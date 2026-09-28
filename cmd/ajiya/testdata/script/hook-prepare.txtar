@@ -10,7 +10,6 @@ cp prepare.sh .git/hooks/prepare-commit-msg
 cp commit-msg.sh .git/hooks/commit-msg
 chmod 755 .git/hooks/prepare-commit-msg
 chmod 755 .git/hooks/commit-msg
-chmod 755 editor.sh
 exec git add -A
 
 # Nothing in progress: nothing to fill, so commit-msg refuses.
@@ -33,7 +32,7 @@ exec git log -1 --format=%(trailers:key=Ajiya,valueonly)
 stdout '^DE-0002$'
 
 # With an editor, the trailer sits below a blank line under the subject.
-env GIT_EDITOR=$WORK/editor.sh
+env 'GIT_EDITOR=sh editor.sh'
 exec git commit -q --allow-empty
 exec git log -1 --format=%B
 cmp stdout want-editor.txt
