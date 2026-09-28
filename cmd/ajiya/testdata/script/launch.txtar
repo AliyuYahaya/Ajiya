@@ -1,0 +1,42 @@
+# launch set and show: the required set is the target plus everything it depends on.
+
+exec ajiya init --name Demo --prefix DE
+exec ajiya phase add api 'API works'
+exec ajiya phase add go-live 'Live'
+exec ajiya phase add later 'Nice to have'
+exec ajiya ticket add --phase api --app infra --done-when x 'Schema'
+exec ajiya ticket add --phase api --app infra --done-when x 'Endpoint' --depends DE-0001
+exec ajiya ticket add --phase api --app infra --done-when x 'Unrelated API work'
+exec ajiya ticket add --phase go-live --app infra --done-when x 'Deploy' --depends DE-0002
+exec ajiya ticket add --phase later --app infra --done-when x 'Dark mode'
+
+exec ajiya launch show
+stdout 'No launch target'
+
+! exec ajiya launch set nope
+stderr 'launch target "nope" is neither a phase nor a ticket'
+
+# A phase target: its tickets and their dependencies, not the rest of api.
+exec ajiya launch set go-live
+stdout 'Launch target: go-live \(phase\)'
+stdout 'Required: 0 of 3 closed \(0%\)'
+stdout 'After launch: 2 tickets'
+stdout 'DE-0001  Schema'
+stdout 'DE-0002  Endpoint'
+stdout 'DE-0004  Deploy'
+! stdout 'DE-0003'
+grep '^target = "go-live"$' ajiya.toml
+grep '^# \[launch\]$' ajiya.toml
+
+# Closing a ticket moves the numbers.
+exec git add -A
+exec git commit -q -m 'Schema' -m 'Ajiya: DE-0001'
+exec ajiya ticket done DE-0001
+exec ajiya launch show
+stdout 'Required: 1 of 3 closed \(33%\)'
+
+# A ticket target, set again in place.
+exec ajiya launch set DE-0002
+stdout 'Launch target: DE-0002 \(ticket\)'
+stdout 'Required: 1 of 2 closed \(50%\)'
+grep -count=1 '^target = ' ajiya.toml

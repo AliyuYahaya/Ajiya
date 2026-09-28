@@ -189,3 +189,25 @@ func LoopWith(tickets []*Ticket, id string, deps []string) []string {
 	}
 	return nil
 }
+
+// Upstream returns every ticket id depends on, directly or not, sorted.
+func (g *Graph) Upstream(id string) []string {
+	seen := map[string]bool{}
+	queue := []string{id}
+	for len(queue) > 0 {
+		cur := queue[0]
+		queue = queue[1:]
+		for _, d := range g.deps[cur] {
+			if !seen[d] && d != id {
+				seen[d] = true
+				queue = append(queue, d)
+			}
+		}
+	}
+	out := make([]string, 0, len(seen))
+	for d := range seen {
+		out = append(out, d)
+	}
+	SortIDs(out)
+	return out
+}
