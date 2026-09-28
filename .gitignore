@@ -4,6 +4,7 @@ __pycache__/
 
 # Build output
 /ajiya
+!/ajiya/
 /ajiya.exe
 /dist/
 

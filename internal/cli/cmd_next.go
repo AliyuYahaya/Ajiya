@@ -65,7 +65,11 @@ func runNext(e *env, args []string) error {
 		if t.Status.Human != "" {
 			extra = join(extra, "needs a human: "+t.Status.Human)
 		}
-		fmt.Fprintf(w, "%s %s\t%s\t%s\t%s\n", t.Status.Mark(), t.ID, t.App, t.Title, extra)
+		line := fmt.Sprintf("%s %s\t%s\t%s", t.Status.Mark(), t.ID, t.App, t.Title)
+		if extra != "" { // no trailing tab, so the title is not padded with spaces
+			line += "\t" + extra
+		}
+		fmt.Fprintln(w, line)
 	}
 	return w.Flush()
 }

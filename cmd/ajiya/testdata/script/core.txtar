@@ -70,6 +70,14 @@ stdout 'Needed by:  CB-0002 🟥 Booking screen'
 ! exec ajiya ticket show CB-0099
 stderr 'no ticket CB-0099'
 
+# A title that starts with -- goes after a -- separator.
+exec ajiya ticket add --phase bookings --app infra --done-when 'Flag works' -- '--json output'
+stdout 'Added CB-0004 to bookings: --json output'
+
+# next pads no cell at the end of a line.
+exec ajiya next
+! stdout ' $'
+
 exec ajiya check
 stdout 'No problems found.'
 
