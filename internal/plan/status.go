@@ -28,22 +28,45 @@ const (
 //
 //	🟥 Pending[ · Needs a human: <Human>][ · Blocked: <Blocked>]
 //	🟨 In progress[: <Note>][ · Needs a human: <Human>]
-//	🟩 Done[ · <Commit>][ · by <By>][ · <Date>][ · tests passed][ · Note: <Note>]
+//	🟩 Done[ · <Commit>][ · issue #<Issue>][ · Done before Ajiya][ · by <By>][ · <Date>][ · tests passed][ · Note: <Note>]
 //	🟩 Dropped: <Reason>, decided by <By>
+//
+// Any of them may end with [ · Link: <Link>][ · Was: <Aliases>], which every
+// status change keeps: the URL of an imported issue, and a ticket's old IDs.
 type Status struct {
 	State   State
 	Note    string // in progress: what is left; done: a note
 	Human   string // Needs a human: why
 	Blocked string // pending: why
 	Commit  string // done: short commit hash
+	Issue   string // done: the number of the closed issue it was imported from
+	Before  bool   // done: finished before the project used Ajiya
 	By      string // done by a person, or who dropped it
 	Date    string // done: YYYY-MM-DD
 	Tests   bool   // done: the test command passed
 	Reason  string // dropped: why
+
+	Link    string   // the ticket's source, such as an issue URL
+	Aliases []string // old IDs the ticket had before it was imported
 }
 
 // Closed reports whether the ticket counts as finished: done or dropped.
 func (s Status) Closed() bool { return s.State == Done || s.State == Dropped }
+
+// HasEvidence reports whether a done ticket says how it was done.
+func (s Status) HasEvidence() bool {
+	return s.Commit != "" || s.By != "" || s.Issue != "" || s.Before
+}
+
+// Carry returns a new status in state st that keeps what outlives a status
+// change: Needs a human (while the ticket is open), the link and the aliases.
+func (s Status) Carry(st State) Status {
+	n := Status{State: st, Link: s.Link, Aliases: s.Aliases}
+	if st == Pending || st == InProgress {
+		n.Human = s.Human
+	}
+	return n
+}
 
 // Mark returns the coloured square the cell starts with.
 func (s Status) Mark() string {
@@ -57,8 +80,9 @@ func (s Status) Mark() string {
 }
 
 var (
-	hashRE = regexp.MustCompile(`^[0-9a-f]{7,40}$`)
-	dateRE = regexp.MustCompile(`^\d{4}-\d{2}-\d{2}$`)
+	hashRE  = regexp.MustCompile(`^[0-9a-f]{7,40}$`)
+	dateRE  = regexp.MustCompile(`^\d{4}-\d{2}-\d{2}$`)
+	issueRE = regexp.MustCompile(`^issue #(\d+)$`)
 )
 
 const (
@@ -68,6 +92,9 @@ const (
 	byTag      = "by "
 	decidedTag = ", decided by "
 	testsTag   = "tests passed"
+	beforeTag  = "Done before Ajiya"
+	linkTag    = "Link: "
+	wasTag     = "Was: "
 )
 
 // String formats the status in canonical form.
@@ -96,6 +123,12 @@ func (s Status) String() string {
 		if s.Commit != "" {
 			parts = append(parts, s.Commit)
 		}
+		if s.Issue != "" {
+			parts = append(parts, "issue #"+s.Issue)
+		}
+		if s.Before {
+			parts = append(parts, beforeTag)
+		}
 		if s.By != "" {
 			parts = append(parts, byTag+s.By)
 		}
@@ -109,7 +142,13 @@ func (s Status) String() string {
 			parts = append(parts, noteTag+s.Note)
 		}
 	case Dropped:
-		return markDone + " Dropped: " + s.Reason + decidedTag + s.By
+		parts = append(parts, markDone+" Dropped: "+s.Reason+decidedTag+s.By)
+	}
+	if s.Link != "" {
+		parts = append(parts, linkTag+s.Link)
+	}
+	if len(s.Aliases) > 0 {
+		parts = append(parts, wasTag+strings.Join(s.Aliases, ", "))
 	}
 	return strings.Join(parts, sep)
 }
@@ -118,7 +157,11 @@ func (s Status) String() string {
 // round-trip check reports cells that are not in canonical order.
 func ParseStatus(cell string) (Status, error) {
 	var s Status
-	if rest, ok := strings.CutPrefix(cell, markDone+" Dropped: "); ok {
+	parts := strings.Split(cell, sep)
+	head, parts := parts[0], parts[1:]
+	switch {
+	case strings.HasPrefix(head, markDone+" Dropped: "):
+		rest := strings.TrimPrefix(head, markDone+" Dropped: ")
 		i := strings.LastIndex(rest, decidedTag)
 		if i < 0 {
 			return s, errors.New(`dropped status needs ", decided by <name>"`)
@@ -127,11 +170,6 @@ func ParseStatus(cell string) (Status, error) {
 		if s.Reason == "" || s.By == "" {
 			return s, errors.New("dropped status needs a reason and a name")
 		}
-		return s, nil
-	}
-	parts := strings.Split(cell, sep)
-	head, parts := parts[0], parts[1:]
-	switch {
 	case head == markPending+" Pending":
 		s.State = Pending
 	case head == markPartial+" In progress":
@@ -163,26 +201,45 @@ func (s *Status) setPart(p string) error {
 		*field = v
 		return nil
 	}
-	pendingOrActive := s.State == Pending || s.State == InProgress
+	flag := func(field *bool) error {
+		if *field {
+			return fmt.Errorf("status part %q is repeated", p)
+		}
+		*field = true
+		return nil
+	}
+	open := s.State == Pending || s.State == InProgress
+	done := s.State == Done
 	switch {
-	case pendingOrActive && strings.HasPrefix(p, humanTag):
+	case strings.HasPrefix(p, linkTag):
+		return set(&s.Link, strings.TrimPrefix(p, linkTag))
+	case strings.HasPrefix(p, wasTag):
+		if s.Aliases != nil {
+			return fmt.Errorf("status part %q is repeated", p)
+		}
+		s.Aliases = ParseIDList(strings.TrimPrefix(p, wasTag))
+		if len(s.Aliases) == 0 {
+			return fmt.Errorf("status part %q is empty", p)
+		}
+		return nil
+	case open && strings.HasPrefix(p, humanTag):
 		return set(&s.Human, strings.TrimPrefix(p, humanTag))
 	case s.State == Pending && strings.HasPrefix(p, blockedTag):
 		return set(&s.Blocked, strings.TrimPrefix(p, blockedTag))
-	case s.State == Done && hashRE.MatchString(p):
+	case done && hashRE.MatchString(p):
 		return set(&s.Commit, p)
-	case s.State == Done && dateRE.MatchString(p):
+	case done && issueRE.MatchString(p):
+		return set(&s.Issue, issueRE.FindStringSubmatch(p)[1])
+	case done && p == beforeTag:
+		return flag(&s.Before)
+	case done && dateRE.MatchString(p):
 		return set(&s.Date, p)
-	case s.State == Done && strings.HasPrefix(p, byTag):
+	case done && strings.HasPrefix(p, byTag):
 		return set(&s.By, strings.TrimPrefix(p, byTag))
-	case s.State == Done && strings.HasPrefix(p, noteTag):
+	case done && strings.HasPrefix(p, noteTag):
 		return set(&s.Note, strings.TrimPrefix(p, noteTag))
-	case s.State == Done && p == testsTag:
-		if s.Tests {
-			return fmt.Errorf("status part %q is repeated", p)
-		}
-		s.Tests = true
-		return nil
+	case done && p == testsTag:
+		return flag(&s.Tests)
 	}
 	return fmt.Errorf("status part %q is not understood here", p)
 }

@@ -106,9 +106,9 @@ func Run(cfg *config.Config, p *plan.Plan) []Finding {
 			add("E010", loc(t), fmt.Sprintf("ajiya app add %s --path <dir>, or ajiya ticket edit %s --app <app>", t.App, t.ID),
 				"%s is for app %q, which is not registered", t.ID, t.App)
 		}
-		if s := t.Status; s.State == plan.Done && s.Commit == "" && s.By == "" {
+		if s := t.Status; s.State == plan.Done && !s.HasEvidence() {
 			add("E011", loc(t), "restore the row from git and close it with 'ajiya ticket done'",
-				"%s is marked done without a commit or a person as evidence", t.ID)
+				"%s is marked done without evidence: a commit, a person, an issue or 'Done before Ajiya'", t.ID)
 		}
 	}
 	if target := cfg.Launch.Target; target != "" {

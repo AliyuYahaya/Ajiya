@@ -40,7 +40,7 @@ func decode(t *testing.T, data []byte, v any) {
 
 type status struct {
 	State, Text, Note, Human, Blocked, Commit, By, Date, Reason string
-	TestsPassed                                              bool `json:"tests_passed"`
+	TestsPassed                                                 bool `json:"tests_passed"`
 }
 
 type ticket struct {

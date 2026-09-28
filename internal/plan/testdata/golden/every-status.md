@@ -13,3 +13,7 @@ Goal: One row for each status form, pipes \| and all
 | CB-0006 | api | Done with commit and note | x | - | 🟩 Done · 4f2a91cd · 2026-09-02 · Note: edge cases left for CB-0009 |
 | CB-0007 | web | Dropped | x | - | 🟩 Dropped: not needed after all, decided by Amina Bello |
 | CB-10000 | web | Five-digit ID | x | CB-0007 | 🟥 Pending |
+| CB-10001 | web | Imported, closed issue | x | - | 🟩 Done · issue #12 · Link: https://github.com/o/r/issues/12 |
+| CB-10002 | web | Imported from a todo list | x | - | 🟩 Done · Done before Ajiya |
+| CB-10003 | web | Legacy ticket | x | CB-10002 | 🟨 In progress: half · Needs a human: keys · Link: https://x.test/a · Was: MI3-185, RO-053 |
+| CB-10004 | web | Dropped with link | x | - | 🟩 Dropped: duplicate, decided by Amina · Link: https://x.test/b |

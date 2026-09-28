@@ -15,5 +15,5 @@ Goal: g
 | FX-0001 | infra | A | a | - | 🟩 Done |
 | FX-0002 | infra | Only a date | b | - | 🟩 Done · 2026-09-28 |
 -- want --
-E011 ajiya/core.md:8: FX-0001 is marked done without a commit or a person as evidence. Fix: restore the row from git and close it with 'ajiya ticket done'
-E011 ajiya/core.md:9: FX-0002 is marked done without a commit or a person as evidence. Fix: restore the row from git and close it with 'ajiya ticket done'
+E011 ajiya/core.md:8: FX-0001 is marked done without evidence: a commit, a person, an issue or 'Done before Ajiya'. Fix: restore the row from git and close it with 'ajiya ticket done'
+E011 ajiya/core.md:9: FX-0002 is marked done without evidence: a commit, a person, an issue or 'Done before Ajiya'. Fix: restore the row from git and close it with 'ajiya ticket done'

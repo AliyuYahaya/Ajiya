@@ -6,6 +6,7 @@ import (
 	"errors"
 	"os"
 	"path/filepath"
+	"slices"
 	"sort"
 	"strings"
 )
@@ -83,13 +84,19 @@ func (p *Plan) Tickets() []*Ticket {
 	return all
 }
 
-// Ticket returns the first ticket with the given ID, or nil.
+// Ticket returns the first ticket with the given ID, or, failing that, the
+// first ticket that had it as an old ID. It returns nil if there is none.
 func (p *Plan) Ticket(id string) *Ticket {
 	for _, ph := range p.Phases {
 		for _, t := range ph.Tickets {
 			if t.ID == id {
 				return t
 			}
+		}
+	}
+	for _, t := range p.Tickets() {
+		if slices.Contains(t.Status.Aliases, id) {
+			return t
 		}
 	}
 	return nil

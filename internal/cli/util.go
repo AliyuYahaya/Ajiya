@@ -148,3 +148,30 @@ func (pr *project) saveTicket(t *plan.Ticket) error {
 }
 
 func today() string { return time.Now().Format("2006-01-02") }
+
+// ensurePhase returns the phase with slug, creating it with goal if needed.
+// The caller saves it.
+func (pr *project) ensurePhase(slug, goal string) *plan.Phase {
+	if ph := pr.plan.Phase(slug); ph != nil {
+		return ph
+	}
+	ph := &plan.Phase{Slug: slug, Title: plan.TitleFromSlug(slug), Goal: goal}
+	pr.plan.Phases = append(pr.plan.Phases, ph)
+	return ph
+}
+
+// newTicket adds a ticket with the next ID to a phase and returns it. The
+// caller validates the fields and saves the phase. Importers use it too.
+func (pr *project) newTicket(ph *plan.Phase, app, title, doneWhen string, deps []string, status plan.Status) *plan.Ticket {
+	t := &plan.Ticket{
+		ID:       pr.plan.NextID(pr.cfg.Project.Prefix),
+		App:      app,
+		Title:    title,
+		DoneWhen: doneWhen,
+		Depends:  deps,
+		Status:   status,
+		Phase:    ph.Slug,
+	}
+	ph.Tickets = append(ph.Tickets, t)
+	return t
+}

@@ -43,7 +43,7 @@ func TestParseSpecExample(t *testing.T) {
 	t7 := ph.Tickets[0]
 	want := Status{State: Done, Commit: "4f2a91c", Date: "2026-09-28", Tests: true}
 	if t7.ID != "CB-0007" || t7.App != "api" || !reflect.DeepEqual(t7.Depends, []string{"CB-0002"}) ||
-		t7.Status != want || t7.Line != 8 || t7.Phase != "bookings" {
+		!reflect.DeepEqual(t7.Status, want) || t7.Line != 8 || t7.Phase != "bookings" {
 		t.Errorf("CB-0007 = %+v", t7)
 	}
 	if s := ph.Tickets[1].Status; s.State != InProgress || s.Note != "validation done, tests to do" {
@@ -126,9 +126,13 @@ func TestStatusRoundTrip(t *testing.T) {
 		{State: Done, Commit: "abcdef1", Date: "2026-01-01", Tests: true, Note: "n"},
 		{State: Done, By: "A Person", Date: "2026-01-01", Note: "n"},
 		{State: Dropped, Reason: "r, decided by nobody", By: "Me"},
+		{State: Done, Issue: "12", Link: "https://github.com/o/r/issues/12"},
+		{State: Done, Before: true, Aliases: []string{"MI3-185"}},
+		{State: Pending, Human: "h", Link: "https://x.test/1", Aliases: []string{"A-1", "B-2"}},
+		{State: Dropped, Reason: "r", By: "Me", Link: "https://x.test/2"},
 	} {
 		got, err := ParseStatus(s.String())
-		if err != nil || got != s {
+		if err != nil || !reflect.DeepEqual(got, s) {
 			t.Errorf("ParseStatus(%q) = %+v, %v; want %+v", s.String(), got, err, s)
 		}
 	}
@@ -242,5 +246,28 @@ func TestLoadSaveNextID(t *testing.T) {
 	}
 	if p2.Phase("go-live").Title != "Go-live" {
 		t.Errorf("title = %q", p2.Phase("go-live").Title)
+	}
+}
+
+func TestAliasLookupAndCarry(t *testing.T) {
+	data, _ := os.ReadFile("testdata/golden/every-status.md")
+	ph, err := ParsePhase("x", data)
+	if err != nil {
+		t.Fatal(err)
+	}
+	p := &Plan{Phases: []*Phase{ph}}
+	if got := p.Ticket("RO-053"); got == nil || got.ID != "CB-10003" {
+		t.Errorf("alias lookup = %+v", got)
+	}
+	if got := p.Ticket("CB-10003"); got == nil || got.ID != "CB-10003" {
+		t.Error("ID lookup broken")
+	}
+	s := p.Ticket("CB-10003").Status
+	done := s.Carry(Done)
+	if done.Human != "" || done.Link != s.Link || !reflect.DeepEqual(done.Aliases, s.Aliases) || done.Note != "" {
+		t.Errorf("Carry(Done) = %+v", done)
+	}
+	if again := s.Carry(Pending); again.Human != "keys" {
+		t.Errorf("Carry(Pending) lost Needs a human: %+v", again)
 	}
 }

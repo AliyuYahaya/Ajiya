@@ -54,16 +54,7 @@ func runTicketAdd(e *env, args []string) error {
 	if err := pr.checkDepends("", deps); err != nil {
 		return err
 	}
-	t := &plan.Ticket{
-		ID:       pr.plan.NextID(pr.cfg.Project.Prefix),
-		App:      *app,
-		Title:    title,
-		DoneWhen: *doneWhen,
-		Depends:  deps,
-		Status:   plan.Status{State: plan.Pending, Human: *human},
-		Phase:    ph.Slug,
-	}
-	ph.Tickets = append(ph.Tickets, t)
+	t := pr.newTicket(ph, *app, title, *doneWhen, deps, plan.Status{State: plan.Pending, Human: *human})
 	if err := pr.plan.Save(ph); err != nil {
 		return err
 	}
@@ -102,7 +93,8 @@ func runTicketStart(e *env, args []string) error {
 	if t.Status.Closed() {
 		return refused("%s is already closed: %s", t.ID, t.Status)
 	}
-	s := plan.Status{State: plan.InProgress, Human: t.Status.Human, Note: *note}
+	s := t.Status.Carry(plan.InProgress)
+	s.Note = *note
 	if *note == "" && t.Status.State == plan.InProgress {
 		s.Note = t.Status.Note
 	}
@@ -155,7 +147,8 @@ func runTicketDone(e *env, args []string) error {
 		return refused("%s is already closed: %s", t.ID, t.Status)
 	}
 
-	s := plan.Status{State: plan.Done, Note: *note}
+	s := t.Status.Carry(plan.Done)
+	s.Note = *note
 	if *by != "" {
 		if t.Status.Human == "" {
 			return refused("--by is only for tickets marked 'Needs a human'; for %s, commit with the trailer 'Ajiya: %s' and run 'ajiya ticket done %s'", t.ID, t.ID, t.ID)
@@ -385,7 +378,9 @@ func runTicketBlock(e *env, args []string) error {
 	if t.Status.Closed() {
 		return refused("%s is already closed: %s", t.ID, t.Status)
 	}
-	t.Status = plan.Status{State: plan.Pending, Human: t.Status.Human, Blocked: reason}
+	s := t.Status.Carry(plan.Pending)
+	s.Blocked = reason
+	t.Status = s
 	if err := pr.saveTicket(t); err != nil {
 		return err
 	}
@@ -421,7 +416,9 @@ func runTicketDrop(e *env, args []string) error {
 	if t.Status.Closed() {
 		return refused("%s is already closed: %s", t.ID, t.Status)
 	}
-	t.Status = plan.Status{State: plan.Dropped, Reason: *reason, By: *by}
+	s := t.Status.Carry(plan.Dropped)
+	s.Reason, s.By = *reason, *by
+	t.Status = s
 	if err := pr.saveTicket(t); err != nil {
 		return err
 	}

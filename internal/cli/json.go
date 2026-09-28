@@ -10,16 +10,20 @@ import (
 // rename or remove them.
 
 type jsonStatus struct {
-	State   string `json:"state"` // pending, in_progress, done, dropped
-	Text    string `json:"text"`  // the Status cell as written
-	Note    string `json:"note,omitempty"`
-	Human   string `json:"human,omitempty"`
-	Blocked string `json:"blocked,omitempty"`
-	Commit  string `json:"commit,omitempty"`
-	By      string `json:"by,omitempty"`
-	Date    string `json:"date,omitempty"`
-	Tests   bool   `json:"tests_passed,omitempty"`
-	Reason  string `json:"reason,omitempty"`
+	State   string   `json:"state"` // pending, in_progress, done, dropped
+	Text    string   `json:"text"`  // the Status cell as written
+	Note    string   `json:"note,omitempty"`
+	Human   string   `json:"human,omitempty"`
+	Blocked string   `json:"blocked,omitempty"`
+	Commit  string   `json:"commit,omitempty"`
+	By      string   `json:"by,omitempty"`
+	Date    string   `json:"date,omitempty"`
+	Tests   bool     `json:"tests_passed,omitempty"`
+	Reason  string   `json:"reason,omitempty"`
+	Issue   string   `json:"issue,omitempty"`
+	Before  bool     `json:"done_before_ajiya,omitempty"`
+	Link    string   `json:"link,omitempty"`
+	Aliases []string `json:"aliases,omitempty"`
 }
 
 type jsonTicket struct {
@@ -45,6 +49,7 @@ func toJSON(t *plan.Ticket) jsonTicket {
 		Status: jsonStatus{
 			State: stateNames[s.State], Text: s.String(), Note: s.Note, Human: s.Human, Blocked: s.Blocked,
 			Commit: s.Commit, By: s.By, Date: s.Date, Tests: s.Tests, Reason: s.Reason,
+			Issue: s.Issue, Before: s.Before, Link: s.Link, Aliases: s.Aliases,
 		},
 	}
 }
