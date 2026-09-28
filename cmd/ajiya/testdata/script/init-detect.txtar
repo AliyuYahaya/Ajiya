@@ -1,0 +1,73 @@
+# init suggests apps; nothing is registered without --yes or a person's answer.
+
+# Without a terminal or --yes: suggestions and commands, nothing registered.
+cd mono
+exec ajiya init --name Shop
+stdout 'Apps found:'
+stdout '1\.  web\s+apps/web\s+\(pnpm-workspace.yaml; dev script\)'
+stdout '2\.  ui\s+packages/ui\s+library\s+\(pnpm-workspace.yaml\)'
+stdout 'Nothing registered: run with --yes'
+stdout '  ajiya app add ui --path packages/ui --library'
+! grep '^\[\[apps\]\]' ajiya.toml
+
+# With --yes: all registered, and the plan checks clean.
+cd ../mono2
+exec ajiya init --name Shop --yes
+stdout 'Registered 2 app\(s\)'
+exec ajiya check --strict
+stdout 'No problems found.'
+cmp ajiya.toml ../want-shop.toml
+
+# A single root manifest is one app at the root, named after the project.
+cd ../single
+exec ajiya init --name 'Clinic Booking' --yes
+stdout '1\.  clinic-booking\s+\.\s+\(manifest\)'
+grep '^path = "\."$' ajiya.toml
+
+-- mono/pnpm-workspace.yaml --
+packages:
+  - 'apps/*'
+  - 'packages/*'
+-- mono/package.json --
+{}
+-- mono/apps/web/package.json --
+{"scripts": {"dev": "vite"}}
+-- mono/packages/ui/package.json --
+{}
+-- mono2/pnpm-workspace.yaml --
+packages:
+  - 'apps/*'
+  - 'packages/*'
+-- mono2/package.json --
+{}
+-- mono2/apps/web/package.json --
+{"scripts": {"dev": "vite"}}
+-- mono2/packages/ui/package.json --
+{}
+-- single/go.mod --
+module example.com/clinic
+-- want-shop.toml --
+# Ajiya configuration: https://github.com/AliyuYahaya/Ajiya
+
+[project]
+name = "Shop"
+prefix = "SH"
+
+# [launch]
+# target = "go-live"          # a phase slug or a ticket ID
+
+# [test]
+# command = "go test ./..."   # run by 'ajiya ticket done --test'
+
+# [[apps]]
+# name = "api"
+# path = "apps/api"
+
+[[apps]]
+name = "web"
+path = "apps/web"
+
+[[apps]]
+name = "ui"
+path = "packages/ui"
+kind = "library"

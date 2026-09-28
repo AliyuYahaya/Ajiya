@@ -5,7 +5,7 @@ Goal: Apps are detected and managed, launch readiness is defined, and every chec
 
 | ID | App | Ticket | Done when | Depends | Status |
 |---|---|---|---|---|---|
-| AJ-0008 | ajiya | App detection in init | Suggests apps from workspace files and manifests, ranked, skipping vendor folders; --yes accepts; fixture repos pass | - | 🟥 Pending |
+| AJ-0008 | ajiya | App detection in init | Suggests apps from workspace files and manifests, ranked, skipping vendor folders; --yes accepts; fixture repos pass | - | 🟨 In progress |
 | AJ-0009 | ajiya | ajiya app add, remove and move | Refuses to orphan open tickets unless --to is given; script tests pass | - | 🟩 Done · 57e4454 · 2026-09-29 |
 | AJ-0010 | ajiya | ajiya launch set and show | Required set is the target's tickets plus everything they depend on; table tests pass | - | 🟩 Done · 3349f60 · 2026-09-29 |
 | AJ-0011 | ajiya | ajiya next --launch | Launch-required tickets are listed first | AJ-0010 | 🟩 Done · d32c066 · 2026-09-29 |

@@ -62,7 +62,7 @@ func planWarnings(cfg *config.Config, p *plan.Plan) []Finding {
 	}
 
 	if cfg.Root != "" {
-		dirs, _ := detect.ManifestDirs(cfg.Root)
+		dirs, _ := detect.AppManifestDirs(cfg.Root)
 		for _, d := range dirs {
 			if !underAnyApp(cfg, d) {
 				fs = append(fs, warning("W005", d, fmt.Sprintf("ajiya app add %s --path %s (add --library for a shared package)", suggestName(d, cfg), d),

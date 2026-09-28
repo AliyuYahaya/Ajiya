@@ -44,8 +44,10 @@ type silent int
 func (s silent) Error() string { return "" }
 
 type env struct {
+	stdin          io.Reader
 	stdout, stderr io.Writer
 	dir            string // working directory
+	interactive    bool   // a person is typing at stdin
 }
 
 type command struct {
@@ -59,7 +61,7 @@ var commands []command
 
 func init() {
 	commands = []command{
-		{"init", "[--name <name>] [--prefix <PREFIX>]", "Set up ajiya in this directory", runInit},
+		{"init", "[--name <name>] [--prefix <PREFIX>] [--yes]", "Set up ajiya in this directory, suggesting apps", runInit},
 		{"app add", "<name> --path <dir> [--library]", "Register an app", runAppAdd},
 		{"app move", "<name> --path <dir>", "Change an app's folder", runAppMove},
 		{"app remove", "<name> [--to <app>]", "Unregister an app, moving its open tickets", runAppRemove},
@@ -98,7 +100,13 @@ func Run(args []string, stdout, stderr io.Writer) int {
 		fmt.Fprintf(stderr, "ajiya: %v\n", err)
 		return ExitUsage
 	}
-	return run(&env{stdout: stdout, stderr: stderr, dir: dir}, args)
+	return run(&env{stdin: os.Stdin, stdout: stdout, stderr: stderr, dir: dir, interactive: isTerminal(os.Stdin)}, args)
+}
+
+// isTerminal reports whether f is a terminal rather than a pipe or file.
+func isTerminal(f *os.File) bool {
+	st, err := f.Stat()
+	return err == nil && st.Mode()&os.ModeCharDevice != 0
 }
 
 func run(e *env, args []string) int {
