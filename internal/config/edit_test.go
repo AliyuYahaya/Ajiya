@@ -1,6 +1,9 @@
 package config
 
-import "testing"
+import (
+	"strings"
+	"testing"
+)
 
 func TestSetLaunchText(t *testing.T) {
 	const head = "[project]\nname = \"X\"\nprefix = \"X\"\n"
@@ -31,5 +34,44 @@ func TestSetLaunchText(t *testing.T) {
 				t.Errorf("got\n%s\nwant\n%s", got, tt.want)
 			}
 		})
+	}
+}
+
+func TestAppText(t *testing.T) {
+	const in = `[project]
+name = "X"
+prefix = "X"
+
+[[apps]]
+name = "api"   # the backend
+path = "apps/api"
+
+[[apps]]
+name = 'web'
+path = "apps/web"
+
+[test]
+command = "go test"
+`
+	got, ok := SetAppPathText(in, "web", "web")
+	if !ok || !strings.Contains(got, "name = 'web'\npath = \"web\"\n") || !strings.Contains(got, `path = "apps/api"`) {
+		t.Errorf("SetAppPathText:\n%s", got)
+	}
+	got, ok = RemoveAppText(in, "api")
+	want := strings.Replace(in, "\n[[apps]]\nname = \"api\"   # the backend\npath = \"apps/api\"\n", "", 1)
+	if !ok || got != want {
+		t.Errorf("RemoveAppText:\n%s\nwant\n%s", got, want)
+	}
+	got, _ = RemoveAppText(in, "web")
+	if strings.Contains(got, "web") || !strings.Contains(got, "[test]") {
+		t.Errorf("RemoveAppText web:\n%s", got)
+	}
+	if _, ok := RemoveAppText(in, "nope"); ok {
+		t.Error("removed an app that is not there")
+	}
+	got = AddAppText(in, App{Name: "ui", Path: "packages/ui", Kind: "library"})
+	c, err := Parse([]byte(got))
+	if err != nil || len(c.Apps) != 3 || c.Apps[2].Kind != "library" {
+		t.Errorf("AddAppText: %v\n%s", err, got)
 	}
 }

@@ -1,0 +1,57 @@
+# app add, move and remove.
+
+exec ajiya init --name Demo --prefix DE
+exec ajiya phase add core 'Core works'
+mkdir apps/api
+
+exec ajiya app add api --path apps/api
+stdout 'Registered app api at apps/api.'
+! stderr .
+exec ajiya app add ui --path packages/ui --library
+stderr 'warning: packages/ui is not a folder yet'
+grep '^kind = "library"$' ajiya.toml
+! exec ajiya app add api --path x
+stderr 'already registered'
+! exec ajiya app add infra --path x
+stderr 'already registered'
+! exec ajiya app add Bad --path x
+stderr 'must be lower case'
+! exec ajiya app add web
+stderr '--path is required'
+! exec ajiya app add web --path ../web
+stderr 'outside the project root'
+
+exec ajiya ticket add --phase core --app api --done-when x 'Open work'
+exec ajiya ticket add --phase core --app api --done-when x 'Finished work'
+exec git add -A
+exec git commit -q -m 'Work' -m 'Ajiya: DE-0002'
+exec ajiya ticket done DE-0002
+
+# move changes the path only.
+exec ajiya app move api --path services/api
+stdout 'App api is now at services/api.'
+grep '^path = "services/api"$' ajiya.toml
+! exec ajiya app move nope --path x
+stderr 'app "nope" is not registered'
+! exec ajiya app move infra --path x
+stderr 'built in'
+
+# remove refuses to orphan open tickets.
+! exec ajiya app remove api
+stderr 'app api has open tickets \(DE-0001\); move them with --to <app>'
+! exec ajiya app remove api --to api
+stderr 'another app'
+! exec ajiya app remove api --to web
+stderr 'app "web" is not registered'
+exec ajiya app remove api --to infra
+stdout 'Removed app api. Moved 1 open ticket\(s\) to infra.'
+! grep '^name = "api"' ajiya.toml
+grep '^name = "ui"' ajiya.toml
+grep '^\| DE-0001 \| infra \|' ajiya/core.md
+grep '^\| DE-0002 \| api \|' ajiya/core.md
+
+# An app with no open tickets goes without --to.
+exec ajiya app remove ui
+stdout 'Removed app ui.'
+exec ajiya check
+stdout 'No problems found.'
