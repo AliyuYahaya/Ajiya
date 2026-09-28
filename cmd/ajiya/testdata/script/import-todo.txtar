@@ -1,0 +1,69 @@
+# import todo: list items land in the inbox phase word for word; ticked items
+# are done before Ajiya; importing again adds nothing.
+
+exec ajiya init --name 'Clinic Booking'
+
+! exec ajiya import todo missing.md
+stderr 'cannot read missing.md'
+! exec ajiya import todo notes/todo.md --app web
+stderr 'app "web" is not registered'
+! exists ajiya/inbox.md
+
+exec ajiya import todo notes/todo.md
+stdout '^Imported 8 item\(s\) into inbox \(3 done before Ajiya\); skipped 0 already imported.$'
+cmp ajiya/inbox.md inbox.golden
+exec ajiya check --strict
+stdout 'No problems found.'
+
+# Importing again is a no-op.
+exec ajiya import todo notes/todo.md
+stdout '^Imported 0 item\(s\) into inbox \(0 done before Ajiya\); skipped 8 already imported.$'
+cmp ajiya/inbox.md inbox.golden
+
+# A status change keeps the link, so the item is still recognised.
+exec ajiya ticket start CB-0001
+exec ajiya import todo notes/todo.md
+stdout 'skipped 8 already imported'
+exec ajiya check --strict
+stdout 'No problems found.'
+
+-- notes/todo.md --
+# Launch list
+
+Some notes that are not items.
+
+- [ ] Book a hosting account
+- [x] Register the domain
+* Write the privacy page
++ [X] Pick a name
+1. Set up the database
+2) [ ] Add backups
+   - [x] Nested: nightly dump
+- [ ] Escape a | pipe in the title
+
+```
+- [ ] Not an item: inside a code block
+```
+
+~~~
+* also not an item
+~~~
+
+- [ ]
+---
+-- inbox.golden --
+<!-- Written by ajiya. Do not edit by hand: use ajiya commands. -->
+# Inbox
+
+Goal: Imported items waiting to be organised
+
+| ID | App | Ticket | Done when | Depends | Status |
+|---|---|---|---|---|---|
+| CB-0001 | infra | Book a hosting account | - | - | 🟥 Pending · Link: notes/todo.md:5 |
+| CB-0002 | infra | Register the domain | - | - | 🟩 Done · Done before Ajiya · Link: notes/todo.md:6 |
+| CB-0003 | infra | Write the privacy page | - | - | 🟥 Pending · Link: notes/todo.md:7 |
+| CB-0004 | infra | Pick a name | - | - | 🟩 Done · Done before Ajiya · Link: notes/todo.md:8 |
+| CB-0005 | infra | Set up the database | - | - | 🟥 Pending · Link: notes/todo.md:9 |
+| CB-0006 | infra | Add backups | - | - | 🟥 Pending · Link: notes/todo.md:10 |
+| CB-0007 | infra | Nested: nightly dump | - | - | 🟩 Done · Done before Ajiya · Link: notes/todo.md:11 |
+| CB-0008 | infra | Escape a \| pipe in the title | - | - | 🟥 Pending · Link: notes/todo.md:12 |
