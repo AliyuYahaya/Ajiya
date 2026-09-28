@@ -303,3 +303,79 @@ func LineTime(dir, file string, line int) (int64, error) {
 	}
 	return 0, nil
 }
+
+// Entry is a commit as the activity feed needs it.
+type Entry struct {
+	Commit
+	Time      int64    // committer time, Unix seconds
+	Author    string   // author name
+	CoAuthors []string // values of Co-Authored-By trailers, in order
+	Files     []string // paths the commit changed; none for a merge
+}
+
+// HeadTime returns the committer time (Unix seconds) of HEAD. ok is false
+// when the repository has no commits.
+func HeadTime(dir string) (t int64, ok bool, err error) {
+	if ok, err = hasHead(dir); err != nil || !ok {
+		return 0, false, err
+	}
+	out, err := git(dir, nil, "log", "-1", "--format=%ct", "HEAD")
+	if err != nil {
+		return 0, false, err
+	}
+	if _, err := fmt.Sscanf(string(out), "%d", &t); err != nil {
+		return 0, false, fmt.Errorf("git log: unexpected committer time %q", strings.TrimSpace(string(out)))
+	}
+	return t, true, nil
+}
+
+// LogSince returns the commits on HEAD committed at or after since (Unix
+// seconds), in git's order, with the files each one changed. It runs git once.
+func LogSince(dir string, since int64) ([]Entry, error) {
+	ok, err := hasHead(dir)
+	if err != nil || !ok {
+		return nil, err
+	}
+	format := "--format=%x1e%H%x1f%ct%x1f%cs%x1f%an%x1f%P%x1f%s%x1f" +
+		"%(trailers:key=" + TrailerKey + ",valueonly,unfold,separator=%x1d)%x1f" +
+		"%(trailers:key=Co-Authored-By,valueonly,unfold,separator=%x1d)%x1f"
+	out, err := git(dir, nil, "-c", "core.quotePath=false", "log", format, "--name-only", "--no-renames",
+		fmt.Sprintf("--since=@%d", since), "HEAD", "--")
+	if err != nil {
+		return nil, err
+	}
+	var entries []Entry
+	for rec := range strings.SplitSeq(string(out), "\x1e") {
+		if strings.TrimSpace(rec) == "" {
+			continue
+		}
+		f := strings.Split(rec, "\x1f")
+		if len(f) != 9 {
+			return nil, fmt.Errorf("git log: unexpected output %q", firstLine(rec))
+		}
+		e := Entry{Commit: Commit{Hash: f[0], Date: f[2], Merge: len(strings.Fields(f[4])) > 1, Subject: f[5]}, Author: f[3]}
+		if _, err := fmt.Sscanf(f[1], "%d", &e.Time); err != nil {
+			return nil, fmt.Errorf("git log: unexpected committer time %q", f[1])
+		}
+		if e.Time < since {
+			continue // --since is approximate when commit dates are out of order
+		}
+		e.Refs = parseValues(splitNonEmpty(f[6], "\x1d"))
+		e.Revert = IsRevert(e.Subject)
+		e.CoAuthors = splitNonEmpty(f[7], "\x1d")
+		e.Files = splitNonEmpty(f[8], "\n")
+		entries = append(entries, e)
+	}
+	return entries, nil
+}
+
+// splitNonEmpty splits s by sep and drops blank parts, trimmed.
+func splitNonEmpty(s, sep string) []string {
+	var out []string
+	for v := range strings.SplitSeq(s, sep) {
+		if v = strings.TrimSpace(v); v != "" {
+			out = append(out, v)
+		}
+	}
+	return out
+}
