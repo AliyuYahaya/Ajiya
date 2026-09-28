@@ -79,6 +79,7 @@ func init() {
 		{"launch show", "[--json]", "Show the launch target and what it still needs", runLaunchShow},
 		{"import todo", "<file> [--app <app>]", "Import a markdown to-do list into the inbox phase", runImportTodo},
 		{"import github", "[--repo <owner/name>] [--app <app>] [--limit <n>]", "Import GitHub issues into the inbox phase (uses gh)", runImportGitHub},
+		{"changelog", "[<range>] [--json]", "Print a changelog grouped by phase and ticket", runChangelog},
 		{"check", "[--strict] [--commits <range>] [--json]", "Check the plan for problems", runCheck},
 		{"hook install", "", "Install the commit-msg and prepare-commit-msg git hooks", runHookInstall},
 		{"hook run", "<hook> <git hook arguments>", "Run a git hook (called by the installed hook scripts)", runHookRun},
