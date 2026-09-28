@@ -6,6 +6,7 @@ import (
 	"text/tabwriter"
 
 	"github.com/AliyuYahaya/Ajiya/internal/check"
+	"github.com/AliyuYahaya/Ajiya/internal/gitx"
 	"github.com/AliyuYahaya/Ajiya/internal/plan"
 )
 
@@ -84,6 +85,7 @@ func join(a, b string) string {
 func runCheck(e *env, args []string) error {
 	fs := newFlags("check")
 	strict := fs.Bool("strict", false, "fail on warnings too")
+	commits := fs.String("commits", "", "also check the commit rule on a revision range, such as origin/main..HEAD")
 	if _, err := parse(fs, args, 0); err != nil {
 		return err
 	}
@@ -92,6 +94,16 @@ func runCheck(e *env, args []string) error {
 		return err
 	}
 	findings := check.Run(pr.cfg, pr.plan)
+	if isSet(fs, "commits") {
+		if *commits == "" {
+			return usageErr("--commits needs a revision range, such as origin/main..HEAD")
+		}
+		log, err := gitx.LogRange(pr.cfg.Root, *commits)
+		if err != nil {
+			return usageErr("--commits %s: %v", *commits, err)
+		}
+		findings = append(findings, check.Commits(pr.plan, log)...)
+	}
 	for _, f := range findings {
 		fmt.Fprintln(e.stdout, f)
 	}

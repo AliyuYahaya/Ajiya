@@ -67,7 +67,7 @@ func init() {
 		{"ticket show", "<ID>", "Show a ticket, its dependencies and dependants", runTicketShow},
 		{"ticket edit", `<ID> [--title] [--done-when] [--depends] [--app] [--phase]`, "Change a ticket", runTicketEdit},
 		{"next", "[--app <app>]", "List tickets that can start now", runNext},
-		{"check", "[--strict]", "Check the plan for problems", runCheck},
+		{"check", "[--strict] [--commits <range>]", "Check the plan for problems", runCheck},
 		{"version", "", "Print the version", runVersion},
 	}
 }

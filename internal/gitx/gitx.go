@@ -125,8 +125,23 @@ func Log(dir string) ([]Commit, error) {
 	if err != nil || !ok {
 		return nil, err
 	}
+	return logRevs(dir, "HEAD")
+}
+
+// LogRange returns the commits in a revision range such as main..HEAD, newest first.
+func LogRange(dir, revRange string) ([]Commit, error) {
+	if strings.HasPrefix(revRange, "-") {
+		return nil, fmt.Errorf("range %q must not start with '-'", revRange)
+	}
+	if _, err := git(dir, nil, "rev-parse", "--is-inside-work-tree"); err != nil {
+		return nil, err
+	}
+	return logRevs(dir, revRange, "--")
+}
+
+func logRevs(dir string, revs ...string) ([]Commit, error) {
 	format := "--format=%H%x1f%cs%x1f%P%x1f%s%x1f%(trailers:key=" + TrailerKey + ",valueonly,unfold,separator=%x1f)%x1e"
-	out, err := git(dir, nil, "log", format, "HEAD")
+	out, err := git(dir, nil, append([]string{"log", format}, revs...)...)
 	if err != nil {
 		return nil, err
 	}

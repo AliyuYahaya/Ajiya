@@ -10,9 +10,11 @@
 //	E005 a dependency on an ID that does not exist
 //	E006 a ticket depends on itself
 //	E007 a dependency loop
+//	E008 a commit names no ticket, or more than three, and is not exempt
+//	E009 a commit names a ticket that does not exist
 //
-// Codes for later checks (apps, evidence, launch, commits and warnings) are
-// added as those checks are built.
+// Codes for later checks (apps, evidence, launch and warnings) are added as
+// those checks are built.
 package check
 
 import (
@@ -22,6 +24,7 @@ import (
 	"strings"
 
 	"github.com/AliyuYahaya/Ajiya/internal/config"
+	"github.com/AliyuYahaya/Ajiya/internal/gitx"
 	"github.com/AliyuYahaya/Ajiya/internal/plan"
 )
 
@@ -108,6 +111,37 @@ func Run(cfg *config.Config, p *plan.Plan) []Finding {
 		}
 		return fs[i].Code < fs[j].Code
 	})
+	return fs
+}
+
+// MaxRefs is the most tickets one commit may name; more means it is too big.
+const MaxRefs = 3
+
+// Commits checks the commit rule on the given commits. Merges, reverts and
+// "Ajiya: chore" commits are exempt from the count, not from unknown IDs.
+func Commits(p *plan.Plan, commits []gitx.Commit) []Finding {
+	var fs []Finding
+	for i := len(commits) - 1; i >= 0; i-- { // oldest first
+		c := commits[i]
+		loc := "commit " + c.Short()
+		switch n := len(c.IDs); {
+		case n == 0 && !c.Exempt():
+			fs = append(fs, Finding{Code: "E008", Level: Error, Location: loc,
+				Message: fmt.Sprintf("%q names no ticket", c.Subject),
+				Fix:     "reword it with a last paragraph 'Ajiya: <ID>' (1 to 3 IDs), or 'Ajiya: chore' for upkeep"})
+		case n > MaxRefs && !c.Exempt():
+			fs = append(fs, Finding{Code: "E008", Level: Error, Location: loc,
+				Message: fmt.Sprintf("%q names %d tickets, more than %d", c.Subject, n, MaxRefs),
+				Fix:     "split the work into smaller commits"})
+		}
+		for _, id := range c.IDs {
+			if p.Ticket(id) == nil {
+				fs = append(fs, Finding{Code: "E009", Level: Error, Location: loc,
+					Message: fmt.Sprintf("%q names %s, which does not exist", c.Subject, id),
+					Fix:     "reword the trailer to name an existing ticket"})
+			}
+		}
+	}
 	return fs
 }
 

@@ -1,0 +1,57 @@
+# check --commits: the commit rule over a range of history.
+
+exec ajiya init --name Demo --prefix DE
+exec ajiya phase add core 'Core works'
+exec ajiya ticket add --phase core --app infra --done-when x one
+exec ajiya ticket add --phase core --app infra --done-when x two
+exec ajiya ticket add --phase core --app infra --done-when x three
+exec ajiya ticket add --phase core --app infra --done-when x four
+exec git add -A
+exec git commit -q -m 'Plan' -m 'Ajiya: DE-0001, DE-0002'
+exec git tag base
+
+# Good commits pass.
+exec git commit -q --allow-empty -m 'Three tickets' -m 'Ajiya: DE-0001, DE-0002, DE-0003'
+cp notes.txt upkeep.txt
+exec git add upkeep.txt
+exec git commit -q -m 'Upkeep' -m 'Ajiya: chore'
+exec git revert --no-edit HEAD
+exec ajiya check --commits base..HEAD
+stdout 'No problems found.'
+
+# A merge needs no trailer.
+exec git checkout -q -b side
+exec git commit -q --allow-empty -m 'Side work' -m 'Ajiya: DE-0004'
+exec git checkout -q main
+exec git merge -q --no-ff --no-edit side
+exec ajiya check --commits base..HEAD
+stdout 'No problems found.'
+exec git tag good
+
+# Each broken rule is reported, oldest commit first.
+exec git commit -q --allow-empty -m 'No trailer'
+exec git commit -q --allow-empty -m 'Trailer in the body' -m 'Ajiya: DE-0001' -m 'Then more prose.'
+exec git commit -q --allow-empty -m 'Too big' -m 'Ajiya: DE-0001, DE-0002, DE-0003, DE-0004'
+exec git commit -q --allow-empty -m 'Unknown' -m 'Ajiya: DE-0099'
+exec git commit -q --allow-empty -m 'Chore with unknown' -m 'Ajiya: chore, DE-0098'
+! exec ajiya check --commits good..HEAD
+stdout -count=5 '^E00[89] commit [0-9a-f]{7}: '
+stdout 'E008 commit [0-9a-f]{7}: "No trailer" names no ticket. Fix: reword it'
+stdout 'E008 commit [0-9a-f]{7}: "Trailer in the body" names no ticket'
+stdout 'E008 commit [0-9a-f]{7}: "Too big" names 4 tickets, more than 3. Fix: split'
+stdout 'E009 commit [0-9a-f]{7}: "Unknown" names DE-0099, which does not exist'
+stdout 'E009 commit [0-9a-f]{7}: "Chore with unknown" names DE-0098'
+stdout '5 error\(s\), 0 warning\(s\).'
+
+# Plain check still ignores history.
+exec ajiya check
+stdout 'No problems found.'
+
+# Bad ranges are usage errors.
+! exec ajiya check --commits nope..HEAD
+stderr 'ajiya check: --commits nope..HEAD: git log: '
+! exec ajiya check --commits=''
+stderr 'needs a revision range'
+
+-- notes.txt --
+A file to change, so the upkeep commit can be reverted.
