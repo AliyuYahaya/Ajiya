@@ -1,0 +1,47 @@
+# ticket done --test runs the configured test command.
+
+exec ajiya init --name Demo --prefix DE
+exec ajiya phase add core 'Core works'
+exec ajiya ticket add --phase core --app infra --done-when x one
+exec ajiya ticket add --phase core --app infra --done-when x two --human 'hosting'
+exec git add -A
+exec git commit -q -m 'One' -m 'Ajiya: DE-0001'
+
+# No command configured.
+! exec ajiya ticket done DE-0001 --test
+stderr 'no \[test\] command in ajiya.toml'
+
+# A failing test refuses, and the ticket stays open.
+cp failing.toml ajiya.toml
+! exec ajiya ticket done DE-0001 --test
+stderr 'ajiya: running exit 3'
+stderr 'tests failed \(exit 3\); DE-0001 stays open until they pass'
+grep '\| DE-0001 .* 🟥 Pending \|' ajiya/core.md
+
+# A passing test is recorded; its output goes to stderr.
+cp passing.toml ajiya.toml
+exec ajiya ticket done DE-0001 --test
+stdout '^DE-0001 🟩 Done · [0-9a-f]{7} · \d{4}-\d{2}-\d{2} · tests passed$'
+stderr 'all good'
+! stdout 'all good'
+
+# People closing a ticket can run the tests too.
+exec ajiya ticket done DE-0002 --by Amina --note 'hosting set up' --test
+stdout 'by Amina · \d{4}-\d{2}-\d{2} · tests passed · Note: hosting set up'
+exec ajiya check
+stdout 'No problems found.'
+
+-- failing.toml --
+[project]
+name = "Demo"
+prefix = "DE"
+
+[test]
+command = "exit 3"
+-- passing.toml --
+[project]
+name = "Demo"
+prefix = "DE"
+
+[test]
+command = "echo all good"

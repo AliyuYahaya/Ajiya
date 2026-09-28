@@ -7,8 +7,8 @@ prefix = "AJ"
 # [launch]
 # target = "go-live"          # a phase slug or a ticket ID
 
-# [test]
-# command = "go test ./..."   # run by 'ajiya ticket done --test'
+[test]
+command = "go test ./..."   # run by 'ajiya ticket done --test'
 
 # [[apps]]
 # name = "api"

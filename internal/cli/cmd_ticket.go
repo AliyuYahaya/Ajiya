@@ -1,9 +1,13 @@
 package cli
 
 import (
+	"errors"
 	"fmt"
+	"os/exec"
+	"runtime"
 	"strings"
 
+	"github.com/AliyuYahaya/Ajiya/internal/config"
 	"github.com/AliyuYahaya/Ajiya/internal/gitx"
 	"github.com/AliyuYahaya/Ajiya/internal/plan"
 )
@@ -128,6 +132,7 @@ func runTicketDone(e *env, args []string) error {
 	fs := newFlags("ticket done")
 	note := fs.String("note", "", "a note to keep with the evidence")
 	by := fs.String("by", "", "the person who did it, for tickets that need a human")
+	test := fs.Bool("test", false, "run the [test] command and record the result; a failure refuses")
 	pos, err := parse(fs, args, 1)
 	if err != nil {
 		return err
@@ -172,6 +177,12 @@ func runTicketDone(e *env, args []string) error {
 			return refused("no commit references %s; commit the work with the trailer 'Ajiya: %s' first%s", t.ID, t.ID, hint)
 		}
 		s.Commit, s.Date = commits[0].Short(), commits[0].Date
+	}
+	if *test {
+		if err := runTests(e, pr, t.ID); err != nil {
+			return err
+		}
+		s.Tests = true
 	}
 	for _, d := range waitingOn(pr, t) {
 		fmt.Fprintf(e.stderr, "warning: %s depends on %s, which is not done (%s)\n", t.ID, d.ID, d.Status)
@@ -378,5 +389,31 @@ func runTicketDrop(e *env, args []string) error {
 		return err
 	}
 	fmt.Fprintf(e.stdout, "%s %s\n", t.ID, t.Status)
+	return nil
+}
+
+// runTests runs the configured test command in the project root, with its
+// output on stderr so stdout stays for ajiya's own result.
+func runTests(e *env, pr *project, id string) error {
+	command := pr.cfg.Test.Command
+	if command == "" {
+		return usageErr("no [test] command in %s; add one, or leave out --test", config.FileName)
+	}
+	var cmd *exec.Cmd
+	if runtime.GOOS == "windows" {
+		cmd = exec.Command("cmd", "/C", command)
+	} else {
+		cmd = exec.Command("sh", "-c", command)
+	}
+	cmd.Dir = pr.cfg.Root
+	cmd.Stdout, cmd.Stderr = e.stderr, e.stderr
+	fmt.Fprintf(e.stderr, "ajiya: running %s\n", command)
+	if err := cmd.Run(); err != nil {
+		var exit *exec.ExitError
+		if errors.As(err, &exit) {
+			return refused("tests failed (exit %d); %s stays open until they pass", exit.ExitCode(), id)
+		}
+		return refused("could not run the test command: %v", err)
+	}
 	return nil
 }
