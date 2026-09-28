@@ -15,5 +15,6 @@ Goal: g
 
 | ID | App | Ticket | Done when | Depends | Status |
 |---|---|---|---|---|---|
+| FX-0001 | infra | Deploy | a | - | 🟥 Pending |
 -- want --
 E012 ajiya.toml: launch target "go-live" is neither a phase nor a ticket. Fix: ajiya launch set <phase|ticket>

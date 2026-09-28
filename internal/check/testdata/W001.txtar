@@ -1,0 +1,16 @@
+A phase with no tickets.
+
+-- ajiya.toml --
+[project]
+name = "Fixture"
+prefix = "FX"
+-- ajiya/empty.md --
+<!-- Written by ajiya. Do not edit by hand: use ajiya commands. -->
+# Empty
+
+Goal: g
+
+| ID | App | Ticket | Done when | Depends | Status |
+|---|---|---|---|---|---|
+-- want --
+W001 ajiya/empty.md:1: phase empty has no tickets. Fix: ajiya ticket add --phase empty ...

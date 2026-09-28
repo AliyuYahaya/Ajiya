@@ -1,0 +1,30 @@
+Nothing required for launch mentions deployment or hosting. Tickets after
+launch do not count.
+
+-- ajiya.toml --
+[project]
+name = "Fixture"
+prefix = "FX"
+
+[launch]
+target = "core"
+-- ajiya/core.md --
+<!-- Written by ajiya. Do not edit by hand: use ajiya commands. -->
+# Core
+
+Goal: g
+
+| ID | App | Ticket | Done when | Depends | Status |
+|---|---|---|---|---|---|
+| FX-0001 | infra | Write the API | a | - | 🟥 Pending |
+-- ajiya/later.md --
+<!-- Written by ajiya. Do not edit by hand: use ajiya commands. -->
+# Later
+
+Goal: g
+
+| ID | App | Ticket | Done when | Depends | Status |
+|---|---|---|---|---|---|
+| FX-0002 | infra | Deploy the docs site | b | - | 🟥 Pending |
+-- want --
+W007 ajiya.toml: nothing required for launch mentions deployment or hosting. Fix: add a ticket for deployment or hosting that the launch target depends on

@@ -122,13 +122,19 @@ func Run(cfg *config.Config, p *plan.Plan) []Finding {
 			"dependency loop: %s", strings.Join(c, " -> "))
 	}
 
+	fs = append(fs, planWarnings(cfg, p)...)
+	Sort(fs)
+	return fs
+}
+
+// Sort orders findings by location, then code.
+func Sort(fs []Finding) {
 	sort.SliceStable(fs, func(i, j int) bool {
 		if fs[i].Location != fs[j].Location {
 			return lessLocation(fs[i].Location, fs[j].Location)
 		}
 		return fs[i].Code < fs[j].Code
 	})
-	return fs
 }
 
 // MaxRefs is the most tickets one commit may name; more means it is too big.
@@ -136,7 +142,7 @@ const MaxRefs = 3
 
 // Commits checks the commit rule on the given commits. Merges, reverts and
 // "Ajiya: chore" commits are exempt from the count, not from unknown IDs.
-func Commits(p *plan.Plan, commits []gitx.Commit) []Finding {
+func Commits(cfg *config.Config, p *plan.Plan, commits []gitx.Commit) []Finding {
 	var fs []Finding
 	for i := len(commits) - 1; i >= 0; i-- { // oldest first
 		c := commits[i]
@@ -150,6 +156,24 @@ func Commits(p *plan.Plan, commits []gitx.Commit) []Finding {
 			fs = append(fs, Finding{Code: "E008", Level: Error, Location: loc,
 				Message: fmt.Sprintf("%q names %d tickets, more than %d", c.Subject, n, MaxRefs),
 				Fix:     "split the work into smaller commits"})
+		}
+		if !c.Merge && len(cfg.Apps) > 0 {
+			files, _ := gitx.CommitFiles(cfg.Root, c.Hash)
+			var outside []string
+			for _, f := range files {
+				if !exemptFromApps(f) && !underAnyApp(cfg, f) {
+					outside = append(outside, f)
+				}
+			}
+			if len(outside) > 0 {
+				more := ""
+				if len(outside) > 3 {
+					more = fmt.Sprintf(" and %d more", len(outside)-3)
+					outside = outside[:3]
+				}
+				fs = append(fs, warning("W004", loc, "register the folder with 'ajiya app add', or keep the work inside an app",
+					"%q changed files outside every registered app: %s%s", c.Subject, strings.Join(outside, ", "), more))
+			}
 		}
 		for _, id := range c.IDs {
 			if p.Ticket(id) == nil {

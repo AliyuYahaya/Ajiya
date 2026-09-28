@@ -1,0 +1,70 @@
+# Warnings that need git history: W003, W004, W006, W008.
+
+exec ajiya init --name Demo --prefix DE
+cp apps.toml ajiya.toml
+exec ajiya phase add core 'Core works'
+exec ajiya ticket add --phase core --app api --done-when x 'API work'
+exec ajiya ticket add --phase core --app infra --done-when x 'DNS' --human 'registrar login'
+
+# The first plan commit is years old; the DNS row has not changed since.
+env GIT_COMMITTER_DATE=2020-01-01T12:00:00
+env GIT_AUTHOR_DATE=2020-01-01T12:00:00
+exec git add -A
+exec git commit -q -m 'Plan' -m 'Ajiya: DE-0001, DE-0002'
+env GIT_COMMITTER_DATE=
+env GIT_AUTHOR_DATE=
+
+exec ajiya check
+stdout 'W008 ajiya/core.md:9: DE-0002 has needed a human \(registrar login\) for \d+ days'
+stdout -count=1 '(?m)^W'
+
+# W003: DE-0001 is for api, but its commit changed only docs.
+mkdir docs
+cp notes.txt docs/notes.md
+exec git add docs
+exec git commit -q -m 'Docs' -m 'Ajiya: DE-0001'
+exec ajiya ticket done DE-0001
+exec ajiya check
+stdout 'W003 ajiya/core.md:8: DE-0001 was done in commit [0-9a-f]{7}, which changed nothing under apps/api'
+
+# W004 under --commits: docs/ is outside every app; root and dot files are fine.
+cp notes.txt README.md
+mkdir .github
+cp notes.txt .github/ci.yml
+exec git add -A
+exec git commit -q -m 'Root files' -m 'Ajiya: chore'
+exec ajiya check --commits HEAD~2..HEAD
+stdout 'W004 commit [0-9a-f]{7}: "Docs" changed files outside every registered app: docs/notes.md'
+! stdout 'Root files'
+
+# W006: a ticket added after the first plan commit, with no dependencies.
+exec ajiya ticket add --phase core --app api --done-when x 'Late idea'
+exec ajiya check
+stdout 'W006 ajiya/core.md:10: DE-0003 was added after the plan was first built'
+# A ticket that depends on it links it, and is linked itself: no warnings.
+exec ajiya ticket add --phase core --app api --done-when x 'Needs the idea' --depends DE-0003
+exec ajiya check
+! stdout W006
+
+# Warnings do not fail check; --strict does.
+exec ajiya check
+stdout '0 error\(s\), 2 warning\(s\).'
+! exec ajiya check --strict
+
+# Closing the human ticket clears W008.
+exec ajiya ticket done DE-0002 --by Amina --note 'records added'
+exec ajiya check
+! stdout W008
+
+-- apps.toml --
+[project]
+name = "Demo"
+prefix = "DE"
+
+[[apps]]
+name = "api"
+path = "apps/api"
+-- apps/api/go.mod --
+module api
+-- notes.txt --
+Some notes.

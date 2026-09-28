@@ -1,0 +1,32 @@
+A folder with its own manifest that is not a registered app. Dependency and
+example folders are not searched.
+
+-- ajiya.toml --
+[project]
+name = "Fixture"
+prefix = "FX"
+
+[[apps]]
+name = "api"
+path = "apps/api"
+-- apps/api/go.mod --
+module api
+-- apps/api/internal/tool/go.mod --
+module tool
+-- apps/admin/package.json --
+{}
+-- node_modules/left-pad/package.json --
+{}
+-- examples/demo/package.json --
+{}
+-- ajiya/core.md --
+<!-- Written by ajiya. Do not edit by hand: use ajiya commands. -->
+# Core
+
+Goal: g
+
+| ID | App | Ticket | Done when | Depends | Status |
+|---|---|---|---|---|---|
+| FX-0001 | api | A | a | - | 🟥 Pending |
+-- want --
+W005 apps/admin: apps/admin has its own manifest but is not a registered app. Fix: ajiya app add admin --path apps/admin (add --library for a shared package)

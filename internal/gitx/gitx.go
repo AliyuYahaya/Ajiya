@@ -238,3 +238,68 @@ func AddTrailer(dir, file, value string) error {
 	_, err := git(dir, nil, "interpret-trailers", "--in-place", "--if-exists", "addIfDifferent", "--trailer", TrailerKey+": "+value, file)
 	return err
 }
+
+// CommitFiles returns the paths a commit changed, with / separators. A merge
+// commit lists none.
+func CommitFiles(dir, rev string) ([]string, error) {
+	out, err := git(dir, nil, "show", "--no-renames", "--name-only", "--format=", "-z", rev, "--")
+	if err != nil {
+		return nil, err
+	}
+	var files []string
+	for f := range strings.SplitSeq(string(out), "\x00") {
+		if f = strings.TrimSpace(f); f != "" {
+			files = append(files, f)
+		}
+	}
+	return files, nil
+}
+
+// FirstCommit returns the oldest commit on HEAD that touched path, or "".
+func FirstCommit(dir, path string) (string, error) {
+	ok, err := hasHead(dir)
+	if err != nil || !ok {
+		return "", err
+	}
+	out, err := git(dir, nil, "log", "--reverse", "--format=%H", "HEAD", "--", path)
+	if err != nil {
+		return "", err
+	}
+	first, _, _ := strings.Cut(string(out), "\n")
+	return strings.TrimSpace(first), nil
+}
+
+// TreeFiles returns the files under path at a revision, with / separators.
+func TreeFiles(dir, rev, path string) ([]string, error) {
+	out, err := git(dir, nil, "ls-tree", "-r", "--name-only", "-z", rev, "--", path)
+	if err != nil {
+		return nil, err
+	}
+	var files []string
+	for f := range strings.SplitSeq(string(out), "\x00") {
+		if f != "" {
+			files = append(files, f)
+		}
+	}
+	return files, nil
+}
+
+// LineTime returns the committer time (Unix seconds) of the commit that last
+// changed a line of a file, or 0 if the line is not committed yet.
+func LineTime(dir, file string, line int) (int64, error) {
+	out, err := git(dir, nil, "blame", "--porcelain", "-L", fmt.Sprintf("%d,%d", line, line), "--", file)
+	if err != nil {
+		return 0, err
+	}
+	if strings.HasPrefix(string(out), strings.Repeat("0", 40)) {
+		return 0, nil
+	}
+	for l := range strings.SplitSeq(string(out), "\n") {
+		if v, ok := strings.CutPrefix(l, "committer-time "); ok {
+			var t int64
+			fmt.Sscanf(v, "%d", &t)
+			return t, nil
+		}
+	}
+	return 0, nil
+}

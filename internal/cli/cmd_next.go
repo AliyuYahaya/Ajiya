@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"sort"
 	"text/tabwriter"
+	"time"
 
 	"github.com/AliyuYahaya/Ajiya/internal/check"
 	"github.com/AliyuYahaya/Ajiya/internal/gitx"
@@ -120,8 +121,14 @@ func runCheck(e *env, args []string) error {
 		if err != nil {
 			return usageErr("--commits %s: %v", *commits, err)
 		}
-		findings = append(findings, check.Commits(pr.plan, log)...)
+		findings = append(findings, check.Commits(pr.cfg, pr.plan, log)...)
 	}
+	history, err := check.History(pr.cfg, pr.plan, time.Now())
+	if err != nil {
+		return err
+	}
+	findings = append(findings, history...)
+	check.Sort(findings)
 	for _, f := range findings {
 		fmt.Fprintln(e.stdout, f)
 	}

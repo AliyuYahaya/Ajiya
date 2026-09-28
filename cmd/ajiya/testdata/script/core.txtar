@@ -81,7 +81,13 @@ stdout 'Added CB-0004 to bookings: --json output'
 exec ajiya next
 ! stdout ' $'
 
+# CB-0004 came after the first plan commit and depends on nothing: a warning.
 exec ajiya check
+stdout 'W006 ajiya/bookings.md:11: CB-0004 was added after the plan was first built'
+stdout '0 error\(s\), 1 warning\(s\).'
+! exec ajiya check --strict
+exec ajiya ticket edit CB-0004 --depends CB-0001
+exec ajiya check --strict
 stdout 'No problems found.'
 
 # A hand edit is reported, and changes are refused until it is fixed.
