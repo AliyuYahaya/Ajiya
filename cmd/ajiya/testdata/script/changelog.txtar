@@ -1,0 +1,68 @@
+# changelog: commits grouped by phase and ticket, from the Ajiya trailers.
+
+# Fixed dates, so the commit hashes are the same on every run.
+env GIT_AUTHOR_DATE=2026-01-02T03:04:05Z
+env GIT_COMMITTER_DATE=2026-01-02T03:04:05Z
+
+exec ajiya init --name Demo --prefix DE
+exec ajiya phase add core 'Core works'
+exec ajiya phase add api 'API works' --title 'Public API'
+exec ajiya phase add unused 'Nothing yet'
+exec ajiya ticket add --phase core --app infra --done-when x Setup
+exec ajiya ticket add --phase core --app infra --done-when x Config
+exec ajiya ticket add --phase api --app infra --done-when x Endpoints
+exec ajiya ticket add --phase unused --app infra --done-when x Later
+exec git add ajiya ajiya.toml
+exec git commit -q -m 'Plan' -m 'Ajiya: chore'
+
+exec git commit -q --allow-empty -m 'Set up the core' -m 'Ajiya: DE-0001'
+exec git commit -q --allow-empty -m 'Config and endpoints' -m 'Ajiya: DE-0002, DE-0003'
+exec git commit -q --allow-empty -m 'Tidy up' -m 'Ajiya: chore'
+exec git commit -q --allow-empty -m 'Mystery' -m 'Ajiya: DE-0099'
+exec git tag mid
+exec git checkout -q -b side
+exec git commit -q --allow-empty -m 'Side work' -m 'Ajiya: DE-0001'
+exec git checkout -q main
+exec git merge -q --no-ff --no-edit side
+exec ajiya ticket start DE-0003
+exec ajiya changelog
+cmp stdout all.md
+
+# A range; the merge commit in it is skipped.
+exec ajiya changelog mid..HEAD
+cmp stdout range.md
+
+# Bad ranges are usage errors.
+! exec ajiya changelog nope..HEAD
+stderr 'ajiya changelog: nope..HEAD: git log: '
+! exec ajiya changelog a..b c..d
+stderr 'expected at most 1 argument'
+
+-- all.md --
+# Changelog
+
+## Public API
+
+- **DE-0003** Endpoints — in progress
+  - 7a533bf Config and endpoints
+
+## Core
+
+- **DE-0001** Setup — pending
+  - e25e94f Set up the core
+  - 7ff1d17 Side work
+- **DE-0002** Config — pending
+  - 7a533bf Config and endpoints
+
+## Other changes
+
+- 70fe641 Plan
+- ce8592f Tidy up
+- 1569997 Mystery
+-- range.md --
+# Changelog
+
+## Core
+
+- **DE-0001** Setup — pending
+  - 7ff1d17 Side work
