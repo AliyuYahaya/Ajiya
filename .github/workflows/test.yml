@@ -18,3 +18,19 @@ jobs:
           go-version-file: go.mod
       - run: go vet ./...
       - run: go test ./...
+
+  # The commit rule, as a backup for hooks that can be skipped with --no-verify.
+  # Every commit from the first one made under the rule must name 1 to 3 tickets.
+  ajiya:
+    runs-on: ubuntu-latest
+    env:
+      RULE_START: 125cbc4 # first commit under the commit rule
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0 # the whole history, for --commits
+      - uses: actions/setup-go@v7
+        with:
+          go-version-file: go.mod
+      - run: go build -o "$RUNNER_TEMP/ajiya" ./cmd/ajiya
+      - run: '"$RUNNER_TEMP/ajiya" check --commits "$RULE_START^..HEAD"'
