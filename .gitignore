@@ -12,3 +12,8 @@ __pycache__/
 
 # Build prompt kept locally, not part of the repository.
 ajiya-build-prompt.md
+
+# Share the project's agent skills; keep other .claude/ files (local settings) out.
+!.claude/
+.claude/*
+!.claude/skills/
