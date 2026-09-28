@@ -1,0 +1,19 @@
+A launch target that is neither a phase nor a ticket.
+
+-- ajiya.toml --
+[project]
+name = "Fixture"
+prefix = "FX"
+
+[launch]
+target = "go-live"
+-- ajiya/core.md --
+<!-- Written by ajiya. Do not edit by hand: use ajiya commands. -->
+# Core
+
+Goal: g
+
+| ID | App | Ticket | Done when | Depends | Status |
+|---|---|---|---|---|---|
+-- want --
+E012 ajiya.toml: launch target "go-live" is neither a phase nor a ticket. Fix: ajiya launch set <phase|ticket>

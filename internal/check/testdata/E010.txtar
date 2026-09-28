@@ -1,0 +1,19 @@
+An open ticket for an app that is not registered. Closed tickets keep the
+name of an app that was removed, as a record of where the work was done.
+
+-- ajiya.toml --
+[project]
+name = "Fixture"
+prefix = "FX"
+-- ajiya/core.md --
+<!-- Written by ajiya. Do not edit by hand: use ajiya commands. -->
+# Core
+
+Goal: g
+
+| ID | App | Ticket | Done when | Depends | Status |
+|---|---|---|---|---|---|
+| FX-0001 | web | Open | a | - | 🟥 Pending |
+| FX-0002 | old | Closed | b | - | 🟩 Done · 4f2a91c · 2026-09-28 |
+-- want --
+E010 ajiya/core.md:8: FX-0001 is for app "web", which is not registered. Fix: ajiya app add web --path <dir>, or ajiya ticket edit FX-0001 --app <app>

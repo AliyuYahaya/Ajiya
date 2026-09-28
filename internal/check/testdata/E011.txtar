@@ -1,0 +1,19 @@
+A ticket marked done by hand, with no commit and no person.
+
+-- ajiya.toml --
+[project]
+name = "Fixture"
+prefix = "FX"
+-- ajiya/core.md --
+<!-- Written by ajiya. Do not edit by hand: use ajiya commands. -->
+# Core
+
+Goal: g
+
+| ID | App | Ticket | Done when | Depends | Status |
+|---|---|---|---|---|---|
+| FX-0001 | infra | A | a | - | 🟩 Done |
+| FX-0002 | infra | Only a date | b | - | 🟩 Done · 2026-09-28 |
+-- want --
+E011 ajiya/core.md:8: FX-0001 is marked done without a commit or a person as evidence. Fix: restore the row from git and close it with 'ajiya ticket done'
+E011 ajiya/core.md:9: FX-0002 is marked done without a commit or a person as evidence. Fix: restore the row from git and close it with 'ajiya ticket done'

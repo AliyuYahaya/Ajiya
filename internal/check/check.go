@@ -12,9 +12,11 @@
 //	E007 a dependency loop
 //	E008 a commit names no ticket, or more than three, and is not exempt
 //	E009 a commit names a ticket that does not exist
+//	E010 an open ticket's app is not registered
+//	E011 a ticket marked done has no evidence
+//	E012 the launch target does not exist
 //
-// Codes for later checks (apps, evidence, launch and warnings) are added as
-// those checks are built.
+// Warning codes are added as those checks are built.
 package check
 
 import (
@@ -97,6 +99,21 @@ func Run(cfg *config.Config, p *plan.Plan) []Finding {
 				add("E005", loc(t), fmt.Sprintf("ajiya ticket edit %s --depends <existing IDs>", t.ID),
 					"%s depends on %s, which does not exist", t.ID, d)
 			}
+		}
+	}
+	for _, t := range tickets {
+		if !t.Status.Closed() && !cfg.HasApp(t.App) {
+			add("E010", loc(t), fmt.Sprintf("ajiya app add %s --path <dir>, or ajiya ticket edit %s --app <app>", t.App, t.ID),
+				"%s is for app %q, which is not registered", t.ID, t.App)
+		}
+		if s := t.Status; s.State == plan.Done && s.Commit == "" && s.By == "" {
+			add("E011", loc(t), "restore the row from git and close it with 'ajiya ticket done'",
+				"%s is marked done without a commit or a person as evidence", t.ID)
+		}
+	}
+	if target := cfg.Launch.Target; target != "" {
+		if _, _, err := p.Required(target); err != nil {
+			add("E012", config.FileName, "ajiya launch set <phase|ticket>", "%v", err)
 		}
 	}
 	for _, c := range plan.NewGraph(tickets).Cycles() {
