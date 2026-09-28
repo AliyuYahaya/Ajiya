@@ -5,7 +5,7 @@ Goal: Every commit names 1 to 3 tickets, enforced by hooks with a CI check as ba
 
 | ID | App | Ticket | Done when | Depends | Status |
 |---|---|---|---|---|---|
-| AJ-0001 | ajiya | Parse Ajiya trailers with git's own rules | Refs, chore, merge and revert exemptions agree between message files and history; table tests pass | - | 🟨 In progress: message parsing, exemptions, agreement tests |
+| AJ-0001 | ajiya | Parse Ajiya trailers with git's own rules | Refs, chore, merge and revert exemptions agree between message files and history; table tests pass | - | 🟩 Done · 4cc2b3f · 2026-09-28 |
 | AJ-0002 | ajiya | ajiya check --commits <range> | Reports commits with 0 or more than 3 references and unknown IDs; fixture per case | AJ-0001 | 🟥 Pending |
 | AJ-0003 | ajiya | commit-msg hook | Refuses a commit without a valid trailer; merges and reverts pass; script test in a temp repo | AJ-0001 | 🟥 Pending |
 | AJ-0004 | ajiya | prepare-commit-msg hook | Pre-fills the trailer from in-progress tickets and changed ajiya/ rows; leaves merge, squash and amend alone | AJ-0001 | 🟥 Pending |
