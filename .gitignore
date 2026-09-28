@@ -1,5 +1,6 @@
-# Reference material (old tracker, dashboard, private test data). Local only.
-reference/
+# Private project data used to test `ajiya import legacy`. Never commit.
+reference/private/
+__pycache__/
 
 # Build output
 /ajiya

@@ -1,0 +1,733 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Project Rollout</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Geist+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+/* Colour tokens. Plain CSS: no build step. */
+:root {
+  --c-blue: #2f5bd3; --c-blue-dark: #2448a8; --c-blue-pale: #eaf0fc; --c-blue-tint: #edf2fc;
+  --c-green: #1e9e6a; --c-green-pale: #e8f5ec;
+  --c-red: #c62828; --c-red-pale: #fdecea;
+  --c-amber: #f57f17; --c-amber-pale: #fff8e1;
+  --c-text: #1a1a1a; --c-muted: #666666; --c-faint: #98a2ae;
+  --c-page: #f5f7fa; --c-card: #ffffff; --c-line: #e6e9ee;
+  --c-pri: #6b3fb8; --c-pri-pale: #f1ebfa;
+  --sidebar: 240px;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; }
+body {
+  background: var(--c-page); color: var(--c-text);
+  font: 14px/1.5 Geist, ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+button { font: inherit; color: inherit; }
+.mono { font-family: "Geist Mono", ui-monospace, monospace; font-size: 12px; }
+svg.i { width: 16px; height: 16px; flex-shrink: 0; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+/* Shell: same shape as PortalShell.tsx */
+.shell { display: flex; height: 100vh; overflow: hidden; }
+aside {
+  width: var(--sidebar); flex-shrink: 0; display: flex; flex-direction: column;
+  background: #fff; border-right: 1px solid var(--c-line); transition: width .15s;
+}
+.shell.collapsed aside { width: 68px; }
+.side-top { height: 64px; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; border-bottom: 1px solid var(--c-line); }
+.side-top img { height: 28px; width: auto; }
+.shell.collapsed .side-top { justify-content: center; }
+.shell.collapsed .side-top a, .shell.collapsed .hide-c { display: none !important; }
+.icon-btn { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border: 0; background: transparent; border-radius: 8px; color: var(--c-faint); cursor: pointer; }
+.icon-btn:hover { background: var(--c-page); color: var(--c-text); }
+nav { flex: 1; overflow-y: auto; padding: 12px; display: flex; flex-direction: column; gap: 4px; }
+.nav-item {
+  display: flex; align-items: center; gap: 12px; width: 100%; padding: 10px 12px; border: 0; border-radius: 8px;
+  background: transparent; color: var(--c-muted); font-size: 14px; font-weight: 600; cursor: pointer; text-align: left;
+}
+.nav-item:hover { background: var(--c-page); color: var(--c-text); }
+.nav-item[aria-current="true"] { background: var(--c-blue-pale); color: var(--c-blue); }
+.nav-item .n { margin-left: auto; font-size: 12px; font-weight: 600; color: var(--c-faint); }
+.nav-item[aria-current="true"] .n { color: var(--c-blue); }
+.shell.collapsed .nav-item { justify-content: center; }
+.nav-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--c-faint); padding: 14px 12px 4px; }
+.phase-link { display: flex; flex-direction: column; gap: 5px; padding: 8px 12px; border-radius: 8px; border: 0; background: transparent; cursor: pointer; text-align: left; width: 100%; }
+.phase-link:hover { background: var(--c-page); }
+.phase-link[aria-current="true"] { background: var(--c-blue-pale); }
+.phase-link .t { font-size: 13px; font-weight: 600; color: var(--c-text); display: flex; gap: 8px; }
+.phase-link .t span:last-child { margin-left: auto; color: var(--c-faint); font-weight: 500; font-size: 12px; }
+.side-foot { border-top: 1px solid var(--c-line); padding: 12px 16px; font-size: 12px; color: var(--c-muted); }
+.side-foot b { color: var(--c-text); }
+
+main { flex: 1; overflow-y: auto; min-width: 0; }
+.main-inner { max-width: 1280px; margin: 0 auto; padding: 32px; }
+.page-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 12px; margin-bottom: 20px; }
+.page-head h1 { margin: 0 0 4px; font-size: 24px; font-weight: 800; letter-spacing: -.01em; }
+.page-head p { margin: 0; color: var(--c-muted); font-size: 14px; }
+.mobile-bar { display: none; }
+
+.filters { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 20px; }
+.filters input[type=search], .filters select, .select {
+  font: inherit; font-size: 13px; background: #fff; color: var(--c-text); border: 1px solid var(--c-line);
+  border-radius: 8px; padding: 7px 10px; min-width: 0;
+}
+.filters input[type=search] { width: 260px; max-width: 100%; }
+.filters input:focus, .filters select:focus { outline: 2px solid var(--c-blue-pale); border-color: var(--c-blue); }
+.pill-toggle { display: inline-flex; align-items: center; gap: 6px; padding: 6px 11px; border-radius: 99px; border: 1px solid var(--c-line); background: #fff; font-size: 13px; font-weight: 600; color: var(--c-muted); cursor: pointer; user-select: none; }
+.pill-toggle[aria-pressed="true"] { background: var(--c-blue-pale); border-color: transparent; color: var(--c-blue); }
+.chip-filter { display: inline-flex; align-items: center; gap: 6px; padding: 5px 6px 5px 11px; border-radius: 99px; background: var(--c-blue); color: #fff; font-size: 12px; font-weight: 700; border: 0; cursor: pointer; }
+
+.card-box { background: #fff; border: 1px solid var(--c-line); border-radius: 16px; }
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr)); gap: 16px; margin-bottom: 24px; }
+.kpi { padding: 20px; min-width: 0; }
+.kpi .label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--c-faint); }
+.kpi .value { font-size: 28px; font-weight: 800; margin: 4px 0 10px; letter-spacing: -.02em; }
+.kpi .value small { font-size: 14px; font-weight: 600; color: var(--c-faint); }
+.kpi .sub { color: var(--c-muted); font-size: 12px; margin-top: 8px; }
+
+.bar { display: flex; height: 6px; border-radius: 99px; overflow: hidden; background: var(--c-line); gap: 1px; }
+.bar span { display: block; height: 100%; }
+.bar .d { background: var(--c-green); } .bar .p { background: var(--c-amber); }
+
+h2.section { font-size: 16px; font-weight: 800; margin: 28px 0 4px; display: flex; align-items: baseline; gap: 8px; }
+h2.section:first-child { margin-top: 0; }
+h2.section .count { color: var(--c-faint); font-weight: 600; font-size: 13px; }
+.section-note { color: var(--c-muted); margin: 0 0 12px; font-size: 13px; }
+
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr)); gap: 12px; margin-top: 12px; }
+.card {
+  background: #fff; border: 1px solid var(--c-line); border-radius: 16px; padding: 16px; cursor: pointer;
+  text-align: left; display: flex; flex-direction: column; gap: 10px; width: 100%; min-width: 0; transition: border-color .12s;
+}
+.card:hover, .card:focus-visible { border-color: var(--c-blue); outline: none; }
+.card.flash { animation: flash 1.2s ease; }
+@keyframes flash { 0%,40% { box-shadow: 0 0 0 3px var(--c-blue-pale); border-color: var(--c-blue); } }
+.card .head { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.card .rid { font-weight: 700; color: var(--c-text); }
+.card .name { font-weight: 600; line-height: 1.4; overflow-wrap: anywhere; }
+.card .meta { color: var(--c-muted); font-size: 12px; }
+.card .deps { display: flex; flex-wrap: wrap; gap: 4px; font-size: 12px; color: var(--c-muted); align-items: center; }
+.card.compact { padding: 12px; gap: 8px; border-radius: 12px; }
+.card.compact .name { font-size: 13px; }
+
+.badge { display: inline-flex; align-items: center; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 99px; white-space: nowrap; }
+.badge.pri { background: var(--c-pri-pale); color: var(--c-pri); }
+.badge.req { background: var(--c-blue-pale); color: var(--c-blue); }
+.badge.base { background: var(--c-blue); color: #fff; }
+.badge.opt, .badge.after { background: var(--c-page); color: var(--c-muted); }
+.badge.done { background: var(--c-green-pale); color: var(--c-green); }
+.badge.partial { background: var(--c-amber-pale); color: #b45d0e; }
+.badge.pending { background: var(--c-red-pale); color: var(--c-red); }
+.badge.unknown { background: var(--c-page); color: var(--c-muted); }
+.chip { font-family: "Geist Mono", ui-monospace, monospace; font-size: 11px; padding: 1px 6px; border-radius: 6px; background: var(--c-page); color: var(--c-muted); cursor: pointer; border: 0; }
+.chip.ok { background: var(--c-green-pale); color: var(--c-green); }
+.chip.wait { background: var(--c-red-pale); color: var(--c-red); }
+.dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; }
+.dot.done { background: var(--c-green); } .dot.partial { background: var(--c-amber); } .dot.pending { background: var(--c-red); } .dot.unknown { background: var(--c-faint); }
+
+/* Kanban */
+.board-tools { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; color: var(--c-muted); font-size: 13px; }
+.board { display: grid; grid-template-columns: repeat(4, minmax(250px, 1fr)); gap: 14px; overflow-x: auto; padding-bottom: 8px; align-items: start; }
+.col { background: #eef1f5; border-radius: 16px; padding: 10px; display: flex; flex-direction: column; gap: 8px; min-width: 250px; }
+.col-head { display: flex; align-items: center; gap: 8px; padding: 4px 6px 6px; }
+.col-head h3 { margin: 0; font-size: 13px; font-weight: 800; }
+.col-head .count { margin-left: auto; font-size: 12px; font-weight: 700; color: var(--c-muted); background: #fff; border-radius: 99px; padding: 1px 8px; }
+.col-sub { font-size: 12px; color: var(--c-muted); padding: 0 6px 4px; margin-top: -6px; }
+.lane { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--c-faint); padding: 6px 6px 0; }
+.col-empty { font-size: 12px; color: var(--c-faint); text-align: center; padding: 16px 0; border: 1px dashed #d6dbe2; border-radius: 12px; }
+
+/* Dependency graph: HTML nodes over an SVG edge layer */
+.dep-tools { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; color: var(--c-muted); font-size: 13px; }
+.dep-legend { display: flex; gap: 14px; flex-wrap: wrap; margin-left: auto; font-size: 12px; }
+.dep-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.dep-legend i { display: inline-block; width: 18px; height: 0; border-top: 2px solid; }
+.dep-legend i.dot { width: 8px; height: 8px; border: 0; }
+.dep-wrap { overflow: auto; background: #fff; border: 1px solid var(--c-line); border-radius: 16px; max-height: calc(100vh - 230px); min-height: 360px; }
+.dep-canvas { position: relative; }
+.dep-canvas svg.edges { position: absolute; inset: 0; pointer-events: none; overflow: visible; }
+.dep-canvas path { fill: none; stroke: #cfd6de; stroke-width: 1.6; transition: stroke .12s, opacity .12s; }
+.dep-canvas path.ok { stroke: #9fd8bf; }
+.dep-canvas path.hot { stroke: var(--c-blue); stroke-width: 2.4; }
+.dep-canvas path.dim { opacity: .12; }
+.dep-col-label { position: absolute; top: 12px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--c-faint); }
+.dnode {
+  position: absolute; width: 232px; height: 74px; padding: 8px 10px 8px 14px; border: 1px solid var(--c-line); border-radius: 12px;
+  background: #fff; cursor: pointer; text-align: left; display: flex; flex-direction: column; gap: 3px; overflow: hidden;
+  transition: opacity .12s, border-color .12s, box-shadow .12s;
+}
+.dnode::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--c-faint); }
+.dnode.done::before { background: var(--c-green); } .dnode.partial::before { background: var(--c-amber); } .dnode.pending::before { background: var(--c-red); }
+.dnode .top { display: flex; align-items: center; gap: 5px; font-size: 11px; }
+.dnode .top b { font-family: "Geist Mono", ui-monospace, monospace; font-size: 12px; }
+.dnode .top .ph { margin-left: auto; color: var(--c-faint); font-weight: 600; }
+.dnode .nm { font-size: 12px; font-weight: 600; line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.dnode.ready { box-shadow: 0 0 0 2px var(--c-blue-pale); border-color: #c3d2f5; }
+.dnode.hot { border-color: var(--c-blue); box-shadow: 0 0 0 3px var(--c-blue-pale); }
+.dnode.dim { opacity: .25; }
+.dnode:focus-visible { outline: 2px solid var(--c-blue); }
+
+/* Plan */
+.phase { margin-bottom: 28px; }
+.phase-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; }
+.phase-head h3 { margin: 0; font-size: 16px; font-weight: 800; }
+.phase-head .stats { color: var(--c-muted); font-size: 12px; display: flex; align-items: center; gap: 10px; }
+.phase-head .bar { width: 160px; }
+
+/* Tables */
+.table-wrap { overflow-x: auto; border-radius: 16px; border: 1px solid var(--c-line); background: #fff; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th { text-align: left; padding: 10px 20px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--c-faint); border-bottom: 1px solid var(--c-line); }
+td { padding: 12px 20px; border-bottom: 1px solid var(--c-line); vertical-align: top; }
+tr:last-child td { border-bottom: 0; }
+td.note { color: var(--c-muted); font-size: 12.5px; max-width: 420px; }
+td .sub { color: var(--c-faint); font-size: 12px; }
+.more { display: block; margin: 14px auto 0; background: #fff; border: 1px solid var(--c-line); border-radius: 8px; padding: 7px 14px; font-weight: 600; cursor: pointer; }
+.more:hover { border-color: var(--c-blue); color: var(--c-blue); }
+
+.area-row { padding: 16px 20px; display: grid; grid-template-columns: minmax(170px, 1.2fr) 3fr auto; gap: 16px; align-items: center; margin-bottom: 10px; }
+.area-row .nums { color: var(--c-muted); font-size: 12px; white-space: nowrap; }
+.area-row .src { color: var(--c-faint); font-size: 11.5px; }
+.empty { color: var(--c-muted); padding: 32px; text-align: center; border: 1px dashed var(--c-line); border-radius: 16px; background: var(--c-page); }
+
+dialog { border: 1px solid var(--c-line); border-radius: 16px; padding: 0; width: min(760px, calc(100vw - 32px)); max-height: calc(100vh - 48px); background: #fff; color: var(--c-text); }
+dialog::backdrop { background: rgba(26, 26, 26, .4); }
+.dlg-head { padding: 20px 24px 14px; border-bottom: 1px solid var(--c-line); position: sticky; top: 0; background: #fff; z-index: 1; }
+.dlg-head h3 { margin: 8px 40px 6px 0; font-size: 18px; font-weight: 800; }
+.dlg-head .close { position: absolute; right: 14px; top: 14px; }
+.dlg-meta { color: var(--c-muted); font-size: 13px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.dlg-body { padding: 8px 24px 20px; }
+.tk { display: grid; grid-template-columns: 12px 76px 1fr; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--c-line); }
+.tk:last-child { border-bottom: 0; }
+.tk .dot { margin-top: 7px; }
+.tk .t { font-weight: 600; }
+.tk .n { color: var(--c-muted); font-size: 12.5px; margin-top: 2px; }
+.tk .e { color: var(--c-faint); font-size: 12px; margin-top: 2px; }
+
+@media (max-width: 860px) {
+  .shell { display: block; height: auto; overflow: visible; }
+  aside { position: fixed; inset: 0 auto 0 0; z-index: 20; transform: translateX(-100%); transition: transform .2s; box-shadow: 0 0 40px rgba(0,0,0,.15); width: 260px !important; }
+  .shell.open aside { transform: none; }
+  .shell.collapsed .hide-c { display: revert !important; }
+  .shell.collapsed .side-top a { display: flex !important; }
+  .collapse-btn { display: none !important; }
+  .scrim { display: none; position: fixed; inset: 0; background: rgba(26,26,26,.3); z-index: 15; }
+  .shell.open .scrim { display: block; }
+  main { overflow: visible; }
+  .main-inner { padding: 0 16px 40px; }
+  .mobile-bar { display: flex; align-items: center; gap: 10px; height: 56px; position: sticky; top: 0; background: #fff; border-bottom: 1px solid var(--c-line); margin: 0 -16px 20px; padding: 0 16px; z-index: 10; }
+  .mobile-bar img { height: 24px; }
+  .filters input[type=search] { flex: 1 1 100%; width: 100%; }
+  .area-row { grid-template-columns: 1fr; gap: 8px; }
+  .tk { grid-template-columns: 12px 1fr; }
+  .tk > div:last-child { grid-column: 2; }
+  td.note { display: none; }
+  th, td { padding: 10px 12px; }
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-dash" viewBox="0 0 24 24"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></symbol>
+  <symbol id="i-zap" viewBox="0 0 24 24"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></symbol>
+  <symbol id="i-kanban" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M8 7v7"/><path d="M12 7v4"/><path d="M16 7v9"/></symbol>
+  <symbol id="i-layers" viewBox="0 0 24 24"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/></symbol>
+  <symbol id="i-flow" viewBox="0 0 24 24"><rect width="8" height="8" x="3" y="3" rx="2"/><path d="M7 11v4a2 2 0 0 0 2 2h4"/><rect width="8" height="8" x="13" y="13" rx="2"/></symbol>
+  <symbol id="i-list" viewBox="0 0 24 24"><path d="M3 6h.01"/><path d="M3 12h.01"/><path d="M3 18h.01"/><path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></symbol>
+  <symbol id="i-left" viewBox="0 0 24 24"><path d="m11 17-5-5 5-5"/><path d="m18 17-5-5 5-5"/></symbol>
+  <symbol id="i-right" viewBox="0 0 24 24"><path d="m6 17 5-5-5-5"/><path d="m13 17 5-5-5-5"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
+</svg>
+
+<div class="shell" id="shell">
+  <div class="scrim" id="scrim"></div>
+  <aside aria-label="Rollout navigation">
+    <div class="side-top">
+      <a href="#" aria-label="Rollout home"><strong class="brand">Rollout</strong></a>
+      <button class="icon-btn collapse-btn" id="collapseBtn" type="button" aria-label="Collapse sidebar"><svg class="i"><use href="#i-left"/></svg></button>
+    </div>
+    <nav id="nav"></nav>
+    <div class="side-foot hide-c" id="sideFoot"></div>
+  </aside>
+
+  <main>
+    <div class="main-inner">
+      <div class="mobile-bar">
+        <button class="icon-btn" id="menuBtn" type="button" aria-label="Open menu"><svg class="i"><use href="#i-menu"/></svg></button>
+        <strong class="brand">Rollout</strong>
+      </div>
+      <div class="page-head">
+        <div><h1 id="title"></h1><p id="subtitle"></p></div>
+      </div>
+      <div class="filters" id="filters">
+        <input type="search" id="q" placeholder="Search RO, ticket ID or text" aria-label="Search">
+        <select id="statusF" aria-label="Status filter">
+          <option value="">Any status</option>
+          <option value="pending">Not started / pending</option>
+          <option value="partial">In progress / partial</option>
+          <option value="done">Done</option>
+        </select>
+        <button type="button" class="pill-toggle" id="reqF" aria-pressed="false">Launch-required</button>
+        <button type="button" class="pill-toggle" id="enF" aria-pressed="false">Priority gaps</button>
+        <span id="phaseChip"></span>
+      </div>
+      <div id="view"></div>
+    </div>
+  </main>
+</div>
+
+<dialog id="dlg" aria-labelledby="dlgTitle">
+  <div class="dlg-head">
+    <button class="icon-btn close" type="button" aria-label="Close" onclick="document.getElementById('dlg').close()"><svg class="i"><use href="#i-x"/></svg></button>
+    <div id="dlgBadges" style="display:flex;gap:6px;flex-wrap:wrap;align-items:center"></div>
+    <h3 id="dlgTitle"></h3>
+    <div class="dlg-meta" id="dlgMeta"></div>
+  </div>
+  <div class="dlg-body" id="dlgBody"></div>
+</dialog>
+
+<script src="data.js"></script>
+<script>
+(function () {
+  const D = window.ROLLOUT;
+  const view = document.getElementById('view');
+  if (!D) {
+    view.innerHTML = '<div class="empty">data.js is missing. Run <span class="mono">python3 rollout/collate.py</span> from apps/.</div>';
+    return;
+  }
+
+  const store = {
+    get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+    set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} },
+  };
+  const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const md = s => esc(s).replace(/`([^`]+)`/g, '<span class="mono">$1</span>');
+  const icon = id => `<svg class="i"><use href="#i-${id}"/></svg>`;
+
+  const tickets = new Map(D.tickets.map(t => [t.key, t]));
+  const pkgs = D.packages;
+  const pkgById = new Map(pkgs.map(p => [p.id, p]));
+  const phases = [...new Set(pkgs.map(p => p.phase))];
+  const isReq = p => /^required/i.test(p.launch);
+  const pkgTickets = p => p.tickets.map(k => tickets.get(k)).filter(Boolean);
+  const counts = list => {
+    const c = { done: 0, partial: 0, pending: 0, unknown: 0 };
+    list.forEach(t => c[t.status]++);
+    return c;
+  };
+  const barHTML = (c, total) => {
+    if (!total) return '<div class="bar"></div>';
+    const w = n => (100 * (n || 0) / total).toFixed(2) + '%';
+    return `<div class="bar" role="img" aria-label="${c.done || 0} done, ${c.partial || 0} partial of ${total}"><span class="d" style="width:${w(c.done)}"></span><span class="p" style="width:${w(c.partial)}"></span></div>`;
+  };
+  const statusLabel = { done: 'Done', partial: 'In progress', pending: 'Not started', unknown: 'No status' };
+  const tStatusLabel = { done: 'Done', partial: 'Partial', pending: 'Pending', unknown: 'No status' };
+  const isBase = p => /^base/i.test(p.launch);
+  const launchBadge = p => isBase(p) ? '<span class="badge base">Base</span>' : isReq(p) ? '<span class="badge req">Required</span>'
+    : /optional/i.test(p.launch) ? '<span class="badge opt">Optional</span>' : '<span class="badge after">After launch</span>';
+  const shortPhase = ph => ph.split(':')[0];
+  // Priority order used by PROGRESS.md: PRI + required, required, PRI, rest.
+  const prio = p => isBase(p) ? -1 : (p.priority && isReq(p)) ? 0 : isReq(p) ? 1 : p.priority ? 2 : 3;
+  const byPrio = (a, b) => prio(a) - prio(b) || pkgs.indexOf(a) - pkgs.indexOf(b);
+  // Kanban column: blocked (waiting on another RO), ready, in progress, done.
+  const column = p => p.status === 'done' ? 'done' : p.waitingOn.length ? 'blocked' : p.status === 'partial' ? 'doing' : 'ready';
+
+  // State
+  const F = { q: '', status: '', req: store.get('rollout-req') === '1', en: store.get('rollout-en') === '1', phase: store.get('rollout-phase') || '' };
+  if (!phases.includes(F.phase)) F.phase = '';
+  const views = {
+    overview: { label: 'Overview', icon: 'dash', sub: 'Launch readiness across every area.' },
+    next: { label: 'Next up', icon: 'zap', sub: 'Work that can start now, in priority order: priority gaps first.' },
+    board: { label: 'Board', icon: 'kanban', sub: 'Every work package by where it stands. Blocked means waiting on another RO item.' },
+    deps: { label: 'Dependencies', icon: 'flow', sub: 'What waits on what. Arrows run from a work package to the ones it unblocks. Hover to trace a chain, click to open.' },
+    plan: { label: 'Plan', icon: 'layers', sub: 'Work packages by rollout phase, as in rollout-wbs.md.' },
+    tickets: { label: 'Tickets', icon: 'list', sub: 'Every ticket from every WBS, with the work package that covers it.' },
+    areas: { label: 'Areas', icon: 'chart', sub: 'Ticket counts per WBS file. Not weighted by size.' },
+  };
+  let tab = location.hash.slice(1) || store.get('rollout-tab');
+  if (!views[tab]) tab = 'overview';
+  window.addEventListener('hashchange', () => {
+    const h = location.hash.slice(1);
+    if (views[h] && h !== tab) { tab = h; store.set('rollout-tab', tab); render(); }
+  });
+
+  const pkgText = p => [p.id, p.name, p.phase, p.statusText, ...pkgTickets(p).map(t => t.id + ' ' + t.title)].join(' ').toLowerCase();
+  const pkgMatch = p => (!F.q || pkgText(p).includes(F.q)) && (!F.status || p.status === F.status)
+    && (!F.req || isReq(p)) && (!F.en || p.priority) && (!F.phase || p.phase === F.phase);
+
+  // Sidebar
+  const shell = document.getElementById('shell');
+  if (store.get('rollout-collapsed') === '1') shell.classList.add('collapsed');
+  const colBtn = document.getElementById('collapseBtn');
+  const syncCollapse = () => {
+    const c = shell.classList.contains('collapsed');
+    colBtn.innerHTML = icon(c ? 'right' : 'left');
+    colBtn.setAttribute('aria-label', c ? 'Expand sidebar' : 'Collapse sidebar');
+  };
+  syncCollapse();
+  colBtn.onclick = () => { shell.classList.toggle('collapsed'); store.set('rollout-collapsed', shell.classList.contains('collapsed') ? '1' : '0'); syncCollapse(); };
+  document.getElementById('menuBtn').onclick = () => shell.classList.add('open');
+  document.getElementById('scrim').onclick = () => shell.classList.remove('open');
+
+  function renderNav() {
+    const readyN = pkgs.filter(p => p.ready).length;
+    const n = { next: readyN, board: pkgs.length, tickets: D.tickets.length, plan: phases.length, deps: pkgs.filter(p => p.depends.length).length };
+    let h = Object.entries(views).map(([k, v]) =>
+      `<button class="nav-item" type="button" data-tab="${k}" aria-current="${k === tab}" title="${v.label}">${icon(v.icon)}<span class="hide-c">${v.label}</span>${n[k] ? `<span class="n hide-c">${n[k]}</span>` : ''}</button>`).join('');
+    h += `<div class="nav-label hide-c">Phases</div>`;
+    h += phases.map(ph => {
+      const all = pkgs.filter(p => p.phase === ph);
+      const c = counts(all);
+      return `<button class="phase-link hide-c" type="button" data-phase="${esc(ph)}" aria-current="${F.phase === ph}">
+        <span class="t"><span>${esc(ph.replace(/^(Gate \d|Phase [A-Z]):\s*/, '$1 · '))}</span><span>${c.done}/${all.length}</span></span>${barHTML(c, all.length)}</button>`;
+    }).join('');
+    document.getElementById('nav').innerHTML = h;
+    document.getElementById('sideFoot').innerHTML = `Generated <b>${esc(D.generated)}</b><br>Refresh: <span class="mono">python3 rollout/collate.py</span>`;
+  }
+  document.getElementById('nav').addEventListener('click', e => {
+    const t = e.target.closest('[data-tab]');
+    if (t) { tab = t.dataset.tab; store.set('rollout-tab', tab); ticketLimit = 150; shell.classList.remove('open'); return render(); }
+    const ph = e.target.closest('[data-phase]');
+    if (ph) {
+      F.phase = F.phase === ph.dataset.phase ? '' : ph.dataset.phase;
+      store.set('rollout-phase', F.phase);
+      if (tab === 'overview' || tab === 'areas' || tab === 'tickets') { tab = 'board'; store.set('rollout-tab', tab); }
+      shell.classList.remove('open');
+      render();
+    }
+  });
+
+  // Filters
+  const qEl = document.getElementById('q'), sEl = document.getElementById('statusF'),
+        rEl = document.getElementById('reqF'), eEl = document.getElementById('enF');
+  qEl.oninput = () => { F.q = qEl.value.trim().toLowerCase(); ticketLimit = 150; render(); };
+  sEl.onchange = () => { F.status = sEl.value; render(); };
+  rEl.onclick = () => { F.req = !F.req; store.set('rollout-req', F.req ? '1' : '0'); render(); };
+  eEl.onclick = () => { F.en = !F.en; store.set('rollout-en', F.en ? '1' : '0'); render(); };
+
+  function card(p, compact) {
+    const ts = pkgTickets(p);
+    const c = counts(ts);
+    const deps = p.depends.length ? `<div class="deps">Needs ${p.depends.map(d => {
+      const dp = pkgById.get(d);
+      return `<span class="chip ${dp && dp.status === 'done' ? 'ok' : 'wait'}" data-goto="${d}" title="${esc(dp ? dp.name : '')}">${d}</span>`;
+    }).join('')}</div>` : '';
+    return `<button class="card${compact ? ' compact' : ''}" type="button" data-pkg="${p.id}" id="card-${p.id}">
+      <div class="head"><span class="rid mono">${p.id}</span>${p.priority ? '<span class="badge pri">PRI</span>' : ''}${launchBadge(p)}
+        ${compact ? '' : `<span class="badge ${p.status}" style="margin-left:auto">${statusLabel[p.status]}</span>`}</div>
+      <div class="name">${md(p.name)}</div>
+      ${ts.length ? barHTML(c, ts.length) : ''}
+      <div class="meta">${ts.length ? `${c.done}/${ts.length} tickets done${c.partial ? `, ${c.partial} partial` : ''}` : esc(p.statusText) || 'Rollout-only task'}${compact ? ` · ${esc(shortPhase(p.phase))}` : ''}</div>
+      ${deps}
+    </button>`;
+  }
+  const noMatch = '<div class="empty">Nothing matches the filters.</div>';
+
+  function renderOverview() {
+    const req = pkgs.filter(isReq);
+    const reqDone = req.filter(p => p.status === 'done').length;
+    const reqProg = req.filter(p => p.status === 'partial').length;
+    const en = D.tickets.filter(t => t.id.startsWith('PRI-'));
+    const enC = counts(en);
+    const allC = counts(D.tickets);
+    const ready = pkgs.filter(p => p.ready);
+    const top = ready.filter(pkgMatch).sort(byPrio).slice(0, 6);
+    const base = pkgs.filter(isBase);
+    const baseT = base.flatMap(pkgTickets);
+    const baseC = counts(baseT);
+    let h = `<section class="kpis">
+      <div class="card-box kpi"><div class="label">Base deployment</div>
+        <div class="value">${baseC.done}<small> / ${baseT.length} tickets done</small></div>${barHTML(baseC, baseT.length)}
+        <div class="sub">${base.filter(p => p.status === 'done').length} of ${base.length} work packages</div></div>
+      <div class="card-box kpi"><div class="label">Launch-required work</div>
+        <div class="value">${reqDone}<small> / ${req.length} done</small></div>${barHTML({ done: reqDone, partial: reqProg }, req.length)}
+        <div class="sub">${reqProg} in progress · ${req.length - reqDone - reqProg} not started</div></div>
+      <div class="card-box kpi"><div class="label">Priority gaps (PRI)</div>
+        <div class="value">${enC.done}<small> / ${en.length} closed</small></div>${barHTML(enC, en.length)}
+        <div class="sub">${enC.partial} partial · ${enC.pending} pending · top priority</div></div>
+      <div class="card-box kpi"><div class="label">Can start now</div>
+        <div class="value">${ready.length}<small> work packages</small></div>
+        <div class="sub">${ready.filter(p => prio(p) === 0).length} close priority gaps · ${pkgs.filter(p => column(p) === 'blocked').length} blocked</div></div>
+      <div class="card-box kpi"><div class="label">All tickets</div>
+        <div class="value">${Math.round(100 * allC.done / D.tickets.length)}%<small> done</small></div>${barHTML(allC, D.tickets.length)}
+        <div class="sub">${allC.done} done · ${allC.partial} partial · ${allC.pending} pending of ${D.tickets.length}</div></div>
+    </section>`;
+    h += `<h2 class="section">Top of the queue</h2><p class="section-note">The first ${top.length} from Next up.</p>
+      <div class="grid">${top.map(p => card(p)).join('') || noMatch}</div>`;
+    h += `<h2 class="section">Phases</h2><div class="card-box" style="margin-top:12px">${phases.map((ph, i) => {
+      const all = pkgs.filter(p => p.phase === ph);
+      const c = counts(all);
+      return `<div class="area-row" style="margin:0;${i ? 'border-top:1px solid var(--c-line)' : ''}">
+        <div style="font-weight:700">${esc(ph)}</div>${barHTML(c, all.length)}
+        <div class="nums">${c.done} done · ${c.partial} in progress · ${c.pending} not started</div></div>`;
+    }).join('')}</div>`;
+    view.innerHTML = h;
+  }
+
+  function renderNext() {
+    const ready = pkgs.filter(p => p.ready && pkgMatch(p)).sort(byPrio);
+    const groups = [
+      ['Base deployment', ready.filter(p => prio(p) === -1), 'First: the base release.'],
+      ['Priority gaps, launch-required', ready.filter(p => prio(p) === 0), 'Highest priority: these close PRI tickets and block go-live.'],
+      ['Other launch-required', ready.filter(p => prio(p) === 1), ''],
+      ['Everything else', ready.filter(p => prio(p) > 1), ''],
+    ];
+    view.innerHTML = groups.filter(g => g[1].length).map(([title, list, note]) =>
+      `<h2 class="section">${title} <span class="count">${list.length}</span></h2>${note ? `<p class="section-note">${note}</p>` : ''}<div class="grid">${list.map(p => card(p)).join('')}</div>`).join('') || noMatch;
+  }
+
+  let lanes = store.get('rollout-lanes') === '1';
+  function renderBoard() {
+    const cols = [
+      ['blocked', 'Blocked', 'Waiting on another work package'],
+      ['ready', 'Ready', 'Not started, nothing in the way'],
+      ['doing', 'In progress', 'Some tickets done or partial'],
+      ['done', 'Done', 'Every ticket done'],
+    ];
+    const list = pkgs.filter(pkgMatch).sort(byPrio);
+    const colHTML = ([key, label, sub]) => {
+      const items = list.filter(p => column(p) === key);
+      let body;
+      if (!items.length) body = '<div class="col-empty">None</div>';
+      else if (lanes) body = phases.map(ph => {
+        const inPh = items.filter(p => p.phase === ph);
+        return inPh.length ? `<div class="lane">${esc(shortPhase(ph))}</div>${inPh.map(p => card(p, true)).join('')}` : '';
+      }).join('');
+      else body = items.map(p => card(p, true)).join('');
+      const dot = { blocked: 'pending', ready: 'unknown', doing: 'partial', done: 'done' }[key];
+      return `<div class="col"><div class="col-head"><i class="dot ${dot}"></i><h3>${label}</h3><span class="count">${items.length}</span></div>
+        <div class="col-sub">${sub}</div>${body}</div>`;
+    };
+    view.innerHTML = `<div class="board-tools">
+        <button type="button" class="pill-toggle" id="laneBtn" aria-pressed="${lanes}">Group by phase</button>
+        <span>${list.length} work packages · sorted by priority</span></div>
+      <div class="board">${cols.map(colHTML).join('')}</div>`;
+    document.getElementById('laneBtn').onclick = () => { lanes = !lanes; store.set('rollout-lanes', lanes ? '1' : '0'); renderBoard(); };
+  }
+
+  // Longest-path layering: a package sits one column right of its latest
+  // dependency, so every arrow points rightwards and the last column is
+  // what launch (and after) waits on.
+  let depMode = store.get('rollout-depmode') || 'all';
+  function renderDeps() {
+    const dependents = new Map(pkgs.map(p => [p.id, []]));
+    pkgs.forEach(p => p.depends.forEach(d => dependents.get(d)?.push(p.id)));
+    const level = new Map();
+    const lvl = id => {
+      if (level.has(id)) return level.get(id);
+      level.set(id, 0);
+      const p = pkgById.get(id);
+      const v = p && p.depends.length ? 1 + Math.max(...p.depends.map(lvl)) : 0;
+      level.set(id, v);
+      return v;
+    };
+    pkgs.forEach(p => lvl(p.id));
+    const walk = (id, next, seen = new Set()) => { next(id).forEach(n => { if (!seen.has(n)) { seen.add(n); walk(n, next, seen); } }); return seen; };
+    const up = id => walk(id, i => pkgById.get(i)?.depends || []);
+    const down = id => walk(id, i => dependents.get(i) || []);
+
+    // Which packages to draw
+    const launch = pkgById.get('RO-099');
+    const launchPath = launch ? new Set([...up('RO-099'), 'RO-099']) : new Set();
+    let shown = pkgs;
+    if (depMode === 'launch') shown = pkgs.filter(p => launchPath.has(p.id));
+    if (depMode === 'linked') shown = pkgs.filter(p => p.depends.length || dependents.get(p.id).length);
+    const shownIds = new Set(shown.map(p => p.id));
+
+    const cols = [];
+    shown.forEach(p => { (cols[level.get(p.id)] ||= []).push(p); });
+    // Order within a column: phase order first, then two barycentre sweeps
+    // against neighbours so arrows cross less.
+    const pIndex = p => pkgs.indexOf(p);
+    cols.forEach(c => c && c.sort((a, b) => pIndex(a) - pIndex(b)));
+    const pos = new Map();
+    const reindex = () => cols.forEach(c => c && c.forEach((p, i) => pos.set(p.id, i)));
+    reindex();
+    const bary = (p, nbrs) => { const v = nbrs.filter(n => shownIds.has(n)).map(n => pos.get(n)); return v.length ? v.reduce((a, b) => a + b, 0) / v.length : pos.get(p.id); };
+    for (let pass = 0; pass < 3; pass++) {
+      for (let i = 1; i < cols.length; i++) if (cols[i]) { cols[i].sort((a, b) => bary(a, a.depends) - bary(b, b.depends)); reindex(); }
+      for (let i = cols.length - 2; i >= 0; i--) if (cols[i]) { cols[i].sort((a, b) => bary(a, dependents.get(a.id)) - bary(b, dependents.get(b.id))); reindex(); }
+    }
+
+    const W = 232, H = 74, GX = 84, GY = 14, PAD = 20, TOP = 40;
+    const xy = new Map();
+    let maxRows = 0;
+    cols.forEach((c, i) => { if (!c) return; maxRows = Math.max(maxRows, c.length); c.forEach((p, r) => xy.set(p.id, { x: PAD + i * (W + GX), y: TOP + r * (H + GY) })); });
+    const width = PAD * 2 + cols.length * W + (cols.length - 1) * GX;
+    const height = TOP + maxRows * (H + GY) + PAD;
+
+    const colTitle = i => i === 0 ? 'No dependencies' : `${i} step${i > 1 ? 's' : ''} in`;
+    const edges = [];
+    shown.forEach(p => p.depends.forEach(d => {
+      if (!xy.has(d)) return;
+      const a = xy.get(d), b = xy.get(p.id);
+      const x1 = a.x + W, y1 = a.y + H / 2, x2 = b.x - 6, y2 = b.y + H / 2, mx = (x1 + x2) / 2;
+      const ok = pkgById.get(d)?.status === 'done';
+      edges.push(`<path data-from="${d}" data-to="${p.id}" class="${ok ? 'ok' : ''}" marker-end="url(#arrow${ok ? 'ok' : ''})" d="M${x1},${y1} C${mx},${y1} ${mx},${y2} ${x2},${y2}"/>`);
+    }));
+    const nodes = shown.map(p => {
+      const { x, y } = xy.get(p.id);
+      const match = pkgMatch(p);
+      return `<button type="button" class="dnode ${p.status}${p.ready ? ' ready' : ''}${match ? '' : ' dim'}" data-pkg="${p.id}" data-node="${p.id}" style="left:${x}px;top:${y}px"
+        title="${esc(p.name)}${p.ready ? ' (can start now)' : ''}">
+        <span class="top"><b>${p.id}</b>${p.priority ? '<span class="badge pri">PRI</span>' : ''}${isBase(p) ? '<span class="badge base">Base</span>' : isReq(p) ? '' : '<span class="badge after">' + (/optional/i.test(p.launch) ? 'Optional' : 'After') + '</span>'}<span class="ph">${esc(shortPhase(p.phase).replace('Phase ', ''))}</span></span>
+        <span class="nm">${esc(p.name.replace(/`/g, ''))}</span></button>`;
+    }).join('');
+    const labels = cols.map((c, i) => c ? `<div class="dep-col-label" style="left:${PAD + i * (W + GX)}px">${colTitle(i)}</div>` : '').join('');
+    const modeBtn = (m, label) => `<button type="button" class="pill-toggle" data-depmode="${m}" aria-pressed="${depMode === m}">${label}</button>`;
+    view.innerHTML = `<div class="dep-tools">
+        ${modeBtn('all', 'All work')}${modeBtn('linked', 'Only linked')}${modeBtn('launch', 'Path to cutover (RO-099)')}
+        <span>${shown.length} work packages · ${edges.length} dependencies</span>
+        <div class="dep-legend"><span><i style="border-color:#9fd8bf"></i>Dependency done</span><span><i style="border-color:#cfd6de"></i>Still open</span>
+          <span><i class="dot done"></i>Done</span><span><i class="dot partial"></i>In progress</span><span><i class="dot pending"></i>Not started</span>
+          <span><span class="dnode-key" style="display:inline-block;width:14px;height:10px;border-radius:3px;box-shadow:0 0 0 2px var(--c-blue-pale);border:1px solid #c3d2f5"></span>Can start now</span></div>
+      </div>
+      <div class="dep-wrap"><div class="dep-canvas" id="depCanvas" style="width:${width}px;height:${height}px">
+        <svg class="edges" width="${width}" height="${height}" aria-hidden="true">
+          <defs>
+            <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:#cfd6de;stroke:none"/></marker>
+            <marker id="arrowok" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:#9fd8bf;stroke:none"/></marker>
+          </defs>${edges.join('')}</svg>
+        ${labels}${nodes}</div></div>`;
+
+    view.querySelectorAll('[data-depmode]').forEach(b => b.onclick = () => { depMode = b.dataset.depmode; store.set('rollout-depmode', depMode); renderDeps(); });
+    const canvas = document.getElementById('depCanvas');
+    const clear = () => canvas.querySelectorAll('.hot,.dim-h').forEach(el => el.classList.remove('hot', 'dim-h'));
+    const trace = id => {
+      const chain = new Set([id, ...up(id), ...down(id)]);
+      canvas.querySelectorAll('.dnode').forEach(n => n.classList.toggle('hot', chain.has(n.dataset.node)));
+      canvas.querySelectorAll('.dnode').forEach(n => n.style.opacity = chain.has(n.dataset.node) ? '' : '.25');
+      canvas.querySelectorAll('path[data-from]').forEach(e => {
+        const on = chain.has(e.dataset.from) && chain.has(e.dataset.to);
+        e.classList.toggle('hot', on); e.classList.toggle('dim', !on);
+      });
+    };
+    const reset = () => {
+      canvas.querySelectorAll('.dnode').forEach(n => { n.classList.remove('hot'); n.style.opacity = ''; });
+      canvas.querySelectorAll('path[data-from]').forEach(e => e.classList.remove('hot', 'dim'));
+    };
+    canvas.addEventListener('mouseover', e => { const n = e.target.closest('.dnode'); if (n) trace(n.dataset.node); });
+    canvas.addEventListener('focusin', e => { const n = e.target.closest('.dnode'); if (n) trace(n.dataset.node); });
+    canvas.addEventListener('mouseleave', reset);
+    canvas.addEventListener('focusout', reset);
+  }
+
+  function renderPlan() {
+    const h = phases.map(ph => {
+      const all = pkgs.filter(p => p.phase === ph);
+      const list = all.filter(pkgMatch);
+      if (!list.length) return '';
+      const c = counts(all);
+      return `<section class="phase"><div class="phase-head"><h3>${esc(ph)}</h3>
+        <div class="stats"><span>${c.done} done · ${c.partial} in progress · ${c.pending} not started</span>${barHTML(c, all.length)}</div></div>
+        <div class="grid">${list.map(p => card(p)).join('')}</div></section>`;
+    }).join('');
+    view.innerHTML = h || noMatch;
+  }
+
+  let ticketLimit = 150;
+  function renderTickets() {
+    const areaSel = store.get('rollout-area') || '';
+    const list = D.tickets.filter(t => {
+      if (areaSel && t.area !== areaSel) return false;
+      if (F.status && t.status !== F.status) return false;
+      if (F.en && !t.id.startsWith('PRI-')) return false;
+      if (F.req && !t.rollout.some(r => pkgById.get(r) && isReq(pkgById.get(r)))) return false;
+      if (F.phase && !t.rollout.some(r => pkgById.get(r)?.phase === F.phase)) return false;
+      if (F.q && ![t.id, t.title, t.note, t.epic, t.area, ...t.rollout].join(' ').toLowerCase().includes(F.q)) return false;
+      return true;
+    });
+    const rows = list.slice(0, ticketLimit).map(t => `<tr>
+      <td class="mono" style="white-space:nowrap;font-weight:700">${esc(t.id)}</td>
+      <td>${md(t.title)}<div class="sub">${esc(t.area)} · ${esc(t.epic)}</div></td>
+      <td><span class="badge ${t.status}">${tStatusLabel[t.status]}</span></td>
+      <td>${t.rollout.map(r => `<button class="chip" type="button" data-open="${r}">${r}</button>`).join(' ')}</td>
+      <td class="note">${t.status === 'done' ? '' : md(t.note)}</td></tr>`).join('');
+    view.innerHTML = `<div class="board-tools">
+        <select id="areaF" class="select" aria-label="Area filter"><option value="">All areas</option>${D.areas.map(a => `<option ${a.name === areaSel ? 'selected' : ''}>${esc(a.name)}</option>`).join('')}</select>
+        <span>${list.length} tickets</span></div>
+      ${list.length ? `<div class="table-wrap"><table><thead><tr><th>ID</th><th>Ticket</th><th>Status</th><th>Rollout</th><th>Note</th></tr></thead><tbody>${rows}</tbody></table></div>` : noMatch}
+      ${list.length > ticketLimit ? `<button class="more" id="more" type="button">Show ${Math.min(150, list.length - ticketLimit)} more</button>` : ''}`;
+    document.getElementById('areaF').onchange = e => { store.set('rollout-area', e.target.value); ticketLimit = 150; renderTickets(); };
+    const more = document.getElementById('more');
+    if (more) more.onclick = () => { ticketLimit += 150; renderTickets(); };
+  }
+
+  function renderAreas() {
+    view.innerHTML = D.areas.map(a => `<div class="card-box area-row">
+      <div><div style="font-weight:700">${esc(a.name)}</div><div class="src mono">${esc(a.source)}</div></div>
+      ${barHTML(a, a.total)}
+      <div class="nums">${a.done} done · ${a.partial} partial · ${a.pending} pending · <b style="color:var(--c-text)">${a.total}</b></div>
+    </div>`).join('');
+  }
+
+  const renderers = { overview: renderOverview, next: renderNext, board: renderBoard, deps: renderDeps, plan: renderPlan, tickets: renderTickets, areas: renderAreas };
+  function render() {
+    renderNav();
+    document.getElementById('title').textContent = views[tab].label;
+    document.getElementById('subtitle').textContent = views[tab].sub;
+    document.title = `${views[tab].label} · Project Rollout`;
+    if (location.hash.slice(1) !== tab) history.replaceState(null, '', '#' + tab);
+    // Overview and Areas are whole-programme summaries: no filters there.
+    document.getElementById('filters').style.display = (tab === 'areas') ? 'none' : '';
+    rEl.setAttribute('aria-pressed', String(F.req));
+    eEl.setAttribute('aria-pressed', String(F.en));
+    document.getElementById('phaseChip').innerHTML = F.phase
+      ? `<button type="button" class="chip-filter" id="clearPhase" title="Clear phase filter">${esc(shortPhase(F.phase))} ${icon('x')}</button>` : '';
+    const cp = document.getElementById('clearPhase');
+    if (cp) cp.onclick = () => { F.phase = ''; store.set('rollout-phase', ''); render(); };
+    renderers[tab]();
+  }
+
+  // Detail dialog
+  const dlg = document.getElementById('dlg');
+  function openPkg(id) {
+    const p = pkgById.get(id);
+    if (!p) return;
+    const ts = pkgTickets(p);
+    document.getElementById('dlgBadges').innerHTML =
+      `<span class="mono" style="font-weight:700">${p.id}</span>${p.priority ? '<span class="badge pri">PRI</span>' : ''}${launchBadge(p)}<span class="badge ${p.status}">${statusLabel[p.status]}</span>`;
+    document.getElementById('dlgTitle').innerHTML = md(p.name);
+    const deps = p.depends.length ? `<span>· Needs</span>${p.depends.map(d => `<button type="button" class="chip ${pkgById.get(d)?.status === 'done' ? 'ok' : 'wait'}" data-open="${d}">${d}</button>`).join('')}` : '';
+    const blocks = pkgs.filter(o => o.depends.includes(p.id));
+    const unblocks = blocks.length ? `<span>· Unblocks</span>${blocks.map(o => `<button type="button" class="chip" data-open="${o.id}">${o.id}</button>`).join('')}` : '';
+    document.getElementById('dlgMeta').innerHTML = `<span>${esc(p.phase)} · ${esc(p.statusText)}</span>${deps}${unblocks}`;
+    const order = { partial: 0, pending: 1, unknown: 2, done: 3 };
+    document.getElementById('dlgBody').innerHTML = ts.length
+      ? ts.sort((a, b) => order[a.status] - order[b.status]).map(t => `<div class="tk">
+          <i class="dot ${t.status}" title="${tStatusLabel[t.status]}"></i>
+          <span class="mono" style="padding-top:2px;font-weight:700">${esc(t.id)}</span>
+          <div><div class="t">${md(t.title)}</div>${t.note && t.status !== 'done' ? `<div class="n">${md(t.note)}</div>` : ''}<div class="e">${esc(t.area)} · ${esc(t.epic)}</div></div></div>`).join('')
+      : `<div class="empty" style="margin-top:12px">Rollout-only work with no source tickets. Its status is set by hand in rollout-wbs.md.</div>`;
+    if (!dlg.open) dlg.showModal();
+    dlg.scrollTop = 0;
+  }
+  dlg.addEventListener('click', e => {
+    if (e.target === dlg) return dlg.close();
+    const c = e.target.closest('[data-open]');
+    if (c) openPkg(c.dataset.open);
+  });
+  view.addEventListener('click', e => {
+    const go = e.target.closest('[data-goto]');
+    if (go) {
+      e.stopPropagation();
+      const el = document.getElementById('card-' + go.dataset.goto);
+      if (el) { el.scrollIntoView({ behavior: 'smooth', block: 'center' }); el.classList.remove('flash'); void el.offsetWidth; el.classList.add('flash'); }
+      else openPkg(go.dataset.goto);
+      return;
+    }
+    const op = e.target.closest('[data-open]');
+    if (op) return openPkg(op.dataset.open);
+    const c = e.target.closest('[data-pkg]');
+    if (c) openPkg(c.dataset.pkg);
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
