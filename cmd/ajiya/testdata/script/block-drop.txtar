@@ -1,0 +1,37 @@
+# ticket block and ticket drop.
+
+exec ajiya init --name Demo --prefix DE
+exec ajiya phase add core 'Core works'
+exec ajiya ticket add --phase core --app infra --done-when x 'Needs DNS' --human 'DNS access'
+exec ajiya ticket add --phase core --app infra --done-when x 'Later' --depends DE-0001
+exec ajiya ticket add --phase core --app infra --done-when x 'Maybe'
+
+exec ajiya ticket block DE-0001 'waiting on the registrar'
+stdout 'DE-0001 🟥 Pending · Needs a human: DNS access · Blocked: waiting on the registrar'
+! exec ajiya ticket block DE-0001
+stderr 'expected 2 argument'
+! exec ajiya ticket block DE-0001 'a · b'
+stderr 'must not contain'
+
+# A blocked ticket is not offered by next; start clears the block.
+exec ajiya next
+! stdout DE-0001
+exec ajiya ticket start DE-0001
+stdout 'DE-0001 🟨 In progress · Needs a human: DNS access'
+
+# Drop needs a reason and a person, and counts as closed.
+! exec ajiya ticket drop DE-0003 --reason 'not needed'
+stderr 'a person''s decision'
+exec ajiya ticket drop DE-0003 --reason 'not needed after all' --by 'Amina'
+stdout 'DE-0003 🟩 Dropped: not needed after all, decided by Amina'
+! exec ajiya ticket drop DE-0003 --reason x --by y
+stderr 'already closed'
+! exec ajiya ticket block DE-0003 x
+stderr 'already closed'
+
+# Dropping a dependency unblocks what waits on it.
+exec ajiya ticket drop DE-0001 --reason 'moved to another project' --by 'Amina'
+exec ajiya next
+stdout DE-0002
+exec ajiya check
+stdout 'No problems found.'

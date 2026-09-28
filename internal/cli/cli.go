@@ -67,6 +67,8 @@ func init() {
 		{"ticket add", `--phase <slug> --app <app> "<title>" --done-when "<check>" [--depends <IDs>] [--human "<reason>"]`, "Add a ticket", runTicketAdd},
 		{"ticket start", `<ID> [--note "<what is left>"]`, "Mark a ticket in progress", runTicketStart},
 		{"ticket done", `<ID> [--note "<note>"] [--by "<name>"]`, "Mark a ticket done, with evidence", runTicketDone},
+		{"ticket block", `<ID> "<reason>"`, "Mark a ticket blocked, with what it waits on", runTicketBlock},
+		{"ticket drop", `<ID> --reason "<why>" --by "<name>"`, "Close a ticket that is not needed (a person's decision)", runTicketDrop},
 		{"ticket show", "<ID>", "Show a ticket, its dependencies and dependants", runTicketShow},
 		{"ticket edit", `<ID> [--title] [--done-when] [--depends] [--app] [--phase]`, "Change a ticket", runTicketEdit},
 		{"next", "[--app <app>] [--launch]", "List tickets that can start now", runNext},

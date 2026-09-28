@@ -313,3 +313,70 @@ func runTicketEdit(e *env, args []string) error {
 	fmt.Fprintf(e.stdout, "%s  %s\n  phase %s · app %s · depends %s\n  done when: %s\n", t.ID, t.Title, t.Phase, t.App, deps, t.DoneWhen)
 	return nil
 }
+
+func runTicketBlock(e *env, args []string) error {
+	pos, err := parse(newFlags("ticket block"), args, 2)
+	if err != nil {
+		return err
+	}
+	reason := pos[1]
+	if reason == "" {
+		return usageErr("say what the ticket is waiting on")
+	}
+	if err := plan.CheckStatusText("reason", reason); err != nil {
+		return usageErr("%v", err)
+	}
+	pr, err := loadForChange(e)
+	if err != nil {
+		return err
+	}
+	t, err := pr.ticket(pos[0])
+	if err != nil {
+		return err
+	}
+	if t.Status.Closed() {
+		return refused("%s is already closed: %s", t.ID, t.Status)
+	}
+	t.Status = plan.Status{State: plan.Pending, Human: t.Status.Human, Blocked: reason}
+	if err := pr.saveTicket(t); err != nil {
+		return err
+	}
+	fmt.Fprintf(e.stdout, "%s %s\n", t.ID, t.Status)
+	return nil
+}
+
+// runTicketDrop closes a ticket without doing it. Only a person decides that.
+func runTicketDrop(e *env, args []string) error {
+	fs := newFlags("ticket drop")
+	reason := fs.String("reason", "", "why the ticket is not needed")
+	by := fs.String("by", "", "the person who decided")
+	pos, err := parse(fs, args, 1)
+	if err != nil {
+		return err
+	}
+	if *reason == "" || *by == "" {
+		return usageErr("--reason and --by are both required: dropping work is a person's decision")
+	}
+	for what, v := range map[string]string{"--reason": *reason, "--by": *by} {
+		if err := plan.CheckStatusText(what, v); err != nil {
+			return usageErr("%v", err)
+		}
+	}
+	pr, err := loadForChange(e)
+	if err != nil {
+		return err
+	}
+	t, err := pr.ticket(pos[0])
+	if err != nil {
+		return err
+	}
+	if t.Status.Closed() {
+		return refused("%s is already closed: %s", t.ID, t.Status)
+	}
+	t.Status = plan.Status{State: plan.Dropped, Reason: *reason, By: *by}
+	if err := pr.saveTicket(t); err != nil {
+		return err
+	}
+	fmt.Fprintf(e.stdout, "%s %s\n", t.ID, t.Status)
+	return nil
+}
