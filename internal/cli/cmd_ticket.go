@@ -222,6 +222,20 @@ func runTicketShow(e *env, args []string) error {
 	}
 	list("Depends:", t.Depends)
 	list("Needed by:", plan.NewGraph(pr.plan.Tickets()).Dependants(t.ID))
+	commits, err := gitx.Referencing(pr.cfg.Root, t.ID)
+	if err != nil && err != gitx.ErrNotRepo {
+		return err
+	}
+	if len(commits) == 0 {
+		fmt.Fprintf(w, "%-11s -\n", "Commits:")
+	}
+	for i, c := range commits {
+		label := "Commits:"
+		if i > 0 {
+			label = ""
+		}
+		fmt.Fprintf(w, "%-11s %s %s %s\n", label, c.Short(), c.Date, c.Subject)
+	}
 	return nil
 }
 

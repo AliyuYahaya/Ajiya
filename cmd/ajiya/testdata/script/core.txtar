@@ -67,6 +67,9 @@ exec ajiya ticket show CB-0002
 stdout 'Depends:    CB-0001 🟩 Slots table'
 exec ajiya ticket show CB-0001
 stdout 'Needed by:  CB-0002 🟥 Booking screen'
+stdout 'Commits:    [0-9a-f]{7} \d{4}-\d{2}-\d{2} Add slots table$'
+exec ajiya ticket show CB-0002
+stdout 'Commits:    -$'
 ! exec ajiya ticket show CB-0099
 stderr 'no ticket CB-0099'
 
