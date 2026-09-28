@@ -13,4 +13,4 @@ Goal: Apps are detected and managed, launch readiness is defined, and every chec
 | AJ-0013 | ajiya | Warning checks and --strict | Every warning in spec section 4 has a W code and a fixture; --strict fails on warnings | AJ-0001, AJ-0012 | 🟥 Pending |
 | AJ-0014 | ajiya | --json on every read command | Each read command prints stable JSON with --json; tests decode it | AJ-0013 | 🟥 Pending |
 | AJ-0015 | ajiya | ajiya ticket done --test | Runs the configured test command, records tests passed, refuses on failure | - | 🟥 Pending |
-| AJ-0016 | ajiya | ajiya ticket block and ticket drop | block sets a reason; drop needs --reason and --by and counts as closed | - | 🟨 In progress |
+| AJ-0016 | ajiya | ajiya ticket block and ticket drop | block sets a reason; drop needs --reason and --by and counts as closed | - | 🟩 Done · 1ad6b45 · 2026-09-29 |
