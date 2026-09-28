@@ -1,0 +1,237 @@
+# import legacy: a made-up project in the collate.py format, with a
+# duplicate old ID, a range, heading scopes, a cross-reference, a ticket in
+# two work packages, and rollout dependencies.
+
+exec ajiya init --name Legacy --prefix LE --yes
+
+# Mistakes in the call or the config change nothing.
+! exec ajiya import legacy
+stderr 'expected 1 argument'
+! exec ajiya import legacy nope.toml
+stderr 'no such file'
+! exec ajiya import legacy bad/typo.toml
+stderr 'unknown key "prefixs"'
+! exec ajiya import legacy bad/missing.toml
+stderr 'docs/none.md does not exist; fix the path in the config'
+! exec ajiya import legacy legacy/legacy.toml --app web
+stderr 'app "web" is not registered'
+! exists ajiya/api.md
+
+exec ajiya import legacy legacy/legacy.toml
+cmp stdout report.txt
+! stderr .
+cmp ajiya/api.md golden/api.md
+cmp ajiya/web-app.md golden/web-app.md
+cmp ajiya/operations.md golden/operations.md
+cmp ajiya/rollout.md golden/rollout.md
+
+# Old IDs still find their tickets; a duplicate finds the first.
+exec ajiya ticket show API-003
+stdout '^LE-0003  Reset password$'
+exec ajiya ticket show RO-2
+stdout '^LE-0015  Accounts$'
+exec ajiya ticket show LE-0010
+stdout 'Was: API-003'
+
+# Rollout order carries over: only work whose packages' dependencies are done is ready.
+exec ajiya next
+stdout 'LE-0002'
+! stdout 'LE-0004'
+
+exec ajiya check
+stdout 'No problems found.'
+
+# Importing the same project twice is refused.
+! exec ajiya import legacy legacy/legacy.toml
+stderr 'API-001 was already imported as LE-0001; importing this project again would duplicate its tickets'
+cmp ajiya/api.md golden/api.md
+
+# Work packages that depend on each other: the link that closes the loop is
+# left out and reported. --app and a phase key are honoured.
+cd $WORK/loop
+exec ajiya init --name Loop --prefix LO --yes
+mkdir svc
+exec ajiya app add svc --path svc
+exec ajiya import legacy loop.toml --app svc
+stdout '^  core: 2 ticket\(s\): 0 done, 0 in progress, 2 pending$'
+stdout '^  plan: 2 ticket\(s\): 0 done, 0 in progress, 2 pending$'
+stdout '^  RO-2: depends on RO-1, which would make a dependency loop; not linked$'
+stdout '^  RO-2: X-002 not made to wait on RO-1, which already depends on it; not linked$'
+grep '^\| LO-0001 \| svc \| First \| - \| LO-0004 \| 🟥 Pending · Was: X-001 \|$' ajiya/core.md
+grep '^\| LO-0003 \| svc \| One \| - \| LO-0001, LO-0004 \| 🟥 Pending · Was: RO-1 \|$' ajiya/plan.md
+grep '^\| LO-0004 \| svc \| Two \| - \| LO-0002 \| 🟥 Pending · Was: RO-2 \|$' ajiya/plan.md
+exec ajiya check
+stdout 'No problems found.'
+
+-- bad/typo.toml --
+prefixs = ["API"]
+-- bad/missing.toml --
+prefixes = ["API"]
+
+[[sources]]
+area = "API"
+path = "../legacy/docs/none.md"
+-- report.txt --
+Imported 18 ticket(s) from 3 WBS file(s) and 5 work package(s).
+  api: 5 ticket(s): 1 done, 1 in progress, 3 pending
+  web-app: 5 ticket(s): 1 done, 1 in progress, 3 pending
+  operations: 3 ticket(s): 2 done, 0 in progress, 1 pending
+  rollout: 5 ticket(s): 1 done, 1 in progress, 3 pending
+  total: 18 ticket(s): 5 done, 3 in progress, 10 pending
+Old IDs used by more than one ticket, each now its own ticket ('ajiya ticket show <old ID>' finds the first):
+  API-003: LE-0003 (api), LE-0010 (web-app)
+Cross-references:
+  RO-2: WEB-002 (LE-0007) is the same work as API-002, so it counts once
+Not mapped, or read with a guess:
+  docs/api/wbs.md: 1 row(s) skipped because the prefix ZZZ- is not in prefixes: ZZZ-001
+  docs/api/wbs.md: 1 ticket(s) with no 🟩/🟨/🟥 mark, imported as pending: API-005
+  RO-2: scope names API-003, used by more than one ticket, so every one of them is included
+  RO-3: scope entries not found: API-099
+  RO-5: typed status "Not started" has no mark, read as pending
+  rollout/rollout-wbs.md:17: RO-6 has 3 columns, needs 6 (ID, name, scope, depends, launch, status); skipped
+  RO-5: depends on RO-9, which does not exist; not linked
+  RO-2: OPS-001 not made to wait on RO-1, which already depends on it; not linked
+-- golden/api.md --
+<!-- Written by ajiya. Do not edit by hand: use ajiya commands. -->
+# API
+
+Goal: Every ticket imported from docs/api/wbs.md is done
+
+| ID | App | Ticket | Done when | Depends | Status |
+|---|---|---|---|---|---|
+| LE-0001 | infra | Sign up with **email** | - | LE-0014 | 🟩 Done · Done before Ajiya · Was: API-001 |
+| LE-0002 | infra | Log in \| log out | - | LE-0014 | 🟨 In progress · Was: API-002 |
+| LE-0003 | infra | Reset password | - | LE-0014 | 🟥 Pending · Was: API-003 |
+| LE-0004 | infra | Charge a card | - | LE-0015 | 🟥 Pending · Was: API-004 |
+| LE-0005 | infra | Refunds | - | LE-0015 | 🟥 Pending · Was: API-005 |
+-- golden/web-app.md --
+<!-- Written by ajiya. Do not edit by hand: use ajiya commands. -->
+# Web app
+
+Goal: Every ticket imported from docs/web/wbs.md is done
+
+| ID | App | Ticket | Done when | Depends | Status |
+|---|---|---|---|---|---|
+| LE-0006 | infra | Sign-up page | - | LE-0014 | 🟩 Done · Done before Ajiya · Was: WEB-001 |
+| LE-0007 | infra | Login page, same as API-002 | - | - | 🟨 In progress · Was: WEB-002 |
+| LE-0008 | infra | Billing page | - | LE-0015 | 🟥 Pending · Was: WEB-003 |
+| LE-0009 | infra | Refund page | - | LE-0015 | 🟥 Pending · Was: WEB-004 |
+| LE-0010 | infra | Password reset page, numbered in the wrong series | - | LE-0014 | 🟥 Pending · Was: API-003 |
+-- golden/operations.md --
+<!-- Written by ajiya. Do not edit by hand: use ajiya commands. -->
+# Operations
+
+Goal: Every ticket imported from docs/ops/wbs.md is done
+
+| ID | App | Ticket | Done when | Depends | Status |
+|---|---|---|---|---|---|
+| LE-0011 | infra | Provision the database | - | - | 🟩 Done · Done before Ajiya · Was: OPS-001 |
+| LE-0012 | infra | Set up CI | - | - | 🟩 Done · Done before Ajiya · Was: OPS-002 |
+| LE-0013 | infra | Deploy to production | - | LE-0015, LE-0016 | 🟥 Pending · Was: OPS-003 |
+-- golden/rollout.md --
+<!-- Written by ajiya. Do not edit by hand: use ajiya commands. -->
+# Rollout
+
+Goal: Every work package in rollout/rollout-wbs.md is done
+
+| ID | App | Ticket | Done when | Depends | Status |
+|---|---|---|---|---|---|
+| LE-0014 | infra | Foundations | - | LE-0011, LE-0012 | 🟩 Done · Done before Ajiya · Was: RO-1 |
+| LE-0015 | infra | Accounts | - | LE-0001, LE-0002, LE-0003, LE-0006, LE-0010, LE-0011, LE-0014 | 🟨 In progress · Was: RO-2 |
+| LE-0016 | infra | Billing | - | LE-0004, LE-0005, LE-0008, LE-0009, LE-0015 | 🟥 Pending · Was: RO-3 |
+| LE-0017 | infra | Go live | - | LE-0013, LE-0015, LE-0016 | 🟥 Pending · Was: RO-4 |
+| LE-0018 | infra | Launch party | - | LE-0017 | 🟥 Pending · Was: RO-5 |
+-- legacy/legacy.toml --
+# A made-up legacy project in the collate.py format.
+prefixes = ["API", "WEB", "OPS"]
+rollout = "rollout/rollout-wbs.md"
+
+[[sources]]
+area = "API"
+path = "docs/api/wbs.md"
+
+[[sources]]
+area = "Web app"
+path = "docs/web/wbs.md"
+
+[[sources]]
+area = "Operations"
+path = "docs/ops/wbs.md"
+-- legacy/docs/api/wbs.md --
+# API work breakdown
+
+## EPIC A: Accounts
+
+| ID | Ticket | Notes | Status |
+|---|---|---|---|
+| API-001 | Sign up with **email** | - | 🟩 Done |
+| API-002 | Log in \| log out | - | 🟨 Half done |
+| API-003 | Reset password | 🟩 was done once | 🟥 Reopened |
+
+## EPIC B: Billing
+
+| ID | Ticket | Status |
+|---|---|---|
+| API-004 | Charge a card | 🟥 |
+| API-005 | Refunds | |
+| ZZZ-001 | A row with a prefix nobody listed | 🟥 |
+-- legacy/docs/web/wbs.md --
+## Phase 1
+
+| ID | Ticket | Status |
+|---|---|---|
+| WEB-001 | Sign-up page | 🟩 |
+| WEB-002 | Login page, same as API-002 | 🟨 |
+| WEB-003 | Billing page | 🟥 |
+| WEB-004 | Refund page | 🟥 |
+| API-003 | Password reset page, numbered in the wrong series | 🟥 |
+-- legacy/docs/ops/wbs.md --
+### Phase 0: Setup
+
+| ID | Task | Status |
+|---|---|---|
+| OPS-001 | Provision the database | 🟩 |
+| OPS-002 | Set up CI | 🟩 |
+
+### Phase 1: Launch
+
+| ID | Task | Status |
+|---|---|---|
+| OPS-003 | Deploy to production | 🟥 |
+-- legacy/rollout/rollout-wbs.md --
+# Rollout
+
+## Stage 1
+
+| ID | Work package | Scope | Depends | Launch | Status |
+|---|---|---|---|---|---|
+| RO-1 | Foundations | OPS[Phase 0] | - | Required | |
+| RO-2 | Accounts | API-001..API-003, WEB-001, WEB-002, OPS-001 | RO-1 | Required | |
+| RO-3 | Billing | API[epic b], WEB-003..WEB-004, API-099 | RO-2 | Required | |
+
+## Stage 2
+
+| ID | Work package | Scope | Depends | Launch | Status |
+|---|---|---|---|---|---|
+| RO-4 | Go live | OPS-003 | RO-2, RO-3 | Required | |
+| RO-5 | Launch party | - | RO-4, RO-9 | Optional | Not started |
+| RO-6 | Short row | x |
+-- loop/loop.toml --
+prefixes = ["X"]
+rollout = "rollout.md"
+rollout_phase = "plan"
+
+[[sources]]
+area = "Core work"
+path = "wbs.md"
+phase = "core"
+-- loop/wbs.md --
+| ID | Ticket | Status |
+|---|---|---|
+| X-001 | First | 🟥 |
+| X-002 | Second | 🟥 |
+-- loop/rollout.md --
+| ID | Name | Scope | Depends | Launch | Status |
+|---|---|---|---|---|---|
+| RO-1 | One | X-001 | RO-2 | Required | |
+| RO-2 | Two | X-002 | RO-1 | Required | |

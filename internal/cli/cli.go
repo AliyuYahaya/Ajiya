@@ -80,6 +80,7 @@ func init() {
 		{"import todo", "<file> [--app <app>]", "Import a markdown to-do list into the inbox phase", runImportTodo},
 		{"import github", "[--repo <owner/name>] [--app <app>] [--limit <n>]", "Import GitHub issues into the inbox phase (uses gh)", runImportGitHub},
 		{"changelog", "[<range>] [--json]", "Print a changelog grouped by phase and ticket", runChangelog},
+		{"import legacy", "<config> [--app <app>]", "Import a legacy WBS project (the collate.py format)", runImportLegacy},
 		{"check", "[--strict] [--commits <range>] [--json]", "Check the plan for problems", runCheck},
 		{"hook install", "", "Install the commit-msg and prepare-commit-msg git hooks", runHookInstall},
 		{"hook run", "<hook> <git hook arguments>", "Run a git hook (called by the installed hook scripts)", runHookRun},
