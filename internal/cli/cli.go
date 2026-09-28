@@ -66,7 +66,7 @@ func init() {
 		{"ticket done", `<ID> [--note "<note>"] [--by "<name>"]`, "Mark a ticket done, with evidence", runTicketDone},
 		{"ticket show", "<ID>", "Show a ticket, its dependencies and dependants", runTicketShow},
 		{"ticket edit", `<ID> [--title] [--done-when] [--depends] [--app] [--phase]`, "Change a ticket", runTicketEdit},
-		{"next", "[--app <app>]", "List tickets that can start now", runNext},
+		{"next", "[--app <app>] [--launch]", "List tickets that can start now", runNext},
 		{"launch set", "<phase|ticket>", "Set the launch target", runLaunchSet},
 		{"launch show", "", "Show the launch target and what it still needs", runLaunchShow},
 		{"check", "[--strict] [--commits <range>]", "Check the plan for problems", runCheck},

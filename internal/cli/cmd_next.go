@@ -13,6 +13,7 @@ import (
 func runNext(e *env, args []string) error {
 	fs := newFlags("next")
 	app := fs.String("app", "", "only tickets for this app")
+	launchOnly := fs.Bool("launch", false, "only tickets required for launch")
 	if _, err := parse(fs, args, 0); err != nil {
 		return err
 	}
@@ -28,11 +29,22 @@ func runNext(e *env, args []string) error {
 	tickets := pr.plan.Tickets()
 	g := plan.NewGraph(tickets)
 
+	// required is the launch set; empty when no target is set.
+	required := map[string]bool{}
+	if target := pr.cfg.Launch.Target; target != "" {
+		if required, _, err = pr.plan.Required(target); err != nil {
+			return refused("%v; set another with 'ajiya launch set <phase|ticket>'", err)
+		}
+	} else if *launchOnly {
+		return refused("no launch target; set one with 'ajiya launch set <phase|ticket>'")
+	}
+
 	// unblocks counts the open tickets waiting, directly or not, on each ticket.
 	unblocks := map[string]int{}
 	var ready []*plan.Ticket
 	for _, t := range tickets {
-		if t.Status.Closed() || t.Status.Blocked != "" || (*app != "" && t.App != *app) || len(waitingOn(pr, t)) > 0 {
+		if t.Status.Closed() || t.Status.Blocked != "" || (*app != "" && t.App != *app) ||
+			(*launchOnly && !required[t.ID]) || len(waitingOn(pr, t)) > 0 {
 			continue
 		}
 		for _, id := range g.Downstream(t.ID) {
@@ -44,6 +56,9 @@ func runNext(e *env, args []string) error {
 	}
 	sort.SliceStable(ready, func(i, j int) bool {
 		a, b := ready[i], ready[j]
+		if required[a.ID] != required[b.ID] {
+			return required[a.ID]
+		}
 		if unblocks[a.ID] != unblocks[b.ID] {
 			return unblocks[a.ID] > unblocks[b.ID]
 		}
@@ -57,8 +72,11 @@ func runNext(e *env, args []string) error {
 	w := tabwriter.NewWriter(e.stdout, 0, 0, 2, ' ', 0)
 	for _, t := range ready {
 		extra := ""
+		if required[t.ID] {
+			extra = "launch"
+		}
 		if n := unblocks[t.ID]; n > 0 {
-			extra = fmt.Sprintf("unblocks %d", n)
+			extra = join(extra, fmt.Sprintf("unblocks %d", n))
 		}
 		if t.Status.State == plan.InProgress {
 			extra = join(extra, "in progress")

@@ -12,6 +12,8 @@ exec ajiya ticket add --phase later --app infra --done-when x 'Dark mode'
 
 exec ajiya launch show
 stdout 'No launch target'
+! exec ajiya next --launch
+stderr 'no launch target'
 
 ! exec ajiya launch set nope
 stderr 'launch target "nope" is neither a phase nor a ticket'
@@ -40,3 +42,16 @@ exec ajiya launch set DE-0002
 stdout 'Launch target: DE-0002 \(ticket\)'
 stdout 'Required: 1 of 2 closed \(50%\)'
 grep -count=1 '^target = ' ajiya.toml
+
+# next: launch-required first, even when other work unblocks more.
+exec ajiya launch set go-live
+exec ajiya ticket add --phase later --app infra --done-when x 'Theme' --depends DE-0005
+exec ajiya ticket add --phase later --app infra --done-when x 'Icons' --depends DE-0005
+exec ajiya next
+stdout -count=3 '(?m)^🟥'
+stdout '(?m)\A.*DE-0002.*launch · unblocks 1$'
+stdout '(?m)^.*DE-0005.*unblocks 2$'
+stdout '(?m)^.*DE-0003  infra  Unrelated API work$'
+exec ajiya next --launch
+stdout -count=1 '(?m)^🟥'
+stdout DE-0002
