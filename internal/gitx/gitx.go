@@ -194,3 +194,47 @@ func Referencing(dir, id string) ([]Commit, error) {
 	}
 	return out, nil
 }
+
+// GitPath returns the path of a file in the git directory, such as MERGE_HEAD,
+// relative to dir or absolute.
+func GitPath(dir, name string) (string, error) {
+	out, err := git(dir, nil, "rev-parse", "--git-path", name)
+	if err != nil {
+		return "", err
+	}
+	return strings.TrimSpace(string(out)), nil
+}
+
+// StagedFiles returns the paths staged for the next commit, with / separators.
+func StagedFiles(dir string) ([]string, error) {
+	out, err := git(dir, nil, "diff", "--cached", "--name-only", "-z")
+	if err != nil {
+		return nil, err
+	}
+	var files []string
+	for f := range strings.SplitSeq(string(out), "\x00") {
+		if f != "" {
+			files = append(files, f)
+		}
+	}
+	return files, nil
+}
+
+// Show returns a file at a revision ("HEAD:ajiya/x.md", or ":ajiya/x.md" for
+// the staged version). ok is false when the file does not exist there.
+func Show(dir, spec string) (data []byte, ok bool, err error) {
+	if _, err := git(dir, nil, "cat-file", "-e", spec); err != nil {
+		if err == ErrNotRepo {
+			return nil, false, err
+		}
+		return nil, false, nil
+	}
+	data, err = git(dir, nil, "cat-file", "-p", spec)
+	return data, err == nil, err
+}
+
+// AddTrailer adds "Ajiya: <value>" to a message file, as git places trailers.
+func AddTrailer(dir, file, value string) error {
+	_, err := git(dir, nil, "interpret-trailers", "--in-place", "--if-exists", "addIfDifferent", "--trailer", TrailerKey+": "+value, file)
+	return err
+}

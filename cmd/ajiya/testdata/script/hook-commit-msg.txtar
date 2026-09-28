@@ -1,0 +1,73 @@
+# The commit-msg hook enforces the commit rule as commits are made.
+
+exec ajiya init --name Demo --prefix DE
+exec ajiya phase add core 'Core works'
+exec ajiya ticket add --phase core --app infra --done-when x one
+exec ajiya ticket add --phase core --app infra --done-when x two
+exec ajiya ticket add --phase core --app infra --done-when x three
+exec ajiya ticket add --phase core --app infra --done-when x four
+cp commit-msg.sh .git/hooks/commit-msg
+chmod 755 .git/hooks/commit-msg
+exec git add -A
+
+# No trailer: refused, with a hint.
+! exec git commit -q -m 'No trailer'
+stderr 'commit refused: the message names no ticket'
+stderr 'No ticket is in progress'
+exec ajiya ticket start DE-0001
+exec git add -A
+! exec git commit -q -m 'No trailer'
+stderr 'In progress: DE-0001\.'
+
+# A trailer that is not in the last paragraph does not count.
+! exec git commit -q -m 'Body' -m 'Ajiya: DE-0001' -m 'More prose.'
+stderr 'names no ticket'
+
+exec git commit -q -m 'Plan' -m 'Ajiya: DE-0001'
+
+! exec git commit -q --allow-empty -m 'Too big' -m 'Ajiya: DE-0001, DE-0002, DE-0003, DE-0004'
+stderr 'names 4 tickets, more than 3'
+! exec git commit -q --allow-empty -m 'Unknown' -m 'Ajiya: DE-0099'
+stderr 'names DE-0099, which does not exist'
+! exec git commit -q --allow-empty -m 'Chore, unknown' -m 'Ajiya: chore, DE-0099'
+stderr 'DE-0099'
+
+# Exempt: chore, revert, merge.
+exec git commit -q --allow-empty -m 'Upkeep' -m 'Ajiya: chore'
+cp notes.txt change.txt
+exec git add change.txt
+exec git commit -q -m 'Change' -m 'Ajiya: DE-0002'
+exec git revert --no-edit HEAD
+exec git checkout -q -b side
+exec git commit -q --allow-empty -m 'Side' -m 'Ajiya: DE-0003'
+exec git checkout -q main
+exec git commit -q --allow-empty -m 'Main' -m 'Ajiya: DE-0003'
+exec git merge -q --no-ff --no-edit side
+
+# A merge that needed conflict resolution is exempt too.
+exec git checkout -q -b left
+cp left.txt clash.txt
+exec git add clash.txt
+exec git commit -q -m 'Left' -m 'Ajiya: DE-0004'
+exec git checkout -q main
+cp right.txt clash.txt
+exec git add clash.txt
+exec git commit -q -m 'Right' -m 'Ajiya: DE-0004'
+! exec git merge -q left
+cp left.txt clash.txt
+exec git add clash.txt
+exec git commit -q --no-edit
+
+# The whole history passes the CI check too.
+exec ajiya check --commits HEAD
+stdout 'No problems found.'
+
+-- commit-msg.sh --
+#!/bin/sh
+exec ajiya hook run commit-msg "$@"
+-- notes.txt --
+A file to change.
+-- left.txt --
+left
+-- right.txt --
+right
