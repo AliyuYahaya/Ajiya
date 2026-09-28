@@ -68,6 +68,7 @@ func init() {
 		{"ticket edit", `<ID> [--title] [--done-when] [--depends] [--app] [--phase]`, "Change a ticket", runTicketEdit},
 		{"next", "[--app <app>]", "List tickets that can start now", runNext},
 		{"check", "[--strict] [--commits <range>]", "Check the plan for problems", runCheck},
+		{"hook install", "", "Install the commit-msg and prepare-commit-msg git hooks", runHookInstall},
 		{"hook run", "<hook> <git hook arguments>", "Run a git hook (called by the installed hook scripts)", runHookRun},
 		{"version", "", "Print the version", runVersion},
 	}

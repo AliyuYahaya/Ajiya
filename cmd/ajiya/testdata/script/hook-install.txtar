@@ -1,0 +1,87 @@
+# ajiya hook install: writes, updates and appends hook scripts.
+
+exec ajiya init --name Demo --prefix DE
+exec ajiya phase add core 'Core works'
+exec ajiya ticket add --phase core --app infra --done-when x one
+
+# Fresh install.
+exec ajiya hook install
+stdout '^Installed .git/hooks/commit-msg$'
+stdout '^Installed .git/hooks/prepare-commit-msg$'
+grep '^#!/bin/sh$' .git/hooks/commit-msg
+grep 'ajiya hook run commit-msg "\$@"' .git/hooks/commit-msg
+grep 'ajiya hook run prepare-commit-msg "\$@"' .git/hooks/prepare-commit-msg
+
+# The hooks work.
+exec git add -A
+! exec git commit -q -m 'Plan'
+stderr 'names no ticket'
+exec ajiya ticket start DE-0001
+exec git add -A
+exec git commit -q -m 'Plan'
+stderr 'added ''Ajiya: DE-0001'''
+
+# Running again changes nothing.
+cp .git/hooks/commit-msg before.txt
+exec ajiya hook install
+stdout '^Up to date: .git/hooks/commit-msg$'
+cmp .git/hooks/commit-msg before.txt
+
+# An old block is replaced in place, keeping the user's lines around it.
+cp old-block.sh .git/hooks/commit-msg
+exec ajiya hook install
+stdout '^Updated .git/hooks/commit-msg$'
+grep '^echo mine before$' .git/hooks/commit-msg
+grep '^echo mine after$' .git/hooks/commit-msg
+! grep 'old ajiya line' .git/hooks/commit-msg
+grep 'ajiya hook run commit-msg' .git/hooks/commit-msg
+
+# An existing shell hook gets the block appended.
+cp user-hook.sh .git/hooks/prepare-commit-msg
+exec ajiya hook install
+stdout '^Added ajiya to .git/hooks/prepare-commit-msg$'
+grep '^echo user hook$' .git/hooks/prepare-commit-msg
+grep 'ajiya hook run prepare-commit-msg' .git/hooks/prepare-commit-msg
+
+# Hooks that are not shell, or end in exec, are refused with instructions.
+cp python-hook.py .git/hooks/commit-msg
+! exec ajiya hook install
+stderr 'is not a shell script'
+stderr 'ajiya hook run commit-msg "\$@" \|\| exit \$\?'
+cp exec-hook.sh .git/hooks/commit-msg
+! exec ajiya hook install
+stderr 'ends in ''exec'''
+
+# core.hooksPath is respected.
+exec git config core.hooksPath .githooks
+exec ajiya hook install
+stdout '^Installed .githooks/commit-msg$'
+exists .githooks/prepare-commit-msg
+
+# Without ajiya on PATH the hook warns and lets the commit through.
+[windows] skip 'PATH juggling below is for Unix shells'
+exec git config core.hooksPath .git/hooks
+cp fresh-hook.sh .git/hooks/commit-msg
+exec ajiya hook install
+env PATH=/usr/bin:/bin
+exec git commit -q --allow-empty -m 'No ajiya here'
+stderr 'ajiya: not on PATH, so this commit was not checked'
+
+-- old-block.sh --
+#!/bin/sh
+echo mine before
+# ajiya:start (managed by 'ajiya hook install'; do not edit)
+old ajiya line
+# ajiya:end
+echo mine after
+-- user-hook.sh --
+#!/bin/bash
+echo user hook
+-- python-hook.py --
+#!/usr/bin/env python3
+print("hi")
+-- exec-hook.sh --
+#!/bin/sh
+exec other-tool "$@"
+-- fresh-hook.sh --
+#!/bin/sh
