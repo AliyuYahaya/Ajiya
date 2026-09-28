@@ -66,6 +66,7 @@ func init() {
 		{"app move", "<name> --path <dir>", "Change an app's folder", runAppMove},
 		{"app remove", "<name> [--to <app>]", "Unregister an app, moving its open tickets", runAppRemove},
 		{"phase add", `<slug> "<goal>" [--title "<title>"]`, "Add a phase", runPhaseAdd},
+		{"phase rename", `<old> <new> [--title "<title>"]`, "Rename a phase and its file", runPhaseRename},
 		{"ticket add", `--phase <slug> --app <app> "<title>" --done-when "<check>" [--depends <IDs>] [--human "<reason>"]`, "Add a ticket", runTicketAdd},
 		{"ticket start", `<ID> [--note "<what is left>"]`, "Mark a ticket in progress", runTicketStart},
 		{"ticket done", `<ID> [--test] [--note "<note>"] [--by "<name>"]`, "Mark a ticket done, with evidence", runTicketDone},

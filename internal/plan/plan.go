@@ -168,3 +168,28 @@ func writeFile(path string, data []byte) error {
 	}
 	return os.Rename(tmp.Name(), path)
 }
+
+// Rename gives a phase a new slug: it writes ajiya/<slug>.md with every
+// ticket moved, then removes the old file. It fails if <slug> already exists.
+func (p *Plan) Rename(ph *Phase, slug string) error {
+	old := ph.Slug
+	if _, exists := p.Raw[slug]; exists {
+		return errors.New("phase " + slug + " already exists in " + Path(slug))
+	}
+	ph.Slug = slug
+	for _, t := range ph.Tickets {
+		t.Phase = slug
+	}
+	data := ph.Format()
+	if err := writeFile(filepath.Join(p.Root, Dir, slug+".md"), data); err != nil {
+		ph.Slug = old
+		for _, t := range ph.Tickets {
+			t.Phase = old
+		}
+		return err
+	}
+	p.Raw[slug] = data
+	delete(p.Raw, old)
+	sort.Slice(p.Phases, func(i, j int) bool { return p.Phases[i].Slug < p.Phases[j].Slug })
+	return os.Remove(filepath.Join(p.Root, Dir, old+".md"))
+}
