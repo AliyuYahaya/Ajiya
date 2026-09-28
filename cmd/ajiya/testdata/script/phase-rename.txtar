@@ -1,0 +1,67 @@
+# phase rename: new file, tickets moved, old file gone, launch target follows.
+
+exec ajiya init --name Demo --prefix DE
+exec ajiya phase add api 'The API works'
+exec ajiya phase add go-live 'Live' --title 'Go live'
+exec ajiya ticket add --phase api --app infra 'Endpoint' --done-when 'Returns 200'
+exec ajiya ticket add --phase api --app infra 'Deploy' --done-when 'Reachable' --depends DE-0001
+exec ajiya ticket add --phase go-live --app infra 'Ship' --done-when 'Live' --depends DE-0002
+exec ajiya launch set api
+
+# Refusals leave everything as it was.
+! exec ajiya phase rename nope backend
+stderr 'no phase "nope"; phases are api, go-live'
+! exec ajiya phase rename api go-live
+stderr 'phase "go-live" already exists in ajiya/go-live.md'
+! exec ajiya phase rename api Back_End
+stderr 'slug "Back_End" must be lower case letters and digits'
+! exec ajiya phase rename api
+stderr 'expected 2 argument\(s\), got 1'
+exists ajiya/api.md
+! exists ajiya/backend.md
+
+# Rename, keeping the title; the launch target follows.
+exec ajiya phase rename api backend
+stdout '^Renamed phase api to backend \(ajiya/backend.md\).$'
+stdout '^Launch target is now backend.$'
+! exists ajiya/api.md
+cmp ajiya/backend.md backend.golden
+grep '^target = "backend"$' ajiya.toml
+exec ajiya ticket show DE-0002
+stdout '^Phase: +backend \(Api\)$'
+exec ajiya launch show
+stdout 'Launch target: backend \(phase\)'
+exec ajiya check --strict
+stdout 'No problems found.'
+
+# --title; the launch target is not this phase, so it stays.
+exec ajiya phase rename go-live release --title 'Release day'
+stdout '^Renamed phase go-live to release \(ajiya/release.md\).$'
+! stdout 'Launch target'
+! exists ajiya/go-live.md
+cmp ajiya/release.md release.golden
+grep '^target = "backend"$' ajiya.toml
+exec ajiya ticket show DE-0003
+stdout '^Phase: +release \(Release day\)$'
+exec ajiya check --strict
+stdout 'No problems found.'
+
+-- backend.golden --
+<!-- Written by ajiya. Do not edit by hand: use ajiya commands. -->
+# Api
+
+Goal: The API works
+
+| ID | App | Ticket | Done when | Depends | Status |
+|---|---|---|---|---|---|
+| DE-0001 | infra | Endpoint | Returns 200 | - | 🟥 Pending |
+| DE-0002 | infra | Deploy | Reachable | DE-0001 | 🟥 Pending |
+-- release.golden --
+<!-- Written by ajiya. Do not edit by hand: use ajiya commands. -->
+# Release day
+
+Goal: Live
+
+| ID | App | Ticket | Done when | Depends | Status |
+|---|---|---|---|---|---|
+| DE-0003 | infra | Ship | Live | DE-0002 | 🟥 Pending |
