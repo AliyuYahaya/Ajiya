@@ -1,0 +1,12 @@
+# Reference material (old tracker, dashboard, private test data). Local only.
+reference/
+
+# Build output
+/ajiya
+/ajiya.exe
+/dist/
+
+.DS_Store
+
+# Build prompt kept locally, not part of the repository.
+ajiya-build-prompt.md
