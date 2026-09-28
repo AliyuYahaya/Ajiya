@@ -1,0 +1,17 @@
+A dependency on an ID that does not exist.
+
+-- ajiya.toml --
+[project]
+name = "Fixture"
+prefix = "FX"
+-- ajiya/core.md --
+<!-- Written by ajiya. Do not edit by hand: use ajiya commands. -->
+# Core
+
+Goal: g
+
+| ID | App | Ticket | Done when | Depends | Status |
+|---|---|---|---|---|---|
+| FX-0001 | infra | A | a | FX-0099 | 🟥 Pending |
+-- want --
+E005 ajiya/core.md:8: FX-0001 depends on FX-0099, which does not exist. Fix: ajiya ticket edit FX-0001 --depends <existing IDs>

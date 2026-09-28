@@ -1,0 +1,26 @@
+The same ID in two phases.
+
+-- ajiya.toml --
+[project]
+name = "Fixture"
+prefix = "FX"
+-- ajiya/a.md --
+<!-- Written by ajiya. Do not edit by hand: use ajiya commands. -->
+# A
+
+Goal: g
+
+| ID | App | Ticket | Done when | Depends | Status |
+|---|---|---|---|---|---|
+| FX-0001 | infra | First | a | - | 🟥 Pending |
+-- ajiya/b.md --
+<!-- Written by ajiya. Do not edit by hand: use ajiya commands. -->
+# B
+
+Goal: g
+
+| ID | App | Ticket | Done when | Depends | Status |
+|---|---|---|---|---|---|
+| FX-0001 | infra | Copy | a | - | 🟥 Pending |
+-- want --
+E004 ajiya/b.md:8: ID FX-0001 is also used at ajiya/a.md:8. Fix: restore the phase files from git; IDs are only assigned by 'ajiya ticket add'

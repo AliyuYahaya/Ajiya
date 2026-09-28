@@ -1,0 +1,18 @@
+A phase file that parses but is not in canonical form: rows out of order.
+
+-- ajiya.toml --
+[project]
+name = "Fixture"
+prefix = "FX"
+-- ajiya/core.md --
+<!-- Written by ajiya. Do not edit by hand: use ajiya commands. -->
+# Core
+
+Goal: g
+
+| ID | App | Ticket | Done when | Depends | Status |
+|---|---|---|---|---|---|
+| FX-0002 | infra | B | b | - | 🟥 Pending |
+| FX-0001 | infra | A | a | - | 🟥 Pending |
+-- want --
+E002 ajiya/core.md:8: file is not in the form ajiya writes (edited by hand?). Fix: restore it with 'git checkout -- ajiya/core.md' and make the change with ajiya commands

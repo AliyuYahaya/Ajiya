@@ -19,22 +19,22 @@ ticket: one session's work that can be proved.
       same bytes). Depends: M1.2
 - [x] M1.4 ID allocation: one sequence per project, `<PREFIX>-<4 digits>`, never
       reused, including dropped. Done when: table tests pass. Depends: M1.1, M1.2
-- [ ] M1.5 Minimal `ajiya init`: writes `ajiya.toml` and `ajiya/`, no detection, no
+- [x] M1.5 Minimal `ajiya init`: writes `ajiya.toml` and `ajiya/`, no detection, no
       kit. Depends: M1.1
-- [ ] M1.6 `ajiya phase add <slug> "<goal>"`. Depends: M1.3, M1.5
-- [ ] M1.7 `ajiya ticket add`: validates app, phase, dependencies. Depends: M1.4, M1.6
-- [ ] M1.8 `ajiya ticket start` and `ticket show` (row, phase, dependants; commits
+- [x] M1.6 `ajiya phase add <slug> "<goal>"`. Depends: M1.3, M1.5
+- [x] M1.7 `ajiya ticket add`: validates app, phase, dependencies. Depends: M1.4, M1.6
+- [x] M1.8 `ajiya ticket start` and `ticket show` (row, phase, dependants; commits
       come in M2). Depends: M1.7
-- [ ] M1.9 `ajiya ticket done`: requires a commit whose trailer references the ticket;
+- [x] M1.9 `ajiya ticket done`: requires a commit whose trailer references the ticket;
       records hash and date; `--by/--note` for `Needs a human`. Depends: M1.7
-- [ ] M1.10 `ajiya ticket edit`, refusing changes that create a loop. Depends: M1.7, M1.12
-- [ ] M1.11 `ajiya next [--app]`: startable tickets, those that unblock most first.
+- [x] M1.10 `ajiya ticket edit`, refusing changes that create a loop. Depends: M1.7, M1.12
+- [x] M1.11 `ajiya next [--app]`: startable tickets, those that unblock most first.
       Depends: M1.7
 - [x] M1.12 Dependency graph: missing IDs, self-dependency, loops (printed).
       Depends: M1.2
-- [ ] M1.13 `ajiya check` with error-level checks for format, round-trip, IDs,
+- [x] M1.13 `ajiya check` with error-level checks for format, round-trip, IDs,
       dependencies and loops; stable codes. Depends: M1.3, M1.12
-- [ ] M1.14 CLI test harness with testscript (rogpeppe/go-internal, a test helper):
+- [x] M1.14 CLI test harness with testscript (rogpeppe/go-internal, a test helper):
       txtar scripts run the binary in a temporary git repo.
       Depends: M1.5
 - [ ] M1.15 Run `ajiya init` on this repository, add these items as tickets, delete

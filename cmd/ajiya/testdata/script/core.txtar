@@ -1,0 +1,95 @@
+# The M1 loop: init, plan, start, commit with a trailer, done, check.
+
+exec ajiya init --name 'Clinic Booking'
+stdout 'ticket IDs like CB-0001'
+exists ajiya.toml
+! exec ajiya init
+stderr 'already exists'
+
+# Phases.
+exec ajiya phase add bookings 'A patient can book a slot'
+exists ajiya/bookings.md
+! exec ajiya phase add bookings 'again'
+stderr 'already exists'
+! exec ajiya phase add Bad_Slug 'x'
+stderr 'must be lower case'
+
+# Tickets.
+exec ajiya ticket add --phase bookings --app infra 'Slots table' --done-when 'Returns free slots'
+stdout 'Added CB-0001 to bookings'
+exec ajiya ticket add --phase bookings --app infra 'Booking screen' --done-when 'Can pick a slot' --depends CB-0001
+stdout 'Added CB-0002'
+exec ajiya ticket add --phase bookings --app infra 'Hosting' --done-when 'Reachable' --human 'hosting account'
+stdout 'Added CB-0003'
+! exec ajiya ticket add --phase bookings --app web 'x' --done-when y
+stderr 'app "web" is not registered'
+! exec ajiya ticket add --phase nope --app infra 'x' --done-when y
+stderr 'no phase "nope"'
+! exec ajiya ticket add --phase bookings --app infra 'x' --done-when y --depends CB-0099
+stderr 'dependency CB-0099 does not exist'
+! exec ajiya ticket add --phase bookings --app infra 'x'
+stderr '--done-when is required'
+cmp ajiya/bookings.md bookings.golden
+
+# next: CB-0001 unblocks CB-0002, so it comes first; CB-0002 waits.
+exec ajiya next
+stdout 'CB-0001.*unblocks 1'
+stdout 'CB-0003.*needs a human: hosting account'
+! stdout CB-0002
+
+# Loops are refused.
+! exec ajiya ticket edit CB-0001 --depends CB-0002
+stderr 'dependency loop: CB-0001 -> CB-0002 -> CB-0001'
+
+# Start, then done with a commit as evidence.
+exec ajiya ticket start CB-0001 --note 'migration written'
+stdout 'CB-0001 🟨 In progress: migration written'
+! exec ajiya ticket done CB-0001
+stderr 'no commit references CB-0001'
+exec git add -A
+exec git commit -q -m 'Add slots table' -m 'Ajiya: CB-0001'
+exec ajiya ticket done CB-0001
+stdout 'CB-0001 🟩 Done · [0-9a-f]{7} · \d{4}-\d{2}-\d{2}$'
+! exec ajiya ticket done CB-0001
+stderr 'already closed'
+
+# A ticket that needs a human is closed by a person.
+! exec ajiya ticket done CB-0002 --by 'Amina'
+stderr 'only for tickets marked'
+! exec ajiya ticket done CB-0003 --by 'Amina'
+stderr '--by needs --note'
+exec ajiya ticket done CB-0003 --by 'Amina' --note 'account opened'
+stdout 'by Amina'
+
+exec ajiya next
+stdout 'CB-0002'
+exec ajiya ticket show CB-0002
+stdout 'Depends:    CB-0001 🟩 Slots table'
+exec ajiya ticket show CB-0001
+stdout 'Needed by:  CB-0002 🟥 Booking screen'
+! exec ajiya ticket show CB-0099
+stderr 'no ticket CB-0099'
+
+exec ajiya check
+stdout 'No problems found.'
+
+# A hand edit is reported, and changes are refused until it is fixed.
+cp broken.md ajiya/bookings.md
+! exec ajiya check
+stdout 'E001 ajiya/bookings.md:1'
+! exec ajiya ticket start CB-0002
+stderr 'fix this file before changing the plan'
+
+-- bookings.golden --
+<!-- Written by ajiya. Do not edit by hand: use ajiya commands. -->
+# Bookings
+
+Goal: A patient can book a slot
+
+| ID | App | Ticket | Done when | Depends | Status |
+|---|---|---|---|---|---|
+| CB-0001 | infra | Slots table | Returns free slots | - | 🟥 Pending |
+| CB-0002 | infra | Booking screen | Can pick a slot | CB-0001 | 🟥 Pending |
+| CB-0003 | infra | Hosting | Reachable | - | 🟥 Pending · Needs a human: hosting account |
+-- broken.md --
+hand written notes

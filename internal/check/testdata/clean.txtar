@@ -1,0 +1,23 @@
+A valid plan produces no findings.
+
+-- ajiya.toml --
+[project]
+name = "Fixture"
+prefix = "FX"
+
+[[apps]]
+name = "api"
+path = "api"
+-- ajiya/core.md --
+<!-- Written by ajiya. Do not edit by hand: use ajiya commands. -->
+# Core
+
+Goal: g
+
+| ID | App | Ticket | Done when | Depends | Status |
+|---|---|---|---|---|---|
+| FX-0001 | api | A | a | - | 🟩 Done · 4f2a91c · 2026-09-28 |
+| FX-0002 | infra | B | b | FX-0001 | 🟥 Pending |
+-- ajiya/PROGRESS.md --
+Generated files are not phases.
+-- want --

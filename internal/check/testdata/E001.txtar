@@ -1,0 +1,10 @@
+A phase file that does not parse.
+
+-- ajiya.toml --
+[project]
+name = "Fixture"
+prefix = "FX"
+-- ajiya/broken.md --
+Some notes someone wrote by hand.
+-- want --
+E001 ajiya/broken.md:1: expected the phase title as "# <title>". Fix: restore it with 'git checkout -- ajiya/broken.md' and make the change with ajiya commands

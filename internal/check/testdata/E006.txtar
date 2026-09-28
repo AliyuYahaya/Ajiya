@@ -1,0 +1,17 @@
+A ticket that depends on itself.
+
+-- ajiya.toml --
+[project]
+name = "Fixture"
+prefix = "FX"
+-- ajiya/core.md --
+<!-- Written by ajiya. Do not edit by hand: use ajiya commands. -->
+# Core
+
+Goal: g
+
+| ID | App | Ticket | Done when | Depends | Status |
+|---|---|---|---|---|---|
+| FX-0001 | infra | A | a | FX-0001 | 🟥 Pending |
+-- want --
+E006 ajiya/core.md:8: FX-0001 depends on itself. Fix: ajiya ticket edit FX-0001 --depends <IDs without FX-0001>

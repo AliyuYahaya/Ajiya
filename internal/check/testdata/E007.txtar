@@ -1,0 +1,18 @@
+Two tickets that depend on each other.
+
+-- ajiya.toml --
+[project]
+name = "Fixture"
+prefix = "FX"
+-- ajiya/core.md --
+<!-- Written by ajiya. Do not edit by hand: use ajiya commands. -->
+# Core
+
+Goal: g
+
+| ID | App | Ticket | Done when | Depends | Status |
+|---|---|---|---|---|---|
+| FX-0001 | infra | A | a | FX-0002 | 🟥 Pending |
+| FX-0002 | infra | B | b | FX-0001 | 🟥 Pending |
+-- want --
+E007 ajiya/core.md:8: dependency loop: FX-0001 -> FX-0002 -> FX-0001. Fix: remove one link, for example 'ajiya ticket edit FX-0002 --depends ...'

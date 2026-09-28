@@ -1,0 +1,2 @@
+# Phase files and golden tests compare bytes: keep LF on every platform.
+* text=auto eol=lf

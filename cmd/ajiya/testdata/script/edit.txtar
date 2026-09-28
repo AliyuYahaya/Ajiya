@@ -1,0 +1,49 @@
+# ticket edit: fields, moves between phases, dependency changes.
+
+exec ajiya init --name Demo --prefix DE
+exec ajiya phase add api 'The API works'
+exec ajiya phase add go-live 'Live' --title 'Go live'
+exec ajiya ticket add --phase api --app infra 'Endpoint' --done-when 'Returns 200'
+exec ajiya ticket add --phase api --app infra 'Deploy' --done-when 'Reachable' --depends DE-0001
+
+# The app must be registered; ajiya.toml has none yet.
+! exec ajiya ticket add --phase api --app api 'x' --done-when y
+stderr 'app "api" is not registered; use one of infra'
+cp apps.toml ajiya.toml
+exec ajiya ticket add --phase api --app api 'Validation' --done-when 'Rejects bad input'
+stdout 'DE-0003'
+
+! exec ajiya ticket edit DE-0002
+stderr 'nothing to change'
+! exec ajiya ticket edit DE-0002 --title ''
+stderr '--title cannot be empty'
+! exec ajiya ticket edit DE-0002 --depends DE-0002
+stderr 'cannot depend on itself'
+
+exec ajiya ticket edit DE-0002 --phase go-live --title 'Deploy to production' --depends DE-0001,DE-0003
+stdout 'phase go-live · app infra · depends DE-0001, DE-0003'
+cmp ajiya/go-live.md go-live.golden
+! grep DE-0002 ajiya/api.md
+
+exec ajiya ticket edit DE-0002 --depends -
+stdout 'depends -'
+exec ajiya check
+stdout 'No problems found.'
+
+-- apps.toml --
+[project]
+name = "Demo"
+prefix = "DE"
+
+[[apps]]
+name = "api"
+path = "api"
+-- go-live.golden --
+<!-- Written by ajiya. Do not edit by hand: use ajiya commands. -->
+# Go live
+
+Goal: Live
+
+| ID | App | Ticket | Done when | Depends | Status |
+|---|---|---|---|---|---|
+| DE-0002 | infra | Deploy to production | Reachable | DE-0001, DE-0003 | 🟥 Pending |
