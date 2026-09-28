@@ -28,14 +28,52 @@ func runLaunchSet(e *env, args []string) error {
 }
 
 func runLaunchShow(e *env, args []string) error {
-	if _, err := parse(newFlags("launch show"), args, 0); err != nil {
+	fs := newFlags("launch show")
+	asJSON := fs.Bool("json", false, "print JSON")
+	if _, err := parse(fs, args, 0); err != nil {
 		return err
 	}
 	pr, err := load(e)
 	if err != nil {
 		return err
 	}
+	if *asJSON {
+		return launchJSON(e, pr)
+	}
 	return showLaunch(e, pr)
+}
+
+func launchJSON(e *env, pr *project) error {
+	out := struct {
+		Target      *string      `json:"target"` // null when none is set
+		Kind        string       `json:"kind,omitempty"`
+		Required    int          `json:"required"`
+		Closed      int          `json:"closed"`
+		Percent     int          `json:"percent"`
+		AfterLaunch int          `json:"after_launch"`
+		Open        []jsonTicket `json:"open"`
+	}{Open: []jsonTicket{}}
+	if target := pr.cfg.Launch.Target; target != "" {
+		req, kind, err := pr.plan.Required(target)
+		if err != nil {
+			return refused("%v; set another with 'ajiya launch set <phase|ticket>'", err)
+		}
+		out.Target, out.Kind, out.Required = &target, kind, len(req)
+		for _, t := range pr.plan.Tickets() {
+			switch {
+			case !req[t.ID]:
+				out.AfterLaunch++
+			case t.Status.Closed():
+				out.Closed++
+			default:
+				out.Open = append(out.Open, toJSON(t))
+			}
+		}
+		out.Percent = percent(out.Closed, out.Required)
+	} else {
+		out.AfterLaunch = len(pr.plan.Tickets())
+	}
+	return writeJSON(e, out)
 }
 
 func showLaunch(e *env, pr *project) error {

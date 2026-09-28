@@ -196,7 +196,9 @@ func runTicketDone(e *env, args []string) error {
 }
 
 func runTicketShow(e *env, args []string) error {
-	pos, err := parse(newFlags("ticket show"), args, 1)
+	fs := newFlags("ticket show")
+	asJSON := fs.Bool("json", false, "print JSON")
+	pos, err := parse(fs, args, 1)
 	if err != nil {
 		return err
 	}
@@ -209,6 +211,45 @@ func runTicketShow(e *env, args []string) error {
 		return err
 	}
 	ph := pr.plan.Phase(t.Phase)
+	dependants := plan.NewGraph(pr.plan.Tickets()).Dependants(t.ID)
+	commits, err := gitx.Referencing(pr.cfg.Root, t.ID)
+	if err != nil && err != gitx.ErrNotRepo {
+		return err
+	}
+	if *asJSON {
+		type link struct {
+			ID    string `json:"id"`
+			Title string `json:"title,omitempty"`
+			State string `json:"state"` // missing when the ID does not exist
+		}
+		type commit struct {
+			Hash    string `json:"hash"`
+			Date    string `json:"date"`
+			Subject string `json:"subject"`
+		}
+		links := func(ids []string) []link {
+			out := []link{}
+			for _, id := range ids {
+				l := link{ID: id, State: "missing"}
+				if d := pr.plan.Ticket(id); d != nil {
+					l.Title, l.State = d.Title, stateNames[d.Status.State]
+				}
+				out = append(out, l)
+			}
+			return out
+		}
+		cs := []commit{}
+		for _, c := range commits {
+			cs = append(cs, commit{c.Hash, c.Date, c.Subject})
+		}
+		return writeJSON(e, struct {
+			jsonTicket
+			PhaseTitle   string   `json:"phase_title"`
+			Dependencies []link   `json:"dependencies"`
+			Dependants   []link   `json:"dependants"`
+			Commits      []commit `json:"commits"`
+		}{toJSON(t), ph.Title, links(t.Depends), links(dependants), cs})
+	}
 	w := e.stdout
 	fmt.Fprintf(w, "%s  %s\n", t.ID, t.Title)
 	fmt.Fprintf(w, "Phase:      %s (%s)\n", ph.Slug, ph.Title)
@@ -232,11 +273,7 @@ func runTicketShow(e *env, args []string) error {
 		}
 	}
 	list("Depends:", t.Depends)
-	list("Needed by:", plan.NewGraph(pr.plan.Tickets()).Dependants(t.ID))
-	commits, err := gitx.Referencing(pr.cfg.Root, t.ID)
-	if err != nil && err != gitx.ErrNotRepo {
-		return err
-	}
+	list("Needed by:", dependants)
 	if len(commits) == 0 {
 		fmt.Fprintf(w, "%-11s -\n", "Commits:")
 	}

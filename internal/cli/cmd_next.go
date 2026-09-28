@@ -15,6 +15,7 @@ func runNext(e *env, args []string) error {
 	fs := newFlags("next")
 	app := fs.String("app", "", "only tickets for this app")
 	launchOnly := fs.Bool("launch", false, "only tickets required for launch")
+	asJSON := fs.Bool("json", false, "print JSON")
 	if _, err := parse(fs, args, 0); err != nil {
 		return err
 	}
@@ -66,6 +67,18 @@ func runNext(e *env, args []string) error {
 		return plan.LessID(a.ID, b.ID)
 	})
 
+	if *asJSON {
+		type item struct {
+			jsonTicket
+			Launch   bool `json:"launch"`
+			Unblocks int  `json:"unblocks"`
+		}
+		items := []item{}
+		for _, t := range ready {
+			items = append(items, item{toJSON(t), required[t.ID], unblocks[t.ID]})
+		}
+		return writeJSON(e, items)
+	}
 	if len(ready) == 0 {
 		fmt.Fprintln(e.stdout, "Nothing can start now.")
 		return nil
@@ -104,6 +117,7 @@ func join(a, b string) string {
 func runCheck(e *env, args []string) error {
 	fs := newFlags("check")
 	strict := fs.Bool("strict", false, "fail on warnings too")
+	asJSON := fs.Bool("json", false, "print the findings as a JSON list")
 	commits := fs.String("commits", "", "also check the commit rule on a revision range, such as origin/main..HEAD")
 	if _, err := parse(fs, args, 0); err != nil {
 		return err
@@ -129,14 +143,23 @@ func runCheck(e *env, args []string) error {
 	}
 	findings = append(findings, history...)
 	check.Sort(findings)
-	for _, f := range findings {
-		fmt.Fprintln(e.stdout, f)
-	}
 	errs, warns := check.Count(findings)
-	if len(findings) == 0 {
-		fmt.Fprintln(e.stdout, "No problems found.")
+	if *asJSON {
+		if findings == nil {
+			findings = []check.Finding{}
+		}
+		if err := writeJSON(e, findings); err != nil {
+			return err
+		}
 	} else {
-		fmt.Fprintf(e.stdout, "%d error(s), %d warning(s).\n", errs, warns)
+		for _, f := range findings {
+			fmt.Fprintln(e.stdout, f)
+		}
+		if len(findings) == 0 {
+			fmt.Fprintln(e.stdout, "No problems found.")
+		} else {
+			fmt.Fprintf(e.stdout, "%d error(s), %d warning(s).\n", errs, warns)
+		}
 	}
 	if errs > 0 || (*strict && warns > 0) {
 		return silent(ExitRefused)
