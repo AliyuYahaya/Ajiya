@@ -13,7 +13,7 @@ const (
 	ExitUsage   = 2 // usage or config error
 )
 
-// Version is set at build time with -ldflags "-X github.com/AliyuYahaya/ajiya/internal/cli.Version=...".
+// Version is set at build time with -ldflags "-X github.com/AliyuYahaya/Ajiya/internal/cli.Version=...".
 var Version = "dev"
 
 const usage = `usage: ajiya <command> [arguments]

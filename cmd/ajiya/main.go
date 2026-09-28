@@ -4,7 +4,7 @@ package main
 import (
 	"os"
 
-	"github.com/AliyuYahaya/ajiya/internal/cli"
+	"github.com/AliyuYahaya/Ajiya/internal/cli"
 )
 
 func main() {
