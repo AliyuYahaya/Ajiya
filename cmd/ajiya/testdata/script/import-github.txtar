@@ -1,0 +1,102 @@
+[windows] skip 'fake gh is a shell script'
+
+# import github: issues come from a fake gh that checks its arguments.
+
+exec ajiya init --name Demo --prefix DE
+exec ajiya phase add core 'Core works'
+exec ajiya ticket add --phase core --app infra --done-when x 'Existing work'
+
+# Without gh on PATH the import is refused in one line. The PATH holds
+# only a link to ajiya.
+exec sh -c 'ln -s "$(command -v ajiya)" nogh/ajiya'
+env OLDPATH=$PATH
+env PATH=$WORK/nogh
+! exec ajiya import github
+stderr '^ajiya import github: gh is not installed; install GitHub CLI \(https://cli.github.com\) and run ''gh auth login''$'
+! stdout .
+env PATH=$WORK/bin${:}$OLDPATH
+chmod 755 bin/gh
+
+# Flags are checked before gh runs.
+! exec ajiya import github --app web
+stderr 'app "web" is not registered'
+! exec ajiya import github --limit 0
+stderr '--limit must be a positive number'
+! exec ajiya import github extra
+stderr 'expected 0 argument\(s\), got 1'
+
+# Issues land in the inbox in number order; titles are kept as they are.
+exec ajiya import github
+stdout '^Imported 3 issue\(s\) into inbox \(1 closed\); skipped 0 already imported.$'
+stderr '^warning: skipped issue #4: the title must be one line$'
+cmp ajiya/inbox.md inbox.golden
+exec ajiya ticket show DE-0004
+stdout 'Status:     🟩 Done · issue #3 · Link: https://github.com/o/r/issues/3'
+
+# Running it again adds nothing.
+exec ajiya import github
+stdout '^Imported 0 issue\(s\) into inbox \(0 closed\); skipped 3 already imported.$'
+cmp ajiya/inbox.md inbox.golden
+
+# A status change keeps the link, and the issue stays imported.
+exec ajiya ticket start DE-0002
+grep 'DE-0002 .*🟨 In progress · Link: https://github.com/o/r/issues/1 ' ajiya/inbox.md
+exec ajiya import github
+stdout 'skipped 3 already imported'
+
+exec ajiya check --strict
+stdout 'No problems found.'
+
+# --repo and --limit are passed on; gh's errors are shown in one line.
+! exec ajiya import github --repo o/other --limit 5
+stderr '^ajiya import github: gh issue list failed: GraphQL: Could not resolve to a Repository with the name ''o/other''.$'
+
+# The tickets' app can be chosen.
+exec ajiya app add api --path api
+env GH_JSON=$WORK/more.json
+exec ajiya import github --app api
+stdout '^Imported 1 issue\(s\) into inbox \(0 closed\); skipped 3 already imported.$'
+grep '^\| DE-0005 \| api \| Issue ten \| - \| - \| 🟥 Pending · Link: https://github.com/o/r/issues/10 \|$' ajiya/inbox.md
+
+-- bin/gh --
+#!/bin/sh
+if [ "$*" = "issue list --state all --limit 5 --json number,title,state,url --repo o/other" ]; then
+	echo "GraphQL: Could not resolve to a Repository with the name 'o/other'." >&2
+	echo "second line" >&2
+	exit 1
+fi
+if [ "$*" != "issue list --state all --limit 1000 --json number,title,state,url" ]; then
+	echo "unexpected arguments: $*" >&2
+	exit 2
+fi
+if [ -n "$GH_JSON" ]; then
+	cat "$GH_JSON"
+	exit 0
+fi
+cat "$WORK/issues.json"
+-- nogh/.keep --
+-- issues.json --
+[
+  {"number": 3, "title": "Closed | with a pipe", "state": "CLOSED", "url": "https://github.com/o/r/issues/3"},
+  {"number": 4, "title": "Two\nlines", "state": "OPEN", "url": "https://github.com/o/r/issues/4"},
+  {"number": 1, "title": "first issue, lower case  as written", "state": "OPEN", "url": "https://github.com/o/r/issues/1"},
+  {"number": 2, "title": "Second issue", "state": "OPEN", "url": "https://github.com/o/r/issues/2"}
+]
+-- more.json --
+[
+  {"number": 10, "title": "Issue ten", "state": "OPEN", "url": "https://github.com/o/r/issues/10"},
+  {"number": 1, "title": "first issue, lower case  as written", "state": "OPEN", "url": "https://github.com/o/r/issues/1"},
+  {"number": 2, "title": "Second issue", "state": "OPEN", "url": "https://github.com/o/r/issues/2"},
+  {"number": 3, "title": "Closed | with a pipe", "state": "CLOSED", "url": "https://github.com/o/r/issues/3"}
+]
+-- inbox.golden --
+<!-- Written by ajiya. Do not edit by hand: use ajiya commands. -->
+# Inbox
+
+Goal: Imported items waiting to be organised
+
+| ID | App | Ticket | Done when | Depends | Status |
+|---|---|---|---|---|---|
+| DE-0002 | infra | first issue, lower case  as written | - | - | 🟥 Pending · Link: https://github.com/o/r/issues/1 |
+| DE-0003 | infra | Second issue | - | - | 🟥 Pending · Link: https://github.com/o/r/issues/2 |
+| DE-0004 | infra | Closed \| with a pipe | - | - | 🟩 Done · issue #3 · Link: https://github.com/o/r/issues/3 |
