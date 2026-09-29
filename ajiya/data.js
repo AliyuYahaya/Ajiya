@@ -1813,6 +1813,30 @@ window.AJIYA = {
   "checks": [],
   "activity": [
     {
+      "hash": "edf9e224c4ea6f1ec9723cb61d4391c5277ea7cc",
+      "short": "edf9e22",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "AJ-0031 done",
+      "refs": [
+        "AJ-0031"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0031",
+          "phase": "release",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · bb6e0eb · 2026-09-29 · tests passed · Note: snapshot writes dist/homebrew/Casks/ajiya.rb with quarantine removal; skip_upload true"
+        }
+      ],
+      "time": 1790712371
+    },
+    {
       "hash": "bb6e0ebe1362d64f52b80eebbd4b8ffb71873da3",
       "short": "bb6e0eb",
       "date": "2026-09-29",

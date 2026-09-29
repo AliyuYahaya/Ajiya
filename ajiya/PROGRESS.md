@@ -60,6 +60,8 @@ Generated 2026-09-29.
 
 ## Recent activity
 
+- 2026-09-29 `edf9e22` AJ-0031 done (AJ-0031)
+  - AJ-0031: in_progress → done
 - 2026-09-29 `bb6e0eb` Homebrew cask config (AJ-0031)
   - AJ-0031: pending → in_progress
 - 2026-09-29 `03b432d` AJ-0030 done (AJ-0030)
@@ -88,12 +90,7 @@ Generated 2026-09-29.
 - 2026-09-29 `47117c5` Merge branch 'worktree-agent-a658cbd8dac8f5d6c' (-)
 - 2026-09-29 `4b321be` AJ-0021 done (AJ-0021)
   - AJ-0021: pending → done
-- 2026-09-29 `dcb3501` AJ-0061 to AJ-0064 done (chore)
-  - AJ-0061: in_progress → done
-  - AJ-0062: in_progress → done
-  - AJ-0063: in_progress → done
-  - AJ-0064: in_progress → done
-- and 101 more in data.js
+- and 102 more in data.js
 
 ## Checks
 
