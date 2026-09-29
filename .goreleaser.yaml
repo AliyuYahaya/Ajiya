@@ -1,0 +1,49 @@
+# GoReleaser: https://goreleaser.com
+#
+# Try it without publishing:
+#   goreleaser release --snapshot --clean
+# which writes the archives to dist/.
+#
+# Release notes come from the Ajiya trailers, not from GoReleaser:
+#   ajiya changelog <previous tag>..<tag> > notes.md
+#   goreleaser release --clean --release-notes notes.md
+# Nothing is published without the maintainer's go-ahead: releases are drafts.
+version: 2
+
+project_name: ajiya
+
+builds:
+  - id: ajiya
+    main: ./cmd/ajiya
+    binary: ajiya
+    env:
+      - CGO_ENABLED=0 # one static binary per platform
+    goos: [darwin, linux, windows]
+    goarch: [amd64, arm64]
+    flags:
+      - -trimpath
+    ldflags:
+      - -s -w -X github.com/AliyuYahaya/Ajiya/internal/cli.Version={{ .Version }}
+    mod_timestamp: "{{ .CommitTimestamp }}" # reproducible builds
+
+archives:
+  - id: ajiya
+    formats: [tar.gz]
+    format_overrides:
+      - goos: windows
+        formats: [zip]
+    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    files:
+      - README.md
+
+checksum:
+  name_template: checksums.txt
+
+snapshot:
+  version_template: "{{ incpatch .Version }}-snapshot+{{ .ShortCommit }}"
+
+changelog:
+  disable: true # see the release notes above
+
+release:
+  draft: true
