@@ -287,3 +287,13 @@ prefix = %q
 # path = "apps/api"
 `, name, prefix)
 }
+
+const testExample = `# [test]
+# command = "go test ./..."   # run by 'ajiya ticket done --test'`
+
+// WithTestCommand returns Template text with the commented [test] example
+// replaced by a real command.
+func WithTestCommand(text, command string) string {
+	return strings.Replace(text, testExample,
+		fmt.Sprintf("[test]\ncommand = %q   # run by 'ajiya ticket done --test'", command), 1)
+}

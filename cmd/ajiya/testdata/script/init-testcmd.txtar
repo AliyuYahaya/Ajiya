@@ -1,0 +1,35 @@
+# init writes the test command when it can tell it, and says so.
+
+cd gomod
+exec ajiya init --name Go
+stdout 'Test command set to "go test \./\.\.\." in \[test\] of ajiya.toml'
+grep '^command = "go test \./\.\.\."' ajiya.toml
+exec ajiya check
+
+cd ../js
+exec ajiya init --name Js
+stdout 'Test command set to "pnpm test"'
+grep '^command = "pnpm test"' ajiya.toml
+
+cd ../py
+exec ajiya init --name Py
+stdout 'Test command set to "pytest"'
+grep '^command = "pytest"' ajiya.toml
+
+# Nothing recognised: the commented example stays.
+cd ../none
+exec ajiya init --name None
+stdout 'No test command found'
+grep '^# command = "go test' ajiya.toml
+! grep '^command' ajiya.toml
+
+-- gomod/go.mod --
+module example.com/x
+-- js/package.json --
+{"scripts": {"test": "vitest"}}
+-- js/pnpm-lock.yaml --
+lockfileVersion: 9
+-- py/pyproject.toml --
+[tool.pytest.ini_options]
+-- none/README.md --
+hello

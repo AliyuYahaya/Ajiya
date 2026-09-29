@@ -44,7 +44,9 @@ never touches text outside the markers. Then:
 - Run `ajiya hook install`. The hooks check every commit message for the
   `Ajiya:` trailer and pre-fill it from the tickets in progress.
 - Set the command that runs the project's tests, so `ajiya ticket done --test`
-  can run it. No command sets it: edit the `[test]` section of `ajiya.toml` by
+  can run it. `init` sets it when it can tell (`go.mod`, a `package.json` test
+  script, `pytest` in `pyproject.toml`) and says so; check that it is right. When
+  it could not tell, no command sets it: edit the `[test]` section of `ajiya.toml` by
   hand, which is the only hand edit Ajiya expects. Use the command the project
   already uses (its CI config or `package.json` scripts show it); ask the user
   if there is none.
