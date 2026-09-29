@@ -73,6 +73,8 @@ Generated 2026-09-29.
 
 ## Recent activity
 
+- 2026-09-29 `885b499` Close AJ-0091 (AJ-0091)
+  - AJ-0091: pending → done
 - 2026-09-29 `9f1c49a` Guide fixes from the walkthrough test (AJ-0091)
 - 2026-09-29 `ab57528` npm account, org and @ajiya/cli placeholder in place (AJ-0068)
   - AJ-0068: pending → done
@@ -100,15 +102,7 @@ Generated 2026-09-29.
 - 2026-09-29 `df2e9dc` Release environments created; the tap repository exists (AJ-0069, AJ-0071)
   - AJ-0069: pending → in_progress
   - AJ-0071: pending → done
-- 2026-09-29 `c245c5e` Plan the fixes from the agent-only walkthrough test (chore)
-  - AJ-0085: new → pending
-  - AJ-0086: new → pending
-  - AJ-0087: new → pending
-  - AJ-0088: new → pending
-  - AJ-0089: new → pending
-  - AJ-0090: new → pending
-  - AJ-0091: new → pending
-- and 139 more in data.js
+- and 140 more in data.js
 
 ## Checks
 
