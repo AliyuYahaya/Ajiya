@@ -2262,6 +2262,31 @@ window.AJIYA = {
   "checks": [],
   "activity": [
     {
+      "hash": "810c3c0e1576565d83bac786416dfd1b850df279",
+      "short": "810c3c0",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "npm packaging decided: per-platform packages behind a wrapper",
+      "refs": [
+        "AJ-0067",
+        "AJ-0075"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0067",
+          "phase": "install",
+          "from": "pending",
+          "to": "done",
+          "text": "🟩 Done · by Aliyu Yahaya · 2026-09-29 · Note: npm ships per-platform optional packages behind a small ajiya wrapper, not a postinstall download (agreed in session)"
+        }
+      ],
+      "time": 1790713318
+    },
+    {
       "hash": "2ba31d5c99eefb96618996039fbaca561d2612cf",
       "short": "2ba31d5",
       "date": "2026-09-29",

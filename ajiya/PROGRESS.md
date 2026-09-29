@@ -79,6 +79,8 @@ Generated 2026-09-29.
 
 ## Recent activity
 
+- 2026-09-29 `810c3c0` npm packaging decided: per-platform packages behind a wrapper (AJ-0067, AJ-0075)
+  - AJ-0067: pending → done
 - 2026-09-29 `2ba31d5` Reflow the daily guide's done paragraph (AJ-0065)
 - 2026-09-29 `622e678` Merge branch 'worktree-agent-af0c9a6c1037d2858' into worktree-agent-a658cbd8dac8f5d6c (-)
 - 2026-09-29 `140a432` AJ-0065 done (AJ-0065)
@@ -119,9 +121,7 @@ Generated 2026-09-29.
   - AJ-0030: in_progress → done
 - 2026-09-29 `9a2c69c` GoReleaser config (AJ-0030)
   - AJ-0030: pending → in_progress
-- 2026-09-29 `d18ad9e` AJ-0029 done (AJ-0029)
-  - AJ-0029: in_progress → done
-- and 112 more in data.js
+- and 113 more in data.js
 
 ## Checks
 
