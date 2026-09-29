@@ -59,6 +59,8 @@ Generated 2026-09-29.
 
 ## Recent activity
 
+- 2026-09-29 `c6f6b5a` AJ-0033 done (AJ-0033)
+  - AJ-0033: in_progress → done
 - 2026-09-29 `6fb1bcc` README: how it works, install, and the two walkthroughs (AJ-0033)
   - AJ-0033: pending → in_progress
 - 2026-09-29 `edf9e22` AJ-0031 done (AJ-0031)
@@ -88,8 +90,7 @@ Generated 2026-09-29.
 - 2026-09-29 `8d5cafe` Setup and daily guides for agents (AJ-0022, AJ-0023)
   - AJ-0022: pending → in_progress
   - AJ-0023: pending → in_progress
-- 2026-09-29 `47117c5` Merge branch 'worktree-agent-a658cbd8dac8f5d6c' (-)
-- and 103 more in data.js
+- and 104 more in data.js
 
 ## Checks
 
