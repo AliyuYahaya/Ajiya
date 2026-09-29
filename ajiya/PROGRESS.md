@@ -67,6 +67,11 @@ Generated 2026-09-29.
 
 ## Recent activity
 
+- 2026-09-29 `dcb3501` AJ-0061 to AJ-0064 done (chore)
+  - AJ-0061: in_progress → done
+  - AJ-0062: in_progress → done
+  - AJ-0063: in_progress → done
+  - AJ-0064: in_progress → done
 - 2026-09-29 `40d743d` Ticket cards without the side stripe (AJ-0064)
 - 2026-09-29 `d84de11` Dashboard: logo, filters on every view, ticket and phase dependency graphs (AJ-0061, AJ-0062, AJ-0063)
   - AJ-0061: pending → in_progress
@@ -95,8 +100,7 @@ Generated 2026-09-29.
 - 2026-09-29 `d7460c0` Merge branch 'worktree-agent-acd57cf3aab521d30' (-)
 - 2026-09-29 `994ad17` Dashboard: overview by milestone, next up, board, phases, tickets, apps, checks and activity (AJ-0019)
 - 2026-09-29 `b777830` Merge branch 'worktree-agent-a236161fb3f4ab13d' (-)
-- 2026-09-29 `28b8618` Add ajiya serve: dashboard on 127.0.0.1 with Host check and rebuild on change (AJ-0020)
-- and 86 more in data.js
+- and 87 more in data.js
 
 ## Checks
 
