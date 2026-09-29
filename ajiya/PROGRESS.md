@@ -82,6 +82,9 @@ Generated 2026-09-29.
 
 ## Recent activity
 
+- 2026-09-29 `ff9cdca` Plan: sign and notarise the macOS binaries (chore)
+  - AJ-0083: new → pending
+  - AJ-0084: new → pending
 - 2026-09-29 `810c3c0` npm packaging decided: per-platform packages behind a wrapper (AJ-0067, AJ-0075)
   - AJ-0067: pending → done
 - 2026-09-29 `2ba31d5` Reflow the daily guide's done paragraph (AJ-0065)
@@ -122,9 +125,7 @@ Generated 2026-09-29.
   - AJ-0031: pending → in_progress
 - 2026-09-29 `03b432d` AJ-0030 done (AJ-0030)
   - AJ-0030: in_progress → done
-- 2026-09-29 `9a2c69c` GoReleaser config (AJ-0030)
-  - AJ-0030: pending → in_progress
-- and 113 more in data.js
+- and 114 more in data.js
 
 ## Checks
 

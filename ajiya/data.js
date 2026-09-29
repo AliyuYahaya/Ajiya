@@ -2318,6 +2318,35 @@ window.AJIYA = {
   "checks": [],
   "activity": [
     {
+      "hash": "ff9cdca90b676672305c3228fcbfebd3927b8cee",
+      "short": "ff9cdca",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Plan: sign and notarise the macOS binaries",
+      "refs": [],
+      "chore": true,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0083",
+          "phase": "install",
+          "from": "",
+          "to": "pending",
+          "text": "🟥 Pending · Needs a human: needs the maintainer's Apple Developer account"
+        },
+        {
+          "id": "AJ-0084",
+          "phase": "install",
+          "from": "",
+          "to": "pending",
+          "text": "🟥 Pending"
+        }
+      ],
+      "time": 1790713405
+    },
+    {
       "hash": "810c3c0e1576565d83bac786416dfd1b850df279",
       "short": "810c3c0",
       "date": "2026-09-29",
