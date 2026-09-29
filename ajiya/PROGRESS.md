@@ -7,10 +7,10 @@ Generated 2026-09-29.
 
 | Milestone | Closed | Required | % | Can start now |
 |---|---|---|---|---|
-| v0-1 | 31 | 36 | 86% | 4 |
-| v0-2 | 31 | 42 | 73% | 4 |
-| v0-3 | 31 | 52 | 59% | 4 |
-| after-v0-3 | 31 | 51 | 60% | 4 |
+| v0-1 | 32 | 36 | 88% | 3 |
+| v0-2 | 32 | 42 | 76% | 3 |
+| v0-3 | 32 | 52 | 61% | 3 |
+| after-v0-3 | 32 | 51 | 62% | 3 |
 
 ## Phases
 
@@ -20,25 +20,24 @@ Generated 2026-09-29.
 | Apps-launch | 14 | 0 | 0 | 14 | 100% | v0-1 |
 | Outputs | 12 | 0 | 0 | 12 | 100% | v0-1 |
 | Onboarding | 8 | 0 | 1 | 9 | 88% | v0-1 |
-| Release | 2 | 0 | 3 | 5 | 40% | v0-1 |
+| Release | 3 | 0 | 2 | 5 | 60% | v0-1 |
 | Agent-access | 0 | 0 | 3 | 3 | 0% | v0-2 |
 | Install | 0 | 0 | 3 | 3 | 0% | v0-2 |
 | Decisions-and-changes | 0 | 0 | 11 | 11 | 0% | v0-3 |
 
 ## Can start now
 
-- **AJ-0031** Homebrew cask config (ajiya) · v0-1
 - **AJ-0033** README walkthroughs (ajiya) · v0-1
 - **AJ-0041** import legacy maps each RO package to a phase (ajiya) · v0-1
 - **AJ-0065** ticket done takes evidence only from commits after the ticket started (ajiya) · v0-1
 
 ## Waiting
 
-- **AJ-0034** v0.1 definition of done (ajiya) waits on AJ-0031, AJ-0033, AJ-0041, AJ-0065
+- **AJ-0034** v0.1 definition of done (ajiya) waits on AJ-0033, AJ-0041, AJ-0065
 - **AJ-0042** ajiya status (ajiya) waits on AJ-0034
 - **AJ-0043** ajiya mcp server (ajiya) waits on AJ-0042
 - **AJ-0044** ajiya mcp install, uninstall and status (ajiya) waits on AJ-0043
-- **AJ-0045** Install script and npm package (ajiya) waits on AJ-0031, AJ-0044
+- **AJ-0045** Install script and npm package (ajiya) waits on AJ-0044
 - **AJ-0046** Claude Code plugin (ajiya) waits on AJ-0042, AJ-0043
 - **AJ-0047** v0.2 definition of done (ajiya) waits on AJ-0042, AJ-0043, AJ-0044, AJ-0045, AJ-0046
 - **AJ-0048** Tags column (ajiya) waits on AJ-0047
@@ -61,6 +60,8 @@ Generated 2026-09-29.
 
 ## Recent activity
 
+- 2026-09-29 `bb6e0eb` Homebrew cask config (AJ-0031)
+  - AJ-0031: pending → in_progress
 - 2026-09-29 `03b432d` AJ-0030 done (AJ-0030)
   - AJ-0030: in_progress → done
 - 2026-09-29 `9a2c69c` GoReleaser config (AJ-0030)
@@ -92,8 +93,7 @@ Generated 2026-09-29.
   - AJ-0062: in_progress → done
   - AJ-0063: in_progress → done
   - AJ-0064: in_progress → done
-- 2026-09-29 `40d743d` Ticket cards without the side stripe (AJ-0064)
-- and 100 more in data.js
+- and 101 more in data.js
 
 ## Checks
 

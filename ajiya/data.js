@@ -14,13 +14,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 36,
-        "done": 31,
+        "done": 32,
         "in_progress": 0,
-        "pending": 5,
+        "pending": 4,
         "dropped": 0
       },
-      "percent": 86,
-      "ready": 4
+      "percent": 88,
+      "ready": 3
     },
     {
       "name": "v0-2",
@@ -29,13 +29,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 42,
-        "done": 31,
+        "done": 32,
         "in_progress": 0,
-        "pending": 11,
+        "pending": 10,
         "dropped": 0
       },
-      "percent": 73,
-      "ready": 4
+      "percent": 76,
+      "ready": 3
     },
     {
       "name": "v0-3",
@@ -44,13 +44,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 52,
-        "done": 31,
+        "done": 32,
         "in_progress": 0,
-        "pending": 21,
+        "pending": 20,
         "dropped": 0
       },
-      "percent": 59,
-      "ready": 4
+      "percent": 61,
+      "ready": 3
     },
     {
       "name": "after-v0-3",
@@ -59,13 +59,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 51,
-        "done": 31,
+        "done": 32,
         "in_progress": 0,
-        "pending": 20,
+        "pending": 19,
         "dropped": 0
       },
-      "percent": 60,
-      "ready": 4
+      "percent": 62,
+      "ready": 3
     }
   ],
   "phases": [
@@ -131,12 +131,12 @@ window.AJIYA = {
       "goal": "v0.1 is ready to publish: binaries, Homebrew cask, README walkthroughs and changelog",
       "counts": {
         "total": 5,
-        "done": 2,
+        "done": 3,
         "in_progress": 0,
-        "pending": 3,
+        "pending": 2,
         "dropped": 0
       },
-      "percent": 40,
+      "percent": 60,
       "milestone": "v0-1"
     },
     {
@@ -188,9 +188,9 @@ window.AJIYA = {
       "path": ".",
       "counts": {
         "total": 65,
-        "done": 43,
+        "done": 44,
         "in_progress": 0,
-        "pending": 22,
+        "pending": 21,
         "dropped": 0
       }
     }
@@ -922,17 +922,21 @@ window.AJIYA = {
         "AJ-0030"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · bb6e0eb · 2026-09-29 · tests passed · Note: snapshot writes dist/homebrew/Casks/ajiya.rb with quarantine removal; skip_upload true",
+        "note": "snapshot writes dist/homebrew/Casks/ajiya.rb with quarantine removal; skip_upload true",
+        "commit": "bb6e0eb",
+        "date": "2026-09-29",
+        "tests_passed": true
       },
       "milestone": "v0-1",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0034",
         "AJ-0045"
       ],
-      "unblocks": 18
+      "unblocks": 0
     },
     {
       "id": "AJ-0032",
@@ -1006,7 +1010,6 @@ window.AJIYA = {
       "milestone": "v0-1",
       "ready": false,
       "waiting_on": [
-        "AJ-0031",
         "AJ-0033",
         "AJ-0041",
         "AJ-0065"
@@ -1287,7 +1290,6 @@ window.AJIYA = {
       "milestone": "v0-2",
       "ready": false,
       "waiting_on": [
-        "AJ-0031",
         "AJ-0044"
       ],
       "dependants": [
@@ -1804,13 +1806,36 @@ window.AJIYA = {
     }
   ],
   "next": [
-    "AJ-0031",
     "AJ-0033",
     "AJ-0041",
     "AJ-0065"
   ],
   "checks": [],
   "activity": [
+    {
+      "hash": "bb6e0ebe1362d64f52b80eebbd4b8ffb71873da3",
+      "short": "bb6e0eb",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Homebrew cask config",
+      "refs": [
+        "AJ-0031"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0031",
+          "phase": "release",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        }
+      ],
+      "time": 1790712367
+    },
     {
       "hash": "03b432dbfb59b411171640fe293d0426d8f03235",
       "short": "03b432d",
