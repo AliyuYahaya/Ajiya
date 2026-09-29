@@ -63,6 +63,8 @@ Generated 2026-09-29.
 
 ## Recent activity
 
+- 2026-09-29 `298f56f` AJ-0025 done (AJ-0025)
+  - AJ-0025: in_progress → done
 - 2026-09-29 `15cad8a` init writes and updates the agent kit (AJ-0025)
   - AJ-0025: pending → in_progress
 - 2026-09-29 `4f9b1a6` Plan: ticket done evidence must come after the ticket started (chore)
@@ -99,8 +101,7 @@ Generated 2026-09-29.
 - 2026-09-29 `f84a39b` AJ-0036 and AJ-0060 done (AJ-0036, AJ-0060)
   - AJ-0036: in_progress → done
   - AJ-0060: in_progress → done
-- 2026-09-29 `3ae5531` Refill filter menus on live refresh (AJ-0060)
-- and 95 more in data.js
+- and 96 more in data.js
 
 ## Checks
 
