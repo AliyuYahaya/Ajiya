@@ -29,12 +29,12 @@ window.AJIYA = {
       ],
       "required": {
         "total": 59,
-        "done": 35,
+        "done": 36,
         "in_progress": 0,
-        "pending": 24,
+        "pending": 23,
         "dropped": 0
       },
-      "percent": 59,
+      "percent": 61,
       "ready": 1
     },
     {
@@ -44,12 +44,12 @@ window.AJIYA = {
       ],
       "required": {
         "total": 69,
-        "done": 35,
+        "done": 36,
         "in_progress": 0,
-        "pending": 34,
+        "pending": 33,
         "dropped": 0
       },
-      "percent": 50,
+      "percent": 52,
       "ready": 1
     },
     {
@@ -59,12 +59,12 @@ window.AJIYA = {
       ],
       "required": {
         "total": 68,
-        "done": 35,
+        "done": 36,
         "in_progress": 0,
-        "pending": 33,
+        "pending": 32,
         "dropped": 0
       },
-      "percent": 51,
+      "percent": 52,
       "ready": 1
     }
   ],
@@ -159,12 +159,12 @@ window.AJIYA = {
       "goal": "Ajiya installs in one step, with a Claude Code plugin",
       "counts": {
         "total": 19,
-        "done": 0,
+        "done": 1,
         "in_progress": 0,
-        "pending": 19,
+        "pending": 18,
         "dropped": 0
       },
-      "percent": 0,
+      "percent": 5,
       "milestone": "v0-2"
     },
     {
@@ -188,9 +188,9 @@ window.AJIYA = {
       "path": ".",
       "counts": {
         "total": 82,
-        "done": 47,
+        "done": 48,
         "in_progress": 0,
-        "pending": 35,
+        "pending": 34,
         "dropped": 0
       }
     }
@@ -1029,7 +1029,7 @@ window.AJIYA = {
         "AJ-0071",
         "AJ-0072"
       ],
-      "unblocks": 33
+      "unblocks": 32
     },
     {
       "id": "AJ-0035",
@@ -1207,7 +1207,7 @@ window.AJIYA = {
       "dependants": [
         "AJ-0034"
       ],
-      "unblocks": 34
+      "unblocks": 33
     },
     {
       "id": "AJ-0042",
@@ -1859,9 +1859,11 @@ window.AJIYA = {
         "AJ-0034"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending · Needs a human: changes spec 02's wording; the maintainer decides",
-        "human": "changes spec 02's wording; the maintainer decides"
+        "state": "done",
+        "text": "🟩 Done · by Aliyu Yahaya · 2026-09-29 · Note: npm ships per-platform optional packages behind a small ajiya wrapper, not a postinstall download (agreed in session)",
+        "note": "npm ships per-platform optional packages behind a small ajiya wrapper, not a postinstall download (agreed in session)",
+        "by": "Aliyu Yahaya",
+        "date": "2026-09-29"
       },
       "milestone": "v0-2",
       "ready": false,
@@ -1871,7 +1873,7 @@ window.AJIYA = {
       "dependants": [
         "AJ-0075"
       ],
-      "unblocks": 18
+      "unblocks": 0
     },
     {
       "id": "AJ-0068",
@@ -2046,8 +2048,8 @@ window.AJIYA = {
       "id": "AJ-0075",
       "phase": "install",
       "app": "ajiya",
-      "title": "npm packages built from the release archives",
-      "done_when": "A script in the repo verifies every archive against checksums.txt and writes the npm package(s) the decision chose, versioned from the tag; npm pack --dry-run succeeds; a bad checksum fails it",
+      "title": "npm packages: a wrapper and one package per platform",
+      "done_when": "A script verifies every release archive against checksums.txt, then writes six platform packages (os and cpu set, binary mode 755) and the ajiya wrapper with exact optionalDependencies, all versioned from the tag; npm pack --dry-run succeeds for all seven; a bad checksum fails it",
       "depends": [
         "AJ-0030",
         "AJ-0067",
@@ -2060,7 +2062,6 @@ window.AJIYA = {
       "milestone": "v0-2",
       "ready": false,
       "waiting_on": [
-        "AJ-0067",
         "AJ-0068"
       ],
       "dependants": [
@@ -2260,6 +2261,76 @@ window.AJIYA = {
   ],
   "checks": [],
   "activity": [
+    {
+      "hash": "2ba31d5c99eefb96618996039fbaca561d2612cf",
+      "short": "2ba31d5",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Reflow the daily guide's done paragraph",
+      "refs": [
+        "AJ-0065"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790713300
+    },
+    {
+      "hash": "622e67856c1e157906e1ff4aa92307fb22af33e5",
+      "short": "622e678",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Merge branch 'worktree-agent-af0c9a6c1037d2858' into worktree-agent-a658cbd8dac8f5d6c",
+      "refs": [],
+      "chore": false,
+      "merge": true,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790713282
+    },
+    {
+      "hash": "140a432e17f79b84388154d37fe04dad3d0221f9",
+      "short": "140a432",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "AJ-0065 done",
+      "refs": [
+        "AJ-0065"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0065",
+          "phase": "commit-rule",
+          "from": "pending",
+          "to": "done",
+          "text": "🟩 Done · 5c1af99 · 2026-09-29 · tests passed"
+        }
+      ],
+      "time": 1790713202
+    },
+    {
+      "hash": "5c1af9978623670e6ad96f84e17d4d641d1871bf",
+      "short": "5c1af99",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Ticket done counts only commits made after the ticket started",
+      "refs": [
+        "AJ-0065"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790713063
+    },
     {
       "hash": "619df03ca1896569f885249708a822acd3e92868",
       "short": "619df03",
