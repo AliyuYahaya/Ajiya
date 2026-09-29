@@ -29,12 +29,12 @@ window.AJIYA = {
       ],
       "required": {
         "total": 68,
-        "done": 50,
+        "done": 51,
         "in_progress": 0,
-        "pending": 18,
+        "pending": 17,
         "dropped": 0
       },
-      "percent": 73,
+      "percent": 75,
       "ready": 3
     },
     {
@@ -44,12 +44,12 @@ window.AJIYA = {
       ],
       "required": {
         "total": 78,
-        "done": 50,
+        "done": 51,
         "in_progress": 0,
-        "pending": 28,
+        "pending": 27,
         "dropped": 0
       },
-      "percent": 64,
+      "percent": 65,
       "ready": 3
     },
     {
@@ -59,12 +59,12 @@ window.AJIYA = {
       ],
       "required": {
         "total": 77,
-        "done": 50,
+        "done": 51,
         "in_progress": 0,
-        "pending": 27,
+        "pending": 26,
         "dropped": 0
       },
-      "percent": 64,
+      "percent": 66,
       "ready": 3
     }
   ],
@@ -145,12 +145,12 @@ window.AJIYA = {
       "goal": "Agents read and change the plan through ajiya status and an MCP server they register with in one step",
       "counts": {
         "total": 3,
-        "done": 0,
+        "done": 1,
         "in_progress": 0,
-        "pending": 3,
+        "pending": 2,
         "dropped": 0
       },
-      "percent": 0,
+      "percent": 33,
       "milestone": "v0-2"
     },
     {
@@ -188,9 +188,9 @@ window.AJIYA = {
       "path": ".",
       "counts": {
         "total": 91,
-        "done": 62,
+        "done": 63,
         "in_progress": 0,
-        "pending": 29,
+        "pending": 28,
         "dropped": 0
       }
     }
@@ -1229,18 +1229,21 @@ window.AJIYA = {
         "AJ-0038"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · cbdcde9 · 2026-09-29 · tests passed",
+        "commit": "cbdcde9",
+        "date": "2026-09-29",
+        "tests_passed": true
       },
       "milestone": "v0-2",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0043",
         "AJ-0046",
         "AJ-0047"
       ],
-      "unblocks": 24
+      "unblocks": 0
     },
     {
       "id": "AJ-0043",
@@ -1256,10 +1259,8 @@ window.AJIYA = {
         "text": "🟥 Pending"
       },
       "milestone": "v0-2",
-      "ready": false,
-      "waiting_on": [
-        "AJ-0042"
-      ],
+      "ready": true,
+      "waiting_on": [],
       "dependants": [
         "AJ-0044",
         "AJ-0046",
@@ -1337,7 +1338,6 @@ window.AJIYA = {
       "milestone": "v0-2",
       "ready": false,
       "waiting_on": [
-        "AJ-0042",
         "AJ-0043"
       ],
       "dependants": [
@@ -1374,7 +1374,6 @@ window.AJIYA = {
       "milestone": "v0-2",
       "ready": false,
       "waiting_on": [
-        "AJ-0042",
         "AJ-0043",
         "AJ-0044",
         "AJ-0045",
@@ -2490,12 +2489,26 @@ window.AJIYA = {
     }
   ],
   "next": [
-    "AJ-0042",
+    "AJ-0043",
     "AJ-0075",
     "AJ-0083"
   ],
   "checks": [],
   "activity": [
+    {
+      "hash": "7cb789fe45a2cf3b511bb9080263ddb10766a63d",
+      "short": "7cb789f",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Windows CI: accept Windows' missing-file wording in import-legacy",
+      "refs": [],
+      "chore": true,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790718538
+    },
     {
       "hash": "573e2529a4b1d29e51a614d24fef2a9b88948f0c",
       "short": "573e252",

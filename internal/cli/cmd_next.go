@@ -138,6 +138,19 @@ func join(a, b string) string {
 	return a + " · " + b
 }
 
+// allFindings runs every check on the plan, including those that need git
+// history, and sorts them. 'ajiya check' and 'ajiya status' share it.
+func allFindings(pr *project, now time.Time) ([]check.Finding, error) {
+	findings := check.Run(pr.cfg, pr.plan)
+	history, err := check.History(pr.cfg, pr.plan, now)
+	if err != nil {
+		return nil, err
+	}
+	findings = append(findings, history...)
+	check.Sort(findings)
+	return findings, nil
+}
+
 func runCheck(e *env, args []string) error {
 	fs := newFlags("check")
 	strict := fs.Bool("strict", false, "fail on warnings too")
@@ -150,7 +163,10 @@ func runCheck(e *env, args []string) error {
 	if err != nil {
 		return err
 	}
-	findings := check.Run(pr.cfg, pr.plan)
+	findings, err := allFindings(pr, e.clock())
+	if err != nil {
+		return err
+	}
 	if isSet(fs, "commits") {
 		if *commits == "" {
 			return usageErr("--commits needs a revision range, such as origin/main..HEAD")
@@ -161,11 +177,6 @@ func runCheck(e *env, args []string) error {
 		}
 		findings = append(findings, check.Commits(pr.cfg, pr.plan, log)...)
 	}
-	history, err := check.History(pr.cfg, pr.plan, time.Now())
-	if err != nil {
-		return err
-	}
-	findings = append(findings, history...)
 	check.Sort(findings)
 	errs, warns := check.Count(findings)
 	if *asJSON {

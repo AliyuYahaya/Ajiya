@@ -8,9 +8,9 @@ Generated 2026-09-29.
 | Milestone | Closed | Required | % | Can start now |
 |---|---|---|---|---|
 | v0-1 | 37 | 37 | 100% | 0 |
-| v0-2 | 50 | 68 | 73% | 3 |
-| v0-3 | 50 | 78 | 64% | 3 |
-| after-v0-3 | 50 | 77 | 64% | 3 |
+| v0-2 | 51 | 68 | 75% | 3 |
+| v0-3 | 51 | 78 | 65% | 3 |
+| after-v0-3 | 51 | 77 | 66% | 3 |
 
 ## Phases
 
@@ -21,23 +21,22 @@ Generated 2026-09-29.
 | Outputs | 12 | 0 | 0 | 12 | 100% | v0-1 |
 | Onboarding | 17 | 0 | 0 | 17 | 100% | v0-1 |
 | Release | 5 | 0 | 0 | 5 | 100% | v0-1 |
-| Agent-access | 0 | 0 | 3 | 3 | 0% | v0-2 |
+| Agent-access | 1 | 0 | 2 | 3 | 33% | v0-2 |
 | Install | 6 | 0 | 15 | 21 | 28% | v0-2 |
 | Decisions-and-changes | 0 | 0 | 11 | 11 | 0% | v0-3 |
 
 ## Can start now
 
-- **AJ-0042** ajiya status (ajiya) · v0-2
+- **AJ-0043** ajiya mcp server (ajiya) · v0-2
 - **AJ-0075** npm packages: @ajiya/cli and one package per platform (ajiya) · v0-2
 - **AJ-0083** Apple signing credentials as release secrets (ajiya) · v0-2
 
 ## Waiting
 
-- **AJ-0043** ajiya mcp server (ajiya) waits on AJ-0042
 - **AJ-0044** ajiya mcp install, uninstall and status (ajiya) waits on AJ-0043
 - **AJ-0045** install.sh for macOS and Linux (ajiya) waits on AJ-0044
-- **AJ-0046** Claude Code plugin (ajiya) waits on AJ-0042, AJ-0043
-- **AJ-0047** v0.2 definition of done (ajiya) waits on AJ-0042, AJ-0043, AJ-0044, AJ-0045, AJ-0046, AJ-0082
+- **AJ-0046** Claude Code plugin (ajiya) waits on AJ-0043
+- **AJ-0047** v0.2 definition of done (ajiya) waits on AJ-0043, AJ-0044, AJ-0045, AJ-0046, AJ-0082
 - **AJ-0048** Tags column (ajiya) waits on AJ-0047
 - **AJ-0049** ajiya ticket files (ajiya) waits on AJ-0048
 - **AJ-0050** Decision records and commands (ajiya) waits on AJ-0048
@@ -70,6 +69,7 @@ Generated 2026-09-29.
 
 ## Recent activity
 
+- 2026-09-29 `7cb789f` Windows CI: accept Windows' missing-file wording in import-legacy (chore)
 - 2026-09-29 `573e252` Tidy the import and app-folder guide text (AJ-0091)
 - 2026-09-29 `c0b1294` Merge branch 'worktree-agent-a3488137fbba0e00c' into worktree-agent-a658cbd8dac8f5d6c (-)
 - 2026-09-29 `4a25d7c` Merge branch 'worktree-agent-afca5fbf28b0fec73' into worktree-agent-a658cbd8dac8f5d6c (-)
@@ -92,8 +92,7 @@ Generated 2026-09-29.
   - AJ-0090: in_progress → done
 - 2026-09-29 `23f1de8` ajiya init suggests the test command (AJ-0090)
   - AJ-0090: pending → in_progress
-- 2026-09-29 `47eac13` npm wrapper is @ajiya/cli (AJ-0068, AJ-0075)
-- and 146 more in data.js
+- and 147 more in data.js
 
 ## Checks
 

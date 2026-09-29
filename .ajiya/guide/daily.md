@@ -12,9 +12,17 @@ plan over your memory of earlier sessions.
 
 ### 1. Pick a ticket
 
+At the start of every session, see where the project stands, then pick:
+
 ```
+ajiya status
 ajiya next
 ```
+
+`ajiya status` is a short summary: progress to each milestone, tickets already
+in progress (and for how long), what can start, tickets that need a human, the
+check results and the latest activity. `ajiya status --brief` is three lines.
+Finish what is in progress before you start something new.
 
 It lists the tickets that can start now: open, not blocked, every dependency
 done. The earliest milestone comes first, then what unblocks the most work. Take
@@ -134,6 +142,7 @@ include the ones already there.
 
 | Command | Use it to |
 |---|---|
+| `ajiya status [--brief]` | See where the project stands at the start of a session |
 | `ajiya next [--app <app>] [--milestone <name>]` | See what can start now |
 | `ajiya ticket show <ID>` | See a ticket, what it waits on, what waits on it, and its commits |
 | `ajiya ticket start <ID>` | Start a ticket |

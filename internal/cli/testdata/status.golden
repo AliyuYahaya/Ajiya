@@ -1,0 +1,24 @@
+Project: Demo
+
+Milestones
+  1. staging: 0 of 1 done, 1 can start now
+  2. launch: 0 of 6 done, 4 can start now
+
+In progress
+  DE-0002  infra  Schema (started 5h ago)
+  DE-0003  infra  Endpoint (started 2d ago)
+  DE-0004  infra  Auth
+
+Can start now: 4
+  DE-0001  infra  Staging host
+  DE-0002  infra  Schema
+  DE-0004  infra  Auth
+
+Needs a human
+  DE-0005  Deploy: needs the production keys
+
+Checks: 0 errors, 1 warning
+
+Recent activity
+  2026-03-09  Start the schema work [DE-0002]
+  2026-03-08  Start the endpoint work [DE-0003]

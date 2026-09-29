@@ -1,0 +1,38 @@
+# ajiya status: plain, --brief and --json on a small plan. Durations depend on
+# the clock, so they are matched loosely here; exact output is in the Go goldens
+# (internal/cli/testdata/status*.golden).
+
+exec ajiya init --name Demo --prefix DE
+exec ajiya phase add gate 'Staging proven'
+exec ajiya phase add go-live 'Live'
+exec ajiya ticket add --phase gate --app infra --done-when x 'Staging host'
+exec ajiya ticket add --phase gate --app infra --done-when x 'Schema'
+exec ajiya ticket add --phase go-live --app infra --done-when x 'Deploy' --depends DE-0001 --human keys
+exec ajiya milestone add staging --targets gate
+exec ajiya milestone add launch --targets go-live
+exec ajiya ticket start DE-0002
+
+exec ajiya status
+stdout '^Project: Demo$'
+stdout '(?m)^  1\. staging: 0 of 2 done, 2 can start now$'
+stdout '(?m)^  2\. launch: 0 of 2 done, 1 can start now$'
+stdout '(?m)^  DE-0002  infra  Schema \(started (just now|\d+m ago)\)$'
+stdout '(?m)^Can start now: 2$'
+stdout '(?m)^  DE-0001  infra  Staging host$'
+stdout '(?m)^  DE-0003  Deploy: keys$'
+stdout '(?m)^Checks: '
+stdout '(?m)^Recent activity$'
+
+exec ajiya status --brief
+stdout '^Demo · staging 0 of 2 done · 2 can start now\nIn progress: DE-0002 \((\d+m|just now)\) · Needs a human: DE-0003\nNext: DE-0001, DE-0002 · Checks: '
+! stdout '(?s)\n.*\n.*\n.'
+
+exec ajiya status --json
+stdout '"project": "Demo"'
+stdout '"since_source": "local"'
+stdout '"count": 2'
+stdout '"reason": "keys"'
+
+# The two output forms cannot be combined.
+! exec ajiya status --brief --json
+stderr 'give --brief or --json, not both'
