@@ -66,6 +66,7 @@ Generated 2026-09-29.
 
 ## Recent activity
 
+- 2026-09-29 `47117c5` Merge branch 'worktree-agent-a658cbd8dac8f5d6c' (-)
 - 2026-09-29 `4b321be` AJ-0021 done (AJ-0021)
   - AJ-0021: pending → done
 - 2026-09-29 `dcb3501` AJ-0061 to AJ-0064 done (chore)
@@ -99,8 +100,7 @@ Generated 2026-09-29.
   - AJ-0019: in_progress → done
   - AJ-0020: in_progress → done
 - 2026-09-29 `d7460c0` Merge branch 'worktree-agent-acd57cf3aab521d30' (-)
-- 2026-09-29 `994ad17` Dashboard: overview by milestone, next up, board, phases, tickets, apps, checks and activity (AJ-0019)
-- and 88 more in data.js
+- and 89 more in data.js
 
 ## Checks
 
