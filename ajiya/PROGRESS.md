@@ -71,6 +71,10 @@ Generated 2026-09-29.
 
 ## Recent activity
 
+- 2026-09-29 `4a25d7c` Merge branch 'worktree-agent-afca5fbf28b0fec73' into worktree-agent-a658cbd8dac8f5d6c (-)
+- 2026-09-29 `f38b713` AJ-0072 done (AJ-0072)
+  - AJ-0072: pending → done
+- 2026-09-29 `d1df3f0` Release workflow: tag builds a draft release, pull requests a snapshot (AJ-0072)
 - 2026-09-29 `7363ad4` Install scripts are served as GitHub release assets (AJ-0070, AJ-0078)
   - AJ-0070: pending → done
 - 2026-09-29 `ab57528` npm account, org and @ajiya/cli placeholder in place (AJ-0068)
@@ -94,20 +98,7 @@ Generated 2026-09-29.
 - 2026-09-29 `ac6842b` Add ticket list, group help and required-flag usage lines (AJ-0087, AJ-0088, AJ-0089)
 - 2026-09-29 `7f1ede7` Homebrew tap and its token in place (AJ-0069)
   - AJ-0069: in_progress → done
-- 2026-09-29 `980c627` Imports default to the project's only app and say which app they used (AJ-0085)
-  - AJ-0085: pending → in_progress
-- 2026-09-29 `df2e9dc` Release environments created; the tap repository exists (AJ-0069, AJ-0071)
-  - AJ-0069: pending → in_progress
-  - AJ-0071: pending → done
-- 2026-09-29 `c245c5e` Plan the fixes from the agent-only walkthrough test (chore)
-  - AJ-0085: new → pending
-  - AJ-0086: new → pending
-  - AJ-0087: new → pending
-  - AJ-0088: new → pending
-  - AJ-0089: new → pending
-  - AJ-0090: new → pending
-  - AJ-0091: new → pending
-- and 139 more in data.js
+- and 142 more in data.js
 
 ## Checks
 

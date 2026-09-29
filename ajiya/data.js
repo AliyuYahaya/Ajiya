@@ -2496,6 +2496,60 @@ window.AJIYA = {
   "checks": [],
   "activity": [
     {
+      "hash": "4a25d7c534e63485dcbef141c4b85c0a12cae7c0",
+      "short": "4a25d7c",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Merge branch 'worktree-agent-afca5fbf28b0fec73' into worktree-agent-a658cbd8dac8f5d6c",
+      "refs": [],
+      "chore": false,
+      "merge": true,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790718235
+    },
+    {
+      "hash": "f38b713a1691fe6168d6db26c3541ff30babefca",
+      "short": "f38b713",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "AJ-0072 done",
+      "refs": [
+        "AJ-0072"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0072",
+          "phase": "install",
+          "from": "pending",
+          "to": "done",
+          "text": "🟩 Done · d1df3f0 · 2026-09-29 · tests passed"
+        }
+      ],
+      "time": 1790718164
+    },
+    {
+      "hash": "d1df3f0da7c6e88391f62a87a166e280c63bc425",
+      "short": "d1df3f0",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Release workflow: tag builds a draft release, pull requests a snapshot",
+      "refs": [
+        "AJ-0072"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790718144
+    },
+    {
       "hash": "7363ad410a2ee46b77c21c1366c75f43ddfccdde",
       "short": "7363ad4",
       "date": "2026-09-29",
