@@ -28,12 +28,12 @@ window.AJIYA = {
       "goal": "Apps are detected and managed, launch readiness is defined, and every check in the spec runs",
       "counts": {
         "total": 14,
-        "done": 13,
+        "done": 14,
         "in_progress": 0,
-        "pending": 1,
+        "pending": 0,
         "dropped": 0
       },
-      "percent": 92,
+      "percent": 100,
       "milestone": ""
     },
     {
@@ -43,8 +43,8 @@ window.AJIYA = {
       "counts": {
         "total": 7,
         "done": 3,
-        "in_progress": 0,
-        "pending": 4,
+        "in_progress": 2,
+        "pending": 2,
         "dropped": 0
       },
       "percent": 42,
@@ -127,9 +127,9 @@ window.AJIYA = {
       "path": ".",
       "counts": {
         "total": 59,
-        "done": 27,
-        "in_progress": 0,
-        "pending": 32,
+        "done": 28,
+        "in_progress": 2,
+        "pending": 29,
         "dropped": 0
       }
     }
@@ -562,8 +562,9 @@ window.AJIYA = {
         "AJ-0038"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "in_progress",
+        "text": "🟨 In progress: in a parallel worktree",
+        "note": "in a parallel worktree"
       },
       "milestone": "",
       "ready": true,
@@ -585,8 +586,9 @@ window.AJIYA = {
         "AJ-0019"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "in_progress",
+        "text": "🟨 In progress: in a parallel worktree",
+        "note": "in a parallel worktree"
       },
       "milestone": "",
       "ready": false,
@@ -928,8 +930,7 @@ window.AJIYA = {
         "AJ-0030",
         "AJ-0031",
         "AJ-0033",
-        "AJ-0041",
-        "AJ-0059"
+        "AJ-0041"
       ],
       "dependants": [
         "AJ-0042"
@@ -1568,24 +1569,107 @@ window.AJIYA = {
         "AJ-0038"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · 57776dc · 2026-09-29 · tests passed",
+        "commit": "57776dc",
+        "date": "2026-09-29",
+        "tests_passed": true
       },
       "milestone": "",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0034"
       ],
-      "unblocks": 18
+      "unblocks": 0
     }
   ],
   "next": [
-    "AJ-0019",
-    "AJ-0059"
+    "AJ-0019"
   ],
   "checks": [],
   "activity": [
+    {
+      "hash": "57776dcc4dd367fcca69ecf281808a2b6955830f",
+      "short": "57776dc",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "phase rename updates milestone targets",
+      "refs": [
+        "AJ-0059"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790670894
+    },
+    {
+      "hash": "4ddeb1f1dd8573be8619e23916a291f93c1ec3ed",
+      "short": "4ddeb1f",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Start AJ-0019, AJ-0020 and AJ-0059",
+      "refs": [
+        "AJ-0019",
+        "AJ-0020",
+        "AJ-0059"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0019",
+          "phase": "outputs",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress: in a parallel worktree"
+        },
+        {
+          "id": "AJ-0020",
+          "phase": "outputs",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress: in a parallel worktree"
+        },
+        {
+          "id": "AJ-0059",
+          "phase": "apps-launch",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        }
+      ],
+      "time": 1790670796
+    },
+    {
+      "hash": "29d61fc33dc2e1a2c7d223ca7b7d2ab8863facdb",
+      "short": "29d61fc",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Embed the dashboard page; build writes ajiya/index.html",
+      "refs": [
+        "AJ-0019",
+        "AJ-0059"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0059",
+          "phase": "apps-launch",
+          "from": "",
+          "to": "pending",
+          "text": "🟥 Pending"
+        }
+      ],
+      "time": 1790670795
+    },
     {
       "hash": "2eae85df7d5635a6aa25c5106c9d872047be4cfd",
       "short": "2eae85d",
