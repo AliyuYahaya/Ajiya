@@ -29,13 +29,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 68,
-        "done": 38,
+        "done": 41,
         "in_progress": 0,
-        "pending": 30,
+        "pending": 27,
         "dropped": 0
       },
-      "percent": 55,
-      "ready": 12
+      "percent": 60,
+      "ready": 9
     },
     {
       "name": "v0-3",
@@ -44,13 +44,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 78,
-        "done": 38,
+        "done": 41,
         "in_progress": 0,
-        "pending": 40,
+        "pending": 37,
         "dropped": 0
       },
-      "percent": 48,
-      "ready": 12
+      "percent": 52,
+      "ready": 9
     },
     {
       "name": "after-v0-3",
@@ -59,13 +59,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 77,
-        "done": 38,
+        "done": 41,
         "in_progress": 0,
-        "pending": 39,
+        "pending": 36,
         "dropped": 0
       },
-      "percent": 49,
-      "ready": 12
+      "percent": 53,
+      "ready": 9
     }
   ],
   "phases": [
@@ -117,12 +117,12 @@ window.AJIYA = {
       "goal": "A new or existing project can be set up by an agent using only the installed kit and importers",
       "counts": {
         "total": 17,
-        "done": 10,
+        "done": 13,
         "in_progress": 0,
-        "pending": 7,
+        "pending": 4,
         "dropped": 0
       },
-      "percent": 58,
+      "percent": 76,
       "milestone": "v0-1"
     },
     {
@@ -188,9 +188,9 @@ window.AJIYA = {
       "path": ".",
       "counts": {
         "total": 91,
-        "done": 50,
+        "done": 53,
         "in_progress": 0,
-        "pending": 41,
+        "pending": 38,
         "dropped": 0
       }
     }
@@ -1382,9 +1382,6 @@ window.AJIYA = {
         "AJ-0082",
         "AJ-0085",
         "AJ-0086",
-        "AJ-0087",
-        "AJ-0088",
-        "AJ-0089",
         "AJ-0090",
         "AJ-0091"
       ],
@@ -2374,16 +2371,19 @@ window.AJIYA = {
         "AJ-0034"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · ac6842b · 2026-09-29 · tests passed",
+        "commit": "ac6842b",
+        "date": "2026-09-29",
+        "tests_passed": true
       },
       "milestone": "v0-2",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0047"
       ],
-      "unblocks": 12
+      "unblocks": 0
     },
     {
       "id": "AJ-0088",
@@ -2395,17 +2395,20 @@ window.AJIYA = {
         "AJ-0034"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · ac6842b · 2026-09-29 · tests passed",
+        "commit": "ac6842b",
+        "date": "2026-09-29",
+        "tests_passed": true
       },
       "milestone": "v0-2",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0047",
         "AJ-0091"
       ],
-      "unblocks": 13
+      "unblocks": 0
     },
     {
       "id": "AJ-0089",
@@ -2417,16 +2420,19 @@ window.AJIYA = {
         "AJ-0034"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · ac6842b · 2026-09-29 · tests passed",
+        "commit": "ac6842b",
+        "date": "2026-09-29",
+        "tests_passed": true
       },
       "milestone": "v0-2",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0047"
       ],
-      "unblocks": 12
+      "unblocks": 0
     },
     {
       "id": "AJ-0090",
@@ -2468,8 +2474,7 @@ window.AJIYA = {
       "ready": false,
       "waiting_on": [
         "AJ-0085",
-        "AJ-0086",
-        "AJ-0088"
+        "AJ-0086"
       ],
       "dependants": [
         "AJ-0047"
@@ -2486,13 +2491,28 @@ window.AJIYA = {
     "AJ-0070",
     "AJ-0085",
     "AJ-0086",
-    "AJ-0088",
-    "AJ-0087",
-    "AJ-0089",
     "AJ-0090"
   ],
   "checks": [],
   "activity": [
+    {
+      "hash": "ac6842bb36ac856bf0c7638c0cea089d37141a3b",
+      "short": "ac6842b",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Add ticket list, group help and required-flag usage lines",
+      "refs": [
+        "AJ-0087",
+        "AJ-0088",
+        "AJ-0089"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790717274
+    },
     {
       "hash": "c245c5ec07a398504ae85a3e23623dcad35055d1",
       "short": "c245c5e",
