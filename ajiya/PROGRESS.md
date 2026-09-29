@@ -83,6 +83,10 @@ Generated 2026-09-29.
 
 ## Recent activity
 
+- 2026-09-29 `45d9f00` Mark AJ-0087, AJ-0088 and AJ-0089 done (AJ-0087, AJ-0088, AJ-0089)
+  - AJ-0087: pending → done
+  - AJ-0088: pending → done
+  - AJ-0089: pending → done
 - 2026-09-29 `ac6842b` Add ticket list, group help and required-flag usage lines (AJ-0087, AJ-0088, AJ-0089)
 - 2026-09-29 `c245c5e` Plan the fixes from the agent-only walkthrough test (chore)
   - AJ-0085: new → pending
@@ -109,8 +113,7 @@ Generated 2026-09-29.
 - 2026-09-29 `810c3c0` npm packaging decided: per-platform packages behind a wrapper (AJ-0067, AJ-0075)
   - AJ-0067: pending → done
 - 2026-09-29 `2ba31d5` Reflow the daily guide's done paragraph (AJ-0065)
-- 2026-09-29 `622e678` Merge branch 'worktree-agent-af0c9a6c1037d2858' into worktree-agent-a658cbd8dac8f5d6c (-)
-- and 126 more in data.js
+- and 127 more in data.js
 
 ## Checks
 
