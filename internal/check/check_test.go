@@ -65,8 +65,9 @@ func TestFixtures(t *testing.T) {
 			if got != want {
 				t.Errorf("findings:\n%s\nwant:\n%s", got, want)
 			}
-			// The fixture named after a code must produce that code.
-			code := strings.TrimSuffix(filepath.Base(f), ".txtar")
+			// The fixture named after a code (E012, or E012-milestones for a
+			// second case) must produce that code.
+			code, _, _ := strings.Cut(strings.TrimSuffix(filepath.Base(f), ".txtar"), "-")
 			if code != "clean" && !strings.Contains(got, code+" ") {
 				t.Errorf("fixture %s does not produce %s", f, code)
 			}

@@ -14,9 +14,13 @@
 //	E009 a commit names a ticket that does not exist
 //	E010 an open ticket's app is not registered
 //	E011 a ticket marked done has no evidence
-//	E012 the launch target does not exist
+//	E012 a milestone target (or the [launch] target) is neither a phase nor a ticket
 //
-// Warning codes are added as those checks are built.
+// A milestone name used twice has no code here: config.Parse refuses such an
+// ajiya.toml ("milestone ... is listed twice"), so every command, check
+// included, stops with that error before any check can run.
+//
+// Warning codes are listed in warn.go.
 package check
 
 import (
@@ -111,9 +115,16 @@ func Run(cfg *config.Config, p *plan.Plan) []Finding {
 				"%s is marked done without evidence: a commit, a person, an issue or 'Done before Ajiya'", t.ID)
 		}
 	}
-	if target := cfg.Launch.Target; target != "" {
-		if _, _, err := p.Required(target); err != nil {
-			add("E012", config.FileName, "ajiya launch set <phase|ticket>", "launch %v", err)
+	for _, m := range cfg.MilestoneList() {
+		for _, target := range m.Targets {
+			if _, _, err := p.Required(target); err != nil {
+				if cfg.Launch.Target != "" { // the older [launch] form
+					add("E012", config.FileName, "ajiya launch set <phase|ticket>", "launch %v", err)
+					continue
+				}
+				add("E012", config.FileName, fmt.Sprintf("give milestone %s only phase slugs or ticket IDs as targets in %s", m.Name, config.FileName),
+					"milestone %s: %v", m.Name, err)
+			}
 		}
 	}
 	for _, c := range plan.NewGraph(tickets).Cycles() {

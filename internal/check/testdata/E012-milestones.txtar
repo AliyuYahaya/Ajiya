@@ -1,0 +1,28 @@
+A [[milestones]] target that is neither a phase nor a ticket. Each bad target
+is named with its milestone; the good ones are not. Milestone warnings wait
+until the targets are fixed.
+
+-- ajiya.toml --
+[project]
+name = "Fixture"
+prefix = "FX"
+
+[[milestones]]
+name = "staging-proven"
+targets = ["core", "gate-0"]
+
+[[milestones]]
+name = "launch"
+targets = ["FX-0009"]
+-- ajiya/core.md --
+<!-- Written by ajiya. Do not edit by hand: use ajiya commands. -->
+# Core
+
+Goal: g
+
+| ID | App | Ticket | Done when | Depends | Status |
+|---|---|---|---|---|---|
+| FX-0001 | infra | Write the API | a | - | 🟥 Pending |
+-- want --
+E012 ajiya.toml: milestone staging-proven: target "gate-0" is neither a phase nor a ticket. Fix: give milestone staging-proven only phase slugs or ticket IDs as targets in ajiya.toml
+E012 ajiya.toml: milestone launch: target "FX-0009" is neither a phase nor a ticket. Fix: give milestone launch only phase slugs or ticket IDs as targets in ajiya.toml

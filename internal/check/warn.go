@@ -9,8 +9,10 @@ package check
 //	W004 a commit changed files outside every registered app
 //	W005 a folder with a manifest is not a registered app
 //	W006 an open ticket added after the plan was first built is linked to nothing
-//	W007 the launch set has no deployment or hosting ticket
+//	W007 the launch milestone's required set has no deployment or hosting ticket
 //	W008 an open ticket has needed a human for more than 14 days
+//	W009 an earlier milestone already requires everything a later one does
+//	W010 open tickets are in no milestone, when a [[milestones]] list exists
 
 import (
 	"errors"
@@ -71,22 +73,97 @@ func planWarnings(cfg *config.Config, p *plan.Plan) []Finding {
 		}
 	}
 
-	if target := cfg.Launch.Target; target != "" {
-		if req, _, err := p.Required(target); err == nil {
-			found := false
-			for _, t := range p.Tickets() {
-				if req[t.ID] && deployRE.MatchString(t.Title+" "+t.DoneWhen) {
-					found = true
-					break
-				}
+	return append(fs, milestoneWarnings(cfg, p)...)
+}
+
+// MaxListed is how many ticket IDs one finding lists before "and N more".
+const MaxListed = 10
+
+// milestoneWarnings are W007, W009 and W010. They are skipped while a target
+// does not exist: that is E012, and the required sets are not known.
+func milestoneWarnings(cfg *config.Config, p *plan.Plan) []Finding {
+	var ms []plan.Milestone
+	for _, m := range cfg.MilestoneList() {
+		ms = append(ms, plan.Milestone{Name: m.Name, Targets: m.Targets})
+	}
+	if len(ms) == 0 {
+		return nil
+	}
+	s, err := p.Schedule(ms)
+	if err != nil {
+		return nil
+	}
+	var fs []Finding
+	tickets := p.Tickets()
+
+	// W007: only the milestone named launch needs a deployment ticket.
+	if i := s.Index(config.LaunchMilestone); i >= 0 {
+		found := false
+		for _, t := range tickets {
+			if s.Required[i][t.ID] && deployRE.MatchString(t.Title+" "+t.DoneWhen) {
+				found = true
+				break
 			}
-			if !found {
-				fs = append(fs, warning("W007", config.FileName, "add a ticket for deployment or hosting that the launch target depends on",
-					"nothing required for launch mentions deployment or hosting"))
+		}
+		if !found {
+			fs = append(fs, warning("W007", config.FileName, "add a ticket for deployment or hosting that the launch target depends on",
+				"nothing required for launch mentions deployment or hosting"))
+		}
+	}
+
+	// W009: a required set is closed under dependencies, so when an earlier
+	// milestone requires every ticket of a later one's targets, it requires
+	// the later one's whole set, and the later gate opens no later. Each
+	// later milestone is named once, against the first such earlier one.
+	for j := range ms {
+		if len(s.Required[j]) == 0 {
+			continue
+		}
+		for i := range j {
+			if subset(s.Required[j], s.Required[i]) {
+				a, b := ms[i].Name, ms[j].Name
+				fs = append(fs, warning("W009", config.FileName,
+					fmt.Sprintf("put %s first with 'ajiya milestone move %s --before %s', or give %s targets that %s does not require", b, b, a, b, a),
+					"milestone %s comes after %s, but %s already requires every ticket %s does, so %s is reached no later than %s",
+					b, a, a, b, b, a))
+				break
 			}
 		}
 	}
+
+	// W010: open work that no milestone requires. Only for a [[milestones]]
+	// list: with the older [launch] target alone, work after launch is the
+	// expected state ('launch show' counts it), not a problem.
+	var loose []string
+	for _, t := range tickets {
+		if _, ok := s.Of[t.ID]; !ok && !t.Status.Closed() && len(cfg.Milestones) > 0 {
+			loose = append(loose, t.ID)
+		}
+	}
+	if n := len(loose); n > 0 {
+		more := ""
+		if n > MaxListed {
+			more = fmt.Sprintf(" and %d more", n-MaxListed)
+			loose = loose[:MaxListed]
+		}
+		noun := "tickets are"
+		if n == 1 {
+			noun = "ticket is"
+		}
+		fs = append(fs, warning("W010", config.FileName, "make a milestone's targets depend on them, or add a milestone for the later work",
+			"%d open %s in no milestone: %s%s", n, noun, strings.Join(loose, ", "), more))
+	}
 	return fs
+}
+
+// subset reports whether every key of a is in b.
+func subset(a, b map[string]bool) bool {
+	for k := range a {
+		if !b[k] {
+			return false
+		}
+	}
+	return true
 }
 
 // appsNamedIn returns the registered apps whose names appear as words in text.
