@@ -7,10 +7,10 @@ Generated 2026-09-29.
 
 | Milestone | Closed | Required | % | Can start now |
 |---|---|---|---|---|
-| v0-1 | 20 | 31 | 64% | 1 |
-| v0-2 | 20 | 37 | 54% | 1 |
-| v0-3 | 20 | 47 | 42% | 1 |
-| after-v0-3 | 20 | 46 | 43% | 1 |
+| v0-1 | 25 | 35 | 71% | 2 |
+| v0-2 | 25 | 41 | 60% | 2 |
+| v0-3 | 25 | 51 | 49% | 2 |
+| after-v0-3 | 25 | 50 | 50% | 2 |
 
 ## Phases
 
@@ -18,7 +18,7 @@ Generated 2026-09-29.
 |---|---|---|---|---|---|---|
 | Commit-rule | 7 | 0 | 0 | 7 | 100% | v0-1 |
 | Apps-launch | 14 | 0 | 0 | 14 | 100% | v0-1 |
-| Outputs | 7 | 0 | 1 | 8 | 87% | v0-1 |
+| Outputs | 12 | 0 | 0 | 12 | 100% | v0-1 |
 | Onboarding | 3 | 0 | 6 | 9 | 33% | v0-1 |
 | Release | 1 | 0 | 4 | 5 | 20% | v0-1 |
 | Agent-access | 0 | 0 | 3 | 3 | 0% | v0-2 |
@@ -27,12 +27,11 @@ Generated 2026-09-29.
 
 ## Can start now
 
-- **AJ-0021** Milestones v0-1, v0-2 and v0-3 set and the dashboard in use on this repo (ajiya) · v0-1
+- **AJ-0022** Setup guide (ajiya) · v0-1
+- **AJ-0023** Daily guide (ajiya) · v0-1
 
 ## Waiting
 
-- **AJ-0022** Setup guide (ajiya) waits on AJ-0021
-- **AJ-0023** Daily guide (ajiya) waits on AJ-0021
 - **AJ-0024** Skill and agent instruction blocks (ajiya) waits on AJ-0022, AJ-0023
 - **AJ-0025** init writes and updates the agent kit (ajiya) waits on AJ-0024
 - **AJ-0029** Re-run init on this repo (ajiya) waits on AJ-0025
@@ -67,6 +66,24 @@ Generated 2026-09-29.
 
 ## Recent activity
 
+- 2026-09-29 `4b321be` AJ-0021 done (AJ-0021)
+  - AJ-0021: pending → done
+- 2026-09-29 `dcb3501` AJ-0061 to AJ-0064 done (chore)
+  - AJ-0061: in_progress → done
+  - AJ-0062: in_progress → done
+  - AJ-0063: in_progress → done
+  - AJ-0064: in_progress → done
+- 2026-09-29 `40d743d` Ticket cards without the side stripe (AJ-0064)
+- 2026-09-29 `d84de11` Dashboard: logo, filters on every view, ticket and phase dependency graphs (AJ-0061, AJ-0062, AJ-0063)
+  - AJ-0061: pending → in_progress
+  - AJ-0062: pending → in_progress
+  - AJ-0063: pending → in_progress
+  - AJ-0064: pending → in_progress
+- 2026-09-29 `72a0c1f` Plan dashboard polish: logo, filters everywhere, dependency toggle, card borders (chore)
+  - AJ-0061: new → pending
+  - AJ-0062: new → pending
+  - AJ-0063: new → pending
+  - AJ-0064: new → pending
 - 2026-09-29 `8ced233` Merge branch 'worktree-agent-a658cbd8dac8f5d6c' (-)
 - 2026-09-29 `f84a39b` AJ-0036 and AJ-0060 done (AJ-0036, AJ-0060)
   - AJ-0036: in_progress → done
@@ -83,16 +100,7 @@ Generated 2026-09-29.
   - AJ-0020: in_progress → done
 - 2026-09-29 `d7460c0` Merge branch 'worktree-agent-acd57cf3aab521d30' (-)
 - 2026-09-29 `994ad17` Dashboard: overview by milestone, next up, board, phases, tickets, apps, checks and activity (AJ-0019)
-- 2026-09-29 `b777830` Merge branch 'worktree-agent-a236161fb3f4ab13d' (-)
-- 2026-09-29 `28b8618` Add ajiya serve: dashboard on 127.0.0.1 with Host check and rebuild on change (AJ-0020)
-- 2026-09-29 `9d34072` AJ-0059 done (AJ-0059)
-  - AJ-0059: in_progress → done
-- 2026-09-29 `57776dc` phase rename updates milestone targets (AJ-0059)
-- 2026-09-29 `4ddeb1f` Start AJ-0019, AJ-0020 and AJ-0059 (AJ-0019, AJ-0020, AJ-0059)
-  - AJ-0019: pending → in_progress
-  - AJ-0020: pending → in_progress
-  - AJ-0059: pending → in_progress
-- and 83 more in data.js
+- and 88 more in data.js
 
 ## Checks
 

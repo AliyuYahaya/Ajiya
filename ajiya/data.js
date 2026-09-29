@@ -13,14 +13,14 @@ window.AJIYA = {
         "AJ-0034"
       ],
       "required": {
-        "total": 31,
-        "done": 20,
+        "total": 35,
+        "done": 25,
         "in_progress": 0,
-        "pending": 11,
+        "pending": 10,
         "dropped": 0
       },
-      "percent": 64,
-      "ready": 1
+      "percent": 71,
+      "ready": 2
     },
     {
       "name": "v0-2",
@@ -28,14 +28,14 @@ window.AJIYA = {
         "AJ-0047"
       ],
       "required": {
-        "total": 37,
-        "done": 20,
+        "total": 41,
+        "done": 25,
         "in_progress": 0,
-        "pending": 17,
+        "pending": 16,
         "dropped": 0
       },
-      "percent": 54,
-      "ready": 1
+      "percent": 60,
+      "ready": 2
     },
     {
       "name": "v0-3",
@@ -43,14 +43,14 @@ window.AJIYA = {
         "AJ-0058"
       ],
       "required": {
-        "total": 47,
-        "done": 20,
+        "total": 51,
+        "done": 25,
         "in_progress": 0,
-        "pending": 27,
+        "pending": 26,
         "dropped": 0
       },
-      "percent": 42,
-      "ready": 1
+      "percent": 49,
+      "ready": 2
     },
     {
       "name": "after-v0-3",
@@ -58,14 +58,14 @@ window.AJIYA = {
         "AJ-0057"
       ],
       "required": {
-        "total": 46,
-        "done": 20,
+        "total": 50,
+        "done": 25,
         "in_progress": 0,
-        "pending": 26,
+        "pending": 25,
         "dropped": 0
       },
-      "percent": 43,
-      "ready": 1
+      "percent": 50,
+      "ready": 2
     }
   ],
   "phases": [
@@ -102,13 +102,13 @@ window.AJIYA = {
       "title": "Outputs",
       "goal": "PROGRESS.md, data.js, the dashboard and serve show the plan and its activity",
       "counts": {
-        "total": 8,
-        "done": 7,
+        "total": 12,
+        "done": 12,
         "in_progress": 0,
-        "pending": 1,
+        "pending": 0,
         "dropped": 0
       },
-      "percent": 87,
+      "percent": 100,
       "milestone": "v0-1"
     },
     {
@@ -187,10 +187,10 @@ window.AJIYA = {
       "name": "ajiya",
       "path": ".",
       "counts": {
-        "total": 60,
-        "done": 32,
+        "total": 64,
+        "done": 37,
         "in_progress": 0,
-        "pending": 28,
+        "pending": 27,
         "dropped": 0
       }
     }
@@ -636,7 +636,10 @@ window.AJIYA = {
         "AJ-0020",
         "AJ-0036",
         "AJ-0057",
-        "AJ-0060"
+        "AJ-0060",
+        "AJ-0061",
+        "AJ-0062",
+        "AJ-0064"
       ],
       "unblocks": 0
     },
@@ -675,20 +678,28 @@ window.AJIYA = {
         "AJ-0020",
         "AJ-0036",
         "AJ-0038",
-        "AJ-0060"
+        "AJ-0060",
+        "AJ-0061",
+        "AJ-0062",
+        "AJ-0063",
+        "AJ-0064"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · 61d1f54 · 2026-09-29 · tests passed · Note: milestone list shows v0-1, v0-2, v0-3 in order; ajiya serve shows this repo's plan live",
+        "note": "milestone list shows v0-1, v0-2, v0-3 in order; ajiya serve shows this repo's plan live",
+        "commit": "61d1f54",
+        "date": "2026-09-29",
+        "tests_passed": true
       },
       "milestone": "v0-1",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0022",
         "AJ-0023"
       ],
-      "unblocks": 27
+      "unblocks": 0
     },
     {
       "id": "AJ-0022",
@@ -704,10 +715,8 @@ window.AJIYA = {
         "text": "🟥 Pending"
       },
       "milestone": "v0-1",
-      "ready": false,
-      "waiting_on": [
-        "AJ-0021"
-      ],
+      "ready": true,
+      "waiting_on": [],
       "dependants": [
         "AJ-0024",
         "AJ-0041"
@@ -728,10 +737,8 @@ window.AJIYA = {
         "text": "🟥 Pending"
       },
       "milestone": "v0-1",
-      "ready": false,
-      "waiting_on": [
-        "AJ-0021"
-      ],
+      "ready": true,
+      "waiting_on": [],
       "dependants": [
         "AJ-0024"
       ],
@@ -1044,7 +1051,8 @@ window.AJIYA = {
       "ready": false,
       "waiting_on": [],
       "dependants": [
-        "AJ-0021"
+        "AJ-0021",
+        "AJ-0063"
       ],
       "unblocks": 0
     },
@@ -1674,13 +1682,283 @@ window.AJIYA = {
         "AJ-0021"
       ],
       "unblocks": 0
+    },
+    {
+      "id": "AJ-0061",
+      "phase": "outputs",
+      "app": "ajiya",
+      "title": "Brand logo in the dashboard",
+      "done_when": "The sidebar shows ajiya/brand-logo.png scaled for 2x screens and embedded as a base64 data URI (no extra file or request), legible in light and dark themes; collapsed sidebar hides it like the reference",
+      "depends": [
+        "AJ-0019"
+      ],
+      "status": {
+        "state": "done",
+        "text": "🟩 Done · d84de11 · 2026-09-29 · tests passed",
+        "commit": "d84de11",
+        "date": "2026-09-29",
+        "tests_passed": true
+      },
+      "milestone": "v0-1",
+      "ready": false,
+      "waiting_on": [],
+      "dependants": [
+        "AJ-0021"
+      ],
+      "unblocks": 0
+    },
+    {
+      "id": "AJ-0062",
+      "phase": "outputs",
+      "app": "ajiya",
+      "title": "Search and filters on every dashboard view",
+      "done_when": "The filter bar (search, app, phase, milestone, state, and Can start now / Needs a human pills) shows on every view the reference shows it on, including Overview and Dependencies; search also narrows Checks and Activity; a test checks each view's filters flag",
+      "depends": [
+        "AJ-0019"
+      ],
+      "status": {
+        "state": "done",
+        "text": "🟩 Done · d84de11 · 2026-09-29 · tests passed",
+        "commit": "d84de11",
+        "date": "2026-09-29",
+        "tests_passed": true
+      },
+      "milestone": "v0-1",
+      "ready": false,
+      "waiting_on": [],
+      "dependants": [
+        "AJ-0021"
+      ],
+      "unblocks": 0
+    },
+    {
+      "id": "AJ-0063",
+      "phase": "outputs",
+      "app": "ajiya",
+      "title": "Dependencies view: toggle between ticket links and phase links",
+      "done_when": "A Tickets / Phases toggle on the Dependencies view; Tickets mode draws every ticket as a card like the reference, with All / Only linked and path to a milestone, and fades tickets that miss the filters; Phases mode keeps the phase graph and its click-through; the choice is remembered",
+      "depends": [
+        "AJ-0036"
+      ],
+      "status": {
+        "state": "done",
+        "text": "🟩 Done · d84de11 · 2026-09-29 · tests passed",
+        "commit": "d84de11",
+        "date": "2026-09-29",
+        "tests_passed": true
+      },
+      "milestone": "v0-1",
+      "ready": false,
+      "waiting_on": [],
+      "dependants": [
+        "AJ-0021"
+      ],
+      "unblocks": 0
+    },
+    {
+      "id": "AJ-0064",
+      "phase": "outputs",
+      "app": "ajiya",
+      "title": "Ticket cards without the side border outside Dependencies",
+      "done_when": "Ticket cards on Overview, Next up, Board, Phases and the rest have no coloured left border; only Dependencies graph nodes keep the state stripe",
+      "depends": [
+        "AJ-0019"
+      ],
+      "status": {
+        "state": "done",
+        "text": "🟩 Done · 40d743d · 2026-09-29 · tests passed",
+        "commit": "40d743d",
+        "date": "2026-09-29",
+        "tests_passed": true
+      },
+      "milestone": "v0-1",
+      "ready": false,
+      "waiting_on": [],
+      "dependants": [
+        "AJ-0021"
+      ],
+      "unblocks": 0
     }
   ],
   "next": [
-    "AJ-0021"
+    "AJ-0022",
+    "AJ-0023"
   ],
   "checks": [],
   "activity": [
+    {
+      "hash": "4b321be611a5f9f1cf6ed8de1260a5d3cbb4a2bf",
+      "short": "4b321be",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "AJ-0021 done",
+      "refs": [
+        "AJ-0021"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0021",
+          "phase": "outputs",
+          "from": "pending",
+          "to": "done",
+          "text": "🟩 Done · 61d1f54 · 2026-09-29 · tests passed · Note: milestone list shows v0-1, v0-2, v0-3 in order; ajiya serve shows this repo's plan live"
+        }
+      ],
+      "time": 1790708918
+    },
+    {
+      "hash": "dcb35011bec7eae072c99a4be9cb170514b2472c",
+      "short": "dcb3501",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "AJ-0061 to AJ-0064 done",
+      "refs": [],
+      "chore": true,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0061",
+          "phase": "outputs",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · d84de11 · 2026-09-29 · tests passed"
+        },
+        {
+          "id": "AJ-0062",
+          "phase": "outputs",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · d84de11 · 2026-09-29 · tests passed"
+        },
+        {
+          "id": "AJ-0063",
+          "phase": "outputs",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · d84de11 · 2026-09-29 · tests passed"
+        },
+        {
+          "id": "AJ-0064",
+          "phase": "outputs",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · 40d743d · 2026-09-29 · tests passed"
+        }
+      ],
+      "time": 1790708649
+    },
+    {
+      "hash": "40d743defd65b40583bf2303fb4cc1929b43056f",
+      "short": "40d743d",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Ticket cards without the side stripe",
+      "refs": [
+        "AJ-0064"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790708324
+    },
+    {
+      "hash": "d84de11fc0f5cffbc6776d492f36efadde05a5ce",
+      "short": "d84de11",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Dashboard: logo, filters on every view, ticket and phase dependency graphs",
+      "refs": [
+        "AJ-0061",
+        "AJ-0062",
+        "AJ-0063"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0061",
+          "phase": "outputs",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        },
+        {
+          "id": "AJ-0062",
+          "phase": "outputs",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        },
+        {
+          "id": "AJ-0063",
+          "phase": "outputs",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        },
+        {
+          "id": "AJ-0064",
+          "phase": "outputs",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        }
+      ],
+      "time": 1790708324
+    },
+    {
+      "hash": "72a0c1f34578f06dda176955567cd9556f4fe2cf",
+      "short": "72a0c1f",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Plan dashboard polish: logo, filters everywhere, dependency toggle, card borders",
+      "refs": [],
+      "chore": true,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0061",
+          "phase": "outputs",
+          "from": "",
+          "to": "pending",
+          "text": "🟥 Pending"
+        },
+        {
+          "id": "AJ-0062",
+          "phase": "outputs",
+          "from": "",
+          "to": "pending",
+          "text": "🟥 Pending"
+        },
+        {
+          "id": "AJ-0063",
+          "phase": "outputs",
+          "from": "",
+          "to": "pending",
+          "text": "🟥 Pending"
+        },
+        {
+          "id": "AJ-0064",
+          "phase": "outputs",
+          "from": "",
+          "to": "pending",
+          "text": "🟥 Pending"
+        }
+      ],
+      "time": 1790707833
+    },
     {
       "hash": "8ced23318e816cc1367c7bc6ca7277194585b40b",
       "short": "8ced233",

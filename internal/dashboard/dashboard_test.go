@@ -177,3 +177,65 @@ func TestLiveRefreshRefillsFilters(t *testing.T) {
 		t.Error("refresh() does not call fillFilters() after setData()")
 	}
 }
+
+// The logo is embedded as a data URI, so the page needs no other file, and
+// appears once: the mobile bar copies it.
+func TestLogoEmbedded(t *testing.T) {
+	s := pageText(t)
+	if n := strings.Count(s, `src="data:image/png;base64,`); n != 1 {
+		t.Fatalf("want the logo embedded once as a PNG data URI, found %d", n)
+	}
+	if !strings.Contains(s, "$('mobileLogo').src = $('logo').src;") {
+		t.Error("the mobile bar does not reuse the embedded logo")
+	}
+	if !strings.Contains(s, "--logo-filter: invert(1) hue-rotate(180deg);") {
+		t.Error("dark themes do not invert the logo's dark wordmark")
+	}
+}
+
+// The filter bar shows on every view but Apps; Checks and Activity get the
+// search box only.
+func TestViewFilters(t *testing.T) {
+	s := pageText(t)
+	want := map[string]string{
+		"overview": "true", "next": "true", "board": "true", "deps": "true", "phases": "true",
+		"tickets": "true", "apps": "false", "checks": "'search'", "activity": "'search'",
+	}
+	for view, flag := range want {
+		re := regexp.MustCompile(`\n    ` + view + `: \{[^\n]*filters: ([^ ]+) \},`)
+		m := re.FindStringSubmatch(s)
+		if m == nil {
+			t.Errorf("view %s: no filters flag found", view)
+			continue
+		}
+		if m[1] != flag {
+			t.Errorf("view %s: filters = %s, want %s", view, m[1], flag)
+		}
+	}
+	for _, id := range []string{`id="readyP"`, `id="humanP"`} {
+		if !strings.Contains(s, id) {
+			t.Errorf("filter bar lacks the %s pill", id)
+		}
+	}
+}
+
+// Ticket cards carry no side stripe; only Dependencies graph nodes do.
+func TestNoCardSideStripe(t *testing.T) {
+	s := pageText(t)
+	if regexp.MustCompile(`\.card[^{\n]*\{[^}]*inset 3px 0 0`).MatchString(s) {
+		t.Error("a .card rule still draws an inset side stripe")
+	}
+	if !strings.Contains(s, ".gnode::before {") {
+		t.Error("Dependencies graph nodes lost their state stripe")
+	}
+}
+
+// Dependencies toggles between ticket links and phase links.
+func TestDepsModeToggle(t *testing.T) {
+	s := pageText(t)
+	for _, want := range []string{`data-depmode="tickets"`, `data-depmode="phases"`, "store.set(key('depmode'), depMode)", `'Only linked'`} {
+		if !strings.Contains(s, want) {
+			t.Errorf("Dependencies view lacks %s", want)
+		}
+	}
+}
