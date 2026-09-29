@@ -10,7 +10,7 @@ exec ajiya init --name Legacy --prefix LE --yes
 ! exec ajiya import legacy
 stderr 'expected 1 argument'
 ! exec ajiya import legacy nope.toml
-stderr 'no such file'
+stderr 'no such file|cannot find the file' # Unix and Windows wording
 ! exec ajiya import legacy bad/typo.toml
 stderr 'unknown key "prefixs"'
 ! exec ajiya import legacy bad/missing.toml
