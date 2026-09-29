@@ -8,9 +8,9 @@ Generated 2026-09-29.
 | Milestone | Closed | Required | % | Can start now |
 |---|---|---|---|---|
 | v0-1 | 34 | 37 | 91% | 2 |
-| v0-2 | 34 | 43 | 79% | 2 |
-| v0-3 | 34 | 53 | 64% | 2 |
-| after-v0-3 | 34 | 52 | 65% | 2 |
+| v0-2 | 34 | 59 | 57% | 2 |
+| v0-3 | 34 | 69 | 49% | 2 |
+| after-v0-3 | 34 | 68 | 50% | 2 |
 
 ## Phases
 
@@ -22,7 +22,7 @@ Generated 2026-09-29.
 | Onboarding | 9 | 0 | 1 | 10 | 90% | v0-1 |
 | Release | 4 | 0 | 1 | 5 | 80% | v0-1 |
 | Agent-access | 0 | 0 | 3 | 3 | 0% | v0-2 |
-| Install | 0 | 0 | 3 | 3 | 0% | v0-2 |
+| Install | 0 | 0 | 19 | 19 | 0% | v0-2 |
 | Decisions-and-changes | 0 | 0 | 11 | 11 | 0% | v0-3 |
 
 ## Can start now
@@ -36,9 +36,9 @@ Generated 2026-09-29.
 - **AJ-0042** ajiya status (ajiya) waits on AJ-0034
 - **AJ-0043** ajiya mcp server (ajiya) waits on AJ-0042
 - **AJ-0044** ajiya mcp install, uninstall and status (ajiya) waits on AJ-0043
-- **AJ-0045** Install script and npm package (ajiya) waits on AJ-0044
+- **AJ-0045** install.sh for macOS and Linux (ajiya) waits on AJ-0044
 - **AJ-0046** Claude Code plugin (ajiya) waits on AJ-0042, AJ-0043
-- **AJ-0047** v0.2 definition of done (ajiya) waits on AJ-0042, AJ-0043, AJ-0044, AJ-0045, AJ-0046
+- **AJ-0047** v0.2 definition of done (ajiya) waits on AJ-0042, AJ-0043, AJ-0044, AJ-0045, AJ-0046, AJ-0082
 - **AJ-0048** Tags column (ajiya) waits on AJ-0047
 - **AJ-0049** ajiya ticket files (ajiya) waits on AJ-0048
 - **AJ-0050** Decision records and commands (ajiya) waits on AJ-0048
@@ -50,12 +50,35 @@ Generated 2026-09-29.
 - **AJ-0056** Guides and skill for decisions and changes (ajiya) waits on AJ-0055
 - **AJ-0057** Dashboard: open changes and decisions (ajiya) waits on AJ-0055
 - **AJ-0058** v0.3 definition of done (ajiya) waits on AJ-0048, AJ-0049, AJ-0050, AJ-0051, AJ-0052, AJ-0053, AJ-0054, AJ-0055, AJ-0056
+- **AJ-0067** Decide how the npm package ships the binary (ajiya) waits on AJ-0034
+- **AJ-0068** npm account and package names (ajiya) waits on AJ-0034
+- **AJ-0069** Homebrew tap repository and token (ajiya) waits on AJ-0034
+- **AJ-0070** Choose the install script URL (ajiya) waits on AJ-0034
+- **AJ-0071** Release environments with required reviewers (ajiya) waits on AJ-0034
+- **AJ-0072** Release workflow: build to a draft release (ajiya) waits on AJ-0034
+- **AJ-0073** install.ps1 for Windows (ajiya) waits on AJ-0044
+- **AJ-0074** Installer CI (ajiya) waits on AJ-0045, AJ-0073
+- **AJ-0075** npm packages built from the release archives (ajiya) waits on AJ-0067, AJ-0068
+- **AJ-0076** npm launcher tests (ajiya) waits on AJ-0075
+- **AJ-0077** Homebrew tap wiring (ajiya) waits on AJ-0044, AJ-0069
+- **AJ-0078** Install scripts served at a stable URL (ajiya) waits on AJ-0045, AJ-0070, AJ-0073
+- **AJ-0079** Gated publish jobs (ajiya) waits on AJ-0071, AJ-0072, AJ-0075, AJ-0077
+- **AJ-0080** npm trusted publishing (ajiya) waits on AJ-0075
+- **AJ-0081** Release rehearsal on a release candidate (ajiya) waits on AJ-0074, AJ-0076, AJ-0078, AJ-0079, AJ-0080
+- **AJ-0082** Install docs for every channel (ajiya) waits on AJ-0081
 
 ## Needs a human
 
 - **AJ-0034** v0.1 definition of done (ajiya): final sign-off before publishing
 - **AJ-0047** v0.2 definition of done (ajiya): final sign-off before publishing v0.2
 - **AJ-0058** v0.3 definition of done (ajiya): final sign-off before publishing v0.3
+- **AJ-0067** Decide how the npm package ships the binary (ajiya): changes spec 02's wording; the maintainer decides
+- **AJ-0068** npm account and package names (ajiya): needs the maintainer's npm account
+- **AJ-0069** Homebrew tap repository and token (ajiya): needs the maintainer's GitHub account
+- **AJ-0070** Choose the install script URL (ajiya): a domain costs money and is the maintainer's choice
+- **AJ-0071** Release environments with required reviewers (ajiya): repository settings need the maintainer
+- **AJ-0080** npm trusted publishing (ajiya): needs the maintainer's npm account
+- **AJ-0081** Release rehearsal on a release candidate (ajiya): publishing anything needs the maintainer's approval
 
 ## Recent activity
 
