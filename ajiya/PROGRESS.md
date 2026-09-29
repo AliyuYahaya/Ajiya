@@ -86,6 +86,14 @@ Generated 2026-09-29.
 
 ## Recent activity
 
+- 2026-09-29 `c245c5e` Plan the fixes from the agent-only walkthrough test (chore)
+  - AJ-0085: new → pending
+  - AJ-0086: new → pending
+  - AJ-0087: new → pending
+  - AJ-0088: new → pending
+  - AJ-0089: new → pending
+  - AJ-0090: new → pending
+  - AJ-0091: new → pending
 - 2026-09-29 `cc18043` npm names: ajiya plus @ajiya/<os>-<arch> under an ajiya org (AJ-0068, AJ-0075)
 - 2026-09-29 `6a75e60` v0.1 signed off (AJ-0034)
   - AJ-0034: pending → done
@@ -106,8 +114,7 @@ Generated 2026-09-29.
 - 2026-09-29 `622e678` Merge branch 'worktree-agent-af0c9a6c1037d2858' into worktree-agent-a658cbd8dac8f5d6c (-)
 - 2026-09-29 `140a432` AJ-0065 done (AJ-0065)
   - AJ-0065: pending → done
-- 2026-09-29 `5c1af99` Ticket done counts only commits made after the ticket started (AJ-0065)
-- and 124 more in data.js
+- and 125 more in data.js
 
 ## Checks
 
