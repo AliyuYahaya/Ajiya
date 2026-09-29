@@ -2496,6 +2496,31 @@ window.AJIYA = {
   "checks": [],
   "activity": [
     {
+      "hash": "7363ad410a2ee46b77c21c1366c75f43ddfccdde",
+      "short": "7363ad4",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Install scripts are served as GitHub release assets",
+      "refs": [
+        "AJ-0070",
+        "AJ-0078"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0070",
+          "phase": "install",
+          "from": "pending",
+          "to": "done",
+          "text": "🟩 Done · by Aliyu Yahaya · 2026-09-29 · Note: install scripts live on GitHub as release assets: releases/latest/download/install.sh and install.ps1; no domain for now"
+        }
+      ],
+      "time": 1790718017
+    },
+    {
       "hash": "ab57528a407d5b785481c6a9b27db908806ae05a",
       "short": "ab57528",
       "date": "2026-09-29",

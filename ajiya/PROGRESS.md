@@ -72,6 +72,8 @@ Generated 2026-09-29.
 
 ## Recent activity
 
+- 2026-09-29 `7363ad4` Install scripts are served as GitHub release assets (AJ-0070, AJ-0078)
+  - AJ-0070: pending → done
 - 2026-09-29 `ab57528` npm account, org and @ajiya/cli placeholder in place (AJ-0068)
   - AJ-0068: pending → done
 - 2026-09-29 `2680bc1` phase remove updates [phases] order before deleting the file (AJ-0086)
@@ -106,8 +108,7 @@ Generated 2026-09-29.
   - AJ-0089: new → pending
   - AJ-0090: new → pending
   - AJ-0091: new → pending
-- 2026-09-29 `cc18043` npm names: ajiya plus @ajiya/<os>-<arch> under an ajiya org (AJ-0068, AJ-0075)
-- and 138 more in data.js
+- and 139 more in data.js
 
 ## Checks
 
