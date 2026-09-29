@@ -81,6 +81,7 @@ func init() {
 		{"import github", "[--repo <owner/name>] [--app <app>] [--limit <n>]", "Import GitHub issues into the inbox phase (uses gh)", runImportGitHub},
 		{"changelog", "[<range>] [--json]", "Print a changelog grouped by phase and ticket", runChangelog},
 		{"import legacy", "<config> [--app <app>]", "Import a legacy WBS project (the collate.py format)", runImportLegacy},
+		{"build", "", "Write ajiya/PROGRESS.md and ajiya/data.js", runBuild},
 		{"check", "[--strict] [--commits <range>] [--json]", "Check the plan for problems", runCheck},
 		{"hook install", "", "Install the commit-msg and prepare-commit-msg git hooks", runHookInstall},
 		{"hook run", "<hook> <git hook arguments>", "Run a git hook (called by the installed hook scripts)", runHookRun},

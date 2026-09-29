@@ -1,0 +1,52 @@
+# ajiya build writes PROGRESS.md and data.js, only when they change.
+
+exec ajiya init --name Demo --prefix DE
+exec ajiya phase add core 'Core works'
+exec ajiya phase add go-live 'Live'
+exec ajiya ticket add --phase core --app infra --done-when x 'Schema'
+exec ajiya ticket add --phase core --app infra --done-when x 'Endpoint' --depends DE-0001
+exec ajiya ticket add --phase go-live --app infra --done-when x 'Deploy to production' --depends DE-0002 --human 'hosting account'
+exec ajiya ticket add --phase core --app infra --done-when x 'Later | maybe'
+exec ajiya launch set go-live
+env GIT_COMMITTER_DATE=2026-09-01T10:00:00
+env GIT_AUTHOR_DATE=2026-09-01T10:00:00
+exec git add -A
+exec git commit -q -m 'Plan' -m 'Ajiya: DE-0001, DE-0002, DE-0003'
+exec ajiya ticket done DE-0001
+exec git add -A
+exec git commit -q -m 'Schema done' -m 'Ajiya: DE-0001'
+
+exec ajiya build
+stdout 'Wrote ajiya/PROGRESS.md'
+stdout 'Wrote ajiya/data.js'
+grep '^Generated 2026-09-01\.$' ajiya/PROGRESS.md
+grep '^\| launch \| 1 \| 3 \| 33% \| 1 \|$' ajiya/PROGRESS.md
+grep '^\| Core \| 1 \| 0 \| 2 \| 3 \| 33% \| launch \|$' ajiya/PROGRESS.md
+grep '^- \*\*DE-0002\*\* Endpoint \(infra\) · launch$' ajiya/PROGRESS.md
+grep '^- \*\*DE-0003\*\* Deploy to production \(infra\) waits on DE-0002$' ajiya/PROGRESS.md
+grep 'DE-0003\*\* Deploy to production \(infra\): hosting account' ajiya/PROGRESS.md
+grep 'Later \\\| maybe' ajiya/PROGRESS.md
+grep '  - DE-0001: pending → done' ajiya/PROGRESS.md
+grep '^window.AJIYA = \{$' ajiya/data.js
+grep '"schema": 1,' ajiya/data.js
+
+# Nothing changed: nothing written.
+exec ajiya build
+stdout '^Up to date.$'
+
+# Committing the output changes nothing either: it is not activity.
+env GIT_COMMITTER_DATE=2026-09-20T10:00:00
+env GIT_AUTHOR_DATE=2026-09-20T10:00:00
+exec git add ajiya/PROGRESS.md ajiya/data.js
+exec git commit -q -m 'Build output' -m 'Ajiya: chore'
+exec ajiya build
+stdout '^Up to date.$'
+# (Commits are backdated, so W008 may fire; errors must not.)
+exec ajiya check
+stdout '^0 error\(s\)|No problems found.'
+
+# A real change moves the date and the numbers.
+exec ajiya ticket start DE-0002
+exec ajiya build
+grep '^Generated \d{4}-\d{2}-\d{2}\.$' ajiya/PROGRESS.md
+grep '^\| Core \| 1 \| 1 \| 1 \| 3 \| 33% \| launch \|$' ajiya/PROGRESS.md

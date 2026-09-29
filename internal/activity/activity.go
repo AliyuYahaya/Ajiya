@@ -9,6 +9,7 @@ package activity
 import (
 	"path"
 	"regexp"
+	"slices"
 	"sort"
 	"strings"
 
@@ -52,9 +53,26 @@ var agentRE = regexp.MustCompile(`(?i)\b(` + strings.Join(Agents, "|") + `)\b`)
 
 var stateNames = map[plan.State]string{plan.Pending: "pending", plan.InProgress: "in_progress", plan.Done: "done", plan.Dropped: "dropped"}
 
+// Generated are the files ajiya build writes. A commit that changes only these
+// is not activity: otherwise committing the build output would change it.
+var Generated = []string{plan.Dir + "/PROGRESS.md", plan.Dir + "/data.js"}
+
+func generatedOnly(files []string) bool {
+	if len(files) == 0 {
+		return false // merges list no files and are activity
+	}
+	for _, f := range files {
+		if !slices.Contains(Generated, f) {
+			return false
+		}
+	}
+	return true
+}
+
 // Recent returns the commits on HEAD from the given number of days before the
-// newest one up to it, newest first (ties by hash). A repository without
-// commits has no activity.
+// newest one up to it, newest first (ties by hash). Commits that change only
+// generated files are left out and do not move the window. A repository
+// without commits has no activity.
 func Recent(root string, days int) ([]Entry, error) {
 	if days <= 0 {
 		days = Days
@@ -67,8 +85,17 @@ func Recent(root string, days int) ([]Entry, error) {
 	if err != nil {
 		return nil, err
 	}
+	var newest int64
+	for _, c := range log {
+		if !generatedOnly(c.Files) && c.Time > newest {
+			newest = c.Time
+		}
+	}
 	entries := make([]Entry, 0, len(log))
 	for _, c := range log {
+		if generatedOnly(c.Files) || c.Time < newest-int64(days)*24*60*60 {
+			continue
+		}
 		e := Entry{
 			Hash: c.Hash, Short: c.Short(), Date: c.Date, Author: c.Author, Subject: c.Subject,
 			Refs: c.IDs, Chore: c.Chore, Merge: c.Merge, Revert: c.Revert,

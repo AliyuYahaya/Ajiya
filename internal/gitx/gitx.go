@@ -379,3 +379,12 @@ func splitNonEmpty(s, sep string) []string {
 	}
 	return out
 }
+
+// Dirty reports whether any of the paths has uncommitted changes, staged or not.
+func Dirty(dir string, paths ...string) (bool, error) {
+	out, err := git(dir, nil, append([]string{"status", "--porcelain", "--"}, paths...)...)
+	if err != nil {
+		return false, err
+	}
+	return strings.TrimSpace(string(out)) != "", nil
+}
