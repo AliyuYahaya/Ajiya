@@ -3,8 +3,8 @@
 exec ajiya init --name 'Clinic Booking'
 stdout 'ticket IDs like CB-0001'
 exists ajiya.toml
-! exec ajiya init
-stderr 'already exists'
+exec ajiya init
+stdout 'ajiya.toml already exists: kept as it is'
 
 # Phases.
 exec ajiya phase add bookings 'A patient can book a slot'

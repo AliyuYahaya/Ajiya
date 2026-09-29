@@ -1,0 +1,50 @@
+# init writes the agent kit; running it again updates the kit and the marked
+# blocks, and never touches the user's own text.
+
+exec ajiya init --name Demo
+stdout 'Agent kit:'
+stdout 'created\s+\.ajiya/guide/setup\.md'
+stdout 'created\s+\.ajiya/guide/daily\.md'
+stdout 'created\s+\.claude/skills/ajiya/SKILL\.md'
+stdout 'created\s+AGENTS\.md'
+stdout 'updated\s+CLAUDE\.md'
+grep '^name: ajiya$' .claude/skills/ajiya/SKILL.md
+grep '<!-- ajiya:start -->' AGENTS.md
+grep '^# House rules$' CLAUDE.md
+grep '<!-- ajiya:end -->' CLAUDE.md
+
+# Again: ajiya.toml kept, nothing to do.
+cp ajiya.toml toml.before
+exec ajiya init --name Other
+stdout 'ajiya.toml already exists: kept as it is'
+stdout 'unchanged\s+AGENTS\.md'
+! stdout 'created|updated'
+cmp ajiya.toml toml.before
+
+# The user writes around the block and edits inside it; a guide goes stale.
+# init restores Ajiya's parts and keeps the user's.
+exec sh -c 'printf "Intro.\n" > x && cat CLAUDE.md >> x && printf "Outro.\n" >> x && sed "s/ajiya next/old text/" x > CLAUDE.md'
+exec sh -c 'echo stale > .ajiya/guide/daily.md'
+exec ajiya init
+stdout 'updated\s+CLAUDE\.md'
+stdout 'updated\s+\.ajiya/guide/daily\.md'
+grep '^Intro\.$' CLAUDE.md
+grep '^Outro\.$' CLAUDE.md
+grep '^Use tabs\.$' CLAUDE.md
+! grep 'old text' CLAUDE.md
+grep 'ajiya next' CLAUDE.md
+! grep stale .ajiya/guide/daily.md
+
+# Broken markers: refused, and nothing is written.
+exec sh -c 'echo "<!-- ajiya:start -->" >> AGENTS.md'
+cp AGENTS.md agents.before
+exec sh -c 'echo stale > .ajiya/guide/setup.md'
+! exec ajiya init
+stderr 'agent kit not written: AGENTS.md: found 2 <!-- ajiya:start --> and 1 <!-- ajiya:end --> markers'
+cmp AGENTS.md agents.before
+grep stale .ajiya/guide/setup.md
+
+-- CLAUDE.md --
+# House rules
+
+Use tabs.
