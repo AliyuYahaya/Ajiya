@@ -15,7 +15,7 @@ func runBuild(e *env, args []string) error {
 	if err != nil {
 		return err
 	}
-	d, err := build.Collect(pr.cfg, pr.plan, nil)
+	d, err := build.Collect(pr.cfg, pr.plan, pr.displayPhases())
 	if err != nil {
 		return err
 	}
