@@ -1,0 +1,202 @@
+# milestone add, list, show, move and remove; next by milestone; the older
+# [launch] form converted; launch set and show on the milestone named launch.
+
+exec ajiya init --name Demo --prefix DE
+exec ajiya phase add gate 'Staging proven'
+exec ajiya phase add api 'API works'
+exec ajiya phase add go-live 'Live'
+exec ajiya phase add later 'Nice to have'
+exec ajiya phase add misc 'Odds and ends'
+exec ajiya ticket add --phase gate --app infra --done-when x 'Staging host'
+exec ajiya ticket add --phase api --app infra --done-when x 'Schema'
+exec ajiya ticket add --phase api --app infra --done-when x 'Endpoint' --depends DE-0002
+exec ajiya ticket add --phase go-live --app infra --done-when x 'Deploy' --depends DE-0001,DE-0003 --human keys
+exec ajiya ticket add --phase later --app infra --done-when x 'Dark mode'
+exec ajiya ticket add --phase later --app infra --done-when x 'Theme' --depends DE-0005
+exec ajiya ticket add --phase later --app infra --done-when x 'Report'
+exec ajiya ticket add --phase misc --app infra --done-when x 'Tidy'
+
+# No milestones yet.
+exec ajiya milestone list
+stdout 'No milestones'
+exec ajiya milestone list --json
+stdout '^\[\]$'
+! exec ajiya milestone show launch
+stderr 'no milestone "launch"; there are none yet'
+
+# The older form: launch set writes [launch] target.
+exec ajiya launch set go-live
+grep '^\[launch\]$' ajiya.toml
+exec ajiya milestone list
+stdout '^1\. launch +go-live +0 of 4 closed \(0%\) +2 can start$'
+
+# Adding a milestone converts it; the new one goes before launch.
+exec ajiya milestone add staging --targets gate
+stdout 'Moved the \[launch\] target into \[\[milestones\]\] as "launch"'
+stdout '^Order: staging, launch.$'
+! grep '^\[launch\]$' ajiya.toml
+grep '^# \[launch\]$' ajiya.toml
+cmp ajiya.toml converted.golden
+
+# After launch only when asked.
+exec ajiya milestone add after-launch --targets later --after launch
+stdout '^Order: staging, launch, after-launch.$'
+exec ajiya milestone list
+stdout '(?m)\A1\. staging +gate +0 of 1 closed \(0%\) +1 can start$'
+stdout '(?m)^2\. launch +go-live +0 of 4 closed \(0%\) +2 can start$'
+stdout '(?m)^3\. after-launch +later +0 of 3 closed \(0%\) +2 can start$'
+
+# next: earliest milestone first, then unblocks, then ID; unscheduled last.
+exec ajiya next
+stdout '(?s)DE-0001.*DE-0002.*DE-0005.*DE-0007.*DE-0008'
+stdout '(?m)\A.*DE-0001  infra  Staging host +staging · unblocks 1$'
+stdout '(?m)^.*DE-0002  infra  Schema +launch · unblocks 2$'
+stdout '(?m)^.*DE-0005  infra  Dark mode +after-launch · unblocks 1$'
+stdout '(?m)^.*DE-0007  infra  Report +after-launch$'
+stdout '(?m)^.*DE-0008  infra  Tidy$'
+
+# --launch is every ticket launch requires, even those of an earlier milestone.
+exec ajiya next --launch
+stdout -count=2 '(?m)^🟥'
+stdout DE-0001
+stdout DE-0002
+exec ajiya next --milestone after-launch
+stdout -count=2 '(?m)^🟥'
+stdout DE-0005
+stdout DE-0007
+exec ajiya next --json
+stdout '"id": "DE-0001",'
+stdout '"launch": true,\n    "milestone": "staging",'
+stdout '"launch": false,\n    "milestone": "after-launch",'
+stdout '"milestone": "",\n    "unblocks": 0'
+
+# show: what is left, what blocks it, what needs a human.
+exec ajiya milestone show launch
+stdout '^Milestone: launch \(2 of 3\)$'
+stdout '^Targets: go-live \(phase\)$'
+stdout '^Required: 0 of 4 closed \(0%\)$'
+stdout 'DE-0001  Staging host +can start$'
+stdout 'DE-0003  Endpoint +waits on DE-0002$'
+stdout 'DE-0004  Deploy +waits on DE-0001, DE-0003 · needs a human: keys$'
+stdout '^Needs a human: DE-0004$'
+exec ajiya milestone show launch --json
+stdout '"name": "launch",'
+stdout '"position": 2,'
+stdout '"kind": "phase"'
+stdout '"waiting_on": \[\n\s+"DE-0001",\n\s+"DE-0003"\n\s+\],'
+stdout '"needs_human": \[\n\s+"DE-0004"\n\s+\]'
+exec ajiya milestone list --json
+stdout '"name": "after-launch",'
+stdout '"can_start": 2'
+
+# move
+exec ajiya milestone move after-launch --before staging
+stdout '^Order: after-launch, staging, launch.$'
+exec ajiya next
+stdout '(?m)\A.*DE-0005.*after-launch · unblocks 1$'
+exec ajiya milestone move after-launch --after launch
+stdout '^Order: staging, launch, after-launch.$'
+cmp ajiya.toml three.golden
+
+# launch set changes the launch milestone in place.
+exec ajiya launch set DE-0003
+stdout 'Launch target: DE-0003 \(ticket\)'
+stdout 'Required: 0 of 2 closed \(0%\)'
+grep '^targets = \["DE-0003"\]$' ajiya.toml
+! grep '^\[launch\]$' ajiya.toml
+exec ajiya launch show --json
+stdout '"target": "DE-0003",'
+exec ajiya launch set go-live
+
+# Refusals leave ajiya.toml as it was.
+! exec ajiya milestone show nope
+stderr 'no milestone "nope"; milestones are staging, launch, after-launch'
+! exec ajiya milestone add staging --targets api
+stderr 'milestone "staging" already exists'
+! exec ajiya milestone add beta --targets api,nope
+stderr 'target "nope" is neither a phase nor a ticket'
+! exec ajiya milestone add beta --targets api --before staging --after launch
+stderr 'give --before or --after, not both'
+! exec ajiya milestone add beta --targets api --before nope
+stderr 'no milestone "nope"'
+! exec ajiya milestone add beta
+stderr '--targets is required'
+! exec ajiya milestone add Beta --targets api
+stderr 'milestone name "Beta" must be lower case'
+! exec ajiya milestone move staging
+stderr 'give --before <milestone> or --after <milestone>'
+! exec ajiya milestone move staging --before staging
+stderr 'relative to itself'
+! exec ajiya milestone remove nope
+stderr 'no milestone "nope"'
+! exec ajiya next --milestone nope
+stderr 'no milestone "nope"'
+! exec ajiya next --launch --milestone staging
+stderr 'give --launch or --milestone, not both'
+cmp ajiya.toml three.golden
+
+# remove: the milestone goes, its tickets stay.
+exec ajiya milestone remove after-launch
+stdout 'Removed milestone after-launch; its tickets are unchanged.'
+! grep 'after-launch' ajiya.toml
+exec ajiya ticket show DE-0005
+stdout 'Dark mode'
+exec ajiya next
+stdout '(?m)^.*DE-0005  infra  Dark mode +unblocks 1$'
+
+# A milestone added with launch in place and no --before or --after.
+exec ajiya milestone add beta --targets api
+stdout '^Order: staging, beta, launch.$'
+
+-- converted.golden --
+# Ajiya configuration: https://github.com/AliyuYahaya/Ajiya
+
+[project]
+name = "Demo"
+prefix = "DE"
+
+# [launch]
+# target = "go-live"          # a phase slug or a ticket ID
+
+# [test]
+# command = "go test ./..."   # run by 'ajiya ticket done --test'
+
+# [[apps]]
+# name = "api"
+# path = "apps/api"
+
+[[milestones]]
+name = "staging"
+targets = ["gate"]
+
+[[milestones]]
+name = "launch"
+targets = ["go-live"]
+-- three.golden --
+# Ajiya configuration: https://github.com/AliyuYahaya/Ajiya
+
+[project]
+name = "Demo"
+prefix = "DE"
+
+# [launch]
+# target = "go-live"          # a phase slug or a ticket ID
+
+# [test]
+# command = "go test ./..."   # run by 'ajiya ticket done --test'
+
+# [[apps]]
+# name = "api"
+# path = "apps/api"
+
+[[milestones]]
+name = "staging"
+targets = ["gate"]
+
+[[milestones]]
+name = "launch"
+targets = ["go-live"]
+
+[[milestones]]
+name = "after-launch"
+targets = ["later"]

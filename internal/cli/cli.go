@@ -74,9 +74,14 @@ func init() {
 		{"ticket drop", `<ID> --reason "<why>" --by "<name>"`, "Close a ticket that is not needed (a person's decision)", runTicketDrop},
 		{"ticket show", "<ID> [--json]", "Show a ticket, its dependencies and dependants", runTicketShow},
 		{"ticket edit", `<ID> [--title] [--done-when] [--depends] [--app] [--phase]`, "Change a ticket", runTicketEdit},
-		{"next", "[--app <app>] [--launch] [--json]", "List tickets that can start now", runNext},
+		{"next", "[--app <app>] [--launch | --milestone <name>] [--json]", "List tickets that can start now", runNext},
 		{"launch set", "<phase|ticket>", "Set the launch target", runLaunchSet},
 		{"launch show", "[--json]", "Show the launch target and what it still needs", runLaunchShow},
+		{"milestone add", "<name> --targets <phases|tickets> [--before <name> | --after <name>]", "Add a milestone; it goes before launch unless placed", runMilestoneAdd},
+		{"milestone list", "[--json]", "List milestones in order, with progress", runMilestoneList},
+		{"milestone show", "<name> [--json]", "Show what a milestone still needs and what blocks it", runMilestoneShow},
+		{"milestone move", "<name> --before <name> | --after <name>", "Reorder a milestone", runMilestoneMove},
+		{"milestone remove", "<name>", "Remove a milestone; tickets are not touched", runMilestoneRemove},
 		{"import todo", "<file> [--app <app>]", "Import a markdown to-do list into the inbox phase", runImportTodo},
 		{"import github", "[--repo <owner/name>] [--app <app>] [--limit <n>]", "Import GitHub issues into the inbox phase (uses gh)", runImportGitHub},
 		{"changelog", "[<range>] [--json]", "Print a changelog grouped by phase and ticket", runChangelog},
@@ -92,7 +97,7 @@ func usageText() string {
 	var b strings.Builder
 	b.WriteString("usage: ajiya <command> [arguments]\n\nCommands:\n")
 	for _, c := range commands {
-		fmt.Fprintf(&b, "  %-13s %s\n", c.name, c.summary)
+		fmt.Fprintf(&b, "  %-17s %s\n", c.name, c.summary)
 	}
 	b.WriteString("\nRun 'ajiya <command> --help' for the arguments of one command.\n")
 	return b.String()
