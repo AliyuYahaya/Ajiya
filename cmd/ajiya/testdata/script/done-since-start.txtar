@@ -1,0 +1,51 @@
+# ticket done only counts commits made after the ticket was started.
+
+exec ajiya init --name Demo --prefix DE
+exec ajiya phase add core 'Core works'
+exec ajiya ticket add --phase core --app infra --done-when x one
+exec ajiya ticket add --phase core --app infra --done-when x two
+exec ajiya ticket add --phase core --app infra --done-when x three
+exec git add -A
+exec git commit -q -m 'Plan' -m 'Ajiya: chore'
+
+# A commit that predates the start is not evidence.
+env GIT_COMMITTER_DATE=2020-01-01T00:00:00Z
+exec git commit -q --allow-empty -m 'Old work' -m 'Ajiya: DE-0001, DE-0003'
+env GIT_COMMITTER_DATE=
+exec ajiya ticket start DE-0001
+exists .git/ajiya/started.json
+grep 'DE-0001' .git/ajiya/started.json
+! exec ajiya ticket done DE-0001
+stderr 'no commit since DE-0001 was started names it \([0-9a-f]{7} is from before the start\); commit the work with the trailer ''Ajiya: DE-0001'' first'
+grep '\| DE-0001 .* 🟨 In progress' ajiya/core.md
+
+# Starting again keeps the earliest start.
+cp .git/ajiya/started.json first.json
+exec ajiya ticket start DE-0001
+cmp .git/ajiya/started.json first.json
+
+# A commit made after the start counts, even with an older one before it.
+exec git commit -q --allow-empty -m 'New work' -m 'Ajiya: DE-0001'
+exec ajiya ticket done DE-0001
+stdout '^DE-0001 🟩 Done · [0-9a-f]{7} · '
+! grep 'DE-0001' .git/ajiya/started.json
+
+# Without a start record (never started, or started in another clone) the newest commit counts.
+exec ajiya ticket done DE-0003
+stdout '^DE-0003 🟩 Done · [0-9a-f]{7} · '
+
+# A corrupt record file is ignored.
+exec ajiya ticket start DE-0002
+cp bad.json .git/ajiya/started.json
+exec git commit -q --allow-empty -m 'Two' -m 'Ajiya: DE-0002'
+exec ajiya ticket done DE-0002
+
+# Dropping forgets the record.
+exec ajiya ticket add --phase core --app infra --done-when x four
+exec ajiya ticket start DE-0004
+grep 'DE-0004' .git/ajiya/started.json
+exec ajiya ticket drop DE-0004 --reason nope --by Amina
+! grep 'DE-0004' .git/ajiya/started.json
+
+-- bad.json --
+not json

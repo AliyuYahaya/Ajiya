@@ -5,7 +5,9 @@ import (
 	"fmt"
 	"os/exec"
 	"runtime"
+	"slices"
 	"strings"
+	"time"
 
 	"github.com/AliyuYahaya/Ajiya/internal/config"
 	"github.com/AliyuYahaya/Ajiya/internal/gitx"
@@ -102,6 +104,9 @@ func runTicketStart(e *env, args []string) error {
 	if err := pr.saveTicket(t); err != nil {
 		return err
 	}
+	if err := gitx.RecordStart(pr.cfg.Root, t.ID, time.Now().Unix()); err != nil {
+		fmt.Fprintf(e.stderr, "warning: could not record when %s started: %v\n", t.ID, err)
+	}
 	for _, d := range waitingOn(pr, t) {
 		fmt.Fprintf(e.stderr, "warning: %s depends on %s, which is not done (%s)\n", t.ID, d.ID, d.Status)
 	}
@@ -169,6 +174,15 @@ func runTicketDone(e *env, args []string) error {
 			}
 			return refused("no commit references %s; commit the work with the trailer 'Ajiya: %s' first%s", t.ID, t.ID, hint)
 		}
+		if started, ok := gitx.StartedAt(pr.cfg.Root, t.ID); ok {
+			i := slices.IndexFunc(commits, func(c gitx.Commit) bool { return c.Time < started })
+			if i == 0 {
+				return refused("no commit since %s was started names it (%s is from before the start); commit the work with the trailer 'Ajiya: %s' first", t.ID, commits[0].Short(), t.ID)
+			}
+			if i > 0 {
+				commits = commits[:i]
+			}
+		}
 		s.Commit, s.Date = commits[0].Short(), commits[0].Date
 	}
 	if *test {
@@ -184,6 +198,7 @@ func runTicketDone(e *env, args []string) error {
 	if err := pr.saveTicket(t); err != nil {
 		return err
 	}
+	_ = gitx.ClearStart(pr.cfg.Root, t.ID)
 	fmt.Fprintf(e.stdout, "%s %s\n", t.ID, t.Status)
 	return nil
 }
@@ -422,6 +437,7 @@ func runTicketDrop(e *env, args []string) error {
 	if err := pr.saveTicket(t); err != nil {
 		return err
 	}
+	_ = gitx.ClearStart(pr.cfg.Root, t.ID)
 	fmt.Fprintf(e.stdout, "%s %s\n", t.ID, t.Status)
 	return nil
 }
