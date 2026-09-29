@@ -7,10 +7,10 @@ Generated 2026-09-29.
 
 | Milestone | Closed | Required | % | Can start now |
 |---|---|---|---|---|
-| v0-1 | 20 | 31 | 64% | 1 |
-| v0-2 | 20 | 37 | 54% | 1 |
-| v0-3 | 20 | 47 | 42% | 1 |
-| after-v0-3 | 20 | 46 | 43% | 1 |
+| v0-1 | 24 | 35 | 68% | 1 |
+| v0-2 | 24 | 41 | 58% | 1 |
+| v0-3 | 24 | 51 | 47% | 1 |
+| after-v0-3 | 24 | 50 | 48% | 1 |
 
 ## Phases
 
@@ -18,7 +18,7 @@ Generated 2026-09-29.
 |---|---|---|---|---|---|---|
 | Commit-rule | 7 | 0 | 0 | 7 | 100% | v0-1 |
 | Apps-launch | 14 | 0 | 0 | 14 | 100% | v0-1 |
-| Outputs | 7 | 0 | 5 | 12 | 58% | v0-1 |
+| Outputs | 11 | 0 | 1 | 12 | 91% | v0-1 |
 | Onboarding | 3 | 0 | 6 | 9 | 33% | v0-1 |
 | Release | 1 | 0 | 4 | 5 | 20% | v0-1 |
 | Agent-access | 0 | 0 | 3 | 3 | 0% | v0-2 |
@@ -28,10 +28,6 @@ Generated 2026-09-29.
 ## Can start now
 
 - **AJ-0021** Milestones v0-1, v0-2 and v0-3 set and the dashboard in use on this repo (ajiya) · v0-1
-- **AJ-0061** Brand logo in the dashboard (ajiya)
-- **AJ-0062** Search and filters on every dashboard view (ajiya)
-- **AJ-0063** Dependencies view: toggle between ticket links and phase links (ajiya)
-- **AJ-0064** Ticket cards without the side border outside Dependencies (ajiya)
 
 ## Waiting
 
@@ -71,6 +67,17 @@ Generated 2026-09-29.
 
 ## Recent activity
 
+- 2026-09-29 `40d743d` Ticket cards without the side stripe (AJ-0064)
+- 2026-09-29 `d84de11` Dashboard: logo, filters on every view, ticket and phase dependency graphs (AJ-0061, AJ-0062, AJ-0063)
+  - AJ-0061: pending → in_progress
+  - AJ-0062: pending → in_progress
+  - AJ-0063: pending → in_progress
+  - AJ-0064: pending → in_progress
+- 2026-09-29 `72a0c1f` Plan dashboard polish: logo, filters everywhere, dependency toggle, card borders (chore)
+  - AJ-0061: new → pending
+  - AJ-0062: new → pending
+  - AJ-0063: new → pending
+  - AJ-0064: new → pending
 - 2026-09-29 `8ced233` Merge branch 'worktree-agent-a658cbd8dac8f5d6c' (-)
 - 2026-09-29 `f84a39b` AJ-0036 and AJ-0060 done (AJ-0036, AJ-0060)
   - AJ-0036: in_progress → done
@@ -89,17 +96,8 @@ Generated 2026-09-29.
 - 2026-09-29 `994ad17` Dashboard: overview by milestone, next up, board, phases, tickets, apps, checks and activity (AJ-0019)
 - 2026-09-29 `b777830` Merge branch 'worktree-agent-a236161fb3f4ab13d' (-)
 - 2026-09-29 `28b8618` Add ajiya serve: dashboard on 127.0.0.1 with Host check and rebuild on change (AJ-0020)
-- 2026-09-29 `9d34072` AJ-0059 done (AJ-0059)
-  - AJ-0059: in_progress → done
-- 2026-09-29 `57776dc` phase rename updates milestone targets (AJ-0059)
-- 2026-09-29 `4ddeb1f` Start AJ-0019, AJ-0020 and AJ-0059 (AJ-0019, AJ-0020, AJ-0059)
-  - AJ-0019: pending → in_progress
-  - AJ-0020: pending → in_progress
-  - AJ-0059: pending → in_progress
-- and 83 more in data.js
+- and 86 more in data.js
 
 ## Checks
 
-0 error(s), 1 warning(s).
-
-- W010 ajiya.toml: 4 open tickets are in no milestone: AJ-0061, AJ-0062, AJ-0063, AJ-0064. Fix: make a milestone's targets depend on them, or add a milestone for the later work
+No problems found.
