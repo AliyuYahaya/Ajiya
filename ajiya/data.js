@@ -29,13 +29,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 68,
-        "done": 47,
+        "done": 48,
         "in_progress": 0,
-        "pending": 21,
+        "pending": 20,
         "dropped": 0
       },
-      "percent": 69,
-      "ready": 6
+      "percent": 70,
+      "ready": 5
     },
     {
       "name": "v0-3",
@@ -44,13 +44,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 78,
-        "done": 47,
+        "done": 48,
         "in_progress": 0,
-        "pending": 31,
+        "pending": 30,
         "dropped": 0
       },
-      "percent": 60,
-      "ready": 6
+      "percent": 61,
+      "ready": 5
     },
     {
       "name": "after-v0-3",
@@ -59,13 +59,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 77,
-        "done": 47,
+        "done": 48,
         "in_progress": 0,
-        "pending": 30,
+        "pending": 29,
         "dropped": 0
       },
-      "percent": 61,
-      "ready": 6
+      "percent": 62,
+      "ready": 5
     }
   ],
   "phases": [
@@ -117,12 +117,12 @@ window.AJIYA = {
       "goal": "A new or existing project can be set up by an agent using only the installed kit and importers",
       "counts": {
         "total": 17,
-        "done": 16,
+        "done": 17,
         "in_progress": 0,
-        "pending": 1,
+        "pending": 0,
         "dropped": 0
       },
-      "percent": 94,
+      "percent": 100,
       "milestone": "v0-1"
     },
     {
@@ -188,9 +188,9 @@ window.AJIYA = {
       "path": ".",
       "counts": {
         "total": 91,
-        "done": 59,
+        "done": 60,
         "in_progress": 0,
-        "pending": 32,
+        "pending": 31,
         "dropped": 0
       }
     }
@@ -1379,8 +1379,7 @@ window.AJIYA = {
         "AJ-0044",
         "AJ-0045",
         "AJ-0046",
-        "AJ-0082",
-        "AJ-0091"
+        "AJ-0082"
       ],
       "dependants": [
         "AJ-0048"
@@ -2473,16 +2472,19 @@ window.AJIYA = {
         "AJ-0088"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · 9f1c49a · 2026-09-29 · tests passed",
+        "commit": "9f1c49a",
+        "date": "2026-09-29",
+        "tests_passed": true
       },
       "milestone": "v0-2",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0047"
       ],
-      "unblocks": 12
+      "unblocks": 0
     }
   ],
   "next": [
@@ -2490,11 +2492,26 @@ window.AJIYA = {
     "AJ-0075",
     "AJ-0072",
     "AJ-0070",
-    "AJ-0083",
-    "AJ-0091"
+    "AJ-0083"
   ],
   "checks": [],
   "activity": [
+    {
+      "hash": "9f1c49a4cf856b439509ffc52d626df776b029f6",
+      "short": "9f1c49a",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Guide fixes from the walkthrough test",
+      "refs": [
+        "AJ-0091"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790718131
+    },
     {
       "hash": "ab57528a407d5b785481c6a9b27db908806ae05a",
       "short": "ab57528",

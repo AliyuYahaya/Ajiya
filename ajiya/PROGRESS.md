@@ -8,9 +8,9 @@ Generated 2026-09-29.
 | Milestone | Closed | Required | % | Can start now |
 |---|---|---|---|---|
 | v0-1 | 37 | 37 | 100% | 0 |
-| v0-2 | 47 | 68 | 69% | 6 |
-| v0-3 | 47 | 78 | 60% | 6 |
-| after-v0-3 | 47 | 77 | 61% | 6 |
+| v0-2 | 48 | 68 | 70% | 5 |
+| v0-3 | 48 | 78 | 61% | 5 |
+| after-v0-3 | 48 | 77 | 62% | 5 |
 
 ## Phases
 
@@ -19,7 +19,7 @@ Generated 2026-09-29.
 | Commit-rule | 8 | 0 | 0 | 8 | 100% | v0-1 |
 | Apps-launch | 14 | 0 | 0 | 14 | 100% | v0-1 |
 | Outputs | 12 | 0 | 0 | 12 | 100% | v0-1 |
-| Onboarding | 16 | 0 | 1 | 17 | 94% | v0-1 |
+| Onboarding | 17 | 0 | 0 | 17 | 100% | v0-1 |
 | Release | 5 | 0 | 0 | 5 | 100% | v0-1 |
 | Agent-access | 0 | 0 | 3 | 3 | 0% | v0-2 |
 | Install | 4 | 0 | 17 | 21 | 19% | v0-2 |
@@ -32,7 +32,6 @@ Generated 2026-09-29.
 - **AJ-0072** Release workflow: build to a draft release (ajiya) · v0-2
 - **AJ-0070** Choose the install script URL (ajiya) · v0-2
 - **AJ-0083** Apple signing credentials as release secrets (ajiya) · v0-2
-- **AJ-0091** Guide fixes from the walkthrough test (ajiya) · v0-2
 
 ## Waiting
 
@@ -40,7 +39,7 @@ Generated 2026-09-29.
 - **AJ-0044** ajiya mcp install, uninstall and status (ajiya) waits on AJ-0043
 - **AJ-0045** install.sh for macOS and Linux (ajiya) waits on AJ-0044
 - **AJ-0046** Claude Code plugin (ajiya) waits on AJ-0042, AJ-0043
-- **AJ-0047** v0.2 definition of done (ajiya) waits on AJ-0042, AJ-0043, AJ-0044, AJ-0045, AJ-0046, AJ-0082, AJ-0091
+- **AJ-0047** v0.2 definition of done (ajiya) waits on AJ-0042, AJ-0043, AJ-0044, AJ-0045, AJ-0046, AJ-0082
 - **AJ-0048** Tags column (ajiya) waits on AJ-0047
 - **AJ-0049** ajiya ticket files (ajiya) waits on AJ-0048
 - **AJ-0050** Decision records and commands (ajiya) waits on AJ-0048
@@ -74,6 +73,7 @@ Generated 2026-09-29.
 
 ## Recent activity
 
+- 2026-09-29 `9f1c49a` Guide fixes from the walkthrough test (AJ-0091)
 - 2026-09-29 `ab57528` npm account, org and @ajiya/cli placeholder in place (AJ-0068)
   - AJ-0068: pending → done
 - 2026-09-29 `2680bc1` phase remove updates [phases] order before deleting the file (AJ-0086)
@@ -108,8 +108,7 @@ Generated 2026-09-29.
   - AJ-0089: new → pending
   - AJ-0090: new → pending
   - AJ-0091: new → pending
-- 2026-09-29 `cc18043` npm names: ajiya plus @ajiya/<os>-<arch> under an ajiya org (AJ-0068, AJ-0075)
-- and 138 more in data.js
+- and 139 more in data.js
 
 ## Checks
 
