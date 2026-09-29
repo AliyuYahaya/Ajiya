@@ -29,12 +29,12 @@ window.AJIYA = {
       ],
       "required": {
         "total": 68,
-        "done": 38,
-        "in_progress": 0,
-        "pending": 30,
+        "done": 39,
+        "in_progress": 1,
+        "pending": 28,
         "dropped": 0
       },
-      "percent": 55,
+      "percent": 57,
       "ready": 12
     },
     {
@@ -44,12 +44,12 @@ window.AJIYA = {
       ],
       "required": {
         "total": 78,
-        "done": 38,
-        "in_progress": 0,
-        "pending": 40,
+        "done": 39,
+        "in_progress": 1,
+        "pending": 38,
         "dropped": 0
       },
-      "percent": 48,
+      "percent": 50,
       "ready": 12
     },
     {
@@ -59,12 +59,12 @@ window.AJIYA = {
       ],
       "required": {
         "total": 77,
-        "done": 38,
-        "in_progress": 0,
-        "pending": 39,
+        "done": 39,
+        "in_progress": 1,
+        "pending": 37,
         "dropped": 0
       },
-      "percent": 49,
+      "percent": 50,
       "ready": 12
     }
   ],
@@ -159,12 +159,12 @@ window.AJIYA = {
       "goal": "Ajiya installs in one step, with a Claude Code plugin",
       "counts": {
         "total": 21,
-        "done": 1,
-        "in_progress": 0,
-        "pending": 20,
+        "done": 2,
+        "in_progress": 1,
+        "pending": 18,
         "dropped": 0
       },
-      "percent": 4,
+      "percent": 9,
       "milestone": "v0-2"
     },
     {
@@ -188,9 +188,9 @@ window.AJIYA = {
       "path": ".",
       "counts": {
         "total": 91,
-        "done": 50,
-        "in_progress": 0,
-        "pending": 41,
+        "done": 51,
+        "in_progress": 1,
+        "pending": 39,
         "dropped": 0
       }
     }
@@ -1926,8 +1926,8 @@ window.AJIYA = {
         "AJ-0034"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending · Needs a human: needs the maintainer's GitHub account",
+        "state": "in_progress",
+        "text": "🟨 In progress · Needs a human: needs the maintainer's GitHub account",
         "human": "needs the maintainer's GitHub account"
       },
       "milestone": "v0-2",
@@ -1970,18 +1970,20 @@ window.AJIYA = {
         "AJ-0034"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending · Needs a human: repository settings need the maintainer",
-        "human": "repository settings need the maintainer"
+        "state": "done",
+        "text": "🟩 Done · by Aliyu Yahaya · 2026-09-29 · Note: created with gh at the maintainer's request: homebrew-release and npm-release, reviewer AliyuYahaya, deployments only from v* tags",
+        "note": "created with gh at the maintainer's request: homebrew-release and npm-release, reviewer AliyuYahaya, deployments only from v* tags",
+        "by": "Aliyu Yahaya",
+        "date": "2026-09-29"
       },
       "milestone": "v0-2",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0079",
         "AJ-0083"
       ],
-      "unblocks": 17
+      "unblocks": 0
     },
     {
       "id": "AJ-0072",
@@ -2178,7 +2180,6 @@ window.AJIYA = {
       "milestone": "v0-2",
       "ready": false,
       "waiting_on": [
-        "AJ-0071",
         "AJ-0072",
         "AJ-0075",
         "AJ-0077"
@@ -2284,10 +2285,8 @@ window.AJIYA = {
         "human": "needs the maintainer's Apple Developer account"
       },
       "milestone": "v0-2",
-      "ready": false,
-      "waiting_on": [
-        "AJ-0071"
-      ],
+      "ready": true,
+      "waiting_on": [],
       "dependants": [
         "AJ-0084"
       ],
@@ -2481,9 +2480,9 @@ window.AJIYA = {
     "AJ-0042",
     "AJ-0068",
     "AJ-0069",
-    "AJ-0071",
     "AJ-0072",
     "AJ-0070",
+    "AJ-0083",
     "AJ-0085",
     "AJ-0086",
     "AJ-0088",
