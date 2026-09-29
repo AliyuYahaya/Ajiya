@@ -7,10 +7,10 @@ Generated 2026-09-29.
 
 | Milestone | Closed | Required | % | Can start now |
 |---|---|---|---|---|
-| v0-1 | 25 | 35 | 71% | 2 |
-| v0-2 | 25 | 41 | 60% | 2 |
-| v0-3 | 25 | 51 | 49% | 2 |
-| after-v0-3 | 25 | 50 | 50% | 2 |
+| v0-1 | 27 | 35 | 77% | 2 |
+| v0-2 | 27 | 41 | 65% | 2 |
+| v0-3 | 27 | 51 | 52% | 2 |
+| after-v0-3 | 27 | 50 | 54% | 2 |
 
 ## Phases
 
@@ -19,7 +19,7 @@ Generated 2026-09-29.
 | Commit-rule | 7 | 0 | 0 | 7 | 100% | v0-1 |
 | Apps-launch | 14 | 0 | 0 | 14 | 100% | v0-1 |
 | Outputs | 12 | 0 | 0 | 12 | 100% | v0-1 |
-| Onboarding | 3 | 0 | 6 | 9 | 33% | v0-1 |
+| Onboarding | 5 | 0 | 4 | 9 | 55% | v0-1 |
 | Release | 1 | 0 | 4 | 5 | 20% | v0-1 |
 | Agent-access | 0 | 0 | 3 | 3 | 0% | v0-2 |
 | Install | 0 | 0 | 3 | 3 | 0% | v0-2 |
@@ -27,19 +27,17 @@ Generated 2026-09-29.
 
 ## Can start now
 
-- **AJ-0022** Setup guide (ajiya) · v0-1
-- **AJ-0023** Daily guide (ajiya) · v0-1
+- **AJ-0024** Skill and agent instruction blocks (ajiya) · v0-1
+- **AJ-0041** import legacy maps each RO package to a phase (ajiya) · v0-1
 
 ## Waiting
 
-- **AJ-0024** Skill and agent instruction blocks (ajiya) waits on AJ-0022, AJ-0023
 - **AJ-0025** init writes and updates the agent kit (ajiya) waits on AJ-0024
 - **AJ-0029** Re-run init on this repo (ajiya) waits on AJ-0025
 - **AJ-0030** GoReleaser config (ajiya) waits on AJ-0029
 - **AJ-0031** Homebrew cask config (ajiya) waits on AJ-0030
 - **AJ-0033** README walkthroughs (ajiya) waits on AJ-0029
 - **AJ-0034** v0.1 definition of done (ajiya) waits on AJ-0030, AJ-0031, AJ-0033, AJ-0041
-- **AJ-0041** import legacy maps each RO package to a phase (ajiya) waits on AJ-0022
 - **AJ-0042** ajiya status (ajiya) waits on AJ-0034
 - **AJ-0043** ajiya mcp server (ajiya) waits on AJ-0042
 - **AJ-0044** ajiya mcp install, uninstall and status (ajiya) waits on AJ-0043
@@ -66,6 +64,9 @@ Generated 2026-09-29.
 
 ## Recent activity
 
+- 2026-09-29 `8d5cafe` Setup and daily guides for agents (AJ-0022, AJ-0023)
+  - AJ-0022: pending → in_progress
+  - AJ-0023: pending → in_progress
 - 2026-09-29 `47117c5` Merge branch 'worktree-agent-a658cbd8dac8f5d6c' (-)
 - 2026-09-29 `4b321be` AJ-0021 done (AJ-0021)
   - AJ-0021: pending → done
@@ -99,8 +100,7 @@ Generated 2026-09-29.
 - 2026-09-29 `1a7db96` AJ-0019 and AJ-0020 done (AJ-0019, AJ-0020)
   - AJ-0019: in_progress → done
   - AJ-0020: in_progress → done
-- 2026-09-29 `d7460c0` Merge branch 'worktree-agent-acd57cf3aab521d30' (-)
-- and 89 more in data.js
+- and 90 more in data.js
 
 ## Checks
 

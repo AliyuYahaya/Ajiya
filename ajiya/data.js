@@ -14,12 +14,12 @@ window.AJIYA = {
       ],
       "required": {
         "total": 35,
-        "done": 25,
+        "done": 27,
         "in_progress": 0,
-        "pending": 10,
+        "pending": 8,
         "dropped": 0
       },
-      "percent": 71,
+      "percent": 77,
       "ready": 2
     },
     {
@@ -29,12 +29,12 @@ window.AJIYA = {
       ],
       "required": {
         "total": 41,
-        "done": 25,
+        "done": 27,
         "in_progress": 0,
-        "pending": 16,
+        "pending": 14,
         "dropped": 0
       },
-      "percent": 60,
+      "percent": 65,
       "ready": 2
     },
     {
@@ -44,12 +44,12 @@ window.AJIYA = {
       ],
       "required": {
         "total": 51,
-        "done": 25,
+        "done": 27,
         "in_progress": 0,
-        "pending": 26,
+        "pending": 24,
         "dropped": 0
       },
-      "percent": 49,
+      "percent": 52,
       "ready": 2
     },
     {
@@ -59,12 +59,12 @@ window.AJIYA = {
       ],
       "required": {
         "total": 50,
-        "done": 25,
+        "done": 27,
         "in_progress": 0,
-        "pending": 25,
+        "pending": 23,
         "dropped": 0
       },
-      "percent": 50,
+      "percent": 54,
       "ready": 2
     }
   ],
@@ -117,12 +117,12 @@ window.AJIYA = {
       "goal": "A new or existing project can be set up by an agent using only the installed kit and importers",
       "counts": {
         "total": 9,
-        "done": 3,
+        "done": 5,
         "in_progress": 0,
-        "pending": 6,
+        "pending": 4,
         "dropped": 0
       },
-      "percent": 33,
+      "percent": 55,
       "milestone": "v0-1"
     },
     {
@@ -188,9 +188,9 @@ window.AJIYA = {
       "path": ".",
       "counts": {
         "total": 64,
-        "done": 37,
+        "done": 39,
         "in_progress": 0,
-        "pending": 27,
+        "pending": 25,
         "dropped": 0
       }
     }
@@ -711,17 +711,20 @@ window.AJIYA = {
         "AJ-0021"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · 8d5cafe · 2026-09-29 · tests passed",
+        "commit": "8d5cafe",
+        "date": "2026-09-29",
+        "tests_passed": true
       },
       "milestone": "v0-1",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0024",
         "AJ-0041"
       ],
-      "unblocks": 25
+      "unblocks": 0
     },
     {
       "id": "AJ-0023",
@@ -733,16 +736,19 @@ window.AJIYA = {
         "AJ-0021"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · 8d5cafe · 2026-09-29 · tests passed",
+        "commit": "8d5cafe",
+        "date": "2026-09-29",
+        "tests_passed": true
       },
       "milestone": "v0-1",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0024"
       ],
-      "unblocks": 24
+      "unblocks": 0
     },
     {
       "id": "AJ-0024",
@@ -759,11 +765,8 @@ window.AJIYA = {
         "text": "🟥 Pending"
       },
       "milestone": "v0-1",
-      "ready": false,
-      "waiting_on": [
-        "AJ-0022",
-        "AJ-0023"
-      ],
+      "ready": true,
+      "waiting_on": [],
       "dependants": [
         "AJ-0025"
       ],
@@ -1180,10 +1183,8 @@ window.AJIYA = {
         "text": "🟥 Pending"
       },
       "milestone": "v0-1",
-      "ready": false,
-      "waiting_on": [
-        "AJ-0022"
-      ],
+      "ready": true,
+      "waiting_on": [],
       "dependants": [
         "AJ-0034"
       ],
@@ -1781,11 +1782,43 @@ window.AJIYA = {
     }
   ],
   "next": [
-    "AJ-0022",
-    "AJ-0023"
+    "AJ-0024",
+    "AJ-0041"
   ],
   "checks": [],
   "activity": [
+    {
+      "hash": "8d5cafea01fae6e046b5c0108394b3c41ee970cd",
+      "short": "8d5cafe",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Setup and daily guides for agents",
+      "refs": [
+        "AJ-0022",
+        "AJ-0023"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0022",
+          "phase": "onboarding",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        },
+        {
+          "id": "AJ-0023",
+          "phase": "onboarding",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        }
+      ],
+      "time": 1790709236
+    },
     {
       "hash": "47117c5f6f586ee6d1fffab898eb34e0f750d684",
       "short": "47117c5",
