@@ -7,16 +7,16 @@ Generated 2026-09-29.
 
 | Milestone | Closed | Required | % | Can start now |
 |---|---|---|---|---|
-| v0-1 | 28 | 35 | 80% | 2 |
-| v0-2 | 28 | 41 | 68% | 2 |
-| v0-3 | 28 | 51 | 54% | 2 |
-| after-v0-3 | 28 | 50 | 56% | 2 |
+| v0-1 | 28 | 36 | 77% | 3 |
+| v0-2 | 28 | 42 | 66% | 3 |
+| v0-3 | 28 | 52 | 53% | 3 |
+| after-v0-3 | 28 | 51 | 54% | 3 |
 
 ## Phases
 
 | Phase | Done | In progress | Pending | Total | % | Milestone |
 |---|---|---|---|---|---|---|
-| Commit-rule | 7 | 0 | 0 | 7 | 100% | v0-1 |
+| Commit-rule | 7 | 0 | 1 | 8 | 87% | v0-1 |
 | Apps-launch | 14 | 0 | 0 | 14 | 100% | v0-1 |
 | Outputs | 12 | 0 | 0 | 12 | 100% | v0-1 |
 | Onboarding | 6 | 0 | 3 | 9 | 66% | v0-1 |
@@ -29,6 +29,7 @@ Generated 2026-09-29.
 
 - **AJ-0025** init writes and updates the agent kit (ajiya) · v0-1
 - **AJ-0041** import legacy maps each RO package to a phase (ajiya) · v0-1
+- **AJ-0065** ticket done takes evidence only from commits after the ticket started (ajiya) · v0-1
 
 ## Waiting
 
@@ -36,7 +37,7 @@ Generated 2026-09-29.
 - **AJ-0030** GoReleaser config (ajiya) waits on AJ-0029
 - **AJ-0031** Homebrew cask config (ajiya) waits on AJ-0030
 - **AJ-0033** README walkthroughs (ajiya) waits on AJ-0029
-- **AJ-0034** v0.1 definition of done (ajiya) waits on AJ-0030, AJ-0031, AJ-0033, AJ-0041
+- **AJ-0034** v0.1 definition of done (ajiya) waits on AJ-0030, AJ-0031, AJ-0033, AJ-0041, AJ-0065
 - **AJ-0042** ajiya status (ajiya) waits on AJ-0034
 - **AJ-0043** ajiya mcp server (ajiya) waits on AJ-0042
 - **AJ-0044** ajiya mcp install, uninstall and status (ajiya) waits on AJ-0043
@@ -63,6 +64,7 @@ Generated 2026-09-29.
 
 ## Recent activity
 
+- 2026-09-29 `5556d64` CLAUDE.md with the Ajiya block (AJ-0024)
 - 2026-09-29 `0c78c49` AJ-0024 done (AJ-0024)
   - AJ-0024: pending → done
 - 2026-09-29 `f6b5387` AJ-0022 and AJ-0023 done (AJ-0022, AJ-0023)
@@ -97,8 +99,7 @@ Generated 2026-09-29.
 - 2026-09-29 `3ae5531` Refill filter menus on live refresh (AJ-0060)
 - 2026-09-29 `7207ba6` Dashboard live refresh under ajiya serve (AJ-0060)
 - 2026-09-29 `a0210e3` Dependencies view in the dashboard (AJ-0036)
-- 2026-09-29 `61d1f54` Milestones v0-1, v0-2, v0-3 for this repository (AJ-0021)
-- and 92 more in data.js
+- and 93 more in data.js
 
 ## Checks
 

@@ -13,14 +13,14 @@ window.AJIYA = {
         "AJ-0034"
       ],
       "required": {
-        "total": 35,
+        "total": 36,
         "done": 28,
         "in_progress": 0,
-        "pending": 7,
+        "pending": 8,
         "dropped": 0
       },
-      "percent": 80,
-      "ready": 2
+      "percent": 77,
+      "ready": 3
     },
     {
       "name": "v0-2",
@@ -28,19 +28,34 @@ window.AJIYA = {
         "AJ-0047"
       ],
       "required": {
-        "total": 41,
+        "total": 42,
         "done": 28,
         "in_progress": 0,
-        "pending": 13,
+        "pending": 14,
         "dropped": 0
       },
-      "percent": 68,
-      "ready": 2
+      "percent": 66,
+      "ready": 3
     },
     {
       "name": "v0-3",
       "targets": [
         "AJ-0058"
+      ],
+      "required": {
+        "total": 52,
+        "done": 28,
+        "in_progress": 0,
+        "pending": 24,
+        "dropped": 0
+      },
+      "percent": 53,
+      "ready": 3
+    },
+    {
+      "name": "after-v0-3",
+      "targets": [
+        "AJ-0057"
       ],
       "required": {
         "total": 51,
@@ -50,22 +65,7 @@ window.AJIYA = {
         "dropped": 0
       },
       "percent": 54,
-      "ready": 2
-    },
-    {
-      "name": "after-v0-3",
-      "targets": [
-        "AJ-0057"
-      ],
-      "required": {
-        "total": 50,
-        "done": 28,
-        "in_progress": 0,
-        "pending": 22,
-        "dropped": 0
-      },
-      "percent": 56,
-      "ready": 2
+      "ready": 3
     }
   ],
   "phases": [
@@ -74,13 +74,13 @@ window.AJIYA = {
       "title": "Commit-rule",
       "goal": "Every commit names 1 to 3 tickets, enforced by hooks with a CI check as backup",
       "counts": {
-        "total": 7,
+        "total": 8,
         "done": 7,
         "in_progress": 0,
-        "pending": 0,
+        "pending": 1,
         "dropped": 0
       },
-      "percent": 100,
+      "percent": 87,
       "milestone": "v0-1"
     },
     {
@@ -187,10 +187,10 @@ window.AJIYA = {
       "name": "ajiya",
       "path": ".",
       "counts": {
-        "total": 64,
+        "total": 65,
         "done": 40,
         "in_progress": 0,
-        "pending": 24,
+        "pending": 25,
         "dropped": 0
       }
     }
@@ -993,7 +993,8 @@ window.AJIYA = {
         "AJ-0039",
         "AJ-0040",
         "AJ-0041",
-        "AJ-0059"
+        "AJ-0059",
+        "AJ-0065"
       ],
       "status": {
         "state": "pending",
@@ -1006,7 +1007,8 @@ window.AJIYA = {
         "AJ-0030",
         "AJ-0031",
         "AJ-0033",
-        "AJ-0041"
+        "AJ-0041",
+        "AJ-0065"
       ],
       "dependants": [
         "AJ-0042"
@@ -1780,14 +1782,50 @@ window.AJIYA = {
         "AJ-0021"
       ],
       "unblocks": 0
+    },
+    {
+      "id": "AJ-0065",
+      "phase": "commit-rule",
+      "app": "ajiya",
+      "title": "ticket done takes evidence only from commits after the ticket started",
+      "done_when": "ticket done refuses when the only commits naming the ticket predate the commit that set it in progress (for example a planning or reference commit), and says to commit the work; tests cover a pre-start commit alone and a pre-start plus a later commit",
+      "depends": [],
+      "status": {
+        "state": "pending",
+        "text": "🟥 Pending"
+      },
+      "milestone": "v0-1",
+      "ready": true,
+      "waiting_on": [],
+      "dependants": [
+        "AJ-0034"
+      ],
+      "unblocks": 18
     }
   ],
   "next": [
     "AJ-0025",
-    "AJ-0041"
+    "AJ-0041",
+    "AJ-0065"
   ],
   "checks": [],
   "activity": [
+    {
+      "hash": "5556d64f91d22caf0ff3a4c8813039604afc0afd",
+      "short": "5556d64",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "CLAUDE.md with the Ajiya block",
+      "refs": [
+        "AJ-0024"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790709574
+    },
     {
       "hash": "0c78c499fce55618c2773391840721d7f94f91b7",
       "short": "0c78c49",
