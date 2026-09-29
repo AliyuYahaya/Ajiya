@@ -2319,6 +2319,339 @@ window.AJIYA = {
   "checks": [],
   "activity": [
     {
+      "hash": "2603a19ee989dac6d4b0eea564038fa6e1011edc",
+      "short": "2603a19",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "MIT licence",
+      "refs": [],
+      "chore": true,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790715377
+    },
+    {
+      "hash": "110dcb2c7f6d12dd262bd60594a7920b1452346f",
+      "short": "110dcb2",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Rebuild plan outputs after the merge",
+      "refs": [],
+      "chore": true,
+      "merge": true,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790715129
+    },
+    {
+      "hash": "cc33bdb225fb147343288c8a3ae9ef770c4f522b",
+      "short": "cc33bdb",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Merge branch 'worktree-agent-a5a988be55680e087' into worktree-agent-a658cbd8dac8f5d6c",
+      "refs": [],
+      "chore": false,
+      "merge": true,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790715103
+    },
+    {
+      "hash": "2d65774cb12f8dd9d743e49544c397059b080c83",
+      "short": "2d65774",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Plan: AJ-0041 done",
+      "refs": [
+        "AJ-0041"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0041",
+          "phase": "onboarding",
+          "from": "pending",
+          "to": "done",
+          "text": "🟩 Done · 7d547a5 · 2026-09-29 · tests passed"
+        }
+      ],
+      "time": 1790714947
+    },
+    {
+      "hash": "7d547a524020425284e59f1ad64d5112ffb32b62",
+      "short": "7d547a5",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "import legacy: map each RO package to a phase",
+      "refs": [
+        "AJ-0041"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790714670
+    },
+    {
+      "hash": "ff9cdca90b676672305c3228fcbfebd3927b8cee",
+      "short": "ff9cdca",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Plan: sign and notarise the macOS binaries",
+      "refs": [],
+      "chore": true,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0083",
+          "phase": "install",
+          "from": "",
+          "to": "pending",
+          "text": "🟥 Pending · Needs a human: needs the maintainer's Apple Developer account"
+        },
+        {
+          "id": "AJ-0084",
+          "phase": "install",
+          "from": "",
+          "to": "pending",
+          "text": "🟥 Pending"
+        }
+      ],
+      "time": 1790713405
+    },
+    {
+      "hash": "810c3c0e1576565d83bac786416dfd1b850df279",
+      "short": "810c3c0",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "npm packaging decided: per-platform packages behind a wrapper",
+      "refs": [
+        "AJ-0067",
+        "AJ-0075"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0067",
+          "phase": "install",
+          "from": "pending",
+          "to": "done",
+          "text": "🟩 Done · by Aliyu Yahaya · 2026-09-29 · Note: npm ships per-platform optional packages behind a small ajiya wrapper, not a postinstall download (agreed in session)"
+        }
+      ],
+      "time": 1790713318
+    },
+    {
+      "hash": "2ba31d5c99eefb96618996039fbaca561d2612cf",
+      "short": "2ba31d5",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Reflow the daily guide's done paragraph",
+      "refs": [
+        "AJ-0065"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790713300
+    },
+    {
+      "hash": "622e67856c1e157906e1ff4aa92307fb22af33e5",
+      "short": "622e678",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Merge branch 'worktree-agent-af0c9a6c1037d2858' into worktree-agent-a658cbd8dac8f5d6c",
+      "refs": [],
+      "chore": false,
+      "merge": true,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790713282
+    },
+    {
+      "hash": "140a432e17f79b84388154d37fe04dad3d0221f9",
+      "short": "140a432",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "AJ-0065 done",
+      "refs": [
+        "AJ-0065"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0065",
+          "phase": "commit-rule",
+          "from": "pending",
+          "to": "done",
+          "text": "🟩 Done · 5c1af99 · 2026-09-29 · tests passed"
+        }
+      ],
+      "time": 1790713202
+    },
+    {
+      "hash": "5c1af9978623670e6ad96f84e17d4d641d1871bf",
+      "short": "5c1af99",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Ticket done counts only commits made after the ticket started",
+      "refs": [
+        "AJ-0065"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790713063
+    },
+    {
+      "hash": "619df03ca1896569f885249708a822acd3e92868",
+      "short": "619df03",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Plan the install channels: npm, Homebrew and the install script",
+      "refs": [],
+      "chore": true,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0067",
+          "phase": "install",
+          "from": "",
+          "to": "pending",
+          "text": "🟥 Pending · Needs a human: changes spec 02's wording; the maintainer decides"
+        },
+        {
+          "id": "AJ-0068",
+          "phase": "install",
+          "from": "",
+          "to": "pending",
+          "text": "🟥 Pending · Needs a human: needs the maintainer's npm account"
+        },
+        {
+          "id": "AJ-0069",
+          "phase": "install",
+          "from": "",
+          "to": "pending",
+          "text": "🟥 Pending · Needs a human: needs the maintainer's GitHub account"
+        },
+        {
+          "id": "AJ-0070",
+          "phase": "install",
+          "from": "",
+          "to": "pending",
+          "text": "🟥 Pending · Needs a human: a domain costs money and is the maintainer's choice"
+        },
+        {
+          "id": "AJ-0071",
+          "phase": "install",
+          "from": "",
+          "to": "pending",
+          "text": "🟥 Pending · Needs a human: repository settings need the maintainer"
+        },
+        {
+          "id": "AJ-0072",
+          "phase": "install",
+          "from": "",
+          "to": "pending",
+          "text": "🟥 Pending"
+        },
+        {
+          "id": "AJ-0073",
+          "phase": "install",
+          "from": "",
+          "to": "pending",
+          "text": "🟥 Pending"
+        },
+        {
+          "id": "AJ-0074",
+          "phase": "install",
+          "from": "",
+          "to": "pending",
+          "text": "🟥 Pending"
+        },
+        {
+          "id": "AJ-0075",
+          "phase": "install",
+          "from": "",
+          "to": "pending",
+          "text": "🟥 Pending"
+        },
+        {
+          "id": "AJ-0076",
+          "phase": "install",
+          "from": "",
+          "to": "pending",
+          "text": "🟥 Pending"
+        },
+        {
+          "id": "AJ-0077",
+          "phase": "install",
+          "from": "",
+          "to": "pending",
+          "text": "🟥 Pending"
+        },
+        {
+          "id": "AJ-0078",
+          "phase": "install",
+          "from": "",
+          "to": "pending",
+          "text": "🟥 Pending"
+        },
+        {
+          "id": "AJ-0079",
+          "phase": "install",
+          "from": "",
+          "to": "pending",
+          "text": "🟥 Pending"
+        },
+        {
+          "id": "AJ-0080",
+          "phase": "install",
+          "from": "",
+          "to": "pending",
+          "text": "🟥 Pending · Needs a human: needs the maintainer's npm account"
+        },
+        {
+          "id": "AJ-0081",
+          "phase": "install",
+          "from": "",
+          "to": "pending",
+          "text": "🟥 Pending · Needs a human: publishing anything needs the maintainer's approval"
+        },
+        {
+          "id": "AJ-0082",
+          "phase": "install",
+          "from": "",
+          "to": "pending",
+          "text": "🟥 Pending"
+        }
+      ],
+      "time": 1790713032
+    },
+    {
       "hash": "7748eae54cb34604773a6deb55f3fe8648bc4411",
       "short": "7748eae",
       "date": "2026-09-29",

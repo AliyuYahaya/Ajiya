@@ -35,6 +35,7 @@ archives:
     name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
     files:
       - README.md
+      - LICENSE
 
 checksum:
   name_template: checksums.txt
@@ -55,6 +56,7 @@ homebrew_casks:
     ids: [ajiya]
     binaries: [ajiya]
     homepage: https://github.com/AliyuYahaya/Ajiya
+    license: MIT
     description: Keeps a project's phases and tickets as markdown in the repository, for coding agents and people
     repository:
       owner: AliyuYahaya
