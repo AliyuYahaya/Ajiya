@@ -8,6 +8,49 @@ import (
 	"github.com/AliyuYahaya/Ajiya/internal/plan"
 )
 
+// runPhaseRemove deletes an empty phase: its file and its [phases] order entry.
+// It refuses while the phase holds a ticket or a milestone or the launch target
+// names it.
+func runPhaseRemove(e *env, args []string) error {
+	fs := newFlags("phase remove")
+	pos, err := parse(fs, args, 1)
+	if err != nil {
+		return err
+	}
+	slug := pos[0]
+	pr, err := loadForChange(e)
+	if err != nil {
+		return err
+	}
+	ph, err := pr.phase(slug)
+	if err != nil {
+		return err
+	}
+	if n := len(ph.Tickets); n > 0 {
+		return refused("phase %s still holds %d ticket(s); move them with 'ajiya ticket edit <ID> --phase <slug>' first", slug, n)
+	}
+	if pr.cfg.Launch.Target == slug {
+		return refused("the launch target is phase %s; point it elsewhere with 'ajiya launch set <phase|ticket>' first", slug)
+	}
+	for _, m := range pr.cfg.Milestones {
+		if slices.Contains(m.Targets, slug) {
+			return refused("milestone %s targets phase %s; remove that milestone with 'ajiya milestone remove %s' or re-create it with other targets first", m.Name, slug, m.Name)
+		}
+	}
+	if err := pr.plan.Remove(ph); err != nil {
+		return err
+	}
+	fmt.Fprintf(e.stdout, "Removed phase %s (%s).\n", slug, plan.Path(slug))
+	if i := slices.Index(pr.cfg.Phases.Order, slug); i >= 0 {
+		order := slices.Delete(slices.Clone(pr.cfg.Phases.Order), i, i+1)
+		if _, err := config.SetPhaseOrder(pr.cfg.Root, order); err != nil {
+			return err
+		}
+		fmt.Fprintln(e.stdout, "Updated [phases] order.")
+	}
+	return nil
+}
+
 // runPhaseRename renames a phase file, moves its tickets and keeps the launch
 // target and [phases] order pointing at it.
 func runPhaseRename(e *env, args []string) error {

@@ -11,6 +11,22 @@ import (
 	"strings"
 )
 
+// Remove deletes a phase's file and forgets the phase. Callers refuse first
+// when the phase still holds tickets.
+func (p *Plan) Remove(ph *Phase) error {
+	if err := os.Remove(filepath.Join(p.Root, Dir, ph.Slug+".md")); err != nil {
+		return err
+	}
+	delete(p.Raw, ph.Slug)
+	for i, q := range p.Phases {
+		if q == ph {
+			p.Phases = slices.Delete(p.Phases, i, i+1)
+			break
+		}
+	}
+	return nil
+}
+
 // Dir is the folder holding the phase files, relative to the project root.
 const Dir = "ajiya"
 

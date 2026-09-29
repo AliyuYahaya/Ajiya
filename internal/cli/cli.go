@@ -67,6 +67,7 @@ func init() {
 		{"app remove", "<name> [--to <app>]", "Unregister an app, moving its open tickets", runAppRemove},
 		{"phase add", `<slug> "<goal>" [--title "<title>"]`, "Add a phase", runPhaseAdd},
 		{"phase rename", `<old> <new> [--title "<title>"]`, "Rename a phase and its file", runPhaseRename},
+		{"phase remove", "<slug>", "Remove an empty phase", runPhaseRemove},
 		{"phase move", "<slug> (--before <slug> | --after <slug> | --first | --last)", "Change where a phase is shown in [phases] order", runPhaseMove},
 		{"phase list", "[--json]", "List phases in display order with progress and earliest milestone", runPhaseList},
 		{"phase order", "(--suggest | --apply)", "Print, or write, a phase order worked out from the dependencies", runPhaseOrder},
