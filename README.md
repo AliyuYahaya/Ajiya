@@ -182,3 +182,9 @@ go install ./cmd/ajiya    # not 'go build -o ajiya': ajiya/ is the plan folder
 go test ./...
 ajiya next
 ```
+
+## License
+
+MIT: see [LICENSE](LICENSE). Copyright Yavid PTY Ltd. The name "Ajiya" and the
+Ajiya logo belong to Yavid PTY Ltd; the licence does not grant them. A fork or a
+copy you share or sell must use a different name and logo.
