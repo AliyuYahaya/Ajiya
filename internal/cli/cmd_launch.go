@@ -2,11 +2,15 @@ package cli
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/AliyuYahaya/Ajiya/internal/config"
 	"github.com/AliyuYahaya/Ajiya/internal/plan"
 )
 
+// runLaunchSet sets the targets of the milestone named launch to one target.
+// A file without [[milestones]] keeps the older [launch] target form; a file
+// with them gets its launch milestone changed, or added at the end.
 func runLaunchSet(e *env, args []string) error {
 	pos, err := parse(newFlags("launch set"), args, 1)
 	if err != nil {
@@ -20,10 +24,18 @@ func runLaunchSet(e *env, args []string) error {
 	if _, _, err := pr.plan.Required(target); err != nil {
 		return refused("launch %v; give a phase slug or a ticket ID", err)
 	}
-	if err := config.SetLaunchTarget(pr.cfg.Root, target); err != nil {
-		return err
+	if len(pr.cfg.Milestones) > 0 {
+		if err := editConfig(pr, func(text string) (string, error) {
+			return config.SetMilestoneTargetsText(text, config.LaunchMilestone, []string{target})
+		}); err != nil {
+			return err
+		}
+	} else {
+		if err := config.SetLaunchTarget(pr.cfg.Root, target); err != nil {
+			return err
+		}
+		pr.cfg.Launch.Target = target
 	}
-	pr.cfg.Launch.Target = target
 	return showLaunch(e, pr)
 }
 
@@ -43,22 +55,45 @@ func runLaunchShow(e *env, args []string) error {
 	return showLaunch(e, pr)
 }
 
+// launchRequired returns the targets of the launch milestone, each with its
+// kind, and its required set. It returns no targets when there is no launch
+// milestone.
+func launchRequired(pr *project) (targets, kinds []string, req map[string]bool, err error) {
+	m := pr.milestone(config.LaunchMilestone)
+	if m == nil {
+		return nil, nil, nil, nil
+	}
+	req = map[string]bool{}
+	for _, t := range m.Targets {
+		r, kind, err := pr.plan.Required(t)
+		if err != nil {
+			return nil, nil, nil, refused("launch %v; set another with 'ajiya launch set <phase|ticket>'", err)
+		}
+		for id := range r {
+			req[id] = true
+		}
+		kinds = append(kinds, kind)
+	}
+	return m.Targets, kinds, req, nil
+}
+
 func launchJSON(e *env, pr *project) error {
 	out := struct {
-		Target      *string      `json:"target"` // null when none is set
+		Target      *string      `json:"target"` // the first target; null when none is set
+		Targets     []string     `json:"targets"`
 		Kind        string       `json:"kind,omitempty"`
 		Required    int          `json:"required"`
 		Closed      int          `json:"closed"`
 		Percent     int          `json:"percent"`
 		AfterLaunch int          `json:"after_launch"`
 		Open        []jsonTicket `json:"open"`
-	}{Open: []jsonTicket{}}
-	if target := pr.cfg.Launch.Target; target != "" {
-		req, kind, err := pr.plan.Required(target)
-		if err != nil {
-			return refused("launch %v; set another with 'ajiya launch set <phase|ticket>'", err)
-		}
-		out.Target, out.Kind, out.Required = &target, kind, len(req)
+	}{Targets: []string{}, Open: []jsonTicket{}}
+	targets, kinds, req, err := launchRequired(pr)
+	if err != nil {
+		return err
+	}
+	if len(targets) > 0 {
+		out.Target, out.Targets, out.Kind, out.Required = &targets[0], targets, kinds[0], len(req)
 		for _, t := range pr.plan.Tickets() {
 			switch {
 			case !req[t.ID]:
@@ -77,14 +112,13 @@ func launchJSON(e *env, pr *project) error {
 }
 
 func showLaunch(e *env, pr *project) error {
-	target := pr.cfg.Launch.Target
-	if target == "" {
+	targets, kinds, req, err := launchRequired(pr)
+	if err != nil {
+		return err
+	}
+	if len(targets) == 0 {
 		fmt.Fprintln(e.stdout, "No launch target. Set one with 'ajiya launch set <phase|ticket>'.")
 		return nil
-	}
-	req, kind, err := pr.plan.Required(target)
-	if err != nil {
-		return refused("launch %v; set another with 'ajiya launch set <phase|ticket>'", err)
 	}
 	closed, open := 0, []*plan.Ticket{}
 	for _, t := range pr.plan.Tickets() {
@@ -97,8 +131,12 @@ func showLaunch(e *env, pr *project) error {
 			open = append(open, t)
 		}
 	}
+	shown := make([]string, len(targets))
+	for i := range targets {
+		shown[i] = fmt.Sprintf("%s (%s)", targets[i], kinds[i])
+	}
 	total := len(req)
-	fmt.Fprintf(e.stdout, "Launch target: %s (%s)\n", target, kind)
+	fmt.Fprintf(e.stdout, "Launch target: %s\n", strings.Join(shown, ", "))
 	fmt.Fprintf(e.stdout, "Required: %d of %d closed (%d%%)\n", closed, total, percent(closed, total))
 	fmt.Fprintf(e.stdout, "After launch: %d tickets\n", len(pr.plan.Tickets())-total)
 	if len(open) > 0 {

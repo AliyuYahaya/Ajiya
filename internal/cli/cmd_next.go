@@ -7,17 +7,24 @@ import (
 	"time"
 
 	"github.com/AliyuYahaya/Ajiya/internal/check"
+	"github.com/AliyuYahaya/Ajiya/internal/config"
 	"github.com/AliyuYahaya/Ajiya/internal/gitx"
 	"github.com/AliyuYahaya/Ajiya/internal/plan"
 )
 
+// runNext lists the tickets that can start now: earliest milestone first
+// (unscheduled last), then those that unblock the most open tickets, then by ID.
 func runNext(e *env, args []string) error {
 	fs := newFlags("next")
 	app := fs.String("app", "", "only tickets for this app")
-	launchOnly := fs.Bool("launch", false, "only tickets required for launch")
+	launchOnly := fs.Bool("launch", false, "only tickets required for the launch milestone")
+	only := fs.String("milestone", "", "only tickets required for this milestone")
 	asJSON := fs.Bool("json", false, "print JSON")
 	if _, err := parse(fs, args, 0); err != nil {
 		return err
+	}
+	if *launchOnly && *only != "" {
+		return usageErr("give --launch or --milestone, not both")
 	}
 	pr, err := load(e)
 	if err != nil {
@@ -28,25 +35,44 @@ func runNext(e *env, args []string) error {
 			return err
 		}
 	}
+	if *launchOnly {
+		if pr.milestone(config.LaunchMilestone) == nil {
+			return refused("no launch target; set one with 'ajiya launch set <phase|ticket>'")
+		}
+		*only = config.LaunchMilestone
+	} else if *only != "" {
+		if err := pr.checkMilestone(*only); err != nil {
+			return err
+		}
+	}
+	s, err := pr.schedule()
+	if err != nil {
+		return err
+	}
 	tickets := pr.plan.Tickets()
 	g := plan.NewGraph(tickets)
 
-	// required is the launch set; empty when no target is set.
-	required := map[string]bool{}
-	if target := pr.cfg.Launch.Target; target != "" {
-		if required, _, err = pr.plan.Required(target); err != nil {
-			return refused("launch %v; set another with 'ajiya launch set <phase|ticket>'", err)
+	// launch is the launch milestone's required set; filter is --milestone's.
+	launch, filter := map[string]bool{}, map[string]bool{}
+	if i := s.Index(config.LaunchMilestone); i >= 0 {
+		launch = s.Required[i]
+	}
+	if *only != "" {
+		filter = s.Required[s.Index(*only)]
+	}
+	// rank is the position of a ticket's earliest milestone; unscheduled last.
+	rank := func(id string) int {
+		if m, ok := s.Of[id]; ok {
+			return s.Index(m)
 		}
-	} else if *launchOnly {
-		return refused("no launch target; set one with 'ajiya launch set <phase|ticket>'")
+		return len(s.Milestones)
 	}
 
 	// unblocks counts the open tickets waiting, directly or not, on each ticket.
 	unblocks := map[string]int{}
 	var ready []*plan.Ticket
 	for _, t := range tickets {
-		if t.Status.Closed() || t.Status.Blocked != "" || (*app != "" && t.App != *app) ||
-			(*launchOnly && !required[t.ID]) || len(waitingOn(pr, t)) > 0 {
+		if !canStart(pr, t) || (*app != "" && t.App != *app) || (*only != "" && !filter[t.ID]) {
 			continue
 		}
 		for _, id := range g.Downstream(t.ID) {
@@ -58,8 +84,8 @@ func runNext(e *env, args []string) error {
 	}
 	sort.SliceStable(ready, func(i, j int) bool {
 		a, b := ready[i], ready[j]
-		if required[a.ID] != required[b.ID] {
-			return required[a.ID]
+		if ra, rb := rank(a.ID), rank(b.ID); ra != rb {
+			return ra < rb
 		}
 		if unblocks[a.ID] != unblocks[b.ID] {
 			return unblocks[a.ID] > unblocks[b.ID]
@@ -70,12 +96,13 @@ func runNext(e *env, args []string) error {
 	if *asJSON {
 		type item struct {
 			jsonTicket
-			Launch   bool `json:"launch"`
-			Unblocks int  `json:"unblocks"`
+			Launch    bool   `json:"launch"`    // required for the launch milestone
+			Milestone string `json:"milestone"` // earliest milestone; "" when unscheduled
+			Unblocks  int    `json:"unblocks"`
 		}
 		items := []item{}
 		for _, t := range ready {
-			items = append(items, item{toJSON(t), required[t.ID], unblocks[t.ID]})
+			items = append(items, item{toJSON(t), launch[t.ID], s.Of[t.ID], unblocks[t.ID]})
 		}
 		return writeJSON(e, items)
 	}
@@ -85,10 +112,7 @@ func runNext(e *env, args []string) error {
 	}
 	w := tabwriter.NewWriter(e.stdout, 0, 0, 2, ' ', 0)
 	for _, t := range ready {
-		extra := ""
-		if required[t.ID] {
-			extra = "launch"
-		}
+		extra := s.Of[t.ID]
 		if n := unblocks[t.ID]; n > 0 {
 			extra = join(extra, fmt.Sprintf("unblocks %d", n))
 		}

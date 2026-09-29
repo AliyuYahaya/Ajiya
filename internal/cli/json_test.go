@@ -68,6 +68,7 @@ func TestJSON(t *testing.T) {
 	}
 	var none struct {
 		Target      *string
+		Targets     []string
 		Kind        string
 		Required    int
 		Closed      int
@@ -76,7 +77,7 @@ func TestJSON(t *testing.T) {
 		Open        []ticket
 	}
 	decode(t, ajiya(t, dir, 0, "launch", "show", "--json"), &none)
-	if none.Target != nil || none.Open == nil {
+	if none.Target != nil || none.Open == nil || none.Targets == nil {
 		t.Errorf("launch show --json without a target = %+v", none)
 	}
 
@@ -91,11 +92,12 @@ func TestJSON(t *testing.T) {
 
 	var next []struct {
 		ticket
-		Launch   bool
-		Unblocks int
+		Launch    bool
+		Milestone string
+		Unblocks  int
 	}
 	decode(t, ajiya(t, dir, 0, "next", "--json"), &next)
-	if len(next) != 1 || next[0].ID != "DE-0002" || !next[0].Launch || next[0].Status.Human != "keys" ||
+	if len(next) != 1 || next[0].ID != "DE-0002" || !next[0].Launch || next[0].Milestone != "launch" || next[0].Status.Human != "keys" ||
 		next[0].Status.State != "pending" || next[0].Depends[0] != "DE-0001" {
 		t.Errorf("next --json = %+v", next)
 	}
@@ -117,7 +119,7 @@ func TestJSON(t *testing.T) {
 
 	var launch = none
 	decode(t, ajiya(t, dir, 0, "launch", "show", "--json"), &launch)
-	if launch.Target == nil || *launch.Target != "DE-0002" || launch.Kind != "ticket" || launch.Required != 2 ||
+	if launch.Target == nil || *launch.Target != "DE-0002" || launch.Kind != "ticket" || len(launch.Targets) != 1 || launch.Required != 2 ||
 		launch.Closed != 1 || launch.Percent != 50 || len(launch.Open) != 1 || launch.AfterLaunch != 0 {
 		t.Errorf("launch show --json = %+v", launch)
 	}
