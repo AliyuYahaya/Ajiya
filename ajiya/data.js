@@ -14,13 +14,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 36,
-        "done": 32,
+        "done": 33,
         "in_progress": 0,
-        "pending": 4,
+        "pending": 3,
         "dropped": 0
       },
-      "percent": 88,
-      "ready": 3
+      "percent": 91,
+      "ready": 2
     },
     {
       "name": "v0-2",
@@ -29,13 +29,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 42,
-        "done": 32,
+        "done": 33,
         "in_progress": 0,
-        "pending": 10,
+        "pending": 9,
         "dropped": 0
       },
-      "percent": 76,
-      "ready": 3
+      "percent": 78,
+      "ready": 2
     },
     {
       "name": "v0-3",
@@ -44,13 +44,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 52,
-        "done": 32,
+        "done": 33,
         "in_progress": 0,
-        "pending": 20,
+        "pending": 19,
         "dropped": 0
       },
-      "percent": 61,
-      "ready": 3
+      "percent": 63,
+      "ready": 2
     },
     {
       "name": "after-v0-3",
@@ -59,13 +59,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 51,
-        "done": 32,
+        "done": 33,
         "in_progress": 0,
-        "pending": 19,
+        "pending": 18,
         "dropped": 0
       },
-      "percent": 62,
-      "ready": 3
+      "percent": 64,
+      "ready": 2
     }
   ],
   "phases": [
@@ -131,12 +131,12 @@ window.AJIYA = {
       "goal": "v0.1 is ready to publish: binaries, Homebrew cask, README walkthroughs and changelog",
       "counts": {
         "total": 5,
-        "done": 3,
+        "done": 4,
         "in_progress": 0,
-        "pending": 2,
+        "pending": 1,
         "dropped": 0
       },
-      "percent": 60,
+      "percent": 80,
       "milestone": "v0-1"
     },
     {
@@ -188,9 +188,9 @@ window.AJIYA = {
       "path": ".",
       "counts": {
         "total": 65,
-        "done": 44,
+        "done": 45,
         "in_progress": 0,
-        "pending": 21,
+        "pending": 20,
         "dropped": 0
       }
     }
@@ -972,16 +972,19 @@ window.AJIYA = {
         "AJ-0029"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · 6fb1bcc · 2026-09-29 · tests passed",
+        "commit": "6fb1bcc",
+        "date": "2026-09-29",
+        "tests_passed": true
       },
       "milestone": "v0-1",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0034"
       ],
-      "unblocks": 18
+      "unblocks": 0
     },
     {
       "id": "AJ-0034",
@@ -1010,7 +1013,6 @@ window.AJIYA = {
       "milestone": "v0-1",
       "ready": false,
       "waiting_on": [
-        "AJ-0033",
         "AJ-0041",
         "AJ-0065"
       ],
@@ -1806,12 +1808,35 @@ window.AJIYA = {
     }
   ],
   "next": [
-    "AJ-0033",
     "AJ-0041",
     "AJ-0065"
   ],
   "checks": [],
   "activity": [
+    {
+      "hash": "6fb1bccd2d6c3aefd697b8377e509dcb96d9e4d8",
+      "short": "6fb1bcc",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "README: how it works, install, and the two walkthroughs",
+      "refs": [
+        "AJ-0033"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0033",
+          "phase": "release",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        }
+      ],
+      "time": 1790712545
+    },
     {
       "hash": "edf9e224c4ea6f1ec9723cb61d4391c5277ea7cc",
       "short": "edf9e22",

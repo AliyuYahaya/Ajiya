@@ -7,10 +7,10 @@ Generated 2026-09-29.
 
 | Milestone | Closed | Required | % | Can start now |
 |---|---|---|---|---|
-| v0-1 | 32 | 36 | 88% | 3 |
-| v0-2 | 32 | 42 | 76% | 3 |
-| v0-3 | 32 | 52 | 61% | 3 |
-| after-v0-3 | 32 | 51 | 62% | 3 |
+| v0-1 | 33 | 36 | 91% | 2 |
+| v0-2 | 33 | 42 | 78% | 2 |
+| v0-3 | 33 | 52 | 63% | 2 |
+| after-v0-3 | 33 | 51 | 64% | 2 |
 
 ## Phases
 
@@ -20,20 +20,19 @@ Generated 2026-09-29.
 | Apps-launch | 14 | 0 | 0 | 14 | 100% | v0-1 |
 | Outputs | 12 | 0 | 0 | 12 | 100% | v0-1 |
 | Onboarding | 8 | 0 | 1 | 9 | 88% | v0-1 |
-| Release | 3 | 0 | 2 | 5 | 60% | v0-1 |
+| Release | 4 | 0 | 1 | 5 | 80% | v0-1 |
 | Agent-access | 0 | 0 | 3 | 3 | 0% | v0-2 |
 | Install | 0 | 0 | 3 | 3 | 0% | v0-2 |
 | Decisions-and-changes | 0 | 0 | 11 | 11 | 0% | v0-3 |
 
 ## Can start now
 
-- **AJ-0033** README walkthroughs (ajiya) · v0-1
 - **AJ-0041** import legacy maps each RO package to a phase (ajiya) · v0-1
 - **AJ-0065** ticket done takes evidence only from commits after the ticket started (ajiya) · v0-1
 
 ## Waiting
 
-- **AJ-0034** v0.1 definition of done (ajiya) waits on AJ-0033, AJ-0041, AJ-0065
+- **AJ-0034** v0.1 definition of done (ajiya) waits on AJ-0041, AJ-0065
 - **AJ-0042** ajiya status (ajiya) waits on AJ-0034
 - **AJ-0043** ajiya mcp server (ajiya) waits on AJ-0042
 - **AJ-0044** ajiya mcp install, uninstall and status (ajiya) waits on AJ-0043
@@ -60,6 +59,8 @@ Generated 2026-09-29.
 
 ## Recent activity
 
+- 2026-09-29 `6fb1bcc` README: how it works, install, and the two walkthroughs (AJ-0033)
+  - AJ-0033: pending → in_progress
 - 2026-09-29 `edf9e22` AJ-0031 done (AJ-0031)
   - AJ-0031: in_progress → done
 - 2026-09-29 `bb6e0eb` Homebrew cask config (AJ-0031)
@@ -88,9 +89,7 @@ Generated 2026-09-29.
   - AJ-0022: pending → in_progress
   - AJ-0023: pending → in_progress
 - 2026-09-29 `47117c5` Merge branch 'worktree-agent-a658cbd8dac8f5d6c' (-)
-- 2026-09-29 `4b321be` AJ-0021 done (AJ-0021)
-  - AJ-0021: pending → done
-- and 102 more in data.js
+- and 103 more in data.js
 
 ## Checks
 
