@@ -63,6 +63,8 @@ Generated 2026-09-29.
 
 ## Recent activity
 
+- 2026-09-29 `0c78c49` AJ-0024 done (AJ-0024)
+  - AJ-0024: pending → done
 - 2026-09-29 `f6b5387` AJ-0022 and AJ-0023 done (AJ-0022, AJ-0023)
   - AJ-0022: in_progress → done
   - AJ-0023: in_progress → done
@@ -96,10 +98,7 @@ Generated 2026-09-29.
 - 2026-09-29 `7207ba6` Dashboard live refresh under ajiya serve (AJ-0060)
 - 2026-09-29 `a0210e3` Dependencies view in the dashboard (AJ-0036)
 - 2026-09-29 `61d1f54` Milestones v0-1, v0-2, v0-3 for this repository (AJ-0021)
-- 2026-09-29 `3aa3572` Plan dashboard live refresh; AJ-0021 waits for the dependencies view again (AJ-0021, AJ-0036, AJ-0060)
-  - AJ-0036: pending → in_progress
-  - AJ-0060: new → in_progress
-- and 91 more in data.js
+- and 92 more in data.js
 
 ## Checks
 
