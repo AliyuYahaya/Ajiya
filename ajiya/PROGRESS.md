@@ -7,10 +7,10 @@ Generated 2026-09-29.
 
 | Milestone | Closed | Required | % | Can start now |
 |---|---|---|---|---|
-| v0-1 | 28 | 36 | 77% | 3 |
-| v0-2 | 28 | 42 | 66% | 3 |
-| v0-3 | 28 | 52 | 53% | 3 |
-| after-v0-3 | 28 | 51 | 54% | 3 |
+| v0-1 | 29 | 36 | 80% | 3 |
+| v0-2 | 29 | 42 | 69% | 3 |
+| v0-3 | 29 | 52 | 55% | 3 |
+| after-v0-3 | 29 | 51 | 56% | 3 |
 
 ## Phases
 
@@ -19,7 +19,7 @@ Generated 2026-09-29.
 | Commit-rule | 7 | 0 | 1 | 8 | 87% | v0-1 |
 | Apps-launch | 14 | 0 | 0 | 14 | 100% | v0-1 |
 | Outputs | 12 | 0 | 0 | 12 | 100% | v0-1 |
-| Onboarding | 6 | 0 | 3 | 9 | 66% | v0-1 |
+| Onboarding | 7 | 0 | 2 | 9 | 77% | v0-1 |
 | Release | 1 | 0 | 4 | 5 | 20% | v0-1 |
 | Agent-access | 0 | 0 | 3 | 3 | 0% | v0-2 |
 | Install | 0 | 0 | 3 | 3 | 0% | v0-2 |
@@ -27,13 +27,12 @@ Generated 2026-09-29.
 
 ## Can start now
 
-- **AJ-0025** init writes and updates the agent kit (ajiya) · v0-1
+- **AJ-0029** Re-run init on this repo (ajiya) · v0-1
 - **AJ-0041** import legacy maps each RO package to a phase (ajiya) · v0-1
 - **AJ-0065** ticket done takes evidence only from commits after the ticket started (ajiya) · v0-1
 
 ## Waiting
 
-- **AJ-0029** Re-run init on this repo (ajiya) waits on AJ-0025
 - **AJ-0030** GoReleaser config (ajiya) waits on AJ-0029
 - **AJ-0031** Homebrew cask config (ajiya) waits on AJ-0030
 - **AJ-0033** README walkthroughs (ajiya) waits on AJ-0029
@@ -64,6 +63,8 @@ Generated 2026-09-29.
 
 ## Recent activity
 
+- 2026-09-29 `15cad8a` init writes and updates the agent kit (AJ-0025)
+  - AJ-0025: pending → in_progress
 - 2026-09-29 `4f9b1a6` Plan: ticket done evidence must come after the ticket started (chore)
   - AJ-0065: new → pending
 - 2026-09-29 `5556d64` CLAUDE.md with the Ajiya block (AJ-0024)
@@ -99,8 +100,7 @@ Generated 2026-09-29.
   - AJ-0036: in_progress → done
   - AJ-0060: in_progress → done
 - 2026-09-29 `3ae5531` Refill filter menus on live refresh (AJ-0060)
-- 2026-09-29 `7207ba6` Dashboard live refresh under ajiya serve (AJ-0060)
-- and 94 more in data.js
+- and 95 more in data.js
 
 ## Checks
 

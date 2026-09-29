@@ -34,7 +34,6 @@
   --c-text: #1a1a1a; --c-muted: #666666; --c-faint: #98a2ae;
   --c-page: #f5f7fa; --c-card: #ffffff; --c-line: #e6e9ee; --c-col: #eef1f5; --c-dash: #d6dbe2;
   --c-on-accent: #ffffff; --c-backdrop: rgba(26, 26, 26, .4); --c-shadow: rgba(0, 0, 0, .15);
-  --logo-filter: none;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
@@ -47,7 +46,6 @@
     --c-text: #e6e8eb; --c-muted: #a3abb6; --c-faint: #6f7a87;
     --c-page: #0f1216; --c-card: #171b21; --c-line: #2a3039; --c-col: #13171c; --c-dash: #343b46;
     --c-on-accent: #0f1216; --c-backdrop: rgba(0, 0, 0, .6); --c-shadow: rgba(0, 0, 0, .5);
-    --logo-filter: invert(1) hue-rotate(180deg);
   }
 }
 :root[data-theme="dark"] {
@@ -60,7 +58,6 @@
   --c-text: #e6e8eb; --c-muted: #a3abb6; --c-faint: #6f7a87;
   --c-page: #0f1216; --c-card: #171b21; --c-line: #2a3039; --c-col: #13171c; --c-dash: #343b46;
   --c-on-accent: #0f1216; --c-backdrop: rgba(0, 0, 0, .6); --c-shadow: rgba(0, 0, 0, .5);
-    --logo-filter: invert(1) hue-rotate(180deg);
 }
 
 /* Base */
@@ -85,11 +82,9 @@ aside {
 }
 .shell.collapsed aside { width: 68px; }
 .side-top { height: 64px; display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 0 16px; border-bottom: 1px solid var(--c-line); }
-.brand-wrap { display: flex; align-items: center; gap: 10px; min-width: 0; }
-.logo { height: 28px; width: auto; flex-shrink: 0; filter: var(--logo-filter); }
 .brand { font-size: 16px; font-weight: 800; letter-spacing: -.01em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .shell.collapsed .side-top { justify-content: center; }
-.shell.collapsed .side-top .brand-wrap, .shell.collapsed .hide-c { display: none !important; }
+.shell.collapsed .side-top .brand, .shell.collapsed .hide-c { display: none !important; }
 .icon-btn { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border: 0; background: transparent; border-radius: 8px; color: var(--c-faint); cursor: pointer; flex-shrink: 0; }
 .icon-btn:hover { background: var(--c-page); color: var(--c-text); }
 nav { flex: 1; overflow-y: auto; padding: 12px; display: flex; flex-direction: column; gap: 4px; }
@@ -130,7 +125,6 @@ main { flex: 1; overflow-y: auto; min-width: 0; }
   border-radius: 8px; padding: 7px 10px; min-width: 0; max-width: 100%;
 }
 .filters input[type=search] { width: 260px; }
-.filters.search-only select, .filters.search-only .pill-toggle { display: none; }
 .filters input:focus, .filters select:focus, .select:focus { outline: 2px solid var(--c-blue-pale); border-color: var(--c-blue); }
 .pill-toggle { display: inline-flex; align-items: center; gap: 6px; padding: 6px 11px; border-radius: 99px; border: 1px solid var(--c-line); background: var(--c-card); font-size: 13px; font-weight: 600; color: var(--c-muted); cursor: pointer; user-select: none; }
 .pill-toggle[aria-pressed="true"] { background: var(--c-blue-pale); border-color: transparent; color: var(--c-blue); }
@@ -162,6 +156,7 @@ h2.section .count { color: var(--c-faint); font-weight: 600; font-size: 13px; }
   text-align: left; display: flex; flex-direction: column; gap: 8px; width: 100%; min-width: 0; transition: border-color .12s;
 }
 .card:hover, .card:focus-visible { border-color: var(--c-blue); outline: none; }
+.card.ready { box-shadow: inset 3px 0 0 var(--c-blue); }
 .card .head { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
 .card .rid { font-weight: 700; color: var(--c-text); }
 .card .name { font-weight: 600; line-height: 1.4; overflow-wrap: anywhere; }
@@ -292,11 +287,6 @@ td .sub { color: var(--c-faint); font-size: 12px; }
 .gnode.ext > *, .gnode.ext::before { opacity: .55; }
 .gnode.dim { border-color: var(--c-line); box-shadow: none; }
 .gnode.dim > *, .gnode.dim::before { opacity: .18; }
-/* Tickets that miss the filters. Separate from dim, which hover and the
-   milestone path use. */
-.gnode.miss { border-color: var(--c-line); box-shadow: none; }
-.gnode.miss > *, .gnode.miss::before { opacity: .25; }
-.gnode .nm.two { white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
 
 /* Live refresh: a small note after data.js reloads under ajiya serve. */
 .live-note {
@@ -326,7 +316,7 @@ dialog::backdrop { background: var(--c-backdrop); }
   aside { position: fixed; inset: 0 auto 0 0; z-index: 20; transform: translateX(-100%); transition: transform .2s; box-shadow: 0 0 40px var(--c-shadow); width: 260px !important; }
   .shell.open aside { transform: none; }
   .shell.collapsed .hide-c { display: revert !important; }
-  .shell.collapsed .side-top .brand-wrap { display: flex !important; }
+  .shell.collapsed .side-top .brand { display: block !important; }
   .shell.collapsed .nav-item { justify-content: flex-start; }
   .collapse-btn { display: none !important; }
   .scrim { display: none; position: fixed; inset: 0; background: var(--c-backdrop); z-index: 15; }
@@ -370,7 +360,7 @@ dialog::backdrop { background: var(--c-backdrop); }
   <div class="scrim" id="scrim"></div>
   <aside aria-label="Dashboard navigation">
     <div class="side-top">
-      <div class="brand-wrap"><img class="logo" id="logo" alt="Ajiya" width="101" height="28" src="data:image/png;base64,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"><strong class="brand" id="brand"></strong></div>
+      <strong class="brand" id="brand">Ajiya</strong>
       <button class="icon-btn collapse-btn" id="collapseBtn" type="button" aria-label="Collapse sidebar"><svg class="i"><use href="#i-left"/></svg></button>
     </div>
     <nav id="nav">
@@ -397,7 +387,7 @@ dialog::backdrop { background: var(--c-backdrop); }
     <div class="main-inner">
       <div class="mobile-bar">
         <button class="icon-btn" id="menuBtn" type="button" aria-label="Open menu"><svg class="i"><use href="#i-menu"/></svg></button>
-        <div class="brand-wrap"><img class="logo" id="mobileLogo" alt="Ajiya" width="101" height="28"><strong class="brand" id="mobileBrand"></strong></div>
+        <strong class="brand" id="mobileBrand">Ajiya</strong>
       </div>
       <div id="banner"></div>
       <div class="page-head">
@@ -422,8 +412,6 @@ dialog::backdrop { background: var(--c-backdrop); }
             <option value="human">Needs a human</option>
           </optgroup>
         </select>
-        <button type="button" class="pill-toggle" id="readyP" aria-pressed="false">Can start now</button>
-        <button type="button" class="pill-toggle" id="humanP" aria-pressed="false">Needs a human</button>
         <button type="button" class="link-btn" id="clearF" hidden>Clear filters</button>
       </div>
       <div id="view"></div>
@@ -499,7 +487,6 @@ dialog::backdrop { background: var(--c-backdrop); }
   /* -------------------------------------------------------------------------
      Data
      ----------------------------------------------------------------------- */
-  $('mobileLogo').src = $('logo').src; // one copy of the logo in the page
   let D = window.AJIYA;
   const view = $('view');
   if (!D || !Array.isArray(D.tickets)) {
@@ -573,15 +560,15 @@ dialog::backdrop { background: var(--c-backdrop); }
      Views. Keys match the nav buttons' data-tab.
      ----------------------------------------------------------------------- */
   const VIEWS = {
-    overview: { label: 'Overview', sub: 'Progress per milestone, in order, and per phase.', filters: true },
+    overview: { label: 'Overview', sub: 'Progress per milestone, in order, and per phase.', filters: false },
     next: { label: 'Next up', sub: 'Tickets that can start now, in the order ajiya next gives: earliest milestone first, then what unblocks most.', filters: true },
     board: { label: 'Board', sub: 'Every ticket by where it stands.', filters: true },
-    deps: { label: 'Dependencies', sub: 'What waits on what. An arrow points from a dependency to what needs it; columns go left to right by depth.', filters: true },
+    deps: { label: 'Dependencies', sub: 'What waits on what. An arrow points from a dependency to what needs it; columns go left to right by depth.', filters: false },
     phases: { label: 'Phases', sub: 'Tickets by phase, in display order.', filters: true },
     tickets: { label: 'Tickets', sub: 'Every ticket in the plan.', filters: true },
     apps: { label: 'Apps', sub: 'Tickets per app.', filters: false },
-    checks: { label: 'Checks', sub: 'What ajiya check reports. Fix errors first.', filters: 'search' },
-    activity: { label: 'Activity', sub: 'Commits from the last 30 days, newest first, with the status changes they made.', filters: 'search' },
+    checks: { label: 'Checks', sub: 'What ajiya check reports. Fix errors first.', filters: false },
+    activity: { label: 'Activity', sub: 'Commits from the last 30 days, newest first, with the status changes they made.', filters: false },
   };
   const renderers = {
     overview: renderOverview, next: renderNext, board: renderBoard, deps: renderDeps, phases: renderPhases,
@@ -636,17 +623,12 @@ dialog::backdrop { background: var(--c-backdrop); }
     }
     return !F.q || textOf(t).includes(F.q);
   };
-  const filtering = () => !!(F.q || F.app || F.phase || F.ms || F.state);
   const setF = (k, v, stored) => { F[k] = v; if (stored) store.set(key(k), v); ticketLimit = 150; render(); };
   $('q').oninput = e => setF('q', e.target.value.trim().toLowerCase());
   $('appF').onchange = e => setF('app', e.target.value, true);
   $('phaseF').onchange = e => setF('phase', e.target.value, true);
   $('msF').onchange = e => setF('ms', e.target.value, true);
   $('stateF').onchange = e => setF('state', e.target.value, true);
-  // The pills are shortcuts for two states in the menu.
-  const pill = v => () => { const n = F.state === v ? '' : v; $('stateF').value = n; setF('state', n, true); };
-  $('readyP').onclick = pill('ready');
-  $('humanP').onclick = pill('human');
   $('clearF').onclick = () => {
     ['app', 'phase', 'ms', 'state'].forEach(k => { F[k] = ''; store.set(key(k), ''); });
     F.q = ''; $('q').value = '';
@@ -660,12 +642,10 @@ dialog::backdrop { background: var(--c-backdrop); }
   let project$, errors;
   function renderNav() {
     project$ = project.name || 'Ajiya';
-    // The logo says Ajiya; the project's own name goes beside it.
-    const own = project$.toLowerCase() === 'ajiya' ? '' : project$;
-    $('brand').textContent = own; $('mobileBrand').textContent = own;
+    $('brand').textContent = project$; $('mobileBrand').textContent = project$;
     errors = checks.filter(c => c.level === 'error').length;
     const n = {
-      next: nextIDs.length, board: tickets.length, deps: tickets.filter(t => arr(t.depends).length).length, phases: phases.length, tickets: tickets.length,
+      next: nextIDs.length, board: tickets.length, phases: phases.length, tickets: tickets.length,
       apps: apps.length, checks: checks.length, activity: activity.length,
     };
     document.querySelectorAll('#nav [data-tab]').forEach(b => {
@@ -752,22 +732,17 @@ dialog::backdrop { background: var(--c-backdrop); }
       h += `<p class="section-note">No milestones yet. Add one with <span class="mono">ajiya milestone add</span>.</p>`;
     }
 
-    const top = nextIDs.map(id => byID.get(id)).filter(t => t && match(t)).slice(0, 6);
+    const top = nextIDs.map(id => byID.get(id)).filter(Boolean).slice(0, 6);
     if (top.length) {
-      h += `<h2 class="section">Top of the queue</h2><p class="section-note">The first ${top.length} from Next up${filtering() ? ' that match the filters' : ''}.</p><div class="grid">${top.map(t => card(t)).join('')}</div>`;
-    } else if (nextIDs.length && filtering()) {
-      h += `<h2 class="section">Top of the queue</h2>${noMatch}`;
+      h += `<h2 class="section">Top of the queue</h2><p class="section-note">The first ${top.length} from Next up.</p><div class="grid">${top.map(t => card(t)).join('')}</div>`;
     }
-    // With filters on, a phase is listed when one of its tickets matches.
-    const hit = new Set(filtering() ? tickets.filter(match).map(t => t.phase) : phases.map(p => p.slug));
-    const shownPhases = phases.filter(p => hit.has(p.slug));
 
-    h += `<h2 class="section">Phases <span class="count">${shownPhases.length}</span></h2><p class="section-note">In display order${filtering() ? ', with tickets that match the filters' : ''}.</p>`;
-    h += shownPhases.length ? `<div class="card-box" style="margin-top:12px">${shownPhases.map(p =>
+    h += `<h2 class="section">Phases <span class="count">${phases.length}</span></h2><p class="section-note">In display order.</p>`;
+    h += phases.length ? `<div class="card-box" style="margin-top:12px">${phases.map(p =>
       `<div class="row link" data-phase-go="${esc(p.slug)}">
         <div><div style="font-weight:700">${esc(p.title || p.slug)} ${msBadge(p.milestone)}</div><div class="src">${esc(p.goal)}</div></div>
         ${barHTML(p.counts)}
-        <div class="nums">${p.percent}% · ${countText(p.counts)}</div></div>`).join('')}</div>` : phases.length ? noMatch : '<div class="empty">No phases yet.</div>';
+        <div class="nums">${p.percent}% · ${countText(p.counts)}</div></div>`).join('')}</div>` : '<div class="empty">No phases yet.</div>';
     view.innerHTML = h;
   }
 
@@ -996,56 +971,26 @@ dialog::backdrop { background: var(--c-backdrop); }
   }
 
   const plainTitle = s => String(s ?? '').replace(/`/g, '');
-  // Tickets (every ticket, as the reference draws its work packages) or
-  // Phases (the phase graph, and a phase's tickets on click). Remembered.
-  let depMode = store.get(key('depmode')) === 'phases' ? 'phases' : 'tickets';
-  let depLinked = store.get(key('deplinked')) === '1';
   function renderDeps() {
     if (depPhase && !phaseBySlug.has(depPhase)) depPhase = '';
     if (depMs && !msIndex.has(depMs)) depMs = '';
     const req = depMs ? requiredSet(depMs) : null;
-    const filtered = filtering();
-    const pill = (attr, on, label) => `<button type="button" class="pill-toggle" ${attr} aria-pressed="${on}">${label}</button>`;
-    const modeBtns = pill('data-depmode="tickets"', depMode === 'tickets', 'Tickets') + pill('data-depmode="phases"', depMode === 'phases', 'Phases');
     const msSel = milestones.length ? `<select class="select" id="gMs" aria-label="Path to a milestone">${opt('', 'Path to a milestone: none', depMs)}${
       milestones.map(m => opt(m.name, `Path to ${m.name}`, depMs)).join('')}</select>` : '';
     const legend = `<div class="g-legend"><span><i class="ln ok"></i>Dependency closed</span><span><i class="ln"></i>Still open</span>${
-      req && depMode === 'phases' ? '<span><i class="ln ms"></i>Milestone path</span>' : ''}<span><i class="dot done"></i>Done</span><span><i class="dot in_progress"></i>In progress</span><span><i class="dot pending"></i>Pending</span></div>`;
+      req ? '<span><i class="ln ms"></i>Milestone path</span>' : ''}<span><i class="dot done"></i>Done</span><span><i class="dot in_progress"></i>In progress</span><span><i class="dot pending"></i>Pending</span></div>`;
     const tUp = id => arr((byID.get(id) || {}).depends).filter(d => byID.has(d));
     const tDown = id => arr((byID.get(id) || {}).dependants).filter(d => byID.has(d));
-    // A ticket card. out: in another phase than the one shown (dashed).
-    const ticketNode = (t, out) => ({
-      id: t.id, cls: `${state(t)}${t.ready ? ' ready' : ''}${out ? ' ext' : ''}${filtered && !match(t) ? ' miss' : ''}`, attr: `data-open="${esc(t.id)}"`,
-      title: `${t.id} ${plainTitle(t.title)}\n${stateLabel[state(t)] || state(t)}${t.ready ? ', can start now' : ''}\nIn phase ${phaseTitle(t.phase)}${t.milestone ? `\nMilestone ${t.milestone}` : ''}`,
-      html: `<span class="top"><b>${esc(t.id)}</b>${t.milestone ? `<span>${esc(t.milestone)}</span>` : ''}<span class="r">${t.ready ? 'can start now' : esc(phaseTitle(t.phase))}</span></span>
-        <span class="nm two">${esc(plainTitle(t.title))}</span>`,
-    });
-    const T = { W: 232, H: 74 };
     let tools, g, up, down, msNodes = null;
 
-    if (depMode === 'tickets') {
-      // Every ticket; Only linked drops tickets with no links, and a
-      // milestone keeps only the tickets it needs.
-      let shown = tickets.slice().sort(byPlan);
-      if (depLinked) shown = shown.filter(t => tUp(t.id).length || tDown(t.id).length);
-      if (req) shown = shown.filter(t => req.has(t.id));
-      const ids = new Set(shown.map(t => t.id));
-      const edges = [];
-      shown.forEach(t => tUp(t.id).forEach(d => { if (ids.has(d)) edges.push({ from: d, to: t.id, cls: closed(byID.get(d)) ? 'ok' : '' }); }));
-      g = graphHTML(shown.map(t => ticketNode(t, false)), edges, T);
-      up = tUp; down = tDown;
-      tools = `${modeBtns}${pill('id="gLinked"', depLinked, 'Only linked')}${msSel}<span>${plural(shown.length, 'ticket')} · ${plural(edges.length, 'dependency', 'dependencies')}${
-        filtered ? ` · ${shown.filter(match).length} match the filters` : ''}${g.cyclic.size ? ` · ${g.cyclic.size} wait on each other` : ''}</span>`;
-      if (!shown.length) g.html = `<div class="empty">${tickets.length ? 'No tickets to show.' : 'No tickets yet. Add one with <span class="mono">ajiya ticket add</span>.'}</div>`;
-    } else if (!depPhase) {
+    if (!depPhase) {
       // Phase graph: an arrow from A to B when a ticket in B depends on one in A.
-      const ph = new Map(phases.map(p => [p.slug, { inside: 0, reqN: 0, hits: 0, ups: new Set(), downs: new Set() }]));
+      const ph = new Map(phases.map(p => [p.slug, { inside: 0, reqN: 0, ups: new Set(), downs: new Set() }]));
       const links = new Map();
       tickets.forEach(t => {
         const b = ph.get(t.phase);
         if (!b) return;
         if (req && req.has(t.id)) b.reqN++;
-        if (match(t)) b.hits++;
         arr(t.depends).forEach(d => {
           const u = byID.get(d);
           if (!u || !ph.has(u.phase)) return;
@@ -1066,9 +1011,9 @@ dialog::backdrop { background: var(--c-backdrop); }
       const nodes = phases.map(p => {
         const c = p.counts, b = ph.get(p.slug);
         const st = c.total && c.done + c.dropped === c.total ? 'done' : c.in_progress || c.done ? 'in_progress' : 'pending';
-        const meta = req ? `${b.reqN} of ${c.total} needed for ${depMs}` : filtered ? `${b.hits} of ${c.total} match the filters` : `${plural(c.total, 'ticket')} · ${plural(b.inside, 'link')} inside`;
+        const meta = req ? `${b.reqN} of ${c.total} needed for ${depMs}` : `${plural(c.total, 'ticket')} · ${plural(b.inside, 'link')} inside`;
         return {
-          id: p.slug, cls: `phase ${st}${filtered && !b.hits ? ' miss' : ''}`, attr: `data-dep-phase="${esc(p.slug)}"`,
+          id: p.slug, cls: 'phase ' + st, attr: `data-dep-phase="${esc(p.slug)}"`,
           title: `${p.title || p.slug}${p.goal ? '\n' + p.goal : ''}\n${countText(c)}\nDepends on ${plural(b.ups.size, 'phase')}, needed by ${b.downs.size}. Click to see its tickets.`,
           html: `<span class="top"><b>${esc(p.slug)}</b><span class="r">${c.done + c.dropped}/${c.total}</span></span>
             <span class="nm">${esc(p.title || p.slug)}</span>${barHTML(c)}<span class="top">${esc(meta)}</span>`,
@@ -1078,7 +1023,7 @@ dialog::backdrop { background: var(--c-backdrop); }
       g = graphHTML(nodes, edges, { W: 240, H: 88 });
       up = id => [...(ph.get(id) || { ups: [] }).ups];
       down = id => [...(ph.get(id) || { downs: [] }).downs];
-      tools = `${modeBtns}${msSel}<span>${plural(phases.length, 'phase')} · ${plural(edges.length, 'link')} between phases${g.cyclic.size ? ` · ${g.cyclic.size} phases wait on each other` : ''} · click a phase to see its tickets</span>`;
+      tools = `${msSel}<span>${plural(phases.length, 'phase')} · ${plural(edges.length, 'link')} between phases${g.cyclic.size ? ` · ${g.cyclic.size} phases wait on each other` : ''} · click a phase to see its tickets</span>`;
       if (!phases.length) g.html = '<div class="empty">No phases yet. Add one with <span class="mono">ajiya phase add</span>.</div>';
     } else {
       // One phase's tickets, with their direct dependencies and dependants in
@@ -1094,10 +1039,19 @@ dialog::backdrop { background: var(--c-backdrop); }
         if (!(inSet.has(d) || ext.has(d)) || !(inSet.has(t.id) || inSet.has(d))) return;
         edges.push({ from: d, to: t.id, cls: closed(byID.get(d)) ? 'ok' : '', ms: !!req && req.has(d) && req.has(t.id) });
       }));
+      const nodes = shown.map(t => {
+        const out = !inSet.has(t.id);
+        return {
+          id: t.id, cls: `${state(t)}${t.ready ? ' ready' : ''}${out ? ' ext' : ''}`, attr: `data-open="${esc(t.id)}"`,
+          title: `${t.id} ${plainTitle(t.title)}\n${stateLabel[state(t)] || state(t)}${t.ready ? ', can start now' : ''}${out ? `\nIn phase ${phaseTitle(t.phase)}` : ''}${t.milestone ? `\nMilestone ${t.milestone}` : ''}`,
+          html: `<span class="top"><b>${esc(t.id)}</b>${t.milestone ? `<span>${esc(t.milestone)}</span>` : ''}<span class="r">${out ? esc(phaseTitle(t.phase)) : t.ready ? 'can start now' : esc(stateLabel[state(t)] || state(t))}</span></span>
+            <span class="nm">${esc(plainTitle(t.title))}</span>`,
+        };
+      });
       if (req) msNodes = req;
-      g = graphHTML(shown.map(t => ticketNode(t, !inSet.has(t.id))), edges, T);
+      g = graphHTML(nodes, edges, { W: 230, H: 54 });
       up = tUp; down = tDown;
-      tools = `${modeBtns}<button type="button" class="pill-toggle back" id="gBack">${icon('left')}All phases</button>
+      tools = `<button type="button" class="pill-toggle back" id="gBack">${icon('left')}All phases</button>
         <select class="select" id="gPhase" aria-label="Phase">${phases.map(x => opt(x.slug, x.title || x.slug, depPhase)).join('')}</select>${msSel}
         <span>${plural(inside.length, 'ticket')}${ext.size ? ` · ${ext.size} in other phases (dashed)` : ''}${g.cyclic.size ? ` · ${g.cyclic.size} wait on each other` : ''}</span>`;
       if (!inside.length) g.html = `<div class="empty">${esc(p.title || p.slug)} has no tickets yet.</div>`;
@@ -1108,8 +1062,6 @@ dialog::backdrop { background: var(--c-backdrop); }
     const setPhase = v => { depPhase = v; store.set(key('depphase'), v); renderDeps(); };
     const canvas = $('gCanvas');
     if (canvas) canvas.addEventListener('click', e => { const n = e.target.closest('[data-dep-phase]'); if (n) setPhase(n.dataset.depPhase); });
-    view.querySelectorAll('[data-depmode]').forEach(b => b.onclick = () => { depMode = b.dataset.depmode; store.set(key('depmode'), depMode); renderDeps(); });
-    if ($('gLinked')) $('gLinked').onclick = () => { depLinked = !depLinked; store.set(key('deplinked'), depLinked ? '1' : ''); renderDeps(); };
     if ($('gBack')) $('gBack').onclick = () => setPhase('');
     if ($('gPhase')) $('gPhase').onchange = e => setPhase(e.target.value);
     if ($('gMs')) $('gMs').onchange = e => { depMs = e.target.value; store.set(key('depms'), depMs); renderDeps(); };
@@ -1165,16 +1117,15 @@ dialog::backdrop { background: var(--c-backdrop); }
       view.innerHTML = '<div class="empty">All checks pass.</div>';
       return;
     }
-    const list = checks.filter(c => !F.q || [c.level, c.code, c.location, c.message, c.fix].join(' ').toLowerCase().includes(F.q));
-    view.innerHTML = `<div class="board-tools"><span>${plural(errors, 'error')} · ${plural(checks.length - errors, 'warning')}${F.q ? ` · ${list.length} match` : ''} · run <span class="mono">ajiya check</span> for the live list</span></div>
-      ${list.length ? `<div class="table-wrap"><table><thead><tr><th>Level</th><th>Code</th><th>Where</th><th>Problem</th><th class="note">Fix</th></tr></thead><tbody>
-      ${list.map(c => `<tr>
+    view.innerHTML = `<div class="board-tools"><span>${plural(errors, 'error')} · ${plural(checks.length - errors, 'warning')} · run <span class="mono">ajiya check</span> for the live list</span></div>
+      <div class="table-wrap"><table><thead><tr><th>Level</th><th>Code</th><th>Where</th><th>Problem</th><th class="note">Fix</th></tr></thead><tbody>
+      ${checks.map(c => `<tr>
         <td><span class="badge ${c.level === 'error' ? 'error' : 'warning'}">${esc(c.level)}</span></td>
         <td class="mono" style="white-space:nowrap">${esc(c.code)}</td>
         <td class="mono" style="white-space:nowrap">${esc(c.location)}</td>
         <td>${linkIDs(c.message)}</td>
         <td class="note">${linkIDs(c.fix)}</td></tr>`).join('')}
-      </tbody></table></div>` : noMatch}`;
+      </tbody></table></div>`;
   }
   // Escaped text with known ticket IDs turned into chips.
   function linkIDs(s) {
@@ -1199,16 +1150,14 @@ dialog::backdrop { background: var(--c-backdrop); }
       view.innerHTML = '<div class="empty">No commits in the last 30 days, or this is not a git repository.</div>';
       return;
     }
-    const hits = F.q ? activity.filter(e => [e.short, e.hash, e.subject, e.author, ...arr(e.refs), ...arr(e.changes).map(c => c.id)].join(' ').toLowerCase().includes(F.q)) : activity;
-    if (!hits.length) { view.innerHTML = noMatch; return; }
-    const list = hits.slice(0, activityLimit);
+    const list = activity.slice(0, activityLimit);
     let h = '', day = null;
     list.forEach(e => {
       if (e.date !== day) { h += (day === null ? '' : '</div>') + `<div class="day">${esc(e.date)}</div><div class="card-box">`; day = e.date; }
       h += commitHTML(e);
     });
     h += '</div>';
-    if (hits.length > activityLimit) h += `<button class="more" id="more" type="button">Show ${Math.min(100, hits.length - activityLimit)} more</button>`;
+    if (activity.length > activityLimit) h += `<button class="more" id="more" type="button">Show ${Math.min(100, activity.length - activityLimit)} more</button>`;
     view.innerHTML = h;
     const more = $('more');
     if (more) more.onclick = () => { activityLimit += 100; renderActivity(); };
@@ -1225,10 +1174,7 @@ dialog::backdrop { background: var(--c-backdrop); }
     document.title = `${v.label} · ${project$}`;
     if (location.hash.slice(1) !== tab) { try { history.replaceState(null, '', '#' + tab); } catch (e) { location.hash = tab; } }
     $('filters').style.display = v.filters ? '' : 'none';
-    $('filters').classList.toggle('search-only', v.filters === 'search');
-    $('readyP').setAttribute('aria-pressed', String(F.state === 'ready'));
-    $('humanP').setAttribute('aria-pressed', String(F.state === 'human'));
-    $('clearF').hidden = !(v.filters === 'search' ? F.q : filtering());
+    $('clearF').hidden = !(F.q || F.app || F.phase || F.ms || F.state);
     renderers[tab]();
   }
 
@@ -1314,7 +1260,6 @@ dialog::backdrop { background: var(--c-backdrop); }
     const main = document.querySelector('main'), top = main.scrollTop, wy = window.scrollY;
     const gw = $('gWrap'), gx = gw ? gw.scrollLeft : 0, gy = gw ? gw.scrollTop : 0;
     setData(d);
-    fillFilters();
     render();
     main.scrollTop = top;
     if (window.scrollY !== wy) window.scrollTo(0, wy);

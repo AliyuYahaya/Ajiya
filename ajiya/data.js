@@ -14,12 +14,12 @@ window.AJIYA = {
       ],
       "required": {
         "total": 36,
-        "done": 28,
+        "done": 29,
         "in_progress": 0,
-        "pending": 8,
+        "pending": 7,
         "dropped": 0
       },
-      "percent": 77,
+      "percent": 80,
       "ready": 3
     },
     {
@@ -29,12 +29,12 @@ window.AJIYA = {
       ],
       "required": {
         "total": 42,
-        "done": 28,
+        "done": 29,
         "in_progress": 0,
-        "pending": 14,
+        "pending": 13,
         "dropped": 0
       },
-      "percent": 66,
+      "percent": 69,
       "ready": 3
     },
     {
@@ -44,12 +44,12 @@ window.AJIYA = {
       ],
       "required": {
         "total": 52,
-        "done": 28,
+        "done": 29,
         "in_progress": 0,
-        "pending": 24,
+        "pending": 23,
         "dropped": 0
       },
-      "percent": 53,
+      "percent": 55,
       "ready": 3
     },
     {
@@ -59,12 +59,12 @@ window.AJIYA = {
       ],
       "required": {
         "total": 51,
-        "done": 28,
+        "done": 29,
         "in_progress": 0,
-        "pending": 23,
+        "pending": 22,
         "dropped": 0
       },
-      "percent": 54,
+      "percent": 56,
       "ready": 3
     }
   ],
@@ -117,12 +117,12 @@ window.AJIYA = {
       "goal": "A new or existing project can be set up by an agent using only the installed kit and importers",
       "counts": {
         "total": 9,
-        "done": 6,
+        "done": 7,
         "in_progress": 0,
-        "pending": 3,
+        "pending": 2,
         "dropped": 0
       },
-      "percent": 66,
+      "percent": 77,
       "milestone": "v0-1"
     },
     {
@@ -188,9 +188,9 @@ window.AJIYA = {
       "path": ".",
       "counts": {
         "total": 65,
-        "done": 40,
+        "done": 41,
         "in_progress": 0,
-        "pending": 25,
+        "pending": 24,
         "dropped": 0
       }
     }
@@ -786,16 +786,19 @@ window.AJIYA = {
         "AJ-0024"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · 15cad8a · 2026-09-29 · tests passed",
+        "commit": "15cad8a",
+        "date": "2026-09-29",
+        "tests_passed": true
       },
       "milestone": "v0-1",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0029"
       ],
-      "unblocks": 22
+      "unblocks": 0
     },
     {
       "id": "AJ-0026",
@@ -871,10 +874,8 @@ window.AJIYA = {
         "text": "🟥 Pending"
       },
       "milestone": "v0-1",
-      "ready": false,
-      "waiting_on": [
-        "AJ-0025"
-      ],
+      "ready": true,
+      "waiting_on": [],
       "dependants": [
         "AJ-0030",
         "AJ-0033"
@@ -1804,12 +1805,36 @@ window.AJIYA = {
     }
   ],
   "next": [
-    "AJ-0025",
+    "AJ-0029",
     "AJ-0041",
     "AJ-0065"
   ],
   "checks": [],
   "activity": [
+    {
+      "hash": "15cad8ae073d3244eebcac01ed58c626596c16d7",
+      "short": "15cad8a",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "init writes and updates the agent kit",
+      "refs": [
+        "AJ-0025"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0025",
+          "phase": "onboarding",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        }
+      ],
+      "time": 1790710637
+    },
     {
       "hash": "4f9b1a62134d072f3fdc39df716c45ac117a708e",
       "short": "4f9b1a6",
