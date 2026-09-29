@@ -15,6 +15,7 @@
 //	E010 an open ticket's app is not registered
 //	E011 a ticket marked done has no evidence
 //	E012 the launch target does not exist
+//	E013 [phases] order lists a slug that is not a phase
 //
 // Warning codes are added as those checks are built.
 package check
@@ -122,6 +123,7 @@ func Run(cfg *config.Config, p *plan.Plan) []Finding {
 			"dependency loop: %s", strings.Join(c, " -> "))
 	}
 
+	fs = append(fs, phaseOrder(cfg, p)...)
 	fs = append(fs, planWarnings(cfg, p)...)
 	Sort(fs)
 	return fs

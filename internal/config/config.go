@@ -34,6 +34,10 @@ type Config struct {
 	// as one milestone named "launch"; see MilestoneList.
 	Milestones []Milestone `toml:"milestones"`
 
+	// Phases holds the display order of phases. It changes nothing but the
+	// order phases are listed in.
+	Phases Phases `toml:"phases"`
+
 	// Root is the directory holding ajiya.toml. Set by Load.
 	Root string `toml:"-"`
 }
@@ -49,6 +53,13 @@ type Launch struct {
 
 type Test struct {
 	Command string `toml:"command"`
+}
+
+// Phases is the [phases] table.
+type Phases struct {
+	// Order lists phase slugs to show first, in this order. Phases missing
+	// from it follow in suggested order.
+	Order []string `toml:"order"`
 }
 
 // Milestone is a named gate: its targets are phase slugs or ticket IDs.
@@ -163,6 +174,16 @@ func (c *Config) Validate() error {
 			}
 		}
 		names[m.Name] = true
+	}
+	listed := map[string]bool{}
+	for _, slug := range c.Phases.Order {
+		switch {
+		case !milestoneRE.MatchString(slug):
+			return fail("[phases] order: %q is not a phase slug; use lower case letters and digits separated by single hyphens", slug)
+		case listed[slug]:
+			return fail("[phases] order lists %q twice; remove one", slug)
+		}
+		listed[slug] = true
 	}
 	seen := map[string]bool{}
 	for i, a := range c.Apps {

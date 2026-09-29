@@ -11,6 +11,7 @@ package check
 //	W006 an open ticket added after the plan was first built is linked to nothing
 //	W007 the launch set has no deployment or hosting ticket
 //	W008 an open ticket has needed a human for more than 14 days
+//	W011 [phases] order lists a phase before a phase it waits on
 
 import (
 	"errors"
