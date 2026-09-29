@@ -81,36 +81,45 @@ Generated 2026-09-29.
 
 ## Recent activity
 
+- 2026-09-29 `2603a19` MIT licence (chore)
+- 2026-09-29 `110dcb2` Rebuild plan outputs after the merge (chore)
+- 2026-09-29 `cc33bdb` Merge branch 'worktree-agent-a5a988be55680e087' into worktree-agent-a658cbd8dac8f5d6c (-)
+- 2026-09-29 `2d65774` Plan: AJ-0041 done (AJ-0041)
+  - AJ-0041: pending → done
+- 2026-09-29 `7d547a5` import legacy: map each RO package to a phase (AJ-0041)
+- 2026-09-29 `ff9cdca` Plan: sign and notarise the macOS binaries (chore)
+  - AJ-0083: new → pending
+  - AJ-0084: new → pending
+- 2026-09-29 `810c3c0` npm packaging decided: per-platform packages behind a wrapper (AJ-0067, AJ-0075)
+  - AJ-0067: pending → done
+- 2026-09-29 `2ba31d5` Reflow the daily guide's done paragraph (AJ-0065)
+- 2026-09-29 `622e678` Merge branch 'worktree-agent-af0c9a6c1037d2858' into worktree-agent-a658cbd8dac8f5d6c (-)
+- 2026-09-29 `140a432` AJ-0065 done (AJ-0065)
+  - AJ-0065: pending → done
+- 2026-09-29 `5c1af99` Ticket done counts only commits made after the ticket started (AJ-0065)
+- 2026-09-29 `619df03` Plan the install channels: npm, Homebrew and the install script (chore)
+  - AJ-0067: new → pending
+  - AJ-0068: new → pending
+  - AJ-0069: new → pending
+  - AJ-0070: new → pending
+  - AJ-0071: new → pending
+  - AJ-0072: new → pending
+  - AJ-0073: new → pending
+  - AJ-0074: new → pending
+  - AJ-0075: new → pending
+  - AJ-0076: new → pending
+  - AJ-0077: new → pending
+  - AJ-0078: new → pending
+  - AJ-0079: new → pending
+  - AJ-0080: new → pending
+  - AJ-0081: new → pending
+  - AJ-0082: new → pending
 - 2026-09-29 `7748eae` Merge branch 'worktree-agent-a658cbd8dac8f5d6c' (-)
 - 2026-09-29 `d0c5d61` AJ-0066 done (AJ-0066)
   - AJ-0066: in_progress → done
 - 2026-09-29 `5a75b38` Guides: how to set the test command (AJ-0066)
   - AJ-0066: pending → in_progress
-- 2026-09-29 `60ba1a3` Plan: guides explain the test command (chore)
-  - AJ-0066: new → pending
-- 2026-09-29 `c6f6b5a` AJ-0033 done (AJ-0033)
-  - AJ-0033: in_progress → done
-- 2026-09-29 `6fb1bcc` README: how it works, install, and the two walkthroughs (AJ-0033)
-  - AJ-0033: pending → in_progress
-- 2026-09-29 `edf9e22` AJ-0031 done (AJ-0031)
-  - AJ-0031: in_progress → done
-- 2026-09-29 `bb6e0eb` Homebrew cask config (AJ-0031)
-  - AJ-0031: pending → in_progress
-- 2026-09-29 `03b432d` AJ-0030 done (AJ-0030)
-  - AJ-0030: in_progress → done
-- 2026-09-29 `9a2c69c` GoReleaser config (AJ-0030)
-  - AJ-0030: pending → in_progress
-- 2026-09-29 `d18ad9e` AJ-0029 done (AJ-0029)
-  - AJ-0029: in_progress → done
-- 2026-09-29 `c93b4be` This repository runs the kit it ships (AJ-0029)
-  - AJ-0029: pending → in_progress
-- 2026-09-29 `298f56f` AJ-0025 done (AJ-0025)
-  - AJ-0025: in_progress → done
-- 2026-09-29 `15cad8a` init writes and updates the agent kit (AJ-0025)
-  - AJ-0025: pending → in_progress
-- 2026-09-29 `4f9b1a6` Plan: ticket done evidence must come after the ticket started (chore)
-  - AJ-0065: new → pending
-- and 108 more in data.js
+- and 120 more in data.js
 
 ## Checks
 
