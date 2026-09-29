@@ -7,10 +7,10 @@ Generated 2026-09-29.
 
 | Milestone | Closed | Required | % | Can start now |
 |---|---|---|---|---|
-| v0-1 | 29 | 36 | 80% | 3 |
-| v0-2 | 29 | 42 | 69% | 3 |
-| v0-3 | 29 | 52 | 55% | 3 |
-| after-v0-3 | 29 | 51 | 56% | 3 |
+| v0-1 | 30 | 36 | 83% | 4 |
+| v0-2 | 30 | 42 | 71% | 4 |
+| v0-3 | 30 | 52 | 57% | 4 |
+| after-v0-3 | 30 | 51 | 58% | 4 |
 
 ## Phases
 
@@ -19,7 +19,7 @@ Generated 2026-09-29.
 | Commit-rule | 7 | 0 | 1 | 8 | 87% | v0-1 |
 | Apps-launch | 14 | 0 | 0 | 14 | 100% | v0-1 |
 | Outputs | 12 | 0 | 0 | 12 | 100% | v0-1 |
-| Onboarding | 7 | 0 | 2 | 9 | 77% | v0-1 |
+| Onboarding | 8 | 0 | 1 | 9 | 88% | v0-1 |
 | Release | 1 | 0 | 4 | 5 | 20% | v0-1 |
 | Agent-access | 0 | 0 | 3 | 3 | 0% | v0-2 |
 | Install | 0 | 0 | 3 | 3 | 0% | v0-2 |
@@ -27,15 +27,14 @@ Generated 2026-09-29.
 
 ## Can start now
 
-- **AJ-0029** Re-run init on this repo (ajiya) · v0-1
+- **AJ-0030** GoReleaser config (ajiya) · v0-1
+- **AJ-0033** README walkthroughs (ajiya) · v0-1
 - **AJ-0041** import legacy maps each RO package to a phase (ajiya) · v0-1
 - **AJ-0065** ticket done takes evidence only from commits after the ticket started (ajiya) · v0-1
 
 ## Waiting
 
-- **AJ-0030** GoReleaser config (ajiya) waits on AJ-0029
 - **AJ-0031** Homebrew cask config (ajiya) waits on AJ-0030
-- **AJ-0033** README walkthroughs (ajiya) waits on AJ-0029
 - **AJ-0034** v0.1 definition of done (ajiya) waits on AJ-0030, AJ-0031, AJ-0033, AJ-0041, AJ-0065
 - **AJ-0042** ajiya status (ajiya) waits on AJ-0034
 - **AJ-0043** ajiya mcp server (ajiya) waits on AJ-0042
@@ -63,6 +62,8 @@ Generated 2026-09-29.
 
 ## Recent activity
 
+- 2026-09-29 `c93b4be` This repository runs the kit it ships (AJ-0029)
+  - AJ-0029: pending → in_progress
 - 2026-09-29 `298f56f` AJ-0025 done (AJ-0025)
   - AJ-0025: in_progress → done
 - 2026-09-29 `15cad8a` init writes and updates the agent kit (AJ-0025)
@@ -98,10 +99,7 @@ Generated 2026-09-29.
   - AJ-0063: new → pending
   - AJ-0064: new → pending
 - 2026-09-29 `8ced233` Merge branch 'worktree-agent-a658cbd8dac8f5d6c' (-)
-- 2026-09-29 `f84a39b` AJ-0036 and AJ-0060 done (AJ-0036, AJ-0060)
-  - AJ-0036: in_progress → done
-  - AJ-0060: in_progress → done
-- and 96 more in data.js
+- and 97 more in data.js
 
 ## Checks
 

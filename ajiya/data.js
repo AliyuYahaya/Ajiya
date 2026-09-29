@@ -14,13 +14,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 36,
-        "done": 29,
+        "done": 30,
         "in_progress": 0,
-        "pending": 7,
+        "pending": 6,
         "dropped": 0
       },
-      "percent": 80,
-      "ready": 3
+      "percent": 83,
+      "ready": 4
     },
     {
       "name": "v0-2",
@@ -29,13 +29,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 42,
-        "done": 29,
+        "done": 30,
         "in_progress": 0,
-        "pending": 13,
+        "pending": 12,
         "dropped": 0
       },
-      "percent": 69,
-      "ready": 3
+      "percent": 71,
+      "ready": 4
     },
     {
       "name": "v0-3",
@@ -44,13 +44,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 52,
-        "done": 29,
+        "done": 30,
         "in_progress": 0,
-        "pending": 23,
+        "pending": 22,
         "dropped": 0
       },
-      "percent": 55,
-      "ready": 3
+      "percent": 57,
+      "ready": 4
     },
     {
       "name": "after-v0-3",
@@ -59,13 +59,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 51,
-        "done": 29,
+        "done": 30,
         "in_progress": 0,
-        "pending": 22,
+        "pending": 21,
         "dropped": 0
       },
-      "percent": 56,
-      "ready": 3
+      "percent": 58,
+      "ready": 4
     }
   ],
   "phases": [
@@ -117,12 +117,12 @@ window.AJIYA = {
       "goal": "A new or existing project can be set up by an agent using only the installed kit and importers",
       "counts": {
         "total": 9,
-        "done": 7,
+        "done": 8,
         "in_progress": 0,
-        "pending": 2,
+        "pending": 1,
         "dropped": 0
       },
-      "percent": 77,
+      "percent": 88,
       "milestone": "v0-1"
     },
     {
@@ -188,9 +188,9 @@ window.AJIYA = {
       "path": ".",
       "counts": {
         "total": 65,
-        "done": 41,
+        "done": 42,
         "in_progress": 0,
-        "pending": 24,
+        "pending": 23,
         "dropped": 0
       }
     }
@@ -870,17 +870,20 @@ window.AJIYA = {
         "AJ-0025"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · c93b4be · 2026-09-29 · tests passed",
+        "commit": "c93b4be",
+        "date": "2026-09-29",
+        "tests_passed": true
       },
       "milestone": "v0-1",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0030",
         "AJ-0033"
       ],
-      "unblocks": 21
+      "unblocks": 0
     },
     {
       "id": "AJ-0030",
@@ -896,10 +899,8 @@ window.AJIYA = {
         "text": "🟥 Pending"
       },
       "milestone": "v0-1",
-      "ready": false,
-      "waiting_on": [
-        "AJ-0029"
-      ],
+      "ready": true,
+      "waiting_on": [],
       "dependants": [
         "AJ-0031",
         "AJ-0034",
@@ -969,10 +970,8 @@ window.AJIYA = {
         "text": "🟥 Pending"
       },
       "milestone": "v0-1",
-      "ready": false,
-      "waiting_on": [
-        "AJ-0029"
-      ],
+      "ready": true,
+      "waiting_on": [],
       "dependants": [
         "AJ-0034"
       ],
@@ -1805,12 +1804,37 @@ window.AJIYA = {
     }
   ],
   "next": [
-    "AJ-0029",
+    "AJ-0030",
+    "AJ-0033",
     "AJ-0041",
     "AJ-0065"
   ],
   "checks": [],
   "activity": [
+    {
+      "hash": "c93b4bea8c2ba7d8762fb91374e7000502028c8f",
+      "short": "c93b4be",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "This repository runs the kit it ships",
+      "refs": [
+        "AJ-0029"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0029",
+          "phase": "onboarding",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        }
+      ],
+      "time": 1790710879
+    },
     {
       "hash": "298f56f505a7eefbcb1bef83c21c2b8aa897cce7",
       "short": "298f56f",
