@@ -59,6 +59,8 @@ Generated 2026-09-29.
 
 ## Recent activity
 
+- 2026-09-29 `d0c5d61` AJ-0066 done (AJ-0066)
+  - AJ-0066: in_progress → done
 - 2026-09-29 `5a75b38` Guides: how to set the test command (AJ-0066)
   - AJ-0066: pending → in_progress
 - 2026-09-29 `60ba1a3` Plan: guides explain the test command (chore)
@@ -86,9 +88,7 @@ Generated 2026-09-29.
 - 2026-09-29 `4f9b1a6` Plan: ticket done evidence must come after the ticket started (chore)
   - AJ-0065: new → pending
 - 2026-09-29 `5556d64` CLAUDE.md with the Ajiya block (AJ-0024)
-- 2026-09-29 `0c78c49` AJ-0024 done (AJ-0024)
-  - AJ-0024: pending → done
-- and 106 more in data.js
+- and 107 more in data.js
 
 ## Checks
 
