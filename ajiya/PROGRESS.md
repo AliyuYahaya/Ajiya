@@ -59,7 +59,7 @@ Generated 2026-09-29.
 - **AJ-0058** v0.3 definition of done (ajiya) waits on AJ-0048, AJ-0049, AJ-0050, AJ-0051, AJ-0052, AJ-0053, AJ-0054, AJ-0055, AJ-0056
 - **AJ-0073** install.ps1 for Windows (ajiya) waits on AJ-0044
 - **AJ-0074** Installer CI (ajiya) waits on AJ-0045, AJ-0073
-- **AJ-0075** npm packages: a wrapper and one package per platform (ajiya) waits on AJ-0068
+- **AJ-0075** npm packages: @ajiya/cli and one package per platform (ajiya) waits on AJ-0068
 - **AJ-0076** npm launcher tests (ajiya) waits on AJ-0075
 - **AJ-0077** Homebrew tap wiring (ajiya) waits on AJ-0044
 - **AJ-0078** Install scripts served at a stable URL (ajiya) waits on AJ-0045, AJ-0070, AJ-0073

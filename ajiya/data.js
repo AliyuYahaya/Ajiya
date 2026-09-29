@@ -1899,7 +1899,7 @@ window.AJIYA = {
       "phase": "install",
       "app": "ajiya",
       "title": "npm account and package names",
-      "done_when": "npm account haidardotdev has 2FA on; an npm org ajiya exists (free, public packages) for the @ajiya/* platform packages; the name ajiya is claimed",
+      "done_when": "npm account haidardotdev has 2FA on; the npm org ajiya exists; @ajiya/cli is claimed with a 0.0.0 placeholder (npm refused the unscoped name ajiya as too similar to tjika)",
       "depends": [
         "AJ-0034"
       ],
@@ -2063,8 +2063,8 @@ window.AJIYA = {
       "id": "AJ-0075",
       "phase": "install",
       "app": "ajiya",
-      "title": "npm packages: a wrapper and one package per platform",
-      "done_when": "A script verifies every release archive against checksums.txt, then writes six platform packages @ajiya/darwin-arm64, @ajiya/darwin-x64, @ajiya/linux-arm64, @ajiya/linux-x64, @ajiya/win32-arm64 and @ajiya/win32-x64 (os and cpu set, binary mode 755) and the ajiya wrapper with exact optionalDependencies on them, all versioned from the tag; npm pack --dry-run succeeds for all seven; a bad checksum fails it",
+      "title": "npm packages: @ajiya/cli and one package per platform",
+      "done_when": "A script verifies every release archive against checksums.txt, then writes six platform packages @ajiya/darwin-arm64, @ajiya/darwin-x64, @ajiya/linux-arm64, @ajiya/linux-x64, @ajiya/win32-arm64 and @ajiya/win32-x64 (os and cpu set, binary mode 755) and the wrapper @ajiya/cli (bin: ajiya) with exact optionalDependencies on them, all versioned from the tag; npm pack --dry-run succeeds for all seven; a bad checksum fails it",
       "depends": [
         "AJ-0030",
         "AJ-0067",
