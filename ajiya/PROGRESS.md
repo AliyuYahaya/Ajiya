@@ -64,6 +64,8 @@ Generated 2026-09-29.
 
 ## Recent activity
 
+- 2026-09-29 `4f9b1a6` Plan: ticket done evidence must come after the ticket started (chore)
+  - AJ-0065: new → pending
 - 2026-09-29 `5556d64` CLAUDE.md with the Ajiya block (AJ-0024)
 - 2026-09-29 `0c78c49` AJ-0024 done (AJ-0024)
   - AJ-0024: pending → done
@@ -98,8 +100,7 @@ Generated 2026-09-29.
   - AJ-0060: in_progress → done
 - 2026-09-29 `3ae5531` Refill filter menus on live refresh (AJ-0060)
 - 2026-09-29 `7207ba6` Dashboard live refresh under ajiya serve (AJ-0060)
-- 2026-09-29 `a0210e3` Dependencies view in the dashboard (AJ-0036)
-- and 93 more in data.js
+- and 94 more in data.js
 
 ## Checks
 
