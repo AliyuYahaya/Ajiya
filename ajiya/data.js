@@ -13,14 +13,14 @@ window.AJIYA = {
         "AJ-0034"
       ],
       "required": {
-        "total": 36,
+        "total": 37,
         "done": 33,
         "in_progress": 0,
-        "pending": 3,
+        "pending": 4,
         "dropped": 0
       },
-      "percent": 91,
-      "ready": 2
+      "percent": 89,
+      "ready": 3
     },
     {
       "name": "v0-2",
@@ -28,19 +28,34 @@ window.AJIYA = {
         "AJ-0047"
       ],
       "required": {
-        "total": 42,
+        "total": 43,
         "done": 33,
         "in_progress": 0,
-        "pending": 9,
+        "pending": 10,
         "dropped": 0
       },
-      "percent": 78,
-      "ready": 2
+      "percent": 76,
+      "ready": 3
     },
     {
       "name": "v0-3",
       "targets": [
         "AJ-0058"
+      ],
+      "required": {
+        "total": 53,
+        "done": 33,
+        "in_progress": 0,
+        "pending": 20,
+        "dropped": 0
+      },
+      "percent": 62,
+      "ready": 3
+    },
+    {
+      "name": "after-v0-3",
+      "targets": [
+        "AJ-0057"
       ],
       "required": {
         "total": 52,
@@ -50,22 +65,7 @@ window.AJIYA = {
         "dropped": 0
       },
       "percent": 63,
-      "ready": 2
-    },
-    {
-      "name": "after-v0-3",
-      "targets": [
-        "AJ-0057"
-      ],
-      "required": {
-        "total": 51,
-        "done": 33,
-        "in_progress": 0,
-        "pending": 18,
-        "dropped": 0
-      },
-      "percent": 64,
-      "ready": 2
+      "ready": 3
     }
   ],
   "phases": [
@@ -116,13 +116,13 @@ window.AJIYA = {
       "title": "Onboarding",
       "goal": "A new or existing project can be set up by an agent using only the installed kit and importers",
       "counts": {
-        "total": 9,
+        "total": 10,
         "done": 8,
         "in_progress": 0,
-        "pending": 1,
+        "pending": 2,
         "dropped": 0
       },
-      "percent": 88,
+      "percent": 80,
       "milestone": "v0-1"
     },
     {
@@ -187,10 +187,10 @@ window.AJIYA = {
       "name": "ajiya",
       "path": ".",
       "counts": {
-        "total": 65,
+        "total": 66,
         "done": 45,
         "in_progress": 0,
-        "pending": 20,
+        "pending": 21,
         "dropped": 0
       }
     }
@@ -796,7 +796,8 @@ window.AJIYA = {
       "ready": false,
       "waiting_on": [],
       "dependants": [
-        "AJ-0029"
+        "AJ-0029",
+        "AJ-0066"
       ],
       "unblocks": 0
     },
@@ -1003,7 +1004,8 @@ window.AJIYA = {
         "AJ-0040",
         "AJ-0041",
         "AJ-0059",
-        "AJ-0065"
+        "AJ-0065",
+        "AJ-0066"
       ],
       "status": {
         "state": "pending",
@@ -1014,7 +1016,8 @@ window.AJIYA = {
       "ready": false,
       "waiting_on": [
         "AJ-0041",
-        "AJ-0065"
+        "AJ-0065",
+        "AJ-0066"
       ],
       "dependants": [
         "AJ-0042"
@@ -1805,11 +1808,33 @@ window.AJIYA = {
         "AJ-0034"
       ],
       "unblocks": 18
+    },
+    {
+      "id": "AJ-0066",
+      "phase": "onboarding",
+      "app": "ajiya",
+      "title": "Guides say how to set the test command",
+      "done_when": "The kit no longer forbids editing ajiya.toml outright: ajiya/ is never edited by hand, and ajiya.toml changes through commands except the [test] command, which the guides say to set by hand; ticket done --test without one is explained",
+      "depends": [
+        "AJ-0025"
+      ],
+      "status": {
+        "state": "pending",
+        "text": "🟥 Pending"
+      },
+      "milestone": "v0-1",
+      "ready": true,
+      "waiting_on": [],
+      "dependants": [
+        "AJ-0034"
+      ],
+      "unblocks": 18
     }
   ],
   "next": [
     "AJ-0041",
-    "AJ-0065"
+    "AJ-0065",
+    "AJ-0066"
   ],
   "checks": [],
   "activity": [
