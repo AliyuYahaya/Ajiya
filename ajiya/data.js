@@ -2497,6 +2497,36 @@ window.AJIYA = {
   "checks": [],
   "activity": [
     {
+      "hash": "573e2529a4b1d29e51a614d24fef2a9b88948f0c",
+      "short": "573e252",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Tidy the import and app-folder guide text",
+      "refs": [
+        "AJ-0091"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790718301
+    },
+    {
+      "hash": "c0b1294a901977cdfa763d8b6a22747ab1e7eb26",
+      "short": "c0b1294",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Merge branch 'worktree-agent-a3488137fbba0e00c' into worktree-agent-a658cbd8dac8f5d6c",
+      "refs": [],
+      "chore": false,
+      "merge": true,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790718296
+    },
+    {
       "hash": "4a25d7c534e63485dcbef141c4b85c0a12cae7c0",
       "short": "4a25d7c",
       "date": "2026-09-29",
@@ -2535,6 +2565,30 @@ window.AJIYA = {
       "time": 1790718164
     },
     {
+      "hash": "885b49926b5e1a2e498011b8f7eff68293a4572b",
+      "short": "885b499",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Close AJ-0091",
+      "refs": [
+        "AJ-0091"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0091",
+          "phase": "onboarding",
+          "from": "pending",
+          "to": "done",
+          "text": "🟩 Done · 9f1c49a · 2026-09-29 · tests passed"
+        }
+      ],
+      "time": 1790718147
+    },
+    {
       "hash": "d1df3f0da7c6e88391f62a87a166e280c63bc425",
       "short": "d1df3f0",
       "date": "2026-09-29",
@@ -2549,6 +2603,22 @@ window.AJIYA = {
       "agent": "",
       "changes": [],
       "time": 1790718144
+    },
+    {
+      "hash": "9f1c49a4cf856b439509ffc52d626df776b029f6",
+      "short": "9f1c49a",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Guide fixes from the walkthrough test",
+      "refs": [
+        "AJ-0091"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790718131
     },
     {
       "hash": "7363ad410a2ee46b77c21c1366c75f43ddfccdde",

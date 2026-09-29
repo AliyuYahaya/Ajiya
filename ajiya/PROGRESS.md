@@ -70,10 +70,15 @@ Generated 2026-09-29.
 
 ## Recent activity
 
+- 2026-09-29 `573e252` Tidy the import and app-folder guide text (AJ-0091)
+- 2026-09-29 `c0b1294` Merge branch 'worktree-agent-a3488137fbba0e00c' into worktree-agent-a658cbd8dac8f5d6c (-)
 - 2026-09-29 `4a25d7c` Merge branch 'worktree-agent-afca5fbf28b0fec73' into worktree-agent-a658cbd8dac8f5d6c (-)
 - 2026-09-29 `f38b713` AJ-0072 done (AJ-0072)
   - AJ-0072: pending → done
+- 2026-09-29 `885b499` Close AJ-0091 (AJ-0091)
+  - AJ-0091: pending → done
 - 2026-09-29 `d1df3f0` Release workflow: tag builds a draft release, pull requests a snapshot (AJ-0072)
+- 2026-09-29 `9f1c49a` Guide fixes from the walkthrough test (AJ-0091)
 - 2026-09-29 `7363ad4` Install scripts are served as GitHub release assets (AJ-0070, AJ-0078)
   - AJ-0070: pending → done
 - 2026-09-29 `ab57528` npm account, org and @ajiya/cli placeholder in place (AJ-0068)
@@ -88,16 +93,7 @@ Generated 2026-09-29.
 - 2026-09-29 `23f1de8` ajiya init suggests the test command (AJ-0090)
   - AJ-0090: pending → in_progress
 - 2026-09-29 `47eac13` npm wrapper is @ajiya/cli (AJ-0068, AJ-0075)
-- 2026-09-29 `4e23e52` Add ajiya phase remove for an empty phase (AJ-0086)
-  - AJ-0086: pending → in_progress
-- 2026-09-29 `45d9f00` Mark AJ-0087, AJ-0088 and AJ-0089 done (AJ-0087, AJ-0088, AJ-0089)
-  - AJ-0087: pending → done
-  - AJ-0088: pending → done
-  - AJ-0089: pending → done
-- 2026-09-29 `ac6842b` Add ticket list, group help and required-flag usage lines (AJ-0087, AJ-0088, AJ-0089)
-- 2026-09-29 `7f1ede7` Homebrew tap and its token in place (AJ-0069)
-  - AJ-0069: in_progress → done
-- and 142 more in data.js
+- and 146 more in data.js
 
 ## Checks
 
