@@ -129,6 +129,7 @@ include the ones already there.
 | `ajiya ticket start <ID>` | Start a ticket |
 | `ajiya ticket done <ID> --test` | Close a ticket with evidence |
 | `ajiya ticket block <ID> "<reason>"` | Park a ticket that waits on something outside the plan |
+| `ajiya ticket list [--phase <slug>] [--app <app>] [--state <state>] [--milestone <name>]` | List tickets in plan order (`--state` takes pending, in_progress, done, dropped, ready or human) |
 | `ajiya ticket add ...` | Add work found on the way |
 | `ajiya ticket edit <ID> ...` | Correct a ticket |
 | `ajiya milestone list` / `ajiya milestone show <name>` | See progress to each gate, and what blocks it |

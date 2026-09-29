@@ -76,14 +76,15 @@ func init() {
 		{"ticket block", `<ID> "<reason>"`, "Mark a ticket blocked, with what it waits on", runTicketBlock},
 		{"ticket drop", `<ID> --reason "<why>" --by "<name>"`, "Close a ticket that is not needed (a person's decision)", runTicketDrop},
 		{"ticket show", "<ID> [--json]", "Show a ticket, its dependencies and dependants", runTicketShow},
-		{"ticket edit", `<ID> [--title] [--done-when] [--depends] [--app] [--phase]`, "Change a ticket", runTicketEdit},
+		{"ticket edit", `<ID> [--title "<title>"] [--done-when "<check>"] [--depends <IDs>|-] [--app <app>] [--phase <slug>]  (at least one flag)`, "Change a ticket", runTicketEdit},
+		{"ticket list", "[--phase <slug>] [--app <app>] [--state <state>] [--milestone <name>] [--json]", "List tickets in plan order with ID, app, state and title", runTicketList},
 		{"next", "[--app <app>] [--launch | --milestone <name>] [--json]", "List tickets that can start now", runNext},
 		{"launch set", "<phase|ticket>", "Set the launch target", runLaunchSet},
 		{"launch show", "[--json]", "Show the launch target and what it still needs", runLaunchShow},
 		{"milestone add", "<name> --targets <phases|tickets> [--before <name> | --after <name>]", "Add a milestone; it goes before launch unless placed", runMilestoneAdd},
 		{"milestone list", "[--json]", "List milestones in order, with progress", runMilestoneList},
 		{"milestone show", "<name> [--json]", "Show what a milestone still needs and what blocks it", runMilestoneShow},
-		{"milestone move", "<name> --before <name> | --after <name>", "Reorder a milestone", runMilestoneMove},
+		{"milestone move", "<name> (--before <name> | --after <name>)", "Reorder a milestone", runMilestoneMove},
 		{"milestone remove", "<name>", "Remove a milestone; tickets are not touched", runMilestoneRemove},
 		{"import todo", "<file> [--app <app>]", "Import a markdown to-do list into the inbox phase", runImportTodo},
 		{"import github", "[--repo <owner/name>] [--app <app>] [--limit <n>]", "Import GitHub issues into the inbox phase (uses gh)", runImportGitHub},
@@ -104,7 +105,30 @@ func usageText() string {
 	for _, c := range commands {
 		fmt.Fprintf(&b, "  %-17s %s\n", c.name, c.summary)
 	}
-	b.WriteString("\nRun 'ajiya <command> --help' for the arguments of one command.\n")
+	b.WriteString("\nRun 'ajiya <command> --help' for the arguments of one command, or\n'ajiya <group> --help' (for example 'ajiya ticket --help') to list a group.\n")
+	return b.String()
+}
+
+// isGroup reports whether name is the first word of a two-word command.
+func isGroup(name string) bool {
+	for _, c := range commands {
+		if strings.HasPrefix(c.name, name+" ") {
+			return true
+		}
+	}
+	return false
+}
+
+// groupText lists the subcommands of a command group with their summaries.
+func groupText(group string) string {
+	var b strings.Builder
+	fmt.Fprintf(&b, "usage: ajiya %s <command> [arguments]\n\nCommands:\n", group)
+	for _, c := range commands {
+		if strings.HasPrefix(c.name, group+" ") {
+			fmt.Fprintf(&b, "  %-17s %s\n", c.name, c.summary)
+		}
+	}
+	fmt.Fprintf(&b, "\nRun 'ajiya %s <command> --help' for the arguments of one command.\n", group)
 	return b.String()
 }
 
@@ -137,6 +161,19 @@ func run(e *env, args []string) int {
 		args = []string{"version"}
 	}
 	c, rest := find(args)
+	if c == nil && isGroup(args[0]) {
+		if len(args) == 1 {
+			fmt.Fprint(e.stderr, groupText(args[0]))
+			return ExitUsage
+		}
+		switch args[1] {
+		case "help", "-h", "--help", "-help":
+			fmt.Fprint(e.stdout, groupText(args[0]))
+			return ExitOK
+		}
+		fmt.Fprintf(e.stderr, "ajiya: unknown command %q; run 'ajiya %s --help' for the list\n", args[0]+" "+args[1], args[0])
+		return ExitUsage
+	}
 	if c == nil {
 		fmt.Fprintf(e.stderr, "ajiya: unknown command %q; run 'ajiya help' for the list\n", strings.Join(args[:min(2, len(args))], " "))
 		return ExitUsage
@@ -148,7 +185,7 @@ func run(e *env, args []string) int {
 	case err == nil:
 		return ExitOK
 	case errors.Is(err, flag.ErrHelp):
-		fmt.Fprintf(e.stdout, "usage: ajiya %s %s\n\n%s.\n", c.name, c.args, c.summary)
+		fmt.Fprintf(e.stdout, "usage: ajiya %s %s\n\n%s.\n\nIn the usage line, arguments and flags outside [ ] are required; those in [ ] are optional.\n", c.name, c.args, c.summary)
 		return ExitOK
 	case errors.As(err, &s):
 		return int(s)

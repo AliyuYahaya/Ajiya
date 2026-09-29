@@ -102,6 +102,19 @@ func TestJSON(t *testing.T) {
 		t.Errorf("next --json = %+v", next)
 	}
 
+	var list []ticket
+	decode(t, ajiya(t, dir, 0, "ticket", "list", "--json"), &list)
+	if len(list) != 2 || list[0].ID != "DE-0001" || list[0].Status.State != "done" || list[1].ID != "DE-0002" || list[1].Status.Human != "keys" {
+		t.Errorf("ticket list --json = %+v", list)
+	}
+	decode(t, ajiya(t, dir, 0, "ticket", "list", "--state", "human", "--json"), &list)
+	if len(list) != 1 || list[0].ID != "DE-0002" {
+		t.Errorf("ticket list --state human --json = %+v", list)
+	}
+	if got := string(ajiya(t, dir, 0, "ticket", "list", "--state", "dropped", "--json")); got != "[]\n" {
+		t.Errorf("ticket list --json with no match = %q", got)
+	}
+
 	var show struct {
 		ticket
 		PhaseTitle   string `json:"phase_title"`

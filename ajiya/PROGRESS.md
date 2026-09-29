@@ -8,9 +8,9 @@ Generated 2026-09-29.
 | Milestone | Closed | Required | % | Can start now |
 |---|---|---|---|---|
 | v0-1 | 37 | 37 | 100% | 0 |
-| v0-2 | 40 | 68 | 58% | 11 |
-| v0-3 | 40 | 78 | 51% | 11 |
-| after-v0-3 | 40 | 77 | 51% | 11 |
+| v0-2 | 43 | 68 | 63% | 8 |
+| v0-3 | 43 | 78 | 55% | 8 |
+| after-v0-3 | 43 | 77 | 55% | 8 |
 
 ## Phases
 
@@ -19,7 +19,7 @@ Generated 2026-09-29.
 | Commit-rule | 8 | 0 | 0 | 8 | 100% | v0-1 |
 | Apps-launch | 14 | 0 | 0 | 14 | 100% | v0-1 |
 | Outputs | 12 | 0 | 0 | 12 | 100% | v0-1 |
-| Onboarding | 10 | 0 | 7 | 17 | 58% | v0-1 |
+| Onboarding | 13 | 0 | 4 | 17 | 76% | v0-1 |
 | Release | 5 | 0 | 0 | 5 | 100% | v0-1 |
 | Agent-access | 0 | 0 | 3 | 3 | 0% | v0-2 |
 | Install | 3 | 0 | 18 | 21 | 14% | v0-2 |
@@ -34,9 +34,6 @@ Generated 2026-09-29.
 - **AJ-0083** Apple signing credentials as release secrets (ajiya) · v0-2
 - **AJ-0085** Imports use the project's app (ajiya) · v0-2
 - **AJ-0086** ajiya phase remove for an empty phase (ajiya) · v0-2
-- **AJ-0088** ajiya ticket list (ajiya) · v0-2
-- **AJ-0087** Group help: ajiya ticket --help and ajiya phase --help (ajiya) · v0-2
-- **AJ-0089** ticket edit always prints the ticket (ajiya) · v0-2
 - **AJ-0090** init suggests the test command (ajiya) · v0-2
 
 ## Waiting
@@ -45,7 +42,7 @@ Generated 2026-09-29.
 - **AJ-0044** ajiya mcp install, uninstall and status (ajiya) waits on AJ-0043
 - **AJ-0045** install.sh for macOS and Linux (ajiya) waits on AJ-0044
 - **AJ-0046** Claude Code plugin (ajiya) waits on AJ-0042, AJ-0043
-- **AJ-0047** v0.2 definition of done (ajiya) waits on AJ-0042, AJ-0043, AJ-0044, AJ-0045, AJ-0046, AJ-0082, AJ-0085, AJ-0086, AJ-0087, AJ-0088, AJ-0089, AJ-0090, AJ-0091
+- **AJ-0047** v0.2 definition of done (ajiya) waits on AJ-0042, AJ-0043, AJ-0044, AJ-0045, AJ-0046, AJ-0082, AJ-0085, AJ-0086, AJ-0090, AJ-0091
 - **AJ-0048** Tags column (ajiya) waits on AJ-0047
 - **AJ-0049** ajiya ticket files (ajiya) waits on AJ-0048
 - **AJ-0050** Decision records and commands (ajiya) waits on AJ-0048
@@ -68,7 +65,7 @@ Generated 2026-09-29.
 - **AJ-0081** Release rehearsal on a release candidate (ajiya) waits on AJ-0074, AJ-0076, AJ-0078, AJ-0079, AJ-0080, AJ-0084
 - **AJ-0082** Install docs for every channel (ajiya) waits on AJ-0081
 - **AJ-0084** Sign and notarise the macOS binaries (ajiya) waits on AJ-0072, AJ-0077, AJ-0083
-- **AJ-0091** Guide fixes from the walkthrough test (ajiya) waits on AJ-0085, AJ-0086, AJ-0088
+- **AJ-0091** Guide fixes from the walkthrough test (ajiya) waits on AJ-0085, AJ-0086
 
 ## Needs a human
 
