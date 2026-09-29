@@ -1,0 +1,43 @@
+Open tickets that no milestone requires: the first 10 IDs are listed, then a
+count. Closed tickets outside every milestone are not counted.
+
+-- ajiya.toml --
+[project]
+name = "Fixture"
+prefix = "FX"
+
+[[milestones]]
+name = "launch"
+targets = ["FX-0001"]
+-- ajiya/core.md --
+<!-- Written by ajiya. Do not edit by hand: use ajiya commands. -->
+# Core
+
+Goal: g
+
+| ID | App | Ticket | Done when | Depends | Status |
+|---|---|---|---|---|---|
+| FX-0001 | infra | Deploy | a | - | 🟥 Pending |
+| FX-0002 | infra | Old work | b | - | 🟩 Done · Done before Ajiya |
+-- ajiya/later.md --
+<!-- Written by ajiya. Do not edit by hand: use ajiya commands. -->
+# Later
+
+Goal: g
+
+| ID | App | Ticket | Done when | Depends | Status |
+|---|---|---|---|---|---|
+| FX-0003 | infra | Later 3 | c | - | 🟥 Pending |
+| FX-0004 | infra | Later 4 | c | - | 🟥 Pending |
+| FX-0005 | infra | Later 5 | c | - | 🟥 Pending |
+| FX-0006 | infra | Later 6 | c | - | 🟥 Pending |
+| FX-0007 | infra | Later 7 | c | - | 🟥 Pending |
+| FX-0008 | infra | Later 8 | c | - | 🟥 Pending |
+| FX-0009 | infra | Later 9 | c | - | 🟥 Pending |
+| FX-0010 | infra | Later 10 | c | - | 🟥 Pending |
+| FX-0011 | infra | Later 11 | c | - | 🟥 Pending |
+| FX-0012 | infra | Later 12 | c | - | 🟥 Pending |
+| FX-0013 | infra | Later 13 | c | - | 🟥 Pending |
+| FX-0014 | infra | Later 14 | c | - | 🟥 Pending |
+-- want --
+W010 ajiya.toml: 12 open tickets are in no milestone: FX-0003, FX-0004, FX-0005, FX-0006, FX-0007, FX-0008, FX-0009, FX-0010, FX-0011, FX-0012 and 2 more. Fix: make a milestone's targets depend on them, or add a milestone for the later work
