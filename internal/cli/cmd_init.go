@@ -12,6 +12,7 @@ import (
 
 	"github.com/AliyuYahaya/Ajiya/internal/config"
 	"github.com/AliyuYahaya/Ajiya/internal/detect"
+	"github.com/AliyuYahaya/Ajiya/internal/kit"
 	"github.com/AliyuYahaya/Ajiya/internal/plan"
 )
 
@@ -28,7 +29,9 @@ func runInit(e *env, args []string) error {
 	}
 	path := filepath.Join(e.dir, config.FileName)
 	if _, err := os.Stat(path); err == nil {
-		return refused("%s already exists in this directory", config.FileName)
+		// Already set up: bring the agent kit up to date, nothing else.
+		fmt.Fprintf(e.stdout, "%s already exists: kept as it is.\n", config.FileName)
+		return installKit(e)
 	} else if !errors.Is(err, os.ErrNotExist) {
 		return err
 	}
@@ -60,8 +63,25 @@ func runInit(e *env, args []string) error {
 	if len(chosen) > 0 {
 		fmt.Fprintf(e.stdout, "Registered %d app(s); 'infra' is always there for work outside them.\n", len(chosen))
 	}
-	fmt.Fprintln(e.stdout, "Next: 'ajiya phase add <slug> \"<goal>\"'.")
+	if err := installKit(e); err != nil {
+		return err
+	}
+	fmt.Fprintln(e.stdout, "Next: 'ajiya hook install', then plan with .ajiya/guide/setup.md.")
 	return nil
+}
+
+// installKit writes or updates the agent kit and says what changed.
+func installKit(e *env) error {
+	rs, err := kit.Install(e.dir)
+	if err != nil {
+		return refused("agent kit not written: %v", err)
+	}
+	fmt.Fprintln(e.stdout, "Agent kit:")
+	w := tabwriter.NewWriter(e.stdout, 0, 0, 2, ' ', 0)
+	for _, r := range rs {
+		fmt.Fprintf(w, "  %s\t%s\n", r.Action, r.Path)
+	}
+	return w.Flush()
 }
 
 // chooseApps shows the suggested apps and returns the ones to register: all

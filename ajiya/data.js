@@ -13,13 +13,13 @@ window.AJIYA = {
         "AJ-0034"
       ],
       "required": {
-        "total": 35,
-        "done": 25,
+        "total": 37,
+        "done": 34,
         "in_progress": 0,
-        "pending": 10,
+        "pending": 3,
         "dropped": 0
       },
-      "percent": 71,
+      "percent": 91,
       "ready": 2
     },
     {
@@ -28,13 +28,13 @@ window.AJIYA = {
         "AJ-0047"
       ],
       "required": {
-        "total": 41,
-        "done": 25,
+        "total": 43,
+        "done": 34,
         "in_progress": 0,
-        "pending": 16,
+        "pending": 9,
         "dropped": 0
       },
-      "percent": 60,
+      "percent": 79,
       "ready": 2
     },
     {
@@ -43,13 +43,13 @@ window.AJIYA = {
         "AJ-0058"
       ],
       "required": {
-        "total": 51,
-        "done": 25,
+        "total": 53,
+        "done": 34,
         "in_progress": 0,
-        "pending": 26,
+        "pending": 19,
         "dropped": 0
       },
-      "percent": 49,
+      "percent": 64,
       "ready": 2
     },
     {
@@ -58,13 +58,13 @@ window.AJIYA = {
         "AJ-0057"
       ],
       "required": {
-        "total": 50,
-        "done": 25,
+        "total": 52,
+        "done": 34,
         "in_progress": 0,
-        "pending": 25,
+        "pending": 18,
         "dropped": 0
       },
-      "percent": 50,
+      "percent": 65,
       "ready": 2
     }
   ],
@@ -74,13 +74,13 @@ window.AJIYA = {
       "title": "Commit-rule",
       "goal": "Every commit names 1 to 3 tickets, enforced by hooks with a CI check as backup",
       "counts": {
-        "total": 7,
+        "total": 8,
         "done": 7,
         "in_progress": 0,
-        "pending": 0,
+        "pending": 1,
         "dropped": 0
       },
-      "percent": 100,
+      "percent": 87,
       "milestone": "v0-1"
     },
     {
@@ -116,13 +116,13 @@ window.AJIYA = {
       "title": "Onboarding",
       "goal": "A new or existing project can be set up by an agent using only the installed kit and importers",
       "counts": {
-        "total": 9,
-        "done": 3,
+        "total": 10,
+        "done": 9,
         "in_progress": 0,
-        "pending": 6,
+        "pending": 1,
         "dropped": 0
       },
-      "percent": 33,
+      "percent": 90,
       "milestone": "v0-1"
     },
     {
@@ -131,12 +131,12 @@ window.AJIYA = {
       "goal": "v0.1 is ready to publish: binaries, Homebrew cask, README walkthroughs and changelog",
       "counts": {
         "total": 5,
-        "done": 1,
+        "done": 4,
         "in_progress": 0,
-        "pending": 4,
+        "pending": 1,
         "dropped": 0
       },
-      "percent": 20,
+      "percent": 80,
       "milestone": "v0-1"
     },
     {
@@ -187,10 +187,10 @@ window.AJIYA = {
       "name": "ajiya",
       "path": ".",
       "counts": {
-        "total": 64,
-        "done": 37,
+        "total": 66,
+        "done": 46,
         "in_progress": 0,
-        "pending": 27,
+        "pending": 20,
         "dropped": 0
       }
     }
@@ -711,17 +711,20 @@ window.AJIYA = {
         "AJ-0021"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · 8d5cafe · 2026-09-29 · tests passed",
+        "commit": "8d5cafe",
+        "date": "2026-09-29",
+        "tests_passed": true
       },
       "milestone": "v0-1",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0024",
         "AJ-0041"
       ],
-      "unblocks": 25
+      "unblocks": 0
     },
     {
       "id": "AJ-0023",
@@ -733,16 +736,19 @@ window.AJIYA = {
         "AJ-0021"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · 8d5cafe · 2026-09-29 · tests passed",
+        "commit": "8d5cafe",
+        "date": "2026-09-29",
+        "tests_passed": true
       },
       "milestone": "v0-1",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0024"
       ],
-      "unblocks": 24
+      "unblocks": 0
     },
     {
       "id": "AJ-0024",
@@ -755,19 +761,19 @@ window.AJIYA = {
         "AJ-0023"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · 39cb092 · 2026-09-28 · tests passed",
+        "commit": "39cb092",
+        "date": "2026-09-28",
+        "tests_passed": true
       },
       "milestone": "v0-1",
       "ready": false,
-      "waiting_on": [
-        "AJ-0022",
-        "AJ-0023"
-      ],
+      "waiting_on": [],
       "dependants": [
         "AJ-0025"
       ],
-      "unblocks": 23
+      "unblocks": 0
     },
     {
       "id": "AJ-0025",
@@ -780,18 +786,20 @@ window.AJIYA = {
         "AJ-0024"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · 15cad8a · 2026-09-29 · tests passed",
+        "commit": "15cad8a",
+        "date": "2026-09-29",
+        "tests_passed": true
       },
       "milestone": "v0-1",
       "ready": false,
-      "waiting_on": [
-        "AJ-0024"
-      ],
+      "waiting_on": [],
       "dependants": [
-        "AJ-0029"
+        "AJ-0029",
+        "AJ-0066"
       ],
-      "unblocks": 22
+      "unblocks": 0
     },
     {
       "id": "AJ-0026",
@@ -863,19 +871,20 @@ window.AJIYA = {
         "AJ-0025"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · c93b4be · 2026-09-29 · tests passed",
+        "commit": "c93b4be",
+        "date": "2026-09-29",
+        "tests_passed": true
       },
       "milestone": "v0-1",
       "ready": false,
-      "waiting_on": [
-        "AJ-0025"
-      ],
+      "waiting_on": [],
       "dependants": [
         "AJ-0030",
         "AJ-0033"
       ],
-      "unblocks": 21
+      "unblocks": 0
     },
     {
       "id": "AJ-0030",
@@ -887,20 +896,22 @@ window.AJIYA = {
         "AJ-0029"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · 9a2c69c · 2026-09-29 · tests passed · Note: goreleaser release --snapshot --clean: 6 binaries, version stamped",
+        "note": "goreleaser release --snapshot --clean: 6 binaries, version stamped",
+        "commit": "9a2c69c",
+        "date": "2026-09-29",
+        "tests_passed": true
       },
       "milestone": "v0-1",
       "ready": false,
-      "waiting_on": [
-        "AJ-0029"
-      ],
+      "waiting_on": [],
       "dependants": [
         "AJ-0031",
         "AJ-0034",
         "AJ-0045"
       ],
-      "unblocks": 19
+      "unblocks": 0
     },
     {
       "id": "AJ-0031",
@@ -912,19 +923,21 @@ window.AJIYA = {
         "AJ-0030"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · bb6e0eb · 2026-09-29 · tests passed · Note: snapshot writes dist/homebrew/Casks/ajiya.rb with quarantine removal; skip_upload true",
+        "note": "snapshot writes dist/homebrew/Casks/ajiya.rb with quarantine removal; skip_upload true",
+        "commit": "bb6e0eb",
+        "date": "2026-09-29",
+        "tests_passed": true
       },
       "milestone": "v0-1",
       "ready": false,
-      "waiting_on": [
-        "AJ-0030"
-      ],
+      "waiting_on": [],
       "dependants": [
         "AJ-0034",
         "AJ-0045"
       ],
-      "unblocks": 18
+      "unblocks": 0
     },
     {
       "id": "AJ-0032",
@@ -960,18 +973,19 @@ window.AJIYA = {
         "AJ-0029"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · 6fb1bcc · 2026-09-29 · tests passed",
+        "commit": "6fb1bcc",
+        "date": "2026-09-29",
+        "tests_passed": true
       },
       "milestone": "v0-1",
       "ready": false,
-      "waiting_on": [
-        "AJ-0029"
-      ],
+      "waiting_on": [],
       "dependants": [
         "AJ-0034"
       ],
-      "unblocks": 18
+      "unblocks": 0
     },
     {
       "id": "AJ-0034",
@@ -989,7 +1003,9 @@ window.AJIYA = {
         "AJ-0039",
         "AJ-0040",
         "AJ-0041",
-        "AJ-0059"
+        "AJ-0059",
+        "AJ-0065",
+        "AJ-0066"
       ],
       "status": {
         "state": "pending",
@@ -999,10 +1015,8 @@ window.AJIYA = {
       "milestone": "v0-1",
       "ready": false,
       "waiting_on": [
-        "AJ-0030",
-        "AJ-0031",
-        "AJ-0033",
-        "AJ-0041"
+        "AJ-0041",
+        "AJ-0065"
       ],
       "dependants": [
         "AJ-0042"
@@ -1180,10 +1194,8 @@ window.AJIYA = {
         "text": "🟥 Pending"
       },
       "milestone": "v0-1",
-      "ready": false,
-      "waiting_on": [
-        "AJ-0022"
-      ],
+      "ready": true,
+      "waiting_on": [],
       "dependants": [
         "AJ-0034"
       ],
@@ -1282,8 +1294,6 @@ window.AJIYA = {
       "milestone": "v0-2",
       "ready": false,
       "waiting_on": [
-        "AJ-0030",
-        "AJ-0031",
         "AJ-0044"
       ],
       "dependants": [
@@ -1778,14 +1788,493 @@ window.AJIYA = {
         "AJ-0021"
       ],
       "unblocks": 0
+    },
+    {
+      "id": "AJ-0065",
+      "phase": "commit-rule",
+      "app": "ajiya",
+      "title": "ticket done takes evidence only from commits after the ticket started",
+      "done_when": "ticket done refuses when the only commits naming the ticket predate the commit that set it in progress (for example a planning or reference commit), and says to commit the work; tests cover a pre-start commit alone and a pre-start plus a later commit",
+      "depends": [],
+      "status": {
+        "state": "pending",
+        "text": "🟥 Pending"
+      },
+      "milestone": "v0-1",
+      "ready": true,
+      "waiting_on": [],
+      "dependants": [
+        "AJ-0034"
+      ],
+      "unblocks": 18
+    },
+    {
+      "id": "AJ-0066",
+      "phase": "onboarding",
+      "app": "ajiya",
+      "title": "Guides say how to set the test command",
+      "done_when": "The kit no longer forbids editing ajiya.toml outright: ajiya/ is never edited by hand, and ajiya.toml changes through commands except the [test] command, which the guides say to set by hand; ticket done --test without one is explained",
+      "depends": [
+        "AJ-0025"
+      ],
+      "status": {
+        "state": "done",
+        "text": "🟩 Done · 5a75b38 · 2026-09-29 · tests passed",
+        "commit": "5a75b38",
+        "date": "2026-09-29",
+        "tests_passed": true
+      },
+      "milestone": "v0-1",
+      "ready": false,
+      "waiting_on": [],
+      "dependants": [
+        "AJ-0034"
+      ],
+      "unblocks": 0
     }
   ],
   "next": [
-    "AJ-0022",
-    "AJ-0023"
+    "AJ-0041",
+    "AJ-0065"
   ],
   "checks": [],
   "activity": [
+    {
+      "hash": "d0c5d61ab6f51a54a306aafb9392197706f50f5f",
+      "short": "d0c5d61",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "AJ-0066 done",
+      "refs": [
+        "AJ-0066"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0066",
+          "phase": "onboarding",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · 5a75b38 · 2026-09-29 · tests passed"
+        }
+      ],
+      "time": 1790712816
+    },
+    {
+      "hash": "5a75b3826b94add680132a239f1d75fe68760be0",
+      "short": "5a75b38",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Guides: how to set the test command",
+      "refs": [
+        "AJ-0066"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0066",
+          "phase": "onboarding",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        }
+      ],
+      "time": 1790712812
+    },
+    {
+      "hash": "60ba1a327450c7a7a0776e57e57b702ee5b738cb",
+      "short": "60ba1a3",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Plan: guides explain the test command",
+      "refs": [],
+      "chore": true,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0066",
+          "phase": "onboarding",
+          "from": "",
+          "to": "pending",
+          "text": "🟥 Pending"
+        }
+      ],
+      "time": 1790712583
+    },
+    {
+      "hash": "c6f6b5aed1691036f5c3eead0c714d27435fc3df",
+      "short": "c6f6b5a",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "AJ-0033 done",
+      "refs": [
+        "AJ-0033"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0033",
+          "phase": "release",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · 6fb1bcc · 2026-09-29 · tests passed"
+        }
+      ],
+      "time": 1790712549
+    },
+    {
+      "hash": "6fb1bccd2d6c3aefd697b8377e509dcb96d9e4d8",
+      "short": "6fb1bcc",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "README: how it works, install, and the two walkthroughs",
+      "refs": [
+        "AJ-0033"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0033",
+          "phase": "release",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        }
+      ],
+      "time": 1790712545
+    },
+    {
+      "hash": "edf9e224c4ea6f1ec9723cb61d4391c5277ea7cc",
+      "short": "edf9e22",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "AJ-0031 done",
+      "refs": [
+        "AJ-0031"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0031",
+          "phase": "release",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · bb6e0eb · 2026-09-29 · tests passed · Note: snapshot writes dist/homebrew/Casks/ajiya.rb with quarantine removal; skip_upload true"
+        }
+      ],
+      "time": 1790712371
+    },
+    {
+      "hash": "bb6e0ebe1362d64f52b80eebbd4b8ffb71873da3",
+      "short": "bb6e0eb",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Homebrew cask config",
+      "refs": [
+        "AJ-0031"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0031",
+          "phase": "release",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        }
+      ],
+      "time": 1790712367
+    },
+    {
+      "hash": "03b432dbfb59b411171640fe293d0426d8f03235",
+      "short": "03b432d",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "AJ-0030 done",
+      "refs": [
+        "AJ-0030"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0030",
+          "phase": "release",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · 9a2c69c · 2026-09-29 · tests passed · Note: goreleaser release --snapshot --clean: 6 binaries, version stamped"
+        }
+      ],
+      "time": 1790711870
+    },
+    {
+      "hash": "9a2c69c5d9375fd7c2e659f341b18b58af2bef32",
+      "short": "9a2c69c",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "GoReleaser config",
+      "refs": [
+        "AJ-0030"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0030",
+          "phase": "release",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        }
+      ],
+      "time": 1790711866
+    },
+    {
+      "hash": "d18ad9e34ebeee7270a29884ed7027a63f7678f4",
+      "short": "d18ad9e",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "AJ-0029 done",
+      "refs": [
+        "AJ-0029"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0029",
+          "phase": "onboarding",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · c93b4be · 2026-09-29 · tests passed"
+        }
+      ],
+      "time": 1790710883
+    },
+    {
+      "hash": "c93b4bea8c2ba7d8762fb91374e7000502028c8f",
+      "short": "c93b4be",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "This repository runs the kit it ships",
+      "refs": [
+        "AJ-0029"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0029",
+          "phase": "onboarding",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        }
+      ],
+      "time": 1790710879
+    },
+    {
+      "hash": "298f56f505a7eefbcb1bef83c21c2b8aa897cce7",
+      "short": "298f56f",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "AJ-0025 done",
+      "refs": [
+        "AJ-0025"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0025",
+          "phase": "onboarding",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · 15cad8a · 2026-09-29 · tests passed"
+        }
+      ],
+      "time": 1790710670
+    },
+    {
+      "hash": "15cad8ae073d3244eebcac01ed58c626596c16d7",
+      "short": "15cad8a",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "init writes and updates the agent kit",
+      "refs": [
+        "AJ-0025"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0025",
+          "phase": "onboarding",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        }
+      ],
+      "time": 1790710637
+    },
+    {
+      "hash": "4f9b1a62134d072f3fdc39df716c45ac117a708e",
+      "short": "4f9b1a6",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Plan: ticket done evidence must come after the ticket started",
+      "refs": [],
+      "chore": true,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0065",
+          "phase": "commit-rule",
+          "from": "",
+          "to": "pending",
+          "text": "🟥 Pending"
+        }
+      ],
+      "time": 1790709594
+    },
+    {
+      "hash": "5556d64f91d22caf0ff3a4c8813039604afc0afd",
+      "short": "5556d64",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "CLAUDE.md with the Ajiya block",
+      "refs": [
+        "AJ-0024"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790709574
+    },
+    {
+      "hash": "0c78c499fce55618c2773391840721d7f94f91b7",
+      "short": "0c78c49",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "AJ-0024 done",
+      "refs": [
+        "AJ-0024"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0024",
+          "phase": "onboarding",
+          "from": "pending",
+          "to": "done",
+          "text": "🟩 Done · 39cb092 · 2026-09-28 · tests passed"
+        }
+      ],
+      "time": 1790709475
+    },
+    {
+      "hash": "f6b5387ed38098cd7703d5d13952581affef7db7",
+      "short": "f6b5387",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "AJ-0022 and AJ-0023 done",
+      "refs": [
+        "AJ-0022",
+        "AJ-0023"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0022",
+          "phase": "onboarding",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · 8d5cafe · 2026-09-29 · tests passed"
+        },
+        {
+          "id": "AJ-0023",
+          "phase": "onboarding",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · 8d5cafe · 2026-09-29 · tests passed"
+        }
+      ],
+      "time": 1790709280
+    },
+    {
+      "hash": "8d5cafea01fae6e046b5c0108394b3c41ee970cd",
+      "short": "8d5cafe",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Setup and daily guides for agents",
+      "refs": [
+        "AJ-0022",
+        "AJ-0023"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0022",
+          "phase": "onboarding",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        },
+        {
+          "id": "AJ-0023",
+          "phase": "onboarding",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        }
+      ],
+      "time": 1790709236
+    },
     {
       "hash": "47117c5f6f586ee6d1fffab898eb34e0f750d684",
       "short": "47117c5",
