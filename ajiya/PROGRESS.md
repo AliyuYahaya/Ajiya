@@ -7,10 +7,10 @@ Generated 2026-09-29.
 
 | Milestone | Closed | Required | % | Can start now |
 |---|---|---|---|---|
-| v0-1 | 35 | 37 | 94% | 1 |
-| v0-2 | 36 | 61 | 59% | 1 |
-| v0-3 | 36 | 71 | 50% | 1 |
-| after-v0-3 | 36 | 70 | 51% | 1 |
+| v0-1 | 36 | 37 | 97% | 1 |
+| v0-2 | 37 | 61 | 60% | 1 |
+| v0-3 | 37 | 71 | 52% | 1 |
+| after-v0-3 | 37 | 70 | 52% | 1 |
 
 ## Phases
 
@@ -19,7 +19,7 @@ Generated 2026-09-29.
 | Commit-rule | 8 | 0 | 0 | 8 | 100% | v0-1 |
 | Apps-launch | 14 | 0 | 0 | 14 | 100% | v0-1 |
 | Outputs | 12 | 0 | 0 | 12 | 100% | v0-1 |
-| Onboarding | 9 | 0 | 1 | 10 | 90% | v0-1 |
+| Onboarding | 10 | 0 | 0 | 10 | 100% | v0-1 |
 | Release | 4 | 0 | 1 | 5 | 80% | v0-1 |
 | Agent-access | 0 | 0 | 3 | 3 | 0% | v0-2 |
 | Install | 1 | 0 | 20 | 21 | 4% | v0-2 |
@@ -27,11 +27,10 @@ Generated 2026-09-29.
 
 ## Can start now
 
-- **AJ-0041** import legacy maps each RO package to a phase (ajiya) · v0-1
+- **AJ-0034** v0.1 definition of done (ajiya) · v0-1
 
 ## Waiting
 
-- **AJ-0034** v0.1 definition of done (ajiya) waits on AJ-0041
 - **AJ-0042** ajiya status (ajiya) waits on AJ-0034
 - **AJ-0043** ajiya mcp server (ajiya) waits on AJ-0042
 - **AJ-0044** ajiya mcp install, uninstall and status (ajiya) waits on AJ-0043

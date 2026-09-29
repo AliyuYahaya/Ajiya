@@ -20,6 +20,8 @@
 //     three-digit numbers), API[EPIC G] (every API ticket under a heading
 //     starting "EPIC G", case-insensitive). "", "-" and "none" mean no scope.
 //     A cross-reference whose target is also in scope counts once.
+//   - A "## " heading in the rollout WBS is kept on the packages below it
+//     (LegacyPackage.Heading).
 //   - A package with a scope takes its status from its tickets; one without
 //     keeps its typed status: a mark, or Done, In progress, Not started and
 //     similar words.
@@ -62,6 +64,7 @@ const (
 //	area = "API"
 //	path = "docs/api/wbs.md"
 //	phase = "api"                        # optional: the area as a slug
+//	app = "api"                          # optional: the app of its tickets
 type LegacyConfig struct {
 	Prefixes     []string       `toml:"prefixes"`
 	Rollout      string         `toml:"rollout"`
@@ -76,12 +79,14 @@ type LegacySource struct {
 	Area  string `toml:"area"`
 	Path  string `toml:"path"`
 	Phase string `toml:"phase"`
+	App   string `toml:"app"` // the app of its tickets; "" for the --app default
 }
 
 var (
 	legacyPrefixRE = regexp.MustCompile(`^[A-Z][A-Z0-9]*$`)
 	legacySlugRE   = regexp.MustCompile(`^[a-z0-9]+(-[a-z0-9]+)*$`)
 	nonSlugRE      = regexp.MustCompile(`[^a-z0-9]+`)
+	legacyH2RE     = regexp.MustCompile(`^##\s+(.*)`)
 )
 
 // LegacySlug turns an area name into a phase slug: "Web app" is web-app.
@@ -178,7 +183,8 @@ type LegacyPackage struct {
 	Launch  string
 	Typed   string // the status cell as written
 	Status  LegacyStatus
-	Line    int // 1-based
+	Line    int    // 1-based
+	Heading string // the "## " heading above the row, "" if none
 
 	Counted   []int    // indexes into LegacyProject.Tickets that the scope counts
 	Aliased   []int    // in scope, but cross-references to a counted ticket
@@ -348,7 +354,12 @@ func ParseLegacyRollout(data, where string, tickets []LegacyTicket, prefixes []s
 	re := newLegacyRE(prefixes)
 	var pkgs []LegacyPackage
 	var notes []string
+	heading := ""
 	for i, line := range strings.Split(strings.ReplaceAll(data, "\r\n", "\n"), "\n") {
+		if h := legacyH2RE.FindStringSubmatch(line); h != nil {
+			heading = strings.TrimSpace(h[1])
+			continue
+		}
 		if !re.rorow.MatchString(line) {
 			continue
 		}
@@ -357,7 +368,7 @@ func ParseLegacyRollout(data, where string, tickets []LegacyTicket, prefixes []s
 			notes = append(notes, fmt.Sprintf("%s:%d: %s has %d columns, needs 6 (ID, name, scope, depends, launch, status); skipped", where, i+1, row[0], len(row)))
 			continue
 		}
-		p := LegacyPackage{ID: row[0], Name: strings.ReplaceAll(row[1], `\|`, "|"), Scope: row[2], Depends: re.ro.FindAllString(row[3], -1), Launch: row[4], Typed: row[5], Line: i + 1}
+		p := LegacyPackage{ID: row[0], Name: strings.ReplaceAll(row[1], `\|`, "|"), Scope: row[2], Depends: re.ro.FindAllString(row[3], -1), Launch: row[4], Typed: row[5], Line: i + 1, Heading: heading}
 		if p.Scope == "-" || p.Scope == "none" {
 			p.Scope = ""
 		}

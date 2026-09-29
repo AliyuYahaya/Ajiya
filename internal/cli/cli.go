@@ -88,7 +88,7 @@ func init() {
 		{"import todo", "<file> [--app <app>]", "Import a markdown to-do list into the inbox phase", runImportTodo},
 		{"import github", "[--repo <owner/name>] [--app <app>] [--limit <n>]", "Import GitHub issues into the inbox phase (uses gh)", runImportGitHub},
 		{"changelog", "[<range>] [--json]", "Print a changelog grouped by phase and ticket", runChangelog},
-		{"import legacy", "<config> [--app <app>]", "Import a legacy WBS project (the collate.py format)", runImportLegacy},
+		{"import legacy", "<config> [--app <app>] [--json]", "Import a legacy WBS project (the collate.py format)", runImportLegacy},
 		{"build", "", "Write ajiya/PROGRESS.md and ajiya/data.js", runBuild},
 		{"serve", "[--port <n>]", "Serve the dashboard on 127.0.0.1, rebuilding when files change", runServe},
 		{"check", "[--strict] [--commits <range>] [--json]", "Check the plan for problems", runCheck},
