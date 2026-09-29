@@ -29,13 +29,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 68,
-        "done": 39,
-        "in_progress": 1,
+        "done": 40,
+        "in_progress": 0,
         "pending": 28,
         "dropped": 0
       },
-      "percent": 57,
-      "ready": 12
+      "percent": 58,
+      "ready": 11
     },
     {
       "name": "v0-3",
@@ -44,13 +44,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 78,
-        "done": 39,
-        "in_progress": 1,
+        "done": 40,
+        "in_progress": 0,
         "pending": 38,
         "dropped": 0
       },
-      "percent": 50,
-      "ready": 12
+      "percent": 51,
+      "ready": 11
     },
     {
       "name": "after-v0-3",
@@ -59,13 +59,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 77,
-        "done": 39,
-        "in_progress": 1,
+        "done": 40,
+        "in_progress": 0,
         "pending": 37,
         "dropped": 0
       },
-      "percent": 50,
-      "ready": 12
+      "percent": 51,
+      "ready": 11
     }
   ],
   "phases": [
@@ -159,12 +159,12 @@ window.AJIYA = {
       "goal": "Ajiya installs in one step, with a Claude Code plugin",
       "counts": {
         "total": 21,
-        "done": 2,
-        "in_progress": 1,
+        "done": 3,
+        "in_progress": 0,
         "pending": 18,
         "dropped": 0
       },
-      "percent": 9,
+      "percent": 14,
       "milestone": "v0-2"
     },
     {
@@ -188,8 +188,8 @@ window.AJIYA = {
       "path": ".",
       "counts": {
         "total": 91,
-        "done": 51,
-        "in_progress": 1,
+        "done": 52,
+        "in_progress": 0,
         "pending": 39,
         "dropped": 0
       }
@@ -1926,17 +1926,19 @@ window.AJIYA = {
         "AJ-0034"
       ],
       "status": {
-        "state": "in_progress",
-        "text": "🟨 In progress · Needs a human: needs the maintainer's GitHub account",
-        "human": "needs the maintainer's GitHub account"
+        "state": "done",
+        "text": "🟩 Done · by Aliyu Yahaya · 2026-09-29 · Note: AliyuYahaya/homebrew-tap created; fine-grained token (Contents read and write on the tap only) stored as HOMEBREW_TAP_TOKEN in the homebrew-release environment",
+        "note": "AliyuYahaya/homebrew-tap created; fine-grained token (Contents read and write on the tap only) stored as HOMEBREW_TAP_TOKEN in the homebrew-release environment",
+        "by": "Aliyu Yahaya",
+        "date": "2026-09-29"
       },
       "milestone": "v0-2",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0077"
       ],
-      "unblocks": 17
+      "unblocks": 0
     },
     {
       "id": "AJ-0070",
@@ -2125,8 +2127,7 @@ window.AJIYA = {
       "milestone": "v0-2",
       "ready": false,
       "waiting_on": [
-        "AJ-0044",
-        "AJ-0069"
+        "AJ-0044"
       ],
       "dependants": [
         "AJ-0079",
@@ -2479,7 +2480,6 @@ window.AJIYA = {
   "next": [
     "AJ-0042",
     "AJ-0068",
-    "AJ-0069",
     "AJ-0072",
     "AJ-0070",
     "AJ-0083",

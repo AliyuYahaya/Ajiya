@@ -8,9 +8,9 @@ Generated 2026-09-29.
 | Milestone | Closed | Required | % | Can start now |
 |---|---|---|---|---|
 | v0-1 | 37 | 37 | 100% | 0 |
-| v0-2 | 39 | 68 | 57% | 12 |
-| v0-3 | 39 | 78 | 50% | 12 |
-| after-v0-3 | 39 | 77 | 50% | 12 |
+| v0-2 | 40 | 68 | 58% | 11 |
+| v0-3 | 40 | 78 | 51% | 11 |
+| after-v0-3 | 40 | 77 | 51% | 11 |
 
 ## Phases
 
@@ -22,14 +22,13 @@ Generated 2026-09-29.
 | Onboarding | 10 | 0 | 7 | 17 | 58% | v0-1 |
 | Release | 5 | 0 | 0 | 5 | 100% | v0-1 |
 | Agent-access | 0 | 0 | 3 | 3 | 0% | v0-2 |
-| Install | 2 | 1 | 18 | 21 | 9% | v0-2 |
+| Install | 3 | 0 | 18 | 21 | 14% | v0-2 |
 | Decisions-and-changes | 0 | 0 | 11 | 11 | 0% | v0-3 |
 
 ## Can start now
 
 - **AJ-0042** ajiya status (ajiya) · v0-2
 - **AJ-0068** npm account and package names (ajiya) · v0-2
-- **AJ-0069** Homebrew tap repository and token (ajiya) · v0-2 · in progress
 - **AJ-0072** Release workflow: build to a draft release (ajiya) · v0-2
 - **AJ-0070** Choose the install script URL (ajiya) · v0-2
 - **AJ-0083** Apple signing credentials as release secrets (ajiya) · v0-2
@@ -62,7 +61,7 @@ Generated 2026-09-29.
 - **AJ-0074** Installer CI (ajiya) waits on AJ-0045, AJ-0073
 - **AJ-0075** npm packages: a wrapper and one package per platform (ajiya) waits on AJ-0068
 - **AJ-0076** npm launcher tests (ajiya) waits on AJ-0075
-- **AJ-0077** Homebrew tap wiring (ajiya) waits on AJ-0044, AJ-0069
+- **AJ-0077** Homebrew tap wiring (ajiya) waits on AJ-0044
 - **AJ-0078** Install scripts served at a stable URL (ajiya) waits on AJ-0045, AJ-0070, AJ-0073
 - **AJ-0079** Gated publish jobs (ajiya) waits on AJ-0072, AJ-0075, AJ-0077
 - **AJ-0080** npm trusted publishing (ajiya) waits on AJ-0075
@@ -76,7 +75,6 @@ Generated 2026-09-29.
 - **AJ-0047** v0.2 definition of done (ajiya): final sign-off before publishing v0.2
 - **AJ-0058** v0.3 definition of done (ajiya): final sign-off before publishing v0.3
 - **AJ-0068** npm account and package names (ajiya): needs the maintainer's npm account
-- **AJ-0069** Homebrew tap repository and token (ajiya): needs the maintainer's GitHub account
 - **AJ-0070** Choose the install script URL (ajiya): a domain costs money and is the maintainer's choice
 - **AJ-0080** npm trusted publishing (ajiya): needs the maintainer's npm account
 - **AJ-0081** Release rehearsal on a release candidate (ajiya): publishing anything needs the maintainer's approval
