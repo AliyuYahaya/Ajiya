@@ -18,7 +18,7 @@ Generated 2026-09-29.
 |---|---|---|---|---|---|---|
 | Commit-rule | 7 | 0 | 0 | 7 | 100% | v0-1 |
 | Apps-launch | 14 | 0 | 0 | 14 | 100% | v0-1 |
-| Outputs | 7 | 0 | 1 | 8 | 87% | v0-1 |
+| Outputs | 7 | 0 | 5 | 12 | 58% | v0-1 |
 | Onboarding | 3 | 0 | 6 | 9 | 33% | v0-1 |
 | Release | 1 | 0 | 4 | 5 | 20% | v0-1 |
 | Agent-access | 0 | 0 | 3 | 3 | 0% | v0-2 |
@@ -28,6 +28,10 @@ Generated 2026-09-29.
 ## Can start now
 
 - **AJ-0021** Milestones v0-1, v0-2 and v0-3 set and the dashboard in use on this repo (ajiya) · v0-1
+- **AJ-0061** Brand logo in the dashboard (ajiya)
+- **AJ-0062** Search and filters on every dashboard view (ajiya)
+- **AJ-0063** Dependencies view: toggle between ticket links and phase links (ajiya)
+- **AJ-0064** Ticket cards without the side border outside Dependencies (ajiya)
 
 ## Waiting
 
@@ -96,4 +100,6 @@ Generated 2026-09-29.
 
 ## Checks
 
-No problems found.
+0 error(s), 1 warning(s).
+
+- W010 ajiya.toml: 4 open tickets are in no milestone: AJ-0061, AJ-0062, AJ-0063, AJ-0064. Fix: make a milestone's targets depend on them, or add a milestone for the later work

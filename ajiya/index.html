@@ -1260,7 +1260,6 @@ dialog::backdrop { background: var(--c-backdrop); }
     const main = document.querySelector('main'), top = main.scrollTop, wy = window.scrollY;
     const gw = $('gWrap'), gx = gw ? gw.scrollLeft : 0, gy = gw ? gw.scrollTop : 0;
     setData(d);
-    fillFilters();
     render();
     main.scrollTop = top;
     if (window.scrollY !== wy) window.scrollTo(0, wy);

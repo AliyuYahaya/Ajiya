@@ -102,13 +102,13 @@ window.AJIYA = {
       "title": "Outputs",
       "goal": "PROGRESS.md, data.js, the dashboard and serve show the plan and its activity",
       "counts": {
-        "total": 8,
+        "total": 12,
         "done": 7,
         "in_progress": 0,
-        "pending": 1,
+        "pending": 5,
         "dropped": 0
       },
-      "percent": 87,
+      "percent": 58,
       "milestone": "v0-1"
     },
     {
@@ -187,10 +187,10 @@ window.AJIYA = {
       "name": "ajiya",
       "path": ".",
       "counts": {
-        "total": 60,
+        "total": 64,
         "done": 32,
         "in_progress": 0,
-        "pending": 28,
+        "pending": 32,
         "dropped": 0
       }
     }
@@ -636,7 +636,10 @@ window.AJIYA = {
         "AJ-0020",
         "AJ-0036",
         "AJ-0057",
-        "AJ-0060"
+        "AJ-0060",
+        "AJ-0061",
+        "AJ-0062",
+        "AJ-0064"
       ],
       "unblocks": 0
     },
@@ -1044,7 +1047,8 @@ window.AJIYA = {
       "ready": false,
       "waiting_on": [],
       "dependants": [
-        "AJ-0021"
+        "AJ-0021",
+        "AJ-0063"
       ],
       "unblocks": 0
     },
@@ -1674,12 +1678,100 @@ window.AJIYA = {
         "AJ-0021"
       ],
       "unblocks": 0
+    },
+    {
+      "id": "AJ-0061",
+      "phase": "outputs",
+      "app": "ajiya",
+      "title": "Brand logo in the dashboard",
+      "done_when": "The sidebar shows ajiya/brand-logo.png scaled for 2x screens and embedded as a base64 data URI (no extra file or request), legible in light and dark themes; collapsed sidebar hides it like the reference",
+      "depends": [
+        "AJ-0019"
+      ],
+      "status": {
+        "state": "pending",
+        "text": "🟥 Pending"
+      },
+      "milestone": "",
+      "ready": true,
+      "waiting_on": [],
+      "dependants": [],
+      "unblocks": 0
+    },
+    {
+      "id": "AJ-0062",
+      "phase": "outputs",
+      "app": "ajiya",
+      "title": "Search and filters on every dashboard view",
+      "done_when": "The filter bar (search, app, phase, milestone, state, and Can start now / Needs a human pills) shows on every view the reference shows it on, including Overview and Dependencies; search also narrows Checks and Activity; a test checks each view's filters flag",
+      "depends": [
+        "AJ-0019"
+      ],
+      "status": {
+        "state": "pending",
+        "text": "🟥 Pending"
+      },
+      "milestone": "",
+      "ready": true,
+      "waiting_on": [],
+      "dependants": [],
+      "unblocks": 0
+    },
+    {
+      "id": "AJ-0063",
+      "phase": "outputs",
+      "app": "ajiya",
+      "title": "Dependencies view: toggle between ticket links and phase links",
+      "done_when": "A Tickets / Phases toggle on the Dependencies view; Tickets mode draws every ticket as a card like the reference, with All / Only linked and path to a milestone, and fades tickets that miss the filters; Phases mode keeps the phase graph and its click-through; the choice is remembered",
+      "depends": [
+        "AJ-0036"
+      ],
+      "status": {
+        "state": "pending",
+        "text": "🟥 Pending"
+      },
+      "milestone": "",
+      "ready": true,
+      "waiting_on": [],
+      "dependants": [],
+      "unblocks": 0
+    },
+    {
+      "id": "AJ-0064",
+      "phase": "outputs",
+      "app": "ajiya",
+      "title": "Ticket cards without the side border outside Dependencies",
+      "done_when": "Ticket cards on Overview, Next up, Board, Phases and the rest have no coloured left border; only Dependencies graph nodes keep the state stripe",
+      "depends": [
+        "AJ-0019"
+      ],
+      "status": {
+        "state": "pending",
+        "text": "🟥 Pending"
+      },
+      "milestone": "",
+      "ready": true,
+      "waiting_on": [],
+      "dependants": [],
+      "unblocks": 0
     }
   ],
   "next": [
-    "AJ-0021"
+    "AJ-0021",
+    "AJ-0061",
+    "AJ-0062",
+    "AJ-0063",
+    "AJ-0064"
   ],
-  "checks": [],
+  "checks": [
+    {
+      "code": "W010",
+      "level": "warning",
+      "location": "ajiya.toml",
+      "message": "4 open tickets are in no milestone: AJ-0061, AJ-0062, AJ-0063, AJ-0064",
+      "fix": "make a milestone's targets depend on them, or add a milestone for the later work"
+    }
+  ],
   "activity": [
     {
       "hash": "8ced23318e816cc1367c7bc6ca7277194585b40b",
