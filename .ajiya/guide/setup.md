@@ -173,7 +173,7 @@ Imports never reword items, and you should not either.
 |---|---|---|
 | A markdown to-do list | `ajiya import todo <file> [--app <app>]` | phase `inbox`; ticked items are done |
 | GitHub issues (needs `gh`) | `ajiya import github [--repo owner/name] [--app <app>]` | phase `inbox`; closed issues are done |
-| A legacy WBS (the `collate.py` format) | `ajiya import legacy <config> [--app <app>]` | phases from the source; old IDs kept as aliases |
+| A legacy WBS (the `collate.py` format) | `ajiya import legacy <config> [--app <app>]` | a phase per rollout work package (or per file); old IDs kept as aliases |
 
 After an import:
 
@@ -189,3 +189,32 @@ After an import:
 6. Set milestones (section 5), check (section 6), and hand over (section 7).
 
 Old IDs stay as aliases, so `ajiya ticket show MI3-185` still finds the ticket.
+
+### A legacy WBS with a rollout file
+
+When the legacy config names a rollout WBS, the import already groups the tickets
+by feature, so most of steps 2 and 3 are done:
+
+- Each rollout work package (`RO-021`) becomes a phase, like
+  `ro-021-production-host-and-deploy`, and the tickets its scope counts move into
+  it. There is no `RO-021` ticket: the report (and `--json`) maps each RO ID to
+  its phase.
+- A ticket keeps its area as its app: give each source an `app = "<app>"` key in
+  the legacy config (register the app first); a source without one uses `--app`.
+- A package with no scope (acceptance, cutover) is a phase with one ticket; a
+  pending one is marked `Needs a human`.
+- When package A depends on package B, the first tickets of A wait for the last
+  tickets of B. Links that would make a loop are left out and reported.
+- A ticket named by several packages stays in the first; the report lists the rest.
+- A cross-reference ("tracked as ...") is imported as dropped, so the work counts
+  once. The report lists them: reopen one if it is really separate work.
+- Open tickets in no package go to `inbox` (organise them as above); done ones to
+  `archive`.
+- Each `##` heading of the rollout file becomes a milestone (`gate-0`,
+  `phase-a`) that targets the phases under it, and the phases are shown in the
+  order of the file.
+
+Without a rollout file, each source file becomes one phase.
+
+After this import, read the report, then check the phases and milestones
+(`ajiya phase list`, `ajiya milestone list`), organise `inbox`, and run `ajiya check`.
