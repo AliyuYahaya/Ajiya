@@ -67,6 +67,13 @@ Generated 2026-09-29.
 
 ## Recent activity
 
+- 2026-09-29 `8ced233` Merge branch 'worktree-agent-a658cbd8dac8f5d6c' (-)
+- 2026-09-29 `f84a39b` AJ-0036 and AJ-0060 done (AJ-0036, AJ-0060)
+  - AJ-0036: in_progress → done
+  - AJ-0060: in_progress → done
+- 2026-09-29 `3ae5531` Refill filter menus on live refresh (AJ-0060)
+- 2026-09-29 `7207ba6` Dashboard live refresh under ajiya serve (AJ-0060)
+- 2026-09-29 `a0210e3` Dependencies view in the dashboard (AJ-0036)
 - 2026-09-29 `61d1f54` Milestones v0-1, v0-2, v0-3 for this repository (AJ-0021)
 - 2026-09-29 `3aa3572` Plan dashboard live refresh; AJ-0021 waits for the dependencies view again (AJ-0021, AJ-0036, AJ-0060)
   - AJ-0036: pending → in_progress
@@ -85,15 +92,7 @@ Generated 2026-09-29.
   - AJ-0019: pending → in_progress
   - AJ-0020: pending → in_progress
   - AJ-0059: pending → in_progress
-- 2026-09-29 `29d61fc` Embed the dashboard page; build writes ajiya/index.html (AJ-0019, AJ-0059)
-  - AJ-0059: new → pending
-- 2026-09-29 `2eae85d` AJ-0018 done (AJ-0018)
-  - AJ-0018: in_progress → done
-- 2026-09-29 `7b6a1fb` ajiya build lists phases in display order (AJ-0018)
-- 2026-09-29 `7d048ab` AJ-0040 done (AJ-0040)
-  - AJ-0040: in_progress → done
-- 2026-09-29 `a939eb5` Merge branch 'worktree-agent-a2dda545491c21789' (-)
-- and 78 more in data.js
+- and 83 more in data.js
 
 ## Checks
 

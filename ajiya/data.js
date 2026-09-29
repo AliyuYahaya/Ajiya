@@ -1682,6 +1682,100 @@ window.AJIYA = {
   "checks": [],
   "activity": [
     {
+      "hash": "8ced23318e816cc1367c7bc6ca7277194585b40b",
+      "short": "8ced233",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Merge branch 'worktree-agent-a658cbd8dac8f5d6c'",
+      "refs": [],
+      "chore": false,
+      "merge": true,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790706988
+    },
+    {
+      "hash": "f84a39b75381ace7177b72a7e9fca7f9f1c14ed4",
+      "short": "f84a39b",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "AJ-0036 and AJ-0060 done",
+      "refs": [
+        "AJ-0036",
+        "AJ-0060"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0036",
+          "phase": "outputs",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · a0210e3 · 2026-09-29 · tests passed"
+        },
+        {
+          "id": "AJ-0060",
+          "phase": "outputs",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · 3ae5531 · 2026-09-29 · tests passed"
+        }
+      ],
+      "time": 1790706850
+    },
+    {
+      "hash": "3ae5531716610ec103b17e7c24e4909bbed44123",
+      "short": "3ae5531",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Refill filter menus on live refresh",
+      "refs": [
+        "AJ-0060"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790706832
+    },
+    {
+      "hash": "7207ba63f5060b34d665cfa6ee724bd4bc39fcbf",
+      "short": "7207ba6",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Dashboard live refresh under ajiya serve",
+      "refs": [
+        "AJ-0060"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790706600
+    },
+    {
+      "hash": "a0210e3923b9d5790ba827ff3e8c73b4a5e2d143",
+      "short": "a0210e3",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Dependencies view in the dashboard",
+      "refs": [
+        "AJ-0036"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790691355
+    },
+    {
       "hash": "61d1f5477f38e4fa2a5ce359e8a453209b815dd8",
       "short": "61d1f54",
       "date": "2026-09-29",
