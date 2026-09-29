@@ -44,7 +44,9 @@ never touches text outside the markers. Then:
 - Run `ajiya hook install`. The hooks check every commit message for the
   `Ajiya:` trailer and pre-fill it from the tickets in progress.
 - Set the command that runs the project's tests, so `ajiya ticket done --test`
-  can run it. No command sets it: edit the `[test]` section of `ajiya.toml` by
+  can run it. `init` sets it when it can tell (`go.mod`, a `package.json` test
+  script, `pytest` in `pyproject.toml`) and says so; check that it is right. When
+  it could not tell, no command sets it: edit the `[test]` section of `ajiya.toml` by
   hand, which is the only hand edit Ajiya expects. Use the command the project
   already uses (its CI config or `package.json` scripts show it); ask the user
   if there is none.
@@ -156,6 +158,7 @@ Then stop and wait. Do not start building until the user says so.
 | Change | Command | Who decides |
 |---|---|---|
 | Rename a phase | `ajiya phase rename <old> <new> [--title "<title>"]` | you |
+| Remove an empty phase | `ajiya phase remove <slug>` (refused while it holds tickets or a milestone or the launch target names it) | you |
 | Show a phase earlier or later | `ajiya phase move <slug> --before <slug>` (or `--after`, `--first`, `--last`) | you |
 | Move an app's folder | `ajiya app move <name> --path <dir>` | you |
 | Remove an app | `ajiya app remove <name> --to <app>` (moves its open tickets) | a person |
@@ -188,7 +191,8 @@ After an import:
 4. Add tickets for gaps, including the forgotten work in section 4.
 5. Duplicates and items that are no longer needed: list them for the user. Only a
    person decides to drop a ticket (`ajiya ticket drop <ID> --reason "..." --by "<name>"`).
-6. Set milestones (section 5), check (section 6), and hand over (section 7).
+6. When `inbox` is empty, remove it: `ajiya phase remove inbox`.
+7. Set milestones (section 5), check (section 6), and hand over (section 7).
 
 Old IDs stay as aliases, so `ajiya ticket show MI3-185` still finds the ticket.
 

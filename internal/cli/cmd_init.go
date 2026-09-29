@@ -36,6 +36,10 @@ func runInit(e *env, args []string) error {
 		return err
 	}
 	text := config.Template(*name, *prefix)
+	testCmd := detect.TestCommand(e.dir)
+	if testCmd != "" {
+		text = config.WithTestCommand(text, testCmd)
+	}
 	if _, err := config.Parse([]byte(text)); err != nil {
 		return usageErr("%v", err)
 	}
@@ -62,6 +66,11 @@ func runInit(e *env, args []string) error {
 	fmt.Fprintf(e.stdout, "Set up %s with ticket IDs like %s.\nWrote %s and %s/.\n", *name, plan.FormatID(*prefix, 1), config.FileName, plan.Dir)
 	if len(chosen) > 0 {
 		fmt.Fprintf(e.stdout, "Registered %d app(s); 'infra' is always there for work outside them.\n", len(chosen))
+	}
+	if testCmd != "" {
+		fmt.Fprintf(e.stdout, "Test command set to %q in [test] of %s; change it there if it is wrong.\n", testCmd, config.FileName)
+	} else {
+		fmt.Fprintf(e.stdout, "No test command found: set one in [test] of %s so 'ajiya ticket done --test' can run it.\n", config.FileName)
 	}
 	if err := installKit(e); err != nil {
 		return err

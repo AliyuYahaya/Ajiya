@@ -1,0 +1,42 @@
+# phase remove: only an empty phase that nothing names goes.
+
+exec ajiya init --name Demo --prefix DE
+exec ajiya phase add a 'First'
+exec ajiya phase add b 'Second'
+exec ajiya phase add c 'Third'
+exec ajiya ticket add --phase a --app infra --done-when x 'Work'
+exec ajiya phase move c --first
+grep '^order = ' ajiya.toml
+
+# A phase with tickets is refused.
+! exec ajiya phase remove a
+stderr '^ajiya phase remove: phase a still holds 1 ticket\(s\); move them'
+exists ajiya/a.md
+
+# A milestone target is refused.
+exec ajiya milestone add gate --targets b
+! exec ajiya phase remove b
+stderr 'milestone gate targets phase b'
+exists ajiya/b.md
+exec ajiya milestone remove gate
+
+# The launch target is refused.
+exec ajiya launch set b
+! exec ajiya phase remove b
+stderr 'the launch target is phase b'
+exec ajiya launch set a
+
+# An unknown phase is refused.
+! exec ajiya phase remove nope
+stderr 'no phase "nope"'
+
+# An empty phase goes, with its order entry.
+exec ajiya phase remove c
+stdout '^Removed phase c \(ajiya/c.md\)\.$'
+stdout 'Updated \[phases\] order\.'
+! exists ajiya/c.md
+! grep '"c"' ajiya.toml
+exec ajiya phase remove b
+! exists ajiya/b.md
+exec ajiya check
+stdout '0 error\(s\)'

@@ -29,13 +29,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 68,
-        "done": 43,
+        "done": 46,
         "in_progress": 0,
-        "pending": 25,
+        "pending": 22,
         "dropped": 0
       },
-      "percent": 63,
-      "ready": 8
+      "percent": 67,
+      "ready": 6
     },
     {
       "name": "v0-3",
@@ -44,13 +44,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 78,
-        "done": 43,
+        "done": 46,
         "in_progress": 0,
-        "pending": 35,
+        "pending": 32,
         "dropped": 0
       },
-      "percent": 55,
-      "ready": 8
+      "percent": 58,
+      "ready": 6
     },
     {
       "name": "after-v0-3",
@@ -59,13 +59,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 77,
-        "done": 43,
+        "done": 46,
         "in_progress": 0,
-        "pending": 34,
+        "pending": 31,
         "dropped": 0
       },
-      "percent": 55,
-      "ready": 8
+      "percent": 59,
+      "ready": 6
     }
   ],
   "phases": [
@@ -117,12 +117,12 @@ window.AJIYA = {
       "goal": "A new or existing project can be set up by an agent using only the installed kit and importers",
       "counts": {
         "total": 17,
-        "done": 13,
+        "done": 16,
         "in_progress": 0,
-        "pending": 4,
+        "pending": 1,
         "dropped": 0
       },
-      "percent": 76,
+      "percent": 94,
       "milestone": "v0-1"
     },
     {
@@ -188,9 +188,9 @@ window.AJIYA = {
       "path": ".",
       "counts": {
         "total": 91,
-        "done": 55,
+        "done": 58,
         "in_progress": 0,
-        "pending": 36,
+        "pending": 33,
         "dropped": 0
       }
     }
@@ -1380,9 +1380,6 @@ window.AJIYA = {
         "AJ-0045",
         "AJ-0046",
         "AJ-0082",
-        "AJ-0085",
-        "AJ-0086",
-        "AJ-0090",
         "AJ-0091"
       ],
       "dependants": [
@@ -2327,17 +2324,20 @@ window.AJIYA = {
         "AJ-0034"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · 980c627 · 2026-09-29 · tests passed",
+        "commit": "980c627",
+        "date": "2026-09-29",
+        "tests_passed": true
       },
       "milestone": "v0-2",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0047",
         "AJ-0091"
       ],
-      "unblocks": 13
+      "unblocks": 0
     },
     {
       "id": "AJ-0086",
@@ -2349,17 +2349,20 @@ window.AJIYA = {
         "AJ-0034"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · 4e23e52 · 2026-09-29 · tests passed",
+        "commit": "4e23e52",
+        "date": "2026-09-29",
+        "tests_passed": true
       },
       "milestone": "v0-2",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0047",
         "AJ-0091"
       ],
-      "unblocks": 13
+      "unblocks": 0
     },
     {
       "id": "AJ-0087",
@@ -2444,16 +2447,19 @@ window.AJIYA = {
         "AJ-0034"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · 23f1de8 · 2026-09-29 · tests passed",
+        "commit": "23f1de8",
+        "date": "2026-09-29",
+        "tests_passed": true
       },
       "milestone": "v0-2",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0047"
       ],
-      "unblocks": 12
+      "unblocks": 0
     },
     {
       "id": "AJ-0091",
@@ -2471,11 +2477,8 @@ window.AJIYA = {
         "text": "🟥 Pending"
       },
       "milestone": "v0-2",
-      "ready": false,
-      "waiting_on": [
-        "AJ-0085",
-        "AJ-0086"
-      ],
+      "ready": true,
+      "waiting_on": [],
       "dependants": [
         "AJ-0047"
       ],
@@ -2488,9 +2491,7 @@ window.AJIYA = {
     "AJ-0072",
     "AJ-0070",
     "AJ-0083",
-    "AJ-0085",
-    "AJ-0086",
-    "AJ-0090"
+    "AJ-0091"
   ],
   "checks": [],
   "activity": [

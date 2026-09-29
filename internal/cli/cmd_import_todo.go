@@ -19,7 +19,7 @@ const (
 // same file again skips the items already imported.
 func runImportTodo(e *env, args []string) error {
 	fs := newFlags("import todo")
-	app := fs.String("app", "infra", "app name")
+	app := fs.String("app", "", "app name; default: the only registered app, else infra")
 	pos, err := parse(fs, args, 1)
 	if err != nil {
 		return err
@@ -45,7 +45,8 @@ func runImportTodo(e *env, args []string) error {
 	if err != nil {
 		return err
 	}
-	if err := pr.checkApp(*app); err != nil {
+	appName := pr.importApp(*app)
+	if err := pr.checkApp(appName); err != nil {
 		return err
 	}
 	linked := map[string]bool{}
@@ -75,7 +76,7 @@ func runImportTodo(e *env, args []string) error {
 		if ph == nil {
 			ph = pr.ensurePhase(inboxPhase, inboxGoal)
 		}
-		pr.newTicket(ph, *app, it.Text, "-", nil, st)
+		pr.newTicket(ph, appName, it.Text, "-", nil, st)
 		linked[link] = true
 		imported++
 	}
@@ -84,6 +85,7 @@ func runImportTodo(e *env, args []string) error {
 			return err
 		}
 	}
+	fmt.Fprintf(e.stdout, "Using app %s.\n", appName)
 	fmt.Fprintf(e.stdout, "Imported %d item(s) into %s (%d done before Ajiya); skipped %d already imported.\n",
 		imported, inboxPhase, before, skipped)
 	return nil
