@@ -2493,6 +2493,23 @@ window.AJIYA = {
   "checks": [],
   "activity": [
     {
+      "hash": "47eac13433feef751d31055e61555a5b7d1b1988",
+      "short": "47eac13",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "npm wrapper is @ajiya/cli",
+      "refs": [
+        "AJ-0068",
+        "AJ-0075"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790717473
+    },
+    {
       "hash": "7f1ede778b36c488b48549625c5a57d076245014",
       "short": "7f1ede7",
       "date": "2026-09-29",

@@ -82,6 +82,7 @@ Generated 2026-09-29.
 
 ## Recent activity
 
+- 2026-09-29 `47eac13` npm wrapper is @ajiya/cli (AJ-0068, AJ-0075)
 - 2026-09-29 `7f1ede7` Homebrew tap and its token in place (AJ-0069)
   - AJ-0069: in_progress → done
 - 2026-09-29 `df2e9dc` Release environments created; the tap repository exists (AJ-0069, AJ-0071)
@@ -111,8 +112,7 @@ Generated 2026-09-29.
   - AJ-0084: new → pending
 - 2026-09-29 `810c3c0` npm packaging decided: per-platform packages behind a wrapper (AJ-0067, AJ-0075)
   - AJ-0067: pending → done
-- 2026-09-29 `2ba31d5` Reflow the daily guide's done paragraph (AJ-0065)
-- and 127 more in data.js
+- and 128 more in data.js
 
 ## Checks
 
