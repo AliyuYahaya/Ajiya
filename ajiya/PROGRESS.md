@@ -81,6 +81,10 @@ Generated 2026-09-29.
 
 ## Recent activity
 
+- 2026-09-29 `cc33bdb` Merge branch 'worktree-agent-a5a988be55680e087' into worktree-agent-a658cbd8dac8f5d6c (-)
+- 2026-09-29 `2d65774` Plan: AJ-0041 done (AJ-0041)
+  - AJ-0041: pending → done
+- 2026-09-29 `7d547a5` import legacy: map each RO package to a phase (AJ-0041)
 - 2026-09-29 `ff9cdca` Plan: sign and notarise the macOS binaries (chore)
   - AJ-0083: new → pending
   - AJ-0084: new → pending
@@ -118,13 +122,7 @@ Generated 2026-09-29.
   - AJ-0033: in_progress → done
 - 2026-09-29 `6fb1bcc` README: how it works, install, and the two walkthroughs (AJ-0033)
   - AJ-0033: pending → in_progress
-- 2026-09-29 `edf9e22` AJ-0031 done (AJ-0031)
-  - AJ-0031: in_progress → done
-- 2026-09-29 `bb6e0eb` Homebrew cask config (AJ-0031)
-  - AJ-0031: pending → in_progress
-- 2026-09-29 `03b432d` AJ-0030 done (AJ-0030)
-  - AJ-0030: in_progress → done
-- and 114 more in data.js
+- and 117 more in data.js
 
 ## Checks
 
