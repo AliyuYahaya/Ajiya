@@ -168,3 +168,12 @@ func TestLiveRefreshLoadsDataJS(t *testing.T) {
 		t.Error("live refresh does not remove the injected <script> tag after loading")
 	}
 }
+
+// A live refresh must rebuild the filter menus from the new data, so an app,
+// phase or milestone added since the page loaded can be picked.
+func TestLiveRefreshRefillsFilters(t *testing.T) {
+	s := pageText(t)
+	if !strings.Contains(s, "setData(d);\n    fillFilters();\n    render();") {
+		t.Error("refresh() does not call fillFilters() after setData()")
+	}
+}
