@@ -58,6 +58,8 @@ Generated 2026-09-29.
 
 ## Recent activity
 
+- 2026-09-29 `2d65774` Plan: AJ-0041 done (AJ-0041)
+  - AJ-0041: pending → done
 - 2026-09-29 `7d547a5` import legacy: map each RO package to a phase (AJ-0041)
 - 2026-09-29 `d0c5d61` AJ-0066 done (AJ-0066)
   - AJ-0066: in_progress → done
@@ -85,9 +87,7 @@ Generated 2026-09-29.
   - AJ-0025: in_progress → done
 - 2026-09-29 `15cad8a` init writes and updates the agent kit (AJ-0025)
   - AJ-0025: pending → in_progress
-- 2026-09-29 `4f9b1a6` Plan: ticket done evidence must come after the ticket started (chore)
-  - AJ-0065: new → pending
-- and 108 more in data.js
+- and 109 more in data.js
 
 ## Checks
 
