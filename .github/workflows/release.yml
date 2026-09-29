@@ -1,0 +1,80 @@
+name: release
+
+# Two jobs, never both on the same event:
+#   release:  a pushed v* tag builds everything and creates a DRAFT release.
+#   snapshot: pull requests (and manual runs) build the same archives without
+#             publishing anything, to catch a broken release config early.
+# Making a draft public, and the Homebrew tap upload, are gated elsewhere (later
+# tickets). Nothing in this file publishes a release or touches the tap.
+
+on:
+  push:
+    tags: ["v*"]
+  pull_request:
+  workflow_dispatch:
+
+# Read-only unless a job asks for more.
+permissions:
+  contents: read
+
+jobs:
+  # Tag push: release notes from the Ajiya trailers, then GoReleaser to a draft.
+  release:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # create the draft release and upload its assets
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0 # the whole history and every tag, for the changelog
+      - uses: actions/setup-go@v7
+        with:
+          go-version-file: go.mod
+      - run: go build -o "$RUNNER_TEMP/ajiya" ./cmd/ajiya
+      - name: Write release notes
+        run: |
+          # The newest tag before this one. The first release has none, so the
+          # notes then cover the whole history.
+          if prev=$(git describe --tags --abbrev=0 "$GITHUB_REF_NAME^" 2>/dev/null); then
+            "$RUNNER_TEMP/ajiya" changelog "$prev..$GITHUB_REF_NAME" > notes.md
+          else
+            "$RUNNER_TEMP/ajiya" changelog > notes.md
+          fi
+          cat notes.md
+      - uses: goreleaser/goreleaser-action@v7
+        with:
+          version: "~> v2"
+          args: release --clean --release-notes notes.md
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Homebrew upload stays off: skip_upload is true in .goreleaser.yaml.
+          # The placeholder only lets its token template resolve.
+          HOMEBREW_TAP_TOKEN: unused
+      - uses: actions/upload-artifact@v7
+        with:
+          name: dist
+          path: dist/
+          if-no-files-found: error
+
+  # Pull requests and manual runs: build only. No secrets, read-only token,
+  # nothing published.
+  snapshot:
+    if: github.event_name != 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-go@v7
+        with:
+          go-version-file: go.mod
+      - uses: goreleaser/goreleaser-action@v7
+        with:
+          version: "~> v2"
+          args: release --snapshot --clean
+      - uses: actions/upload-artifact@v7
+        with:
+          name: dist-snapshot
+          path: dist/
+          if-no-files-found: error
