@@ -2493,6 +2493,30 @@ window.AJIYA = {
   "checks": [],
   "activity": [
     {
+      "hash": "7f1ede778b36c488b48549625c5a57d076245014",
+      "short": "7f1ede7",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Homebrew tap and its token in place",
+      "refs": [
+        "AJ-0069"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0069",
+          "phase": "install",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · by Aliyu Yahaya · 2026-09-29 · Note: AliyuYahaya/homebrew-tap created; fine-grained token (Contents read and write on the tap only) stored as HOMEBREW_TAP_TOKEN in the homebrew-release environment"
+        }
+      ],
+      "time": 1790717251
+    },
+    {
       "hash": "df2e9dc7b60ec9dd01144df62ee7d3d5b3a6405d",
       "short": "df2e9dc",
       "date": "2026-09-29",
