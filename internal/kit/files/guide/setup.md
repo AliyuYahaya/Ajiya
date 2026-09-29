@@ -6,8 +6,9 @@ and need to be organised. For everyday work on a planned project, read
 
 The plan lives in `ajiya/`, one markdown file per phase. You decide what the work
 is. The `ajiya` command does all the bookkeeping: IDs, files, statuses, evidence
-and order. Never edit `ajiya/` or `ajiya.toml` by hand; `ajiya check` finds hand
-edits.
+and order. Never edit `ajiya/` by hand; `ajiya check` finds hand edits. Change
+`ajiya.toml` with commands too; the one exception is its `[test]` command
+(section 2).
 
 ## 1. Understand the goal
 
@@ -42,6 +43,16 @@ never touches text outside the markers. Then:
 - Use the app `infra` for work outside app folders: hosting, CI, DNS.
 - Run `ajiya hook install`. The hooks check every commit message for the
   `Ajiya:` trailer and pre-fill it from the tickets in progress.
+- Set the command that runs the project's tests, so `ajiya ticket done --test`
+  can run it. No command sets it: edit the `[test]` section of `ajiya.toml` by
+  hand, which is the only hand edit Ajiya expects. Use the command the project
+  already uses (its CI config or `package.json` scripts show it); ask the user
+  if there is none.
+
+  ```toml
+  [test]
+  command = "npm test"
+  ```
 
 ## 3. Phases: one per feature
 

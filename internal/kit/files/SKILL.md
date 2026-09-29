@@ -11,7 +11,7 @@ file per phase, and changes only through `ajiya` commands. Run any command with
 
 ## Rules
 
-1. Never edit `ajiya/` or `ajiya.toml` by hand: use `ajiya` commands.
+1. Never edit `ajiya/` by hand: use `ajiya` commands (in `ajiya.toml`, only `[test]` is set by hand).
 2. Before a task: `ajiya next`, then `ajiya ticket start <ID>`. No ticket? Add one first.
 3. Commit with a last paragraph `Ajiya: <ID>` (1 to 3 IDs, or `Ajiya: chore`).
 4. Finish with `ajiya ticket done <ID> --test`, then `ajiya check`. Never mark done any other way.

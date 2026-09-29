@@ -4,8 +4,9 @@ Use this guide for every task in a project that has a plan (`ajiya.toml` and an
 `ajiya/` folder). To plan a project or organise imported tickets, read
 `setup.md` instead.
 
-The plan lives in `ajiya/`. Never edit it or `ajiya.toml` by hand: change them
-only with `ajiya` commands. Trust the plan over your memory of earlier sessions.
+The plan lives in `ajiya/`. Never edit it by hand: change it only with `ajiya`
+commands. The same goes for `ajiya.toml`, except its `[test]` command. Trust the
+plan over your memory of earlier sessions.
 
 ## The loop
 
@@ -67,6 +68,11 @@ ajiya ticket done <ID> --test
 commit as evidence. `--test` runs the project's test command and refuses if it
 fails. Never mark a ticket done any other way, and never before its "done when" is
 met.
+
+If `done --test` says there is no `[test]` command, the project has not set one
+yet. Set it in `ajiya.toml` as `setup.md` section 2 describes (ask the user if you
+cannot tell the command), then run `done --test` again. Leave out `--test` only
+when the project has no tests at all, and say so in your summary.
 
 ### 6. Check
 
