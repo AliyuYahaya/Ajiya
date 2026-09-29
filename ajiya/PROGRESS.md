@@ -69,7 +69,12 @@ Generated 2026-09-29.
 
 ## Recent activity
 
+- 2026-09-29 `4136ead` Merge branch 'worktree-agent-afd29651f0fa7ef3e' into worktree-agent-a658cbd8dac8f5d6c (-)
 - 2026-09-29 `7cb789f` Windows CI: accept Windows' missing-file wording in import-legacy (chore)
+- 2026-09-29 `555ce43` Mark AJ-0042 done (AJ-0042)
+  - AJ-0042: in_progress → done
+- 2026-09-29 `cbdcde9` Add ajiya status (AJ-0042)
+  - AJ-0042: pending → in_progress
 - 2026-09-29 `573e252` Tidy the import and app-folder guide text (AJ-0091)
 - 2026-09-29 `c0b1294` Merge branch 'worktree-agent-a3488137fbba0e00c' into worktree-agent-a658cbd8dac8f5d6c (-)
 - 2026-09-29 `4a25d7c` Merge branch 'worktree-agent-afca5fbf28b0fec73' into worktree-agent-a658cbd8dac8f5d6c (-)
@@ -85,14 +90,7 @@ Generated 2026-09-29.
   - AJ-0068: pending → done
 - 2026-09-29 `2680bc1` phase remove updates [phases] order before deleting the file (AJ-0086)
 - 2026-09-29 `184720e` Merge branch 'worktree-agent-ac75a90c83d346edb' into worktree-agent-a658cbd8dac8f5d6c (-)
-- 2026-09-29 `607c7b6` Merge branch 'worktree-agent-af1c1cc18e0e82a16' into worktree-agent-a658cbd8dac8f5d6c (-)
-- 2026-09-29 `8a67799` Record AJ-0085, AJ-0086 and AJ-0090 as done (AJ-0085, AJ-0086, AJ-0090)
-  - AJ-0085: in_progress → done
-  - AJ-0086: in_progress → done
-  - AJ-0090: in_progress → done
-- 2026-09-29 `23f1de8` ajiya init suggests the test command (AJ-0090)
-  - AJ-0090: pending → in_progress
-- and 147 more in data.js
+- and 150 more in data.js
 
 ## Checks
 
