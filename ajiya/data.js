@@ -29,13 +29,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 68,
-        "done": 47,
+        "done": 48,
         "in_progress": 0,
-        "pending": 21,
+        "pending": 20,
         "dropped": 0
       },
-      "percent": 69,
-      "ready": 6
+      "percent": 70,
+      "ready": 5
     },
     {
       "name": "v0-3",
@@ -44,13 +44,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 78,
-        "done": 47,
+        "done": 48,
         "in_progress": 0,
-        "pending": 31,
+        "pending": 30,
         "dropped": 0
       },
-      "percent": 60,
-      "ready": 6
+      "percent": 61,
+      "ready": 5
     },
     {
       "name": "after-v0-3",
@@ -59,13 +59,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 77,
-        "done": 47,
+        "done": 48,
         "in_progress": 0,
-        "pending": 30,
+        "pending": 29,
         "dropped": 0
       },
-      "percent": 61,
-      "ready": 6
+      "percent": 62,
+      "ready": 5
     }
   ],
   "phases": [
@@ -159,12 +159,12 @@ window.AJIYA = {
       "goal": "Ajiya installs in one step, with a Claude Code plugin",
       "counts": {
         "total": 21,
-        "done": 4,
+        "done": 5,
         "in_progress": 0,
-        "pending": 17,
+        "pending": 16,
         "dropped": 0
       },
-      "percent": 19,
+      "percent": 23,
       "milestone": "v0-2"
     },
     {
@@ -188,9 +188,9 @@ window.AJIYA = {
       "path": ".",
       "counts": {
         "total": 91,
-        "done": 59,
+        "done": 60,
         "in_progress": 0,
-        "pending": 32,
+        "pending": 31,
         "dropped": 0
       }
     }
@@ -1993,17 +1993,20 @@ window.AJIYA = {
         "AJ-0034"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · d1df3f0 · 2026-09-29 · tests passed",
+        "commit": "d1df3f0",
+        "date": "2026-09-29",
+        "tests_passed": true
       },
       "milestone": "v0-2",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0079",
         "AJ-0084"
       ],
-      "unblocks": 16
+      "unblocks": 0
     },
     {
       "id": "AJ-0073",
@@ -2175,7 +2178,6 @@ window.AJIYA = {
       "milestone": "v0-2",
       "ready": false,
       "waiting_on": [
-        "AJ-0072",
         "AJ-0075",
         "AJ-0077"
       ],
@@ -2305,7 +2307,6 @@ window.AJIYA = {
       "milestone": "v0-2",
       "ready": false,
       "waiting_on": [
-        "AJ-0072",
         "AJ-0077",
         "AJ-0083"
       ],
@@ -2488,13 +2489,28 @@ window.AJIYA = {
   "next": [
     "AJ-0042",
     "AJ-0075",
-    "AJ-0072",
     "AJ-0070",
     "AJ-0083",
     "AJ-0091"
   ],
   "checks": [],
   "activity": [
+    {
+      "hash": "d1df3f0da7c6e88391f62a87a166e280c63bc425",
+      "short": "d1df3f0",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Release workflow: tag builds a draft release, pull requests a snapshot",
+      "refs": [
+        "AJ-0072"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790718144
+    },
     {
       "hash": "ab57528a407d5b785481c6a9b27db908806ae05a",
       "short": "ab57528",
