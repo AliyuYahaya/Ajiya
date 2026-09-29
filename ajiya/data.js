@@ -29,13 +29,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 68,
-        "done": 49,
+        "done": 50,
         "in_progress": 0,
-        "pending": 19,
+        "pending": 18,
         "dropped": 0
       },
-      "percent": 72,
-      "ready": 4
+      "percent": 73,
+      "ready": 3
     },
     {
       "name": "v0-3",
@@ -44,13 +44,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 78,
-        "done": 49,
+        "done": 50,
         "in_progress": 0,
-        "pending": 29,
+        "pending": 28,
         "dropped": 0
       },
-      "percent": 62,
-      "ready": 4
+      "percent": 64,
+      "ready": 3
     },
     {
       "name": "after-v0-3",
@@ -59,13 +59,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 77,
-        "done": 49,
+        "done": 50,
         "in_progress": 0,
-        "pending": 28,
+        "pending": 27,
         "dropped": 0
       },
-      "percent": 63,
-      "ready": 4
+      "percent": 64,
+      "ready": 3
     }
   ],
   "phases": [
@@ -117,12 +117,12 @@ window.AJIYA = {
       "goal": "A new or existing project can be set up by an agent using only the installed kit and importers",
       "counts": {
         "total": 17,
-        "done": 16,
+        "done": 17,
         "in_progress": 0,
-        "pending": 1,
+        "pending": 0,
         "dropped": 0
       },
-      "percent": 94,
+      "percent": 100,
       "milestone": "v0-1"
     },
     {
@@ -188,9 +188,9 @@ window.AJIYA = {
       "path": ".",
       "counts": {
         "total": 91,
-        "done": 61,
+        "done": 62,
         "in_progress": 0,
-        "pending": 30,
+        "pending": 29,
         "dropped": 0
       }
     }
@@ -1379,8 +1379,7 @@ window.AJIYA = {
         "AJ-0044",
         "AJ-0045",
         "AJ-0046",
-        "AJ-0082",
-        "AJ-0091"
+        "AJ-0082"
       ],
       "dependants": [
         "AJ-0048"
@@ -2475,23 +2474,25 @@ window.AJIYA = {
         "AJ-0088"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · 9f1c49a · 2026-09-29 · tests passed",
+        "commit": "9f1c49a",
+        "date": "2026-09-29",
+        "tests_passed": true
       },
       "milestone": "v0-2",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0047"
       ],
-      "unblocks": 12
+      "unblocks": 0
     }
   ],
   "next": [
     "AJ-0042",
     "AJ-0075",
-    "AJ-0083",
-    "AJ-0091"
+    "AJ-0083"
   ],
   "checks": [],
   "activity": [

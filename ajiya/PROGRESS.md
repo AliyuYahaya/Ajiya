@@ -8,9 +8,9 @@ Generated 2026-09-29.
 | Milestone | Closed | Required | % | Can start now |
 |---|---|---|---|---|
 | v0-1 | 37 | 37 | 100% | 0 |
-| v0-2 | 49 | 68 | 72% | 4 |
-| v0-3 | 49 | 78 | 62% | 4 |
-| after-v0-3 | 49 | 77 | 63% | 4 |
+| v0-2 | 50 | 68 | 73% | 3 |
+| v0-3 | 50 | 78 | 64% | 3 |
+| after-v0-3 | 50 | 77 | 64% | 3 |
 
 ## Phases
 
@@ -19,7 +19,7 @@ Generated 2026-09-29.
 | Commit-rule | 8 | 0 | 0 | 8 | 100% | v0-1 |
 | Apps-launch | 14 | 0 | 0 | 14 | 100% | v0-1 |
 | Outputs | 12 | 0 | 0 | 12 | 100% | v0-1 |
-| Onboarding | 16 | 0 | 1 | 17 | 94% | v0-1 |
+| Onboarding | 17 | 0 | 0 | 17 | 100% | v0-1 |
 | Release | 5 | 0 | 0 | 5 | 100% | v0-1 |
 | Agent-access | 0 | 0 | 3 | 3 | 0% | v0-2 |
 | Install | 6 | 0 | 15 | 21 | 28% | v0-2 |
@@ -30,7 +30,6 @@ Generated 2026-09-29.
 - **AJ-0042** ajiya status (ajiya) · v0-2
 - **AJ-0075** npm packages: @ajiya/cli and one package per platform (ajiya) · v0-2
 - **AJ-0083** Apple signing credentials as release secrets (ajiya) · v0-2
-- **AJ-0091** Guide fixes from the walkthrough test (ajiya) · v0-2
 
 ## Waiting
 
@@ -38,7 +37,7 @@ Generated 2026-09-29.
 - **AJ-0044** ajiya mcp install, uninstall and status (ajiya) waits on AJ-0043
 - **AJ-0045** install.sh for macOS and Linux (ajiya) waits on AJ-0044
 - **AJ-0046** Claude Code plugin (ajiya) waits on AJ-0042, AJ-0043
-- **AJ-0047** v0.2 definition of done (ajiya) waits on AJ-0042, AJ-0043, AJ-0044, AJ-0045, AJ-0046, AJ-0082, AJ-0091
+- **AJ-0047** v0.2 definition of done (ajiya) waits on AJ-0042, AJ-0043, AJ-0044, AJ-0045, AJ-0046, AJ-0082
 - **AJ-0048** Tags column (ajiya) waits on AJ-0047
 - **AJ-0049** ajiya ticket files (ajiya) waits on AJ-0048
 - **AJ-0050** Decision records and commands (ajiya) waits on AJ-0048
