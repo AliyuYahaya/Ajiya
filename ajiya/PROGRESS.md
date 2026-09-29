@@ -7,10 +7,10 @@ Generated 2026-09-29.
 
 | Milestone | Closed | Required | % | Can start now |
 |---|---|---|---|---|
-| v0-1 | 33 | 37 | 89% | 3 |
-| v0-2 | 33 | 43 | 76% | 3 |
-| v0-3 | 33 | 53 | 62% | 3 |
-| after-v0-3 | 33 | 52 | 63% | 3 |
+| v0-1 | 34 | 37 | 91% | 2 |
+| v0-2 | 34 | 43 | 79% | 2 |
+| v0-3 | 34 | 53 | 64% | 2 |
+| after-v0-3 | 34 | 52 | 65% | 2 |
 
 ## Phases
 
@@ -19,7 +19,7 @@ Generated 2026-09-29.
 | Commit-rule | 7 | 0 | 1 | 8 | 87% | v0-1 |
 | Apps-launch | 14 | 0 | 0 | 14 | 100% | v0-1 |
 | Outputs | 12 | 0 | 0 | 12 | 100% | v0-1 |
-| Onboarding | 8 | 0 | 2 | 10 | 80% | v0-1 |
+| Onboarding | 9 | 0 | 1 | 10 | 90% | v0-1 |
 | Release | 4 | 0 | 1 | 5 | 80% | v0-1 |
 | Agent-access | 0 | 0 | 3 | 3 | 0% | v0-2 |
 | Install | 0 | 0 | 3 | 3 | 0% | v0-2 |
@@ -29,11 +29,10 @@ Generated 2026-09-29.
 
 - **AJ-0041** import legacy maps each RO package to a phase (ajiya) · v0-1
 - **AJ-0065** ticket done takes evidence only from commits after the ticket started (ajiya) · v0-1
-- **AJ-0066** Guides say how to set the test command (ajiya) · v0-1
 
 ## Waiting
 
-- **AJ-0034** v0.1 definition of done (ajiya) waits on AJ-0041, AJ-0065, AJ-0066
+- **AJ-0034** v0.1 definition of done (ajiya) waits on AJ-0041, AJ-0065
 - **AJ-0042** ajiya status (ajiya) waits on AJ-0034
 - **AJ-0043** ajiya mcp server (ajiya) waits on AJ-0042
 - **AJ-0044** ajiya mcp install, uninstall and status (ajiya) waits on AJ-0043
@@ -60,6 +59,8 @@ Generated 2026-09-29.
 
 ## Recent activity
 
+- 2026-09-29 `5a75b38` Guides: how to set the test command (AJ-0066)
+  - AJ-0066: pending → in_progress
 - 2026-09-29 `60ba1a3` Plan: guides explain the test command (chore)
   - AJ-0066: new → pending
 - 2026-09-29 `c6f6b5a` AJ-0033 done (AJ-0033)
@@ -87,10 +88,7 @@ Generated 2026-09-29.
 - 2026-09-29 `5556d64` CLAUDE.md with the Ajiya block (AJ-0024)
 - 2026-09-29 `0c78c49` AJ-0024 done (AJ-0024)
   - AJ-0024: pending → done
-- 2026-09-29 `f6b5387` AJ-0022 and AJ-0023 done (AJ-0022, AJ-0023)
-  - AJ-0022: in_progress → done
-  - AJ-0023: in_progress → done
-- and 105 more in data.js
+- and 106 more in data.js
 
 ## Checks
 

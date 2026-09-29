@@ -14,13 +14,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 37,
-        "done": 33,
+        "done": 34,
         "in_progress": 0,
-        "pending": 4,
+        "pending": 3,
         "dropped": 0
       },
-      "percent": 89,
-      "ready": 3
+      "percent": 91,
+      "ready": 2
     },
     {
       "name": "v0-2",
@@ -29,13 +29,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 43,
-        "done": 33,
+        "done": 34,
         "in_progress": 0,
-        "pending": 10,
+        "pending": 9,
         "dropped": 0
       },
-      "percent": 76,
-      "ready": 3
+      "percent": 79,
+      "ready": 2
     },
     {
       "name": "v0-3",
@@ -44,13 +44,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 53,
-        "done": 33,
+        "done": 34,
         "in_progress": 0,
-        "pending": 20,
+        "pending": 19,
         "dropped": 0
       },
-      "percent": 62,
-      "ready": 3
+      "percent": 64,
+      "ready": 2
     },
     {
       "name": "after-v0-3",
@@ -59,13 +59,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 52,
-        "done": 33,
+        "done": 34,
         "in_progress": 0,
-        "pending": 19,
+        "pending": 18,
         "dropped": 0
       },
-      "percent": 63,
-      "ready": 3
+      "percent": 65,
+      "ready": 2
     }
   ],
   "phases": [
@@ -117,12 +117,12 @@ window.AJIYA = {
       "goal": "A new or existing project can be set up by an agent using only the installed kit and importers",
       "counts": {
         "total": 10,
-        "done": 8,
+        "done": 9,
         "in_progress": 0,
-        "pending": 2,
+        "pending": 1,
         "dropped": 0
       },
-      "percent": 80,
+      "percent": 90,
       "milestone": "v0-1"
     },
     {
@@ -188,9 +188,9 @@ window.AJIYA = {
       "path": ".",
       "counts": {
         "total": 66,
-        "done": 45,
+        "done": 46,
         "in_progress": 0,
-        "pending": 21,
+        "pending": 20,
         "dropped": 0
       }
     }
@@ -1016,8 +1016,7 @@ window.AJIYA = {
       "ready": false,
       "waiting_on": [
         "AJ-0041",
-        "AJ-0065",
-        "AJ-0066"
+        "AJ-0065"
       ],
       "dependants": [
         "AJ-0042"
@@ -1819,25 +1818,51 @@ window.AJIYA = {
         "AJ-0025"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · 5a75b38 · 2026-09-29 · tests passed",
+        "commit": "5a75b38",
+        "date": "2026-09-29",
+        "tests_passed": true
       },
       "milestone": "v0-1",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0034"
       ],
-      "unblocks": 18
+      "unblocks": 0
     }
   ],
   "next": [
     "AJ-0041",
-    "AJ-0065",
-    "AJ-0066"
+    "AJ-0065"
   ],
   "checks": [],
   "activity": [
+    {
+      "hash": "5a75b3826b94add680132a239f1d75fe68760be0",
+      "short": "5a75b38",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Guides: how to set the test command",
+      "refs": [
+        "AJ-0066"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0066",
+          "phase": "onboarding",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        }
+      ],
+      "time": 1790712812
+    },
     {
       "hash": "60ba1a327450c7a7a0776e57e57b702ee5b738cb",
       "short": "60ba1a3",
