@@ -60,6 +60,8 @@ Generated 2026-09-29.
 
 ## Recent activity
 
+- 2026-09-29 `60ba1a3` Plan: guides explain the test command (chore)
+  - AJ-0066: new → pending
 - 2026-09-29 `c6f6b5a` AJ-0033 done (AJ-0033)
   - AJ-0033: in_progress → done
 - 2026-09-29 `6fb1bcc` README: how it works, install, and the two walkthroughs (AJ-0033)
@@ -88,10 +90,7 @@ Generated 2026-09-29.
 - 2026-09-29 `f6b5387` AJ-0022 and AJ-0023 done (AJ-0022, AJ-0023)
   - AJ-0022: in_progress → done
   - AJ-0023: in_progress → done
-- 2026-09-29 `8d5cafe` Setup and daily guides for agents (AJ-0022, AJ-0023)
-  - AJ-0022: pending → in_progress
-  - AJ-0023: pending → in_progress
-- and 104 more in data.js
+- and 105 more in data.js
 
 ## Checks
 
