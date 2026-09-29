@@ -1,0 +1,60 @@
+A phase listed before a phase it waits on. app waits on base (listed after
+it) and on tail (not listed, so it comes after every listed phase). x and y
+wait on each other, so their order is free.
+
+-- ajiya.toml --
+[project]
+name = "Fixture"
+prefix = "FX"
+
+[phases]
+order = ["app", "base", "y", "x"]
+-- ajiya/app.md --
+<!-- Written by ajiya. Do not edit by hand: use ajiya commands. -->
+# App
+
+Goal: g
+
+| ID | App | Ticket | Done when | Depends | Status |
+|---|---|---|---|---|---|
+| FX-0002 | infra | Screens | a | FX-0001, FX-0006 | 🟥 Pending |
+-- ajiya/base.md --
+<!-- Written by ajiya. Do not edit by hand: use ajiya commands. -->
+# Base
+
+Goal: g
+
+| ID | App | Ticket | Done when | Depends | Status |
+|---|---|---|---|---|---|
+| FX-0001 | infra | Schema | a | - | 🟥 Pending |
+-- ajiya/tail.md --
+<!-- Written by ajiya. Do not edit by hand: use ajiya commands. -->
+# Tail
+
+Goal: g
+
+| ID | App | Ticket | Done when | Depends | Status |
+|---|---|---|---|---|---|
+| FX-0006 | infra | Logging | a | - | 🟥 Pending |
+-- ajiya/x.md --
+<!-- Written by ajiya. Do not edit by hand: use ajiya commands. -->
+# X
+
+Goal: g
+
+| ID | App | Ticket | Done when | Depends | Status |
+|---|---|---|---|---|---|
+| FX-0003 | infra | X one | a | - | 🟥 Pending |
+| FX-0005 | infra | X two | a | FX-0004 | 🟥 Pending |
+-- ajiya/y.md --
+<!-- Written by ajiya. Do not edit by hand: use ajiya commands. -->
+# Y
+
+Goal: g
+
+| ID | App | Ticket | Done when | Depends | Status |
+|---|---|---|---|---|---|
+| FX-0004 | infra | Y one | a | FX-0003 | 🟥 Pending |
+-- want --
+W011 ajiya.toml: phase app is listed before phase base, which it waits on: FX-0002 depends on FX-0001. Fix: ajiya phase move base --before app, or 'ajiya phase order --apply'
+W011 ajiya.toml: phase app is listed, so it comes before phase tail, which it waits on: FX-0002 depends on FX-0006. Fix: ajiya phase move tail --before app, or 'ajiya phase order --apply'

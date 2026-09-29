@@ -13,6 +13,7 @@ package check
 //	W008 an open ticket has needed a human for more than 14 days
 //	W009 an earlier milestone already requires everything a later one does
 //	W010 open tickets are in no milestone, when a [[milestones]] list exists
+//	W011 [phases] order lists a phase before a phase it waits on
 
 import (
 	"errors"

@@ -1,0 +1,24 @@
+[phases] order lists a slug that is not a phase. A phase file that does not
+parse still counts as a phase.
+
+-- ajiya.toml --
+[project]
+name = "Fixture"
+prefix = "FX"
+
+[phases]
+order = ["core", "gone", "broken"]
+-- ajiya/core.md --
+<!-- Written by ajiya. Do not edit by hand: use ajiya commands. -->
+# Core
+
+Goal: g
+
+| ID | App | Ticket | Done when | Depends | Status |
+|---|---|---|---|---|---|
+| FX-0001 | infra | Schema | a | - | 🟥 Pending |
+-- ajiya/broken.md --
+not a phase file
+-- want --
+E013 ajiya.toml: [phases] order lists "gone", which is not a phase. Fix: remove "gone" from [phases] order in ajiya.toml, or add it with 'ajiya phase add gone "<goal>"'
+E001 ajiya/broken.md:1: expected the phase title as "# <title>". Fix: restore it with 'git checkout -- ajiya/broken.md' and make the change with ajiya commands

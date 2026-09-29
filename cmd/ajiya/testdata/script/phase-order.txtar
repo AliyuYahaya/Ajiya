@@ -1,0 +1,179 @@
+# phase order: [phases] order is for display only. phase list, phase move,
+# phase order --suggest/--apply, rename, and the E013/W011 checks.
+
+exec ajiya init --name Demo --prefix DE
+exec ajiya phase add app 'Screens work'
+exec ajiya phase add base 'Data is stored'
+exec ajiya phase add admin 'Staff can manage'
+exec ajiya phase add go-live 'Live'
+exec ajiya phase add notes 'Later, maybe'
+exec ajiya phase add x 'X half'
+exec ajiya phase add y 'Y half'
+exec ajiya ticket add --phase app --app infra 'Screens' --done-when 'Shown'
+exec ajiya ticket add --phase base --app infra 'Schema' --done-when 'Migrated'
+exec ajiya ticket edit DE-0001 --depends DE-0002
+exec ajiya ticket add --phase admin --app infra 'Console' --done-when 'Used' --depends DE-0001
+exec ajiya ticket add --phase go-live --app infra 'Ship' --done-when 'Deployed' --depends DE-0001
+exec ajiya ticket add --phase x --app infra 'X one' --done-when 'a'
+exec ajiya ticket add --phase y --app infra 'Y one' --done-when 'a' --depends DE-0005
+exec ajiya ticket add --phase x --app infra 'X two' --done-when 'a' --depends DE-0006
+exec ajiya ticket add --phase notes --app infra 'Idea' --done-when 'a'
+exec ajiya ticket drop DE-0003 --reason 'Not needed' --by Ana
+exec ajiya launch set go-live
+
+# With no list, phases are shown in suggested order: each after what it waits
+# on, then the launch milestone first, then the order they were created.
+exec ajiya phase list
+cmp stdout list-suggested.txt
+
+# --suggest prints it, with the phases that wait on each other as info.
+exec ajiya phase order --suggest
+cmp stdout suggest.txt
+! grep '\[phases\]' ajiya.toml
+
+# phase move starts from the order shown and writes the whole list.
+exec ajiya phase move admin --first
+stdout '^Phase order: admin, base, app, go-live, x, y, notes$'
+grep '^order = \["admin", "base", "app", "go-live", "x", "y", "notes"\]$' ajiya.toml
+exec ajiya phase list
+stdout -count=1 '^admin +Admin +1/1 +-$'
+stdout '^PHASE +TITLE +DONE +MILESTONE\nadmin '
+
+# admin waits on app, so listing it first is a warning; x and y wait on
+# each other, so their order is free.
+exec ajiya check
+stdout '^W011 ajiya.toml: phase admin is listed before phase app, which it waits on: DE-0003 depends on DE-0001. Fix: ajiya phase move app --before admin'
+stdout '0 error\(s\), 1 warning\(s\).'
+! exec ajiya check --strict
+
+exec ajiya phase move admin --after app
+stdout '^Phase order: base, app, admin, go-live, x, y, notes$'
+exec ajiya phase move y --before x
+stdout '^Phase order: base, app, admin, go-live, y, x, notes$'
+exec ajiya phase move notes --last
+stdout '^Phase order: base, app, admin, go-live, y, x, notes$'
+exec ajiya check --strict
+stdout 'No problems found.'
+
+# Display order never changes what can start.
+exec ajiya next
+stdout '^🟥 DE-0002 '
+
+# Refusals.
+! exec ajiya phase move admin
+stderr 'give exactly one of --before <slug>, --after <slug>, --first or --last'
+! exec ajiya phase move admin --first --last
+stderr 'give exactly one of'
+! exec ajiya phase move admin --before admin
+stderr 'cannot move admin relative to itself'
+! exec ajiya phase move admin --before nope
+stderr 'no phase "nope"; phases are '
+! exec ajiya phase move nope --first
+stderr 'no phase "nope"'
+! exec ajiya phase order
+stderr 'give --suggest or --apply'
+! exec ajiya phase order --suggest --apply
+stderr 'give --suggest or --apply'
+
+# rename keeps its place in the list.
+exec ajiya phase rename app frontend
+stdout '^Updated \[phases\] order.$'
+grep '^order = \["base", "frontend", "admin", "go-live", "y", "x", "notes"\]$' ajiya.toml
+exec ajiya check --strict
+stdout 'No problems found.'
+
+# --apply writes the suggested order.
+exec ajiya phase order --apply
+stdout '^Phase order: base, frontend, go-live, admin, x, y, notes$'
+stdout '^Info: phases x, y wait on each other'
+grep '^order = \["base", "frontend", "go-live", "admin", "x", "y", "notes"\]$' ajiya.toml
+exec ajiya phase list --json
+cmp stdout list.json
+
+# A listed slug that is not a phase is an error.
+cp bad.toml ajiya.toml
+! exec ajiya check
+stdout '^E013 ajiya.toml: \[phases\] order lists "gone", which is not a phase. Fix: remove "gone" from \[phases\] order in ajiya.toml'
+exec ajiya phase list
+stdout '^PHASE +TITLE +DONE +MILESTONE\nbase '
+
+-- list-suggested.txt --
+PHASE    TITLE    DONE  MILESTONE
+base     Base     0/1   launch
+app      App      0/1   launch
+go-live  Go-live  0/1   launch
+admin    Admin    1/1   -
+x        X        0/2   -
+y        Y        0/1   -
+notes    Notes    0/1   -
+-- suggest.txt --
+1. base
+2. app
+3. go-live
+4. admin
+5. x
+6. y
+7. notes
+Info: phases x, y wait on each other; they are kept together, in the order they were created.
+-- list.json --
+[
+  {
+    "slug": "base",
+    "title": "Base",
+    "done": 0,
+    "total": 1,
+    "milestone": "launch"
+  },
+  {
+    "slug": "frontend",
+    "title": "App",
+    "done": 0,
+    "total": 1,
+    "milestone": "launch"
+  },
+  {
+    "slug": "go-live",
+    "title": "Go-live",
+    "done": 0,
+    "total": 1,
+    "milestone": "launch"
+  },
+  {
+    "slug": "admin",
+    "title": "Admin",
+    "done": 1,
+    "total": 1,
+    "milestone": ""
+  },
+  {
+    "slug": "x",
+    "title": "X",
+    "done": 0,
+    "total": 2,
+    "milestone": ""
+  },
+  {
+    "slug": "y",
+    "title": "Y",
+    "done": 0,
+    "total": 1,
+    "milestone": ""
+  },
+  {
+    "slug": "notes",
+    "title": "Notes",
+    "done": 0,
+    "total": 1,
+    "milestone": ""
+  }
+]
+-- bad.toml --
+[project]
+name = "Demo"
+prefix = "DE"
+
+[launch]
+target = "go-live"
+
+[phases]
+order = ["gone", "base"]

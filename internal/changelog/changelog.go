@@ -15,7 +15,7 @@ import (
 // Changelog is the commits of a range grouped by phase and ticket. It is also
 // the JSON shape of 'ajiya changelog --json': add fields, never rename them.
 type Changelog struct {
-	Phases []Phase  `json:"phases"` // in slug order, only phases with commits
+	Phases []Phase  `json:"phases"` // in display order, only phases with commits
 	Other  []Commit `json:"other"`  // chores, unknown IDs and commits with no trailer
 }
 
@@ -46,8 +46,14 @@ var stateNames = map[plan.State]string{plan.Pending: "pending", plan.InProgress:
 // Build groups commits (newest first, as gitx.Log returns them) by phase and
 // ticket. A commit naming several tickets is listed under each; an old ID
 // counts for the ticket that has it as an alias. Merges are skipped, and a
-// commit listed under no ticket goes to Other.
+// commit listed under no ticket goes to Other. Phases are in slug order.
 func Build(p *plan.Plan, commits []gitx.Commit) *Changelog {
+	return BuildIn(p, p.Phases, commits)
+}
+
+// BuildIn is Build with the phases listed in the given order, such as
+// plan.DisplayOrder.
+func BuildIn(p *plan.Plan, phases []*plan.Phase, commits []gitx.Commit) *Changelog {
 	byTicket := map[*plan.Ticket][]Commit{}
 	cl := &Changelog{Phases: []Phase{}, Other: []Commit{}}
 	for _, c := range slices.Backward(commits) {
@@ -66,7 +72,7 @@ func Build(p *plan.Plan, commits []gitx.Commit) *Changelog {
 			cl.Other = append(cl.Other, cc)
 		}
 	}
-	for _, ph := range p.Phases {
+	for _, ph := range phases {
 		out := Phase{Slug: ph.Slug, Title: ph.Title, Tickets: []Ticket{}}
 		for _, t := range p.Tickets() {
 			if t.Phase == ph.Slug && len(byTicket[t]) > 0 {

@@ -37,7 +37,7 @@ func runChangelog(e *env, args []string) error {
 	} else if log, err = gitx.Log(pr.cfg.Root); err != nil {
 		return err
 	}
-	cl := changelog.Build(pr.plan, log)
+	cl := changelog.BuildIn(pr.plan, pr.displayPhases(), log)
 	if *asJSON {
 		return writeJSON(e, cl)
 	}

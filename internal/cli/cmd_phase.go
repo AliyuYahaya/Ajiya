@@ -2,13 +2,14 @@ package cli
 
 import (
 	"fmt"
+	"slices"
 
 	"github.com/AliyuYahaya/Ajiya/internal/config"
 	"github.com/AliyuYahaya/Ajiya/internal/plan"
 )
 
 // runPhaseRename renames a phase file, moves its tickets and keeps the launch
-// target pointing at it.
+// target and [phases] order pointing at it.
 func runPhaseRename(e *env, args []string) error {
 	fs := newFlags("phase rename")
 	title := fs.String("title", "", "new phase title (default: keep the current one)")
@@ -51,6 +52,20 @@ func runPhaseRename(e *env, args []string) error {
 			return err
 		}
 		fmt.Fprintf(e.stdout, "Launch target is now %s.\n", slug)
+	}
+	if i := slices.Index(pr.cfg.Phases.Order, old); i >= 0 {
+		order := slices.Clone(pr.cfg.Phases.Order)
+		order[i] = slug
+		// A stale entry for the new slug would now be listed twice.
+		for j := len(order) - 1; j >= 0; j-- {
+			if j != i && order[j] == slug {
+				order = slices.Delete(order, j, j+1)
+			}
+		}
+		if _, err := config.SetPhaseOrder(pr.cfg.Root, order); err != nil {
+			return err
+		}
+		fmt.Fprintln(e.stdout, "Updated [phases] order.")
 	}
 	return nil
 }
