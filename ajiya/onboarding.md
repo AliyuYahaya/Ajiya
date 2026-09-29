@@ -12,5 +12,5 @@ Goal: A new or existing project can be set up by an agent using only the install
 | AJ-0026 | ajiya | ajiya import todo | Checkbox and bullet items land in the inbox phase unchanged; ticked items are done before Ajiya | - | 🟩 Done · 5cf99f1 · 2026-09-29 · tests passed |
 | AJ-0027 | ajiya | ajiya import github | Uses gh to import open issues as pending and closed issues as done, each keeping its URL | - | 🟩 Done · da34caf · 2026-09-29 · tests passed |
 | AJ-0028 | ajiya | ajiya import legacy | Reads the collate.py format with new IDs, old IDs kept as aliases and a duplicate report; tested on reference/private if present | - | 🟩 Done · 3b606af · 2026-09-29 · tests passed |
-| AJ-0029 | ajiya | Re-run init on this repo | This repository's kit is the one users get | AJ-0025 | 🟥 Pending |
+| AJ-0029 | ajiya | Re-run init on this repo | This repository's kit is the one users get | AJ-0025 | 🟨 In progress |
 | AJ-0041 | ajiya | import legacy maps each RO package to a phase | Per spec 01 Part B: RO package to phase, area app per source, packages without scope, root-to-sink links, first package wins, cross-references dropped, inbox and archive, headings to milestones, area mode kept without a rollout file; fixture goldens for phases, ajiya.toml and report; check passes; package comment and the importing guide updated | AJ-0022, AJ-0038, AJ-0040 | 🟥 Pending |

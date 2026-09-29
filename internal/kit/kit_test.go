@@ -180,3 +180,24 @@ func TestBlock(t *testing.T) {
 		}
 	}
 }
+
+// This repository runs the kit it ships: 'ajiya init' here changes nothing.
+// When the kit changes, run 'ajiya init' in the repository and commit the result.
+func TestRepositoryKitIsCurrent(t *testing.T) {
+	root := filepath.Join("..", "..")
+	for _, o := range Owned {
+		b, err := os.ReadFile(filepath.Join(root, o.Path))
+		if err != nil || string(b) != Source(o.Source) {
+			t.Errorf("%s differs from the kit (err %v); run 'ajiya init' and commit", o.Path, err)
+		}
+	}
+	for _, name := range Blocks {
+		b, err := os.ReadFile(filepath.Join(root, name))
+		if err != nil {
+			t.Fatal(err)
+		}
+		if got, err := WithBlock(string(b)); err != nil || got != string(b) {
+			t.Errorf("%s's block differs from the kit (err %v); run 'ajiya init' and commit", name, err)
+		}
+	}
+}
