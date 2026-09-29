@@ -37,10 +37,8 @@ func runPhaseRemove(e *env, args []string) error {
 			return refused("milestone %s targets phase %s; remove that milestone with 'ajiya milestone remove %s' or re-create it with other targets first", m.Name, slug, m.Name)
 		}
 	}
-	if err := pr.plan.Remove(ph); err != nil {
-		return err
-	}
-	fmt.Fprintf(e.stdout, "Removed phase %s (%s).\n", slug, plan.Path(slug))
+	// Drop the order entry first: a stale entry would name a missing phase,
+	// while a phase file left behind is still a valid (empty) phase.
 	if i := slices.Index(pr.cfg.Phases.Order, slug); i >= 0 {
 		order := slices.Delete(slices.Clone(pr.cfg.Phases.Order), i, i+1)
 		if _, err := config.SetPhaseOrder(pr.cfg.Root, order); err != nil {
@@ -48,6 +46,10 @@ func runPhaseRemove(e *env, args []string) error {
 		}
 		fmt.Fprintln(e.stdout, "Updated [phases] order.")
 	}
+	if err := pr.plan.Remove(ph); err != nil {
+		return err
+	}
+	fmt.Fprintf(e.stdout, "Removed phase %s (%s).\n", slug, plan.Path(slug))
 	return nil
 }
 
