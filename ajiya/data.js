@@ -14,13 +14,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 37,
-        "done": 34,
+        "done": 35,
         "in_progress": 0,
-        "pending": 3,
+        "pending": 2,
         "dropped": 0
       },
-      "percent": 91,
-      "ready": 2
+      "percent": 94,
+      "ready": 1
     },
     {
       "name": "v0-2",
@@ -29,13 +29,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 59,
-        "done": 34,
+        "done": 35,
         "in_progress": 0,
-        "pending": 25,
+        "pending": 24,
         "dropped": 0
       },
-      "percent": 57,
-      "ready": 2
+      "percent": 59,
+      "ready": 1
     },
     {
       "name": "v0-3",
@@ -44,13 +44,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 69,
-        "done": 34,
+        "done": 35,
         "in_progress": 0,
-        "pending": 35,
+        "pending": 34,
         "dropped": 0
       },
-      "percent": 49,
-      "ready": 2
+      "percent": 50,
+      "ready": 1
     },
     {
       "name": "after-v0-3",
@@ -59,13 +59,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 68,
-        "done": 34,
+        "done": 35,
         "in_progress": 0,
-        "pending": 34,
+        "pending": 33,
         "dropped": 0
       },
-      "percent": 50,
-      "ready": 2
+      "percent": 51,
+      "ready": 1
     }
   ],
   "phases": [
@@ -75,12 +75,12 @@ window.AJIYA = {
       "goal": "Every commit names 1 to 3 tickets, enforced by hooks with a CI check as backup",
       "counts": {
         "total": 8,
-        "done": 7,
+        "done": 8,
         "in_progress": 0,
-        "pending": 1,
+        "pending": 0,
         "dropped": 0
       },
-      "percent": 87,
+      "percent": 100,
       "milestone": "v0-1"
     },
     {
@@ -188,9 +188,9 @@ window.AJIYA = {
       "path": ".",
       "counts": {
         "total": 82,
-        "done": 46,
+        "done": 47,
         "in_progress": 0,
-        "pending": 36,
+        "pending": 35,
         "dropped": 0
       }
     }
@@ -1018,8 +1018,7 @@ window.AJIYA = {
       "milestone": "v0-1",
       "ready": false,
       "waiting_on": [
-        "AJ-0041",
-        "AJ-0065"
+        "AJ-0041"
       ],
       "dependants": [
         "AJ-0042",
@@ -1809,19 +1808,22 @@ window.AJIYA = {
       "phase": "commit-rule",
       "app": "ajiya",
       "title": "ticket done takes evidence only from commits after the ticket started",
-      "done_when": "ticket done refuses when the only commits naming the ticket predate the commit that set it in progress (for example a planning or reference commit), and says to commit the work; tests cover a pre-start commit alone and a pre-start plus a later commit",
+      "done_when": "ticket start records the start time locally (in the git directory); ticket done refuses when every commit naming the ticket predates it and names the ignored commit; tests cover a pre-start commit alone, a pre-start plus a later commit, and a ticket with no start record",
       "depends": [],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · 5c1af99 · 2026-09-29 · tests passed",
+        "commit": "5c1af99",
+        "date": "2026-09-29",
+        "tests_passed": true
       },
       "milestone": "v0-1",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0034"
       ],
-      "unblocks": 34
+      "unblocks": 0
     },
     {
       "id": "AJ-0066",
@@ -2254,8 +2256,7 @@ window.AJIYA = {
     }
   ],
   "next": [
-    "AJ-0041",
-    "AJ-0065"
+    "AJ-0041"
   ],
   "checks": [],
   "activity": [
