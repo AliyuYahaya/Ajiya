@@ -82,6 +82,23 @@ Generated 2026-09-29.
 
 ## Recent activity
 
+- 2026-09-29 `619df03` Plan the install channels: npm, Homebrew and the install script (chore)
+  - AJ-0067: new → pending
+  - AJ-0068: new → pending
+  - AJ-0069: new → pending
+  - AJ-0070: new → pending
+  - AJ-0071: new → pending
+  - AJ-0072: new → pending
+  - AJ-0073: new → pending
+  - AJ-0074: new → pending
+  - AJ-0075: new → pending
+  - AJ-0076: new → pending
+  - AJ-0077: new → pending
+  - AJ-0078: new → pending
+  - AJ-0079: new → pending
+  - AJ-0080: new → pending
+  - AJ-0081: new → pending
+  - AJ-0082: new → pending
 - 2026-09-29 `d0c5d61` AJ-0066 done (AJ-0066)
   - AJ-0066: in_progress → done
 - 2026-09-29 `5a75b38` Guides: how to set the test command (AJ-0066)
@@ -110,8 +127,7 @@ Generated 2026-09-29.
   - AJ-0025: pending → in_progress
 - 2026-09-29 `4f9b1a6` Plan: ticket done evidence must come after the ticket started (chore)
   - AJ-0065: new → pending
-- 2026-09-29 `5556d64` CLAUDE.md with the Ajiya block (AJ-0024)
-- and 107 more in data.js
+- and 108 more in data.js
 
 ## Checks
 
