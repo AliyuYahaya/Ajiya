@@ -42,12 +42,12 @@ window.AJIYA = {
       "goal": "PROGRESS.md, data.js, the dashboard and serve show the plan and its activity",
       "counts": {
         "total": 7,
-        "done": 2,
-        "in_progress": 1,
+        "done": 3,
+        "in_progress": 0,
         "pending": 4,
         "dropped": 0
       },
-      "percent": 28,
+      "percent": 42,
       "milestone": ""
     },
     {
@@ -127,8 +127,8 @@ window.AJIYA = {
       "path": ".",
       "counts": {
         "total": 58,
-        "done": 26,
-        "in_progress": 1,
+        "done": 27,
+        "in_progress": 0,
         "pending": 31,
         "dropped": 0
       }
@@ -537,16 +537,19 @@ window.AJIYA = {
         "AJ-0040"
       ],
       "status": {
-        "state": "in_progress",
-        "text": "🟨 In progress"
+        "state": "done",
+        "text": "🟩 Done · 7b6a1fb · 2026-09-29 · tests passed",
+        "commit": "7b6a1fb",
+        "date": "2026-09-29",
+        "tests_passed": true
       },
       "milestone": "",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0019"
       ],
-      "unblocks": 31
+      "unblocks": 0
     },
     {
       "id": "AJ-0019",
@@ -563,10 +566,8 @@ window.AJIYA = {
         "text": "🟥 Pending"
       },
       "milestone": "",
-      "ready": false,
-      "waiting_on": [
-        "AJ-0018"
-      ],
+      "ready": true,
+      "waiting_on": [],
       "dependants": [
         "AJ-0020",
         "AJ-0036",
@@ -1553,10 +1554,34 @@ window.AJIYA = {
     }
   ],
   "next": [
-    "AJ-0018"
+    "AJ-0019"
   ],
   "checks": [],
   "activity": [
+    {
+      "hash": "2eae85df7d5635a6aa25c5106c9d872047be4cfd",
+      "short": "2eae85d",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "AJ-0018 done",
+      "refs": [
+        "AJ-0018"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0018",
+          "phase": "outputs",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · 7b6a1fb · 2026-09-29 · tests passed"
+        }
+      ],
+      "time": 1790670718
+    },
     {
       "hash": "7b6a1fbc94bfe6b777f849a86a2635f92c2b88f0",
       "short": "7b6a1fb",

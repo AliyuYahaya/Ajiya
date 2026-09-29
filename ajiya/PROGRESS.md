@@ -13,7 +13,7 @@ No milestones. Set one with `ajiya launch set <phase|ticket>`.
 |---|---|---|---|---|---|---|
 | Commit-rule | 7 | 0 | 0 | 7 | 100% | - |
 | Apps-launch | 13 | 0 | 0 | 13 | 100% | - |
-| Outputs | 2 | 1 | 4 | 7 | 28% | - |
+| Outputs | 3 | 0 | 4 | 7 | 42% | - |
 | Onboarding | 3 | 0 | 6 | 9 | 33% | - |
 | Release | 1 | 0 | 4 | 5 | 20% | - |
 | Agent-access | 0 | 0 | 3 | 3 | 0% | - |
@@ -22,11 +22,10 @@ No milestones. Set one with `ajiya launch set <phase|ticket>`.
 
 ## Can start now
 
-- **AJ-0018** ajiya build (ajiya) · in progress
+- **AJ-0019** Dashboard (ajiya)
 
 ## Waiting
 
-- **AJ-0019** Dashboard (ajiya) waits on AJ-0018
 - **AJ-0020** ajiya serve (ajiya) waits on AJ-0019
 - **AJ-0021** Milestones v0-1, v0-2 and v0-3 set and the dashboard in use on this repo (ajiya) waits on AJ-0020
 - **AJ-0022** Setup guide (ajiya) waits on AJ-0021
@@ -66,6 +65,8 @@ No milestones. Set one with `ajiya launch set <phase|ticket>`.
 
 ## Recent activity
 
+- 2026-09-29 `2eae85d` AJ-0018 done (AJ-0018)
+  - AJ-0018: in_progress → done
 - 2026-09-29 `7b6a1fb` ajiya build lists phases in display order (AJ-0018)
 - 2026-09-29 `7d048ab` AJ-0040 done (AJ-0040)
   - AJ-0040: in_progress → done
@@ -85,11 +86,7 @@ No milestones. Set one with `ajiya launch set <phase|ticket>`.
 - 2026-09-29 `1828a44` Milestone checks: E012 per milestone, W009, W010 (AJ-0039)
 - 2026-09-29 `4892da4` AJ-0037 done (AJ-0037)
   - AJ-0037: in_progress → done
-- 2026-09-29 `e9b12ad` Start AJ-0038 to AJ-0040 in parallel (AJ-0038, AJ-0039, AJ-0040)
-  - AJ-0038: pending → in_progress
-  - AJ-0039: pending → in_progress
-  - AJ-0040: pending → in_progress
-- and 66 more in data.js
+- and 67 more in data.js
 
 ## Checks
 
