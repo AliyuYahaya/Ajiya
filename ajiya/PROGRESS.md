@@ -7,10 +7,10 @@ Generated 2026-09-29.
 
 | Milestone | Closed | Required | % | Can start now |
 |---|---|---|---|---|
-| v0-1 | 30 | 36 | 83% | 4 |
-| v0-2 | 30 | 42 | 71% | 4 |
-| v0-3 | 30 | 52 | 57% | 4 |
-| after-v0-3 | 30 | 51 | 58% | 4 |
+| v0-1 | 31 | 36 | 86% | 4 |
+| v0-2 | 31 | 42 | 73% | 4 |
+| v0-3 | 31 | 52 | 59% | 4 |
+| after-v0-3 | 31 | 51 | 60% | 4 |
 
 ## Phases
 
@@ -20,26 +20,25 @@ Generated 2026-09-29.
 | Apps-launch | 14 | 0 | 0 | 14 | 100% | v0-1 |
 | Outputs | 12 | 0 | 0 | 12 | 100% | v0-1 |
 | Onboarding | 8 | 0 | 1 | 9 | 88% | v0-1 |
-| Release | 1 | 0 | 4 | 5 | 20% | v0-1 |
+| Release | 2 | 0 | 3 | 5 | 40% | v0-1 |
 | Agent-access | 0 | 0 | 3 | 3 | 0% | v0-2 |
 | Install | 0 | 0 | 3 | 3 | 0% | v0-2 |
 | Decisions-and-changes | 0 | 0 | 11 | 11 | 0% | v0-3 |
 
 ## Can start now
 
-- **AJ-0030** GoReleaser config (ajiya) · v0-1
+- **AJ-0031** Homebrew cask config (ajiya) · v0-1
 - **AJ-0033** README walkthroughs (ajiya) · v0-1
 - **AJ-0041** import legacy maps each RO package to a phase (ajiya) · v0-1
 - **AJ-0065** ticket done takes evidence only from commits after the ticket started (ajiya) · v0-1
 
 ## Waiting
 
-- **AJ-0031** Homebrew cask config (ajiya) waits on AJ-0030
-- **AJ-0034** v0.1 definition of done (ajiya) waits on AJ-0030, AJ-0031, AJ-0033, AJ-0041, AJ-0065
+- **AJ-0034** v0.1 definition of done (ajiya) waits on AJ-0031, AJ-0033, AJ-0041, AJ-0065
 - **AJ-0042** ajiya status (ajiya) waits on AJ-0034
 - **AJ-0043** ajiya mcp server (ajiya) waits on AJ-0042
 - **AJ-0044** ajiya mcp install, uninstall and status (ajiya) waits on AJ-0043
-- **AJ-0045** Install script and npm package (ajiya) waits on AJ-0030, AJ-0031, AJ-0044
+- **AJ-0045** Install script and npm package (ajiya) waits on AJ-0031, AJ-0044
 - **AJ-0046** Claude Code plugin (ajiya) waits on AJ-0042, AJ-0043
 - **AJ-0047** v0.2 definition of done (ajiya) waits on AJ-0042, AJ-0043, AJ-0044, AJ-0045, AJ-0046
 - **AJ-0048** Tags column (ajiya) waits on AJ-0047
@@ -62,6 +61,8 @@ Generated 2026-09-29.
 
 ## Recent activity
 
+- 2026-09-29 `9a2c69c` GoReleaser config (AJ-0030)
+  - AJ-0030: pending → in_progress
 - 2026-09-29 `d18ad9e` AJ-0029 done (AJ-0029)
   - AJ-0029: in_progress → done
 - 2026-09-29 `c93b4be` This repository runs the kit it ships (AJ-0029)
@@ -95,12 +96,7 @@ Generated 2026-09-29.
   - AJ-0062: pending → in_progress
   - AJ-0063: pending → in_progress
   - AJ-0064: pending → in_progress
-- 2026-09-29 `72a0c1f` Plan dashboard polish: logo, filters everywhere, dependency toggle, card borders (chore)
-  - AJ-0061: new → pending
-  - AJ-0062: new → pending
-  - AJ-0063: new → pending
-  - AJ-0064: new → pending
-- and 98 more in data.js
+- and 99 more in data.js
 
 ## Checks
 

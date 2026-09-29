@@ -14,12 +14,12 @@ window.AJIYA = {
       ],
       "required": {
         "total": 36,
-        "done": 30,
+        "done": 31,
         "in_progress": 0,
-        "pending": 6,
+        "pending": 5,
         "dropped": 0
       },
-      "percent": 83,
+      "percent": 86,
       "ready": 4
     },
     {
@@ -29,12 +29,12 @@ window.AJIYA = {
       ],
       "required": {
         "total": 42,
-        "done": 30,
+        "done": 31,
         "in_progress": 0,
-        "pending": 12,
+        "pending": 11,
         "dropped": 0
       },
-      "percent": 71,
+      "percent": 73,
       "ready": 4
     },
     {
@@ -44,12 +44,12 @@ window.AJIYA = {
       ],
       "required": {
         "total": 52,
-        "done": 30,
+        "done": 31,
         "in_progress": 0,
-        "pending": 22,
+        "pending": 21,
         "dropped": 0
       },
-      "percent": 57,
+      "percent": 59,
       "ready": 4
     },
     {
@@ -59,12 +59,12 @@ window.AJIYA = {
       ],
       "required": {
         "total": 51,
-        "done": 30,
+        "done": 31,
         "in_progress": 0,
-        "pending": 21,
+        "pending": 20,
         "dropped": 0
       },
-      "percent": 58,
+      "percent": 60,
       "ready": 4
     }
   ],
@@ -131,12 +131,12 @@ window.AJIYA = {
       "goal": "v0.1 is ready to publish: binaries, Homebrew cask, README walkthroughs and changelog",
       "counts": {
         "total": 5,
-        "done": 1,
+        "done": 2,
         "in_progress": 0,
-        "pending": 4,
+        "pending": 3,
         "dropped": 0
       },
-      "percent": 20,
+      "percent": 40,
       "milestone": "v0-1"
     },
     {
@@ -188,9 +188,9 @@ window.AJIYA = {
       "path": ".",
       "counts": {
         "total": 65,
-        "done": 42,
+        "done": 43,
         "in_progress": 0,
-        "pending": 23,
+        "pending": 22,
         "dropped": 0
       }
     }
@@ -895,18 +895,22 @@ window.AJIYA = {
         "AJ-0029"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · 9a2c69c · 2026-09-29 · tests passed · Note: goreleaser release --snapshot --clean: 6 binaries, version stamped",
+        "note": "goreleaser release --snapshot --clean: 6 binaries, version stamped",
+        "commit": "9a2c69c",
+        "date": "2026-09-29",
+        "tests_passed": true
       },
       "milestone": "v0-1",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0031",
         "AJ-0034",
         "AJ-0045"
       ],
-      "unblocks": 19
+      "unblocks": 0
     },
     {
       "id": "AJ-0031",
@@ -922,10 +926,8 @@ window.AJIYA = {
         "text": "🟥 Pending"
       },
       "milestone": "v0-1",
-      "ready": false,
-      "waiting_on": [
-        "AJ-0030"
-      ],
+      "ready": true,
+      "waiting_on": [],
       "dependants": [
         "AJ-0034",
         "AJ-0045"
@@ -1004,7 +1006,6 @@ window.AJIYA = {
       "milestone": "v0-1",
       "ready": false,
       "waiting_on": [
-        "AJ-0030",
         "AJ-0031",
         "AJ-0033",
         "AJ-0041",
@@ -1286,7 +1287,6 @@ window.AJIYA = {
       "milestone": "v0-2",
       "ready": false,
       "waiting_on": [
-        "AJ-0030",
         "AJ-0031",
         "AJ-0044"
       ],
@@ -1804,13 +1804,37 @@ window.AJIYA = {
     }
   ],
   "next": [
-    "AJ-0030",
+    "AJ-0031",
     "AJ-0033",
     "AJ-0041",
     "AJ-0065"
   ],
   "checks": [],
   "activity": [
+    {
+      "hash": "9a2c69c5d9375fd7c2e659f341b18b58af2bef32",
+      "short": "9a2c69c",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "GoReleaser config",
+      "refs": [
+        "AJ-0030"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0030",
+          "phase": "release",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        }
+      ],
+      "time": 1790711866
+    },
     {
       "hash": "d18ad9e34ebeee7270a29884ed7027a63f7678f4",
       "short": "d18ad9e",

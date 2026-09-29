@@ -5,7 +5,7 @@ Goal: v0.1 is ready to publish: binaries, Homebrew cask, README walkthroughs and
 
 | ID | App | Ticket | Done when | Depends | Status |
 |---|---|---|---|---|---|
-| AJ-0030 | ajiya | GoReleaser config | Snapshot build makes macOS, Linux and Windows binaries with the version set | AJ-0029 | 🟨 In progress |
+| AJ-0030 | ajiya | GoReleaser config | Snapshot build makes macOS, Linux and Windows binaries with the version set | AJ-0029 | 🟩 Done · 9a2c69c · 2026-09-29 · tests passed · Note: goreleaser release --snapshot --clean: 6 binaries, version stamped |
 | AJ-0031 | ajiya | Homebrew cask config | homebrew_casks config with quarantine removal; not published | AJ-0030 | 🟥 Pending |
 | AJ-0032 | ajiya | Changelog from Ajiya trailers | Changelog groups commits by ticket and phase | AJ-0001 | 🟩 Done · d84543c · 2026-09-29 · tests passed |
 | AJ-0033 | ajiya | README walkthroughs | README walks through a new project and an existing project | AJ-0029 | 🟥 Pending |
