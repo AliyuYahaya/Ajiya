@@ -4,12 +4,909 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Ajiya</title>
+<!--
+  Ajiya dashboard. Written into ajiya/index.html by 'ajiya build'; it reads
+  ajiya/data.js (window.AJIYA, schema 1) from the same folder, so it works
+  opened from disk and through 'ajiya serve'.
+
+  No network requests: no web fonts, no CDNs, no analytics, no external URLs.
+  One file, plain CSS and JS, no build step. Every text from data.js goes
+  through esc() before it reaches innerHTML.
+-->
+<script>
+  // Apply the saved theme before the page paints. Values: "light", "dark" or
+  // nothing (follow the system).
+  try { const t = localStorage.getItem('ajiya-theme'); if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; } catch (e) {}
+</script>
+<style>
+/* ---------------------------------------------------------------------------
+   Theme. Every colour comes from these variables. Light is the default; dark
+   applies when the system asks for it (unless the toggle chose light) or when
+   the toggle chose dark. Keep the two dark blocks identical.
+   ------------------------------------------------------------------------- */
+:root {
+  color-scheme: light;
+  --c-blue: #2f5bd3; --c-blue-pale: #eaf0fc; --c-blue-line: #c3d2f5;
+  --c-green: #1e9e6a; --c-green-pale: #e8f5ec;
+  --c-red: #c62828; --c-red-pale: #fdecea;
+  --c-amber: #f57f17; --c-amber-pale: #fff8e1; --c-amber-text: #b45d0e;
+  --c-violet: #6b3fb8; --c-violet-pale: #f1ebfa;
+  --c-text: #1a1a1a; --c-muted: #666666; --c-faint: #98a2ae;
+  --c-page: #f5f7fa; --c-card: #ffffff; --c-line: #e6e9ee; --c-col: #eef1f5; --c-dash: #d6dbe2;
+  --c-on-accent: #ffffff; --c-backdrop: rgba(26, 26, 26, .4); --c-shadow: rgba(0, 0, 0, .15);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --c-blue: #7c9dff; --c-blue-pale: #1d2847; --c-blue-line: #34477a;
+    --c-green: #45c98f; --c-green-pale: #14301f;
+    --c-red: #ff7b72; --c-red-pale: #3b1a1c;
+    --c-amber: #f0a33c; --c-amber-pale: #3a2b12; --c-amber-text: #f5b95f;
+    --c-violet: #b69cf0; --c-violet-pale: #2c2142;
+    --c-text: #e6e8eb; --c-muted: #a3abb6; --c-faint: #6f7a87;
+    --c-page: #0f1216; --c-card: #171b21; --c-line: #2a3039; --c-col: #13171c; --c-dash: #343b46;
+    --c-on-accent: #0f1216; --c-backdrop: rgba(0, 0, 0, .6); --c-shadow: rgba(0, 0, 0, .5);
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --c-blue: #7c9dff; --c-blue-pale: #1d2847; --c-blue-line: #34477a;
+  --c-green: #45c98f; --c-green-pale: #14301f;
+  --c-red: #ff7b72; --c-red-pale: #3b1a1c;
+  --c-amber: #f0a33c; --c-amber-pale: #3a2b12; --c-amber-text: #f5b95f;
+  --c-violet: #b69cf0; --c-violet-pale: #2c2142;
+  --c-text: #e6e8eb; --c-muted: #a3abb6; --c-faint: #6f7a87;
+  --c-page: #0f1216; --c-card: #171b21; --c-line: #2a3039; --c-col: #13171c; --c-dash: #343b46;
+  --c-on-accent: #0f1216; --c-backdrop: rgba(0, 0, 0, .6); --c-shadow: rgba(0, 0, 0, .5);
+}
+
+/* Base */
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; }
+body {
+  --sidebar: 240px;
+  background: var(--c-page); color: var(--c-text);
+  font: 14px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+button { font: inherit; color: inherit; }
+a { color: var(--c-blue); }
+.mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; font-size: 12px; }
+svg.i { width: 16px; height: 16px; flex-shrink: 0; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+/* Shell: sidebar and main column */
+.shell { display: flex; height: 100vh; overflow: hidden; }
+aside {
+  width: var(--sidebar); flex-shrink: 0; display: flex; flex-direction: column;
+  background: var(--c-card); border-right: 1px solid var(--c-line); transition: width .15s;
+}
+.shell.collapsed aside { width: 68px; }
+.side-top { height: 64px; display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 0 16px; border-bottom: 1px solid var(--c-line); }
+.brand { font-size: 16px; font-weight: 800; letter-spacing: -.01em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.shell.collapsed .side-top { justify-content: center; }
+.shell.collapsed .side-top .brand, .shell.collapsed .hide-c { display: none !important; }
+.icon-btn { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border: 0; background: transparent; border-radius: 8px; color: var(--c-faint); cursor: pointer; flex-shrink: 0; }
+.icon-btn:hover { background: var(--c-page); color: var(--c-text); }
+nav { flex: 1; overflow-y: auto; padding: 12px; display: flex; flex-direction: column; gap: 4px; }
+.nav-item {
+  display: flex; align-items: center; gap: 12px; width: 100%; padding: 10px 12px; border: 0; border-radius: 8px;
+  background: transparent; color: var(--c-muted); font-size: 14px; font-weight: 600; cursor: pointer; text-align: left;
+}
+.nav-item:hover { background: var(--c-page); color: var(--c-text); }
+.nav-item[aria-current="true"] { background: var(--c-blue-pale); color: var(--c-blue); }
+.nav-item .n { margin-left: auto; font-size: 12px; font-weight: 600; color: var(--c-faint); }
+.nav-item .n.bad { color: var(--c-red); }
+.nav-item[aria-current="true"] .n { color: var(--c-blue); }
+.shell.collapsed .nav-item { justify-content: center; }
+.nav-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--c-faint); padding: 14px 12px 4px; }
+.phase-link { display: flex; flex-direction: column; gap: 5px; padding: 8px 12px; border-radius: 8px; border: 0; background: transparent; cursor: pointer; text-align: left; width: 100%; }
+.phase-link:hover { background: var(--c-page); }
+.phase-link[aria-current="true"] { background: var(--c-blue-pale); }
+.phase-link .t { font-size: 13px; font-weight: 600; color: var(--c-text); display: flex; gap: 8px; }
+.phase-link .t span:first-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.phase-link .t span:last-child { margin-left: auto; color: var(--c-faint); font-weight: 500; font-size: 12px; white-space: nowrap; }
+.side-foot { border-top: 1px solid var(--c-line); padding: 12px 16px; font-size: 12px; color: var(--c-muted); display: flex; align-items: center; gap: 8px; }
+.side-foot b { color: var(--c-text); }
+.side-foot .grow { flex: 1; min-width: 0; }
+.shell.collapsed .side-foot { justify-content: center; padding: 12px 0; }
+
+main { flex: 1; overflow-y: auto; min-width: 0; }
+.main-inner { max-width: 1320px; margin: 0 auto; padding: 32px; }
+.page-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 12px; margin-bottom: 20px; }
+.page-head h1 { margin: 0 0 4px; font-size: 24px; font-weight: 800; letter-spacing: -.01em; }
+.page-head p { margin: 0; color: var(--c-muted); font-size: 14px; }
+.mobile-bar { display: none; }
+.banner { background: var(--c-amber-pale); color: var(--c-amber-text); border-radius: 12px; padding: 10px 14px; margin-bottom: 16px; font-size: 13px; font-weight: 600; }
+
+/* Filters */
+.filters { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 20px; }
+.filters input[type=search], .filters select, .select {
+  font: inherit; font-size: 13px; background: var(--c-card); color: var(--c-text); border: 1px solid var(--c-line);
+  border-radius: 8px; padding: 7px 10px; min-width: 0; max-width: 100%;
+}
+.filters input[type=search] { width: 260px; }
+.filters input:focus, .filters select:focus, .select:focus { outline: 2px solid var(--c-blue-pale); border-color: var(--c-blue); }
+.pill-toggle { display: inline-flex; align-items: center; gap: 6px; padding: 6px 11px; border-radius: 99px; border: 1px solid var(--c-line); background: var(--c-card); font-size: 13px; font-weight: 600; color: var(--c-muted); cursor: pointer; user-select: none; }
+.pill-toggle[aria-pressed="true"] { background: var(--c-blue-pale); border-color: transparent; color: var(--c-blue); }
+.link-btn { border: 0; background: transparent; color: var(--c-blue); font-size: 13px; font-weight: 600; cursor: pointer; padding: 4px 6px; }
+
+/* Cards, KPIs and bars */
+.card-box { background: var(--c-card); border: 1px solid var(--c-line); border-radius: 16px; }
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr)); gap: 16px; margin-bottom: 24px; }
+.kpi { padding: 20px; min-width: 0; }
+button.kpi { text-align: left; cursor: pointer; width: 100%; }
+button.kpi:hover { border-color: var(--c-blue); }
+.kpi .label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--c-faint); }
+.kpi .value { font-size: 28px; font-weight: 800; margin: 4px 0 10px; letter-spacing: -.02em; }
+.kpi .value small { font-size: 14px; font-weight: 600; color: var(--c-faint); }
+.kpi .sub { color: var(--c-muted); font-size: 12px; margin-top: 8px; }
+
+.bar { display: flex; height: 6px; border-radius: 99px; overflow: hidden; background: var(--c-line); gap: 1px; }
+.bar span { display: block; height: 100%; }
+.bar .d { background: var(--c-green); } .bar .p { background: var(--c-amber); } .bar .x { background: var(--c-faint); }
+
+h2.section { font-size: 16px; font-weight: 800; margin: 28px 0 4px; display: flex; align-items: baseline; gap: 8px; }
+h2.section:first-child { margin-top: 0; }
+h2.section .count { color: var(--c-faint); font-weight: 600; font-size: 13px; }
+.section-note { color: var(--c-muted); margin: 0 0 12px; font-size: 13px; }
+
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr)); gap: 12px; margin-top: 12px; }
+.card {
+  background: var(--c-card); border: 1px solid var(--c-line); border-radius: 16px; padding: 16px; cursor: pointer; color: var(--c-text);
+  text-align: left; display: flex; flex-direction: column; gap: 8px; width: 100%; min-width: 0; transition: border-color .12s;
+}
+.card:hover, .card:focus-visible { border-color: var(--c-blue); outline: none; }
+.card.ready { box-shadow: inset 3px 0 0 var(--c-blue); }
+.card .head { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.card .rid { font-weight: 700; color: var(--c-text); }
+.card .name { font-weight: 600; line-height: 1.4; overflow-wrap: anywhere; }
+.card .meta { color: var(--c-muted); font-size: 12px; overflow-wrap: anywhere; }
+.card .note { font-size: 12px; overflow-wrap: anywhere; }
+.card .note.human { color: var(--c-violet); } .card .note.blocked { color: var(--c-red); }
+.card .deps { display: flex; flex-wrap: wrap; gap: 4px; font-size: 12px; color: var(--c-muted); align-items: center; }
+.card.compact { padding: 12px; gap: 6px; border-radius: 12px; }
+.card.compact .name { font-size: 13px; }
+
+/* Badges, chips and dots. State colours: done green, in progress amber,
+   pending red, dropped grey. */
+.badge { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 99px; white-space: nowrap; }
+.badge.done { background: var(--c-green-pale); color: var(--c-green); }
+.badge.in_progress { background: var(--c-amber-pale); color: var(--c-amber-text); }
+.badge.pending { background: var(--c-red-pale); color: var(--c-red); }
+.badge.dropped, .badge.plain { background: var(--c-page); color: var(--c-muted); }
+.badge.ms { background: var(--c-blue-pale); color: var(--c-blue); }
+.badge.ready { background: var(--c-blue); color: var(--c-on-accent); }
+.badge.human, .badge.agent { background: var(--c-violet-pale); color: var(--c-violet); }
+.badge.error { background: var(--c-red-pale); color: var(--c-red); }
+.badge.warning { background: var(--c-amber-pale); color: var(--c-amber-text); }
+.chip { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 11px; padding: 1px 6px; border-radius: 6px; background: var(--c-page); color: var(--c-muted); cursor: pointer; border: 0; white-space: nowrap; }
+.chip.ok { background: var(--c-green-pale); color: var(--c-green); }
+.chip.wait { background: var(--c-red-pale); color: var(--c-red); }
+.chip.unknown { cursor: default; text-decoration: line-through; }
+.dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.dot.done { background: var(--c-green); } .dot.in_progress { background: var(--c-amber); } .dot.pending { background: var(--c-red); }
+.dot.dropped, .dot.none { background: var(--c-faint); } .dot.ready { background: var(--c-blue); } .dot.human { background: var(--c-violet); }
+
+/* Board */
+.board-tools { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; color: var(--c-muted); font-size: 13px; }
+.board { display: grid; grid-template-columns: repeat(5, minmax(230px, 1fr)); gap: 14px; overflow-x: auto; padding-bottom: 8px; align-items: start; }
+.col { background: var(--c-col); border-radius: 16px; padding: 10px; display: flex; flex-direction: column; gap: 8px; min-width: 230px; }
+.col-head { display: flex; align-items: center; gap: 8px; padding: 4px 6px 6px; }
+.col-head h3 { margin: 0; font-size: 13px; font-weight: 800; }
+.col-head .count { margin-left: auto; font-size: 12px; font-weight: 700; color: var(--c-muted); background: var(--c-card); border-radius: 99px; padding: 1px 8px; }
+.col-sub { font-size: 12px; color: var(--c-muted); padding: 0 6px 4px; margin-top: -6px; }
+.lane { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--c-faint); padding: 6px 6px 0; }
+.col-empty { font-size: 12px; color: var(--c-faint); text-align: center; padding: 16px 0; border: 1px dashed var(--c-dash); border-radius: 12px; }
+
+/* Phases */
+.phase { margin-bottom: 28px; }
+.phase-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; }
+.phase-head h3 { margin: 0; font-size: 16px; font-weight: 800; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.phase-head .stats { color: var(--c-muted); font-size: 12px; display: flex; align-items: center; gap: 10px; }
+.phase-head .bar { width: 160px; }
+.phase-goal { color: var(--c-muted); font-size: 13px; margin: 4px 0 0; }
+
+/* Milestones */
+.ms-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(260px, 100%), 1fr)); gap: 12px; margin-top: 12px; }
+.ms-card { padding: 16px 18px; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.ms-card .top { display: flex; align-items: center; gap: 8px; }
+.ms-card .order { font-size: 11px; font-weight: 700; color: var(--c-faint); }
+.ms-card .nm { font-weight: 800; font-size: 15px; overflow-wrap: anywhere; }
+.ms-card .pct { margin-left: auto; font-weight: 800; font-size: 20px; }
+.ms-card .sub { color: var(--c-muted); font-size: 12px; overflow-wrap: anywhere; }
+
+/* Tables and rows */
+.table-wrap { overflow-x: auto; border-radius: 16px; border: 1px solid var(--c-line); background: var(--c-card); }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th { text-align: left; padding: 10px 16px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--c-faint); border-bottom: 1px solid var(--c-line); white-space: nowrap; }
+td { padding: 12px 16px; border-bottom: 1px solid var(--c-line); vertical-align: top; }
+tr:last-child td { border-bottom: 0; }
+tr.click { cursor: pointer; }
+tr.click:hover td { background: var(--c-page); }
+td.note { color: var(--c-muted); font-size: 12.5px; max-width: 380px; overflow-wrap: anywhere; }
+td .sub { color: var(--c-faint); font-size: 12px; }
+.more { display: block; margin: 14px auto 0; background: var(--c-card); color: var(--c-text); border: 1px solid var(--c-line); border-radius: 8px; padding: 7px 14px; font-weight: 600; cursor: pointer; }
+.more:hover { border-color: var(--c-blue); color: var(--c-blue); }
+
+.row { padding: 16px 20px; display: grid; grid-template-columns: minmax(170px, 1.2fr) 3fr auto; gap: 16px; align-items: center; }
+.row + .row { border-top: 1px solid var(--c-line); }
+.row .nums { color: var(--c-muted); font-size: 12px; white-space: nowrap; }
+.row .src { color: var(--c-faint); font-size: 11.5px; }
+.row.link { cursor: pointer; }
+.row.link:hover { background: var(--c-page); }
+.empty { color: var(--c-muted); padding: 32px; text-align: center; border: 1px dashed var(--c-line); border-radius: 16px; background: var(--c-page); }
+
+/* Activity */
+.day { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--c-faint); margin: 20px 0 8px; }
+.day:first-child { margin-top: 0; }
+.commit { padding: 12px 16px; display: grid; grid-template-columns: 64px 1fr; gap: 4px 12px; }
+.commit + .commit { border-top: 1px solid var(--c-line); }
+.commit .h { color: var(--c-muted); padding-top: 2px; }
+.commit .s { font-weight: 600; overflow-wrap: anywhere; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.commit .m { grid-column: 2; color: var(--c-muted); font-size: 12px; display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
+.commit .ch { grid-column: 2; display: flex; flex-direction: column; gap: 2px; font-size: 12.5px; }
+.commit .ch div { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.commit.dim .s { color: var(--c-muted); font-weight: 500; }
+
+/* Detail dialog */
+dialog { border: 1px solid var(--c-line); border-radius: 16px; padding: 0; width: min(760px, calc(100vw - 32px)); max-height: calc(100vh - 48px); background: var(--c-card); color: var(--c-text); }
+dialog::backdrop { background: var(--c-backdrop); }
+.dlg-head { padding: 20px 24px 14px; border-bottom: 1px solid var(--c-line); position: sticky; top: 0; background: var(--c-card); z-index: 1; }
+.dlg-head h3 { margin: 8px 40px 6px 0; font-size: 18px; font-weight: 800; overflow-wrap: anywhere; }
+.dlg-head .close { position: absolute; right: 14px; top: 14px; }
+.dlg-meta { color: var(--c-muted); font-size: 13px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.dlg-body { padding: 8px 24px 20px; }
+.kv { display: grid; grid-template-columns: 130px 1fr; gap: 0 16px; }
+.kv > div { padding: 9px 0; border-bottom: 1px solid var(--c-line); min-width: 0; overflow-wrap: anywhere; }
+.kv > div:nth-last-child(-n+2) { border-bottom: 0; }
+.kv .k { color: var(--c-faint); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; padding-top: 11px; }
+.kv .v { display: flex; flex-wrap: wrap; gap: 4px 6px; align-items: center; }
+.kv .v.text { display: block; }
+
+@media (max-width: 860px) {
+  .shell { display: block; height: auto; overflow: visible; }
+  aside { position: fixed; inset: 0 auto 0 0; z-index: 20; transform: translateX(-100%); transition: transform .2s; box-shadow: 0 0 40px var(--c-shadow); width: 260px !important; }
+  .shell.open aside { transform: none; }
+  .shell.collapsed .hide-c { display: revert !important; }
+  .shell.collapsed .side-top .brand { display: block !important; }
+  .shell.collapsed .nav-item { justify-content: flex-start; }
+  .collapse-btn { display: none !important; }
+  .scrim { display: none; position: fixed; inset: 0; background: var(--c-backdrop); z-index: 15; }
+  .shell.open .scrim { display: block; }
+  main { overflow: visible; }
+  .main-inner { padding: 0 16px 40px; }
+  .mobile-bar { display: flex; align-items: center; gap: 10px; height: 56px; position: sticky; top: 0; background: var(--c-card); border-bottom: 1px solid var(--c-line); margin: 0 -16px 20px; padding: 0 16px; z-index: 10; }
+  .filters input[type=search] { flex: 1 1 100%; width: 100%; }
+  .filters select { flex: 1 1 40%; }
+  .row { grid-template-columns: 1fr; gap: 8px; }
+  .kv { grid-template-columns: 1fr; }
+  .kv .k { border-bottom: 0 !important; padding-bottom: 0; }
+  td.note, th.note { display: none; }
+  th, td { padding: 10px 12px; }
+  .commit { grid-template-columns: 1fr; }
+  .commit .m, .commit .ch { grid-column: 1; }
+}
+</style>
 </head>
 <body>
-<p id="msg">Placeholder: the dashboard is being built (AJ-0019).</p>
+<!-- Icons: inline SVG symbols, no external files. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-dash" viewBox="0 0 24 24"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></symbol>
+  <symbol id="i-zap" viewBox="0 0 24 24"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></symbol>
+  <symbol id="i-kanban" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M8 7v7"/><path d="M12 7v4"/><path d="M16 7v9"/></symbol>
+  <symbol id="i-layers" viewBox="0 0 24 24"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/></symbol>
+  <symbol id="i-list" viewBox="0 0 24 24"><path d="M3 6h.01"/><path d="M3 12h.01"/><path d="M3 18h.01"/><path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/></symbol>
+  <symbol id="i-box" viewBox="0 0 24 24"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></symbol>
+  <symbol id="i-git" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M3 12h6"/><path d="M15 12h6"/></symbol>
+  <symbol id="i-left" viewBox="0 0 24 24"><path d="m11 17-5-5 5-5"/><path d="m18 17-5-5 5-5"/></symbol>
+  <symbol id="i-right" viewBox="0 0 24 24"><path d="m6 17 5-5-5-5"/><path d="m13 17 5-5-5-5"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></symbol>
+</svg>
+
+<div class="shell" id="shell">
+  <div class="scrim" id="scrim"></div>
+  <aside aria-label="Dashboard navigation">
+    <div class="side-top">
+      <strong class="brand" id="brand">Ajiya</strong>
+      <button class="icon-btn collapse-btn" id="collapseBtn" type="button" aria-label="Collapse sidebar"><svg class="i"><use href="#i-left"/></svg></button>
+    </div>
+    <nav id="nav">
+      <!-- One button per view. Each data-tab must match a key in VIEWS below
+           (dashboard_test.go checks this). The Dependencies view (AJ-0036)
+           goes after Board: add its button here and its entry in VIEWS. -->
+      <button class="nav-item" type="button" data-tab="overview" title="Overview"><svg class="i"><use href="#i-dash"/></svg><span class="hide-c">Overview</span><span class="n hide-c"></span></button>
+      <button class="nav-item" type="button" data-tab="next" title="Next up"><svg class="i"><use href="#i-zap"/></svg><span class="hide-c">Next up</span><span class="n hide-c"></span></button>
+      <button class="nav-item" type="button" data-tab="board" title="Board"><svg class="i"><use href="#i-kanban"/></svg><span class="hide-c">Board</span><span class="n hide-c"></span></button>
+      <button class="nav-item" type="button" data-tab="phases" title="Phases"><svg class="i"><use href="#i-layers"/></svg><span class="hide-c">Phases</span><span class="n hide-c"></span></button>
+      <button class="nav-item" type="button" data-tab="tickets" title="Tickets"><svg class="i"><use href="#i-list"/></svg><span class="hide-c">Tickets</span><span class="n hide-c"></span></button>
+      <button class="nav-item" type="button" data-tab="apps" title="Apps"><svg class="i"><use href="#i-box"/></svg><span class="hide-c">Apps</span><span class="n hide-c"></span></button>
+      <button class="nav-item" type="button" data-tab="checks" title="Checks"><svg class="i"><use href="#i-check"/></svg><span class="hide-c">Checks</span><span class="n hide-c"></span></button>
+      <button class="nav-item" type="button" data-tab="activity" title="Activity"><svg class="i"><use href="#i-git"/></svg><span class="hide-c">Activity</span><span class="n hide-c"></span></button>
+      <div id="phaseNav"></div>
+    </nav>
+    <div class="side-foot">
+      <div class="grow hide-c" id="sideFoot"></div>
+      <button class="icon-btn" id="themeBtn" type="button" aria-label="Switch theme"></button>
+    </div>
+  </aside>
+
+  <main>
+    <div class="main-inner">
+      <div class="mobile-bar">
+        <button class="icon-btn" id="menuBtn" type="button" aria-label="Open menu"><svg class="i"><use href="#i-menu"/></svg></button>
+        <strong class="brand" id="mobileBrand">Ajiya</strong>
+      </div>
+      <div id="banner"></div>
+      <div class="page-head">
+        <div><h1 id="title">Ajiya</h1><p id="subtitle"></p></div>
+      </div>
+      <div class="filters" id="filters" style="display:none">
+        <input type="search" id="q" placeholder="Search ID, title or status" aria-label="Search">
+        <select id="appF" aria-label="App filter"></select>
+        <select id="phaseF" aria-label="Phase filter"></select>
+        <select id="msF" aria-label="Milestone filter"></select>
+        <select id="stateF" aria-label="State filter">
+          <option value="">Any state</option>
+          <optgroup label="State">
+            <option value="pending">Pending</option>
+            <option value="in_progress">In progress</option>
+            <option value="done">Done</option>
+            <option value="dropped">Dropped</option>
+          </optgroup>
+          <optgroup label="Open tickets">
+            <option value="ready">Can start now</option>
+            <option value="waiting">Waiting</option>
+            <option value="human">Needs a human</option>
+          </optgroup>
+        </select>
+        <button type="button" class="link-btn" id="clearF" hidden>Clear filters</button>
+      </div>
+      <div id="view"></div>
+    </div>
+  </main>
+</div>
+
+<dialog id="dlg" aria-labelledby="dlgTitle">
+  <div class="dlg-head">
+    <button class="icon-btn close" type="button" aria-label="Close" id="dlgClose"><svg class="i"><use href="#i-x"/></svg></button>
+    <div id="dlgBadges" style="display:flex;gap:6px;flex-wrap:wrap;align-items:center"></div>
+    <h3 id="dlgTitle"></h3>
+    <div class="dlg-meta" id="dlgMeta"></div>
+  </div>
+  <div class="dlg-body" id="dlgBody"></div>
+</dialog>
+
 <script src="data.js"></script>
 <script>
-  if (window.AJIYA) document.getElementById('msg').textContent += ' ' + window.AJIYA.tickets.length + ' tickets loaded.';
+(function () {
+  'use strict';
+
+  /* -------------------------------------------------------------------------
+     Helpers
+     ----------------------------------------------------------------------- */
+  const $ = id => document.getElementById(id);
+  const store = {
+    get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+    set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} },
+  };
+  const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  // Escaped text with `code` spans shown in mono.
+  const md = s => esc(s).replace(/`([^`]+)`/g, '<span class="mono">$1</span>');
+  const icon = id => `<svg class="i"><use href="#i-${id}"/></svg>`;
+  const plural = (n, one, many) => `${n} ${n === 1 ? one : (many || one + 's')}`;
+  // Only web links become anchors; anything else (javascript: and the like) is shown as text.
+  const isWeb = u => /^https?:\/\//i.test(String(u || ''));
+
+  /* Theme toggle: works even without data. */
+  const themeBtn = $('themeBtn');
+  const isDark = () => document.documentElement.dataset.theme === 'dark' ||
+    (!document.documentElement.dataset.theme && window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches);
+  const syncTheme = () => {
+    const d = isDark();
+    themeBtn.innerHTML = icon(d ? 'sun' : 'moon');
+    themeBtn.setAttribute('aria-label', d ? 'Switch to light theme' : 'Switch to dark theme');
+    themeBtn.title = themeBtn.getAttribute('aria-label');
+  };
+  themeBtn.onclick = () => {
+    const t = isDark() ? 'light' : 'dark';
+    document.documentElement.dataset.theme = t;
+    store.set('ajiya-theme', t);
+    syncTheme();
+  };
+  syncTheme();
+
+  /* Sidebar collapse and mobile menu. */
+  const shell = $('shell');
+  if (store.get('ajiya-collapsed') === '1') shell.classList.add('collapsed');
+  const colBtn = $('collapseBtn');
+  const syncCollapse = () => {
+    const c = shell.classList.contains('collapsed');
+    colBtn.innerHTML = icon(c ? 'right' : 'left');
+    colBtn.setAttribute('aria-label', c ? 'Expand sidebar' : 'Collapse sidebar');
+  };
+  syncCollapse();
+  colBtn.onclick = () => { shell.classList.toggle('collapsed'); store.set('ajiya-collapsed', shell.classList.contains('collapsed') ? '1' : '0'); syncCollapse(); };
+  $('menuBtn').onclick = () => shell.classList.add('open');
+  $('scrim').onclick = () => shell.classList.remove('open');
+
+  /* -------------------------------------------------------------------------
+     Data
+     ----------------------------------------------------------------------- */
+  const D = window.AJIYA;
+  const view = $('view');
+  if (!D || !Array.isArray(D.tickets)) {
+    $('title').textContent = 'No data';
+    view.innerHTML = '<div class="empty">data.js is missing or empty. Run <span class="mono">ajiya build</span> in the project folder, then reload this page.</div>';
+    return;
+  }
+  if (D.schema !== 1) {
+    $('banner').innerHTML = `<div class="banner">This page expects data schema 1 but data.js has schema ${esc(D.schema)}. Run <span class="mono">ajiya build</span> with the same ajiya version.</div>`;
+  }
+  const arr = v => Array.isArray(v) ? v : [];
+  const milestones = arr(D.milestones), phases = arr(D.phases), apps = arr(D.apps);
+  const tickets = D.tickets, checks = arr(D.checks), activity = arr(D.activity), nextIDs = arr(D.next);
+  const project = D.project || {};
+  const key = k => `ajiya:${project.prefix || project.name || ''}:${k}`; // localStorage key per project
+
+  const byID = new Map(tickets.map(t => [t.id, t]));
+  const phaseBySlug = new Map(phases.map(p => [p.slug, p]));
+  const phaseIndex = new Map(phases.map((p, i) => [p.slug, i]));
+  const msIndex = new Map(milestones.map((m, i) => [m.name, i]));
+  const idIndex = new Map(tickets.map((t, i) => [t.id, i]));
+  const nextIndex = new Map(nextIDs.map((id, i) => [id, i]));
+  const phaseTitle = slug => (phaseBySlug.get(slug) || {}).title || slug;
+
+  const state = t => t.status.state;
+  const closed = t => state(t) === 'done' || state(t) === 'dropped';
+  const human = t => !closed(t) && !!t.status.human;
+  // Board column. A ticket that needs a human sits there whatever else holds;
+  // in progress comes before "can start now" because started tickets are ready too.
+  const column = t => closed(t) ? 'done' : human(t) ? 'human' : state(t) === 'in_progress' ? 'doing' : t.ready ? 'ready' : 'waiting';
+  const stateLabel = { pending: 'Pending', in_progress: 'In progress', done: 'Done', dropped: 'Dropped' };
+  // Phase display order, then ID: the order used everywhere except Next up.
+  const byPlan = (a, b) => (phaseIndex.get(a.phase) ?? 1e9) - (phaseIndex.get(b.phase) ?? 1e9) || idIndex.get(a.id) - idIndex.get(b.id);
+  const byNext = (a, b) => (nextIndex.get(a.id) ?? 1e9) - (nextIndex.get(b.id) ?? 1e9) || byPlan(a, b);
+
+  const countsOf = list => {
+    const c = { total: 0, done: 0, in_progress: 0, pending: 0, dropped: 0 };
+    list.forEach(t => { c.total++; c[state(t)]++; });
+    return c;
+  };
+  // Progress bar: green for closed (done and dropped), amber for in progress.
+  const barHTML = c => {
+    if (!c.total) return '<div class="bar"></div>';
+    const w = n => (100 * (n || 0) / c.total).toFixed(2) + '%';
+    return `<div class="bar" role="img" aria-label="${c.done + c.dropped} closed, ${c.in_progress} in progress of ${c.total}"><span class="d" style="width:${w(c.done)}"></span><span class="x" style="width:${w(c.dropped)}"></span><span class="p" style="width:${w(c.in_progress)}"></span></div>`;
+  };
+  const pct = c => c.total ? Math.floor(100 * (c.done + c.dropped) / c.total) : 100;
+  const countText = c => `${c.done} done · ${c.in_progress} in progress · ${c.pending} pending${c.dropped ? ` · ${c.dropped} dropped` : ''}`;
+
+  const stateBadge = t => `<span class="badge ${state(t)}">${stateLabel[state(t)] || esc(state(t))}</span>`;
+  const msBadge = name => name ? `<span class="badge ms" title="Milestone">${esc(name)}</span>` : '';
+  // A clickable ticket ID. ok: closed, wait: open. Unknown IDs are struck through.
+  const chip = (id, colour) => {
+    const t = byID.get(id);
+    if (!t) return `<span class="chip unknown" title="Not in the plan">${esc(id)}</span>`;
+    const cls = colour ? (closed(t) ? ' ok' : ' wait') : '';
+    // A span, not a button: chips sit inside card buttons, and buttons cannot nest.
+    return `<span class="chip${cls}" role="button" tabindex="0" data-open="${esc(id)}" title="${esc(t.title)}">${esc(id)}</span>`;
+  };
+
+  /* -------------------------------------------------------------------------
+     Views. Keys match the nav buttons' data-tab. Add the Dependencies view
+     (AJ-0036) here as well as in the nav.
+     ----------------------------------------------------------------------- */
+  const VIEWS = {
+    overview: { label: 'Overview', sub: 'Progress per milestone, in order, and per phase.', filters: false },
+    next: { label: 'Next up', sub: 'Tickets that can start now, in the order ajiya next gives: earliest milestone first, then what unblocks most.', filters: true },
+    board: { label: 'Board', sub: 'Every ticket by where it stands.', filters: true },
+    phases: { label: 'Phases', sub: 'Tickets by phase, in display order.', filters: true },
+    tickets: { label: 'Tickets', sub: 'Every ticket in the plan.', filters: true },
+    apps: { label: 'Apps', sub: 'Tickets per app.', filters: false },
+    checks: { label: 'Checks', sub: 'What ajiya check reports. Fix errors first.', filters: false },
+    activity: { label: 'Activity', sub: 'Commits from the last 30 days, newest first, with the status changes they made.', filters: false },
+  };
+  const renderers = {
+    overview: renderOverview, next: renderNext, board: renderBoard, phases: renderPhases,
+    tickets: renderTickets, apps: renderApps, checks: renderChecks, activity: renderActivity,
+  };
+
+  let tab = location.hash.slice(1) || store.get(key('tab'));
+  if (!VIEWS[tab]) tab = 'overview';
+  window.addEventListener('hashchange', () => {
+    const h = location.hash.slice(1);
+    if (VIEWS[h] && h !== tab) go(h);
+  });
+  function go(t) {
+    tab = t; store.set(key('tab'), t); ticketLimit = 150; activityLimit = 100;
+    shell.classList.remove('open');
+    render();
+    document.querySelector('main').scrollTop = 0;
+  }
+
+  /* -------------------------------------------------------------------------
+     Filters: text, app, phase, milestone and state. Kept in localStorage,
+     except the search text.
+     ----------------------------------------------------------------------- */
+  const F = { q: '', app: store.get(key('app')) || '', phase: store.get(key('phase')) || '', ms: store.get(key('ms')) || '', state: store.get(key('state')) || '' };
+  if (!apps.some(a => a.name === F.app)) F.app = '';
+  if (!phaseBySlug.has(F.phase)) F.phase = '';
+  if (F.ms !== '-' && !msIndex.has(F.ms)) F.ms = '';
+  const opt = (v, label, cur) => `<option value="${esc(v)}"${v === cur ? ' selected' : ''}>${esc(label)}</option>`;
+  const appNames = [...new Set([...apps.map(a => a.name), ...tickets.map(t => t.app)])].filter(Boolean);
+  $('appF').innerHTML = opt('', 'Any app', F.app) + appNames.map(a => opt(a, a, F.app)).join('');
+  $('phaseF').innerHTML = opt('', 'Any phase', F.phase) + phases.map(p => opt(p.slug, p.title || p.slug, F.phase)).join('');
+  $('msF').innerHTML = opt('', 'Any milestone', F.ms) + milestones.map(m => opt(m.name, m.name, F.ms)).join('') + opt('-', 'Not in a milestone', F.ms);
+  $('msF').hidden = !milestones.length;
+  $('appF').hidden = appNames.length < 2;
+  $('stateF').value = F.state;
+  if ($('stateF').value !== F.state) F.state = '';
+
+  const textOf = t => [t.id, t.title, t.done_when, t.phase, phaseTitle(t.phase), t.app, t.milestone, t.status.text, ...(t.status.aliases || [])].join(' ').toLowerCase();
+  const match = t => {
+    if (F.app && t.app !== F.app) return false;
+    if (F.phase && t.phase !== F.phase) return false;
+    if (F.ms === '-' ? t.milestone : F.ms && t.milestone !== F.ms) return false;
+    if (F.state) {
+      if (F.state === 'ready') { if (!t.ready) return false; }
+      else if (F.state === 'waiting') { if (column(t) !== 'waiting') return false; }
+      else if (F.state === 'human') { if (!human(t)) return false; }
+      else if (state(t) !== F.state) return false;
+    }
+    return !F.q || textOf(t).includes(F.q);
+  };
+  const setF = (k, v, stored) => { F[k] = v; if (stored) store.set(key(k), v); ticketLimit = 150; render(); };
+  $('q').oninput = e => setF('q', e.target.value.trim().toLowerCase());
+  $('appF').onchange = e => setF('app', e.target.value, true);
+  $('phaseF').onchange = e => setF('phase', e.target.value, true);
+  $('msF').onchange = e => setF('ms', e.target.value, true);
+  $('stateF').onchange = e => setF('state', e.target.value, true);
+  $('clearF').onclick = () => {
+    ['app', 'phase', 'ms', 'state'].forEach(k => { F[k] = ''; store.set(key(k), ''); });
+    F.q = ''; $('q').value = '';
+    ['appF', 'phaseF', 'msF', 'stateF'].forEach(id => { $(id).value = ''; });
+    render();
+  };
+
+  /* -------------------------------------------------------------------------
+     Sidebar: counts on the nav and phase links in display order.
+     ----------------------------------------------------------------------- */
+  const project$ = project.name || 'Ajiya';
+  $('brand').textContent = project$; $('mobileBrand').textContent = project$;
+  const errors = checks.filter(c => c.level === 'error').length;
+  function renderNav() {
+    const n = {
+      next: nextIDs.length, board: tickets.length, phases: phases.length, tickets: tickets.length,
+      apps: apps.length, checks: checks.length, activity: activity.length,
+    };
+    document.querySelectorAll('#nav [data-tab]').forEach(b => {
+      const k = b.dataset.tab;
+      b.setAttribute('aria-current', String(k === tab));
+      const s = b.querySelector('.n');
+      if (s) { s.textContent = n[k] ? n[k] : ''; s.classList.toggle('bad', k === 'checks' && errors > 0); }
+    });
+    $('phaseNav').innerHTML = phases.length ? `<div class="nav-label hide-c">Phases</div>` + phases.map(p =>
+      `<button class="phase-link hide-c" type="button" data-phase="${esc(p.slug)}" aria-current="${F.phase === p.slug}" title="${esc(p.goal)}">
+        <span class="t"><span>${esc(p.title || p.slug)}</span><span>${p.counts.done + p.counts.dropped}/${p.counts.total}</span></span>${barHTML(p.counts)}</button>`).join('') : '';
+    $('sideFoot').innerHTML = `Generated <b>${esc(D.generated)}</b><br>Refresh: <span class="mono">ajiya build</span>`;
+  }
+  $('nav').addEventListener('click', e => {
+    const t = e.target.closest('[data-tab]');
+    if (t) return go(t.dataset.tab);
+    const ph = e.target.closest('[data-phase]');
+    if (ph) {
+      F.phase = F.phase === ph.dataset.phase ? '' : ph.dataset.phase;
+      store.set(key('phase'), F.phase);
+      $('phaseF').value = F.phase;
+      go(VIEWS[tab].filters ? tab : 'phases');
+    }
+  });
+
+  /* -------------------------------------------------------------------------
+     Ticket card, used by Next up, Board and Phases.
+     ----------------------------------------------------------------------- */
+  function card(t, compact) {
+    const s = t.status;
+    const waiting = !closed(t) && arr(t.waiting_on).length ? `<div class="deps">Waiting on ${t.waiting_on.map(id => chip(id, true)).join('')}</div>` : '';
+    const notes = [];
+    if (!closed(t) && s.human) notes.push(`<div class="note human">Needs a human: ${esc(s.human)}</div>`);
+    if (!closed(t) && s.blocked) notes.push(`<div class="note blocked">Blocked: ${esc(s.blocked)}</div>`);
+    if (state(t) === 'in_progress' && s.note) notes.push(`<div class="note">${esc(s.note)}</div>`);
+    if (state(t) === 'dropped' && s.reason) notes.push(`<div class="note">${esc(s.reason)}</div>`);
+    const meta = [phaseTitle(t.phase), t.app].filter(Boolean).map(esc).join(' · ') + (!closed(t) && t.unblocks ? ` · unblocks ${t.unblocks}` : '');
+    return `<button class="card${compact ? ' compact' : ''}${t.ready && !compact ? ' ready' : ''}" type="button" data-open="${esc(t.id)}">
+      <div class="head"><span class="rid mono">${esc(t.id)}</span>${msBadge(t.milestone)}
+        ${compact && column(t) !== 'done' ? '' : `<span style="margin-left:auto">${stateBadge(t)}</span>`}</div>
+      <div class="name">${md(t.title)}</div>
+      <div class="meta">${meta}</div>
+      ${notes.join('')}${waiting}
+    </button>`;
+  }
+  const noMatch = '<div class="empty">Nothing matches the filters.</div>';
+
+  /* -------------------------------------------------------------------------
+     Overview: overall numbers, milestones in order, phases in display order.
+     ----------------------------------------------------------------------- */
+  function renderOverview() {
+    const all = countsOf(tickets);
+    const cols = { ready: 0, doing: 0, waiting: 0, human: 0 };
+    tickets.forEach(t => { const c = column(t); if (c in cols) cols[c]++; });
+    const warnings = checks.length - errors;
+    let h = `<section class="kpis">
+      <div class="card-box kpi"><div class="label">All tickets</div>
+        <div class="value">${pct(all)}%<small> closed</small></div>${barHTML(all)}
+        <div class="sub">${countText(all)} of ${all.total}</div></div>
+      <button type="button" class="card-box kpi" data-go="next"><div class="label">Can start now</div>
+        <div class="value">${nextIDs.length}<small> ${nextIDs.length === 1 ? 'ticket' : 'tickets'}</small></div>
+        <div class="sub">${cols.doing} in progress · ${cols.waiting} waiting on others</div></button>
+      <button type="button" class="card-box kpi" data-go="board"><div class="label">Needs a human</div>
+        <div class="value">${cols.human}<small> open</small></div>
+        <div class="sub">Tickets only a person can finish</div></button>
+      <button type="button" class="card-box kpi" data-go="checks"><div class="label">Checks</div>
+        <div class="value" style="color:${errors ? 'var(--c-red)' : checks.length ? 'var(--c-amber-text)' : 'var(--c-green)'}">${checks.length ? checks.length : 'OK'}${checks.length ? `<small> ${checks.length === 1 ? 'finding' : 'findings'}</small>` : ''}</div>
+        <div class="sub">${plural(errors, 'error')} · ${plural(warnings, 'warning')}</div></button>
+    </section>`;
+
+    h += `<h2 class="section">Milestones <span class="count">${milestones.length}</span></h2>`;
+    if (milestones.length) {
+      h += `<p class="section-note">In order. Each counts the tickets it needs, including what they depend on; closed means done or dropped.</p><div class="ms-grid">` +
+        milestones.map((m, i) => {
+          const c = m.required;
+          const closedN = c.done + c.dropped;
+          const sub = c.total ? `${closedN}/${c.total} closed · ${c.in_progress} in progress · ${m.ready} can start now` : 'Needs no tickets';
+          return `<div class="card-box ms-card">
+            <div class="top"><span class="order">${i + 1}</span><span class="nm">${esc(m.name)}</span><span class="pct"${m.percent >= 100 ? ' style="color:var(--c-green)"' : ''}>${m.percent}%</span></div>
+            ${barHTML(c)}<div class="sub">${sub}</div>
+            ${arr(m.targets).length ? `<div class="sub">Targets: ${m.targets.map(esc).join(', ')}</div>` : ''}</div>`;
+        }).join('') + '</div>';
+    } else {
+      h += `<p class="section-note">No milestones yet. Add one with <span class="mono">ajiya milestone add</span>.</p>`;
+    }
+
+    const top = nextIDs.map(id => byID.get(id)).filter(Boolean).slice(0, 6);
+    if (top.length) {
+      h += `<h2 class="section">Top of the queue</h2><p class="section-note">The first ${top.length} from Next up.</p><div class="grid">${top.map(t => card(t)).join('')}</div>`;
+    }
+
+    h += `<h2 class="section">Phases <span class="count">${phases.length}</span></h2><p class="section-note">In display order.</p>`;
+    h += phases.length ? `<div class="card-box" style="margin-top:12px">${phases.map(p =>
+      `<div class="row link" data-phase-go="${esc(p.slug)}">
+        <div><div style="font-weight:700">${esc(p.title || p.slug)} ${msBadge(p.milestone)}</div><div class="src">${esc(p.goal)}</div></div>
+        ${barHTML(p.counts)}
+        <div class="nums">${p.percent}% · ${countText(p.counts)}</div></div>`).join('')}</div>` : '<div class="empty">No phases yet.</div>';
+    view.innerHTML = h;
+  }
+
+  /* Next up: ready tickets in 'ajiya next' order, grouped by milestone. */
+  function renderNext() {
+    const list = nextIDs.map(id => byID.get(id)).filter(t => t && match(t));
+    const groups = [];
+    list.forEach(t => {
+      const g = t.milestone || '';
+      if (!groups.length || groups[groups.length - 1].ms !== g) groups.push({ ms: g, items: [] });
+      groups[groups.length - 1].items.push(t);
+    });
+    view.innerHTML = groups.map(g =>
+      `<h2 class="section">${g.ms ? `Milestone ${esc(g.ms)}` : milestones.length ? 'Not in a milestone' : 'Can start now'} <span class="count">${g.items.length}</span></h2>
+       <div class="grid">${g.items.map(t => card(t)).join('')}</div>`).join('')
+      || (nextIDs.length ? noMatch : '<div class="empty">Nothing can start now: every open ticket is waiting on another or blocked.</div>');
+  }
+
+  /* Board: five columns, optionally grouped by phase. */
+  let lanes = store.get(key('lanes')) === '1';
+  function renderBoard() {
+    const cols = [
+      ['ready', 'Can start now', 'Open, nothing in the way', 'ready'],
+      ['doing', 'In progress', 'Started', 'in_progress'],
+      ['waiting', 'Waiting', 'Open dependencies or blocked', 'pending'],
+      ['human', 'Needs a human', 'Only a person can finish these', 'human'],
+      ['done', 'Done', 'Done or dropped', 'done'],
+    ];
+    const list = tickets.filter(match);
+    const colHTML = ([k, label, sub, dot]) => {
+      const items = list.filter(t => column(t) === k).sort(k === 'ready' ? byNext : byPlan);
+      let body;
+      if (!items.length) body = '<div class="col-empty">None</div>';
+      else if (lanes) body = phases.map(p => {
+        const inPh = items.filter(t => t.phase === p.slug);
+        return inPh.length ? `<div class="lane">${esc(p.title || p.slug)}</div>${inPh.map(t => card(t, true)).join('')}` : '';
+      }).join('') + items.filter(t => !phaseBySlug.has(t.phase)).map(t => card(t, true)).join('');
+      else body = items.map(t => card(t, true)).join('');
+      return `<div class="col"><div class="col-head"><i class="dot ${dot}"></i><h3>${label}</h3><span class="count">${items.length}</span></div>
+        <div class="col-sub">${sub}</div>${body}</div>`;
+    };
+    view.innerHTML = `<div class="board-tools">
+        <button type="button" class="pill-toggle" id="laneBtn" aria-pressed="${lanes}">Group by phase</button>
+        <span>${plural(list.length, 'ticket')}</span></div>
+      <div class="board">${cols.map(colHTML).join('')}</div>`;
+    $('laneBtn').onclick = () => { lanes = !lanes; store.set(key('lanes'), lanes ? '1' : '0'); renderBoard(); };
+  }
+
+  /* Phases: each phase in display order with its tickets. */
+  function renderPhases() {
+    const h = phases.map(p => {
+      const list = tickets.filter(t => t.phase === p.slug && match(t)).sort(byPlan);
+      if (!list.length && (F.q || F.app || F.ms || F.state || (F.phase && F.phase !== p.slug))) return '';
+      return `<section class="phase"><div class="phase-head"><h3>${esc(p.title || p.slug)} <span class="mono" style="color:var(--c-faint);font-weight:500">${esc(p.slug)}</span> ${msBadge(p.milestone)}</h3>
+        <div class="stats"><span>${p.percent}% · ${countText(p.counts)}</span>${barHTML(p.counts)}</div></div>
+        ${p.goal ? `<p class="phase-goal">${md(p.goal)}</p>` : ''}
+        ${list.length ? `<div class="grid">${list.map(t => card(t)).join('')}</div>` : '<div class="empty" style="margin-top:12px">No tickets yet.</div>'}</section>`;
+    }).join('');
+    view.innerHTML = h || (phases.length ? noMatch : '<div class="empty">No phases yet. Add one with <span class="mono">ajiya phase add</span>.</div>');
+  }
+
+  /* Tickets: a table, 150 rows at a time. */
+  let ticketLimit = 150;
+  function renderTickets() {
+    const list = tickets.filter(match).sort(byPlan);
+    const rows = list.slice(0, ticketLimit).map(t => {
+      const s = t.status;
+      const note = closed(t) ? '' : [s.human && `Needs a human: ${s.human}`, s.blocked && `Blocked: ${s.blocked}`, s.note].filter(Boolean).map(esc).join(' · ');
+      return `<tr class="click" data-open="${esc(t.id)}">
+        <td class="mono" style="white-space:nowrap;font-weight:700">${esc(t.id)}</td>
+        <td>${md(t.title)}<div class="sub">${esc(phaseTitle(t.phase))} · ${esc(t.app)}</div></td>
+        <td>${stateBadge(t)}${t.ready ? ' <span class="badge ready">Ready</span>' : ''}</td>
+        <td>${msBadge(t.milestone)}</td>
+        <td>${arr(t.depends).map(id => chip(id, true)).join(' ')}</td>
+        <td class="note">${note}</td></tr>`;
+    }).join('');
+    view.innerHTML = `<div class="board-tools"><span>${plural(list.length, 'ticket')}</span></div>
+      ${list.length ? `<div class="table-wrap"><table><thead><tr><th>ID</th><th>Ticket</th><th>State</th><th>Milestone</th><th>Depends on</th><th class="note">Note</th></tr></thead><tbody>${rows}</tbody></table></div>` : noMatch}
+      ${list.length > ticketLimit ? `<button class="more" id="more" type="button">Show ${Math.min(150, list.length - ticketLimit)} more</button>` : ''}`;
+    const more = $('more');
+    if (more) more.onclick = () => { ticketLimit += 150; renderTickets(); };
+  }
+
+  /* Apps: progress per app. Click to see its tickets. */
+  function renderApps() {
+    view.innerHTML = apps.length ? `<div class="card-box">${apps.map(a => `<div class="row link" data-app-go="${esc(a.name)}">
+      <div><div style="font-weight:700">${esc(a.name)} ${a.kind ? `<span class="badge plain">${esc(a.kind)}</span>` : ''}</div><div class="src mono">${esc(a.path || '')}</div></div>
+      ${barHTML(a.counts)}
+      <div class="nums">${countText(a.counts)} · <b style="color:var(--c-text)">${a.counts.total}</b></div>
+    </div>`).join('')}</div>` : '<div class="empty">No apps yet. Add one with <span class="mono">ajiya app add</span>.</div>';
+  }
+
+  /* Checks: findings as ajiya check prints them, errors first. */
+  function renderChecks() {
+    if (!checks.length) {
+      view.innerHTML = '<div class="empty">All checks pass.</div>';
+      return;
+    }
+    view.innerHTML = `<div class="board-tools"><span>${plural(errors, 'error')} · ${plural(checks.length - errors, 'warning')} · run <span class="mono">ajiya check</span> for the live list</span></div>
+      <div class="table-wrap"><table><thead><tr><th>Level</th><th>Code</th><th>Where</th><th>Problem</th><th class="note">Fix</th></tr></thead><tbody>
+      ${checks.map(c => `<tr>
+        <td><span class="badge ${c.level === 'error' ? 'error' : 'warning'}">${esc(c.level)}</span></td>
+        <td class="mono" style="white-space:nowrap">${esc(c.code)}</td>
+        <td class="mono" style="white-space:nowrap">${esc(c.location)}</td>
+        <td>${linkIDs(c.message)}</td>
+        <td class="note">${linkIDs(c.fix)}</td></tr>`).join('')}
+      </tbody></table></div>`;
+  }
+  // Escaped text with known ticket IDs turned into chips.
+  function linkIDs(s) {
+    return esc(s).replace(/\b[A-Z][A-Z0-9]*-\d+\b/g, id => byID.has(id) ? chip(id) : id);
+  }
+
+  /* Activity: commits newest first, grouped by day. */
+  let activityLimit = 100;
+  const change = c => `<div><i class="dot ${esc(c.to)}"></i>${chip(c.id)}<span>${c.from ? `${esc(stateLabel[c.from] || c.from)} → ` : 'New · '}${esc(stateLabel[c.to] || c.to)}</span>${
+    c.text && c.to !== 'pending' ? `<span style="color:var(--c-muted)">${esc(c.text)}</span>` : ''}</div>`;
+  function commitHTML(e) {
+    const badges = [e.merge && '<span class="badge plain">merge</span>', e.revert && '<span class="badge plain">revert</span>',
+      e.chore && '<span class="badge plain">chore</span>', e.agent && `<span class="badge agent" title="Co-authored by an agent">${esc(e.agent)}</span>`].filter(Boolean).join('');
+    return `<div class="commit${e.chore || e.merge ? ' dim' : ''}">
+      <span class="mono h" title="${esc(e.hash)}">${esc(e.short)}</span>
+      <div class="s"><span>${esc(e.subject)}</span>${badges}</div>
+      <div class="m"><span>${esc(e.author)}</span>${arr(e.refs).length ? `<span>·</span>${e.refs.map(id => chip(id)).join('')}` : ''}</div>
+      ${arr(e.changes).length ? `<div class="ch">${e.changes.map(change).join('')}</div>` : ''}</div>`;
+  }
+  function renderActivity() {
+    if (!activity.length) {
+      view.innerHTML = '<div class="empty">No commits in the last 30 days, or this is not a git repository.</div>';
+      return;
+    }
+    const list = activity.slice(0, activityLimit);
+    let h = '', day = null;
+    list.forEach(e => {
+      if (e.date !== day) { h += (day === null ? '' : '</div>') + `<div class="day">${esc(e.date)}</div><div class="card-box">`; day = e.date; }
+      h += commitHTML(e);
+    });
+    h += '</div>';
+    if (activity.length > activityLimit) h += `<button class="more" id="more" type="button">Show ${Math.min(100, activity.length - activityLimit)} more</button>`;
+    view.innerHTML = h;
+    const more = $('more');
+    if (more) more.onclick = () => { activityLimit += 100; renderActivity(); };
+  }
+
+  /* -------------------------------------------------------------------------
+     Render the current view.
+     ----------------------------------------------------------------------- */
+  function render() {
+    renderNav();
+    const v = VIEWS[tab];
+    $('title').textContent = v.label;
+    $('subtitle').textContent = v.sub;
+    document.title = `${v.label} · ${project$}`;
+    if (location.hash.slice(1) !== tab) { try { history.replaceState(null, '', '#' + tab); } catch (e) { location.hash = tab; } }
+    $('filters').style.display = v.filters ? '' : 'none';
+    $('clearF').hidden = !(F.q || F.app || F.phase || F.ms || F.state);
+    renderers[tab]();
+  }
+
+  /* -------------------------------------------------------------------------
+     Ticket detail dialog.
+     ----------------------------------------------------------------------- */
+  const dlg = $('dlg');
+  function openTicket(id) {
+    const t = byID.get(id);
+    if (!t) return;
+    const s = t.status;
+    const colName = { ready: 'Can start now', doing: '', waiting: 'Waiting', human: 'Needs a human', done: '' }[column(t)];
+    $('dlgBadges').innerHTML = `<span class="mono" style="font-weight:700">${esc(t.id)}</span>${stateBadge(t)}${msBadge(t.milestone)}${
+      colName ? `<span class="badge ${column(t) === 'ready' ? 'ready' : column(t) === 'human' ? 'human' : 'plain'}">${colName}</span>` : ''}`;
+    $('dlgTitle').innerHTML = md(t.title);
+    $('dlgMeta').innerHTML = `<span>${esc(phaseTitle(t.phase))} <span class="mono">(${esc(t.phase)})</span> · ${esc(t.app)}</span>`;
+
+    const rows = [];
+    const add = (k, v, text) => { if (v) rows.push(`<div class="k">${k}</div><div class="v${text ? ' text' : ''}">${v}</div>`); };
+    add('Done when', md(t.done_when), true);
+    add('Status', esc(s.text), true);
+    if (s.note) add('Note', esc(s.note), true);
+    if (s.human) add('Needs a human', esc(s.human), true);
+    if (s.blocked) add('Blocked', esc(s.blocked), true);
+    if (s.reason) add('Dropped because', esc(s.reason), true);
+    // Evidence for done tickets.
+    const ev = [];
+    if (s.commit) ev.push(`<span class="mono">${esc(s.commit)}</span>`);
+    if (s.issue) ev.push(isWeb(s.link) ? `<a href="${esc(s.link)}" target="_blank" rel="noopener noreferrer">issue #${esc(s.issue)}</a>` : `issue #${esc(s.issue)}`);
+    if (s.by) ev.push(`by ${esc(s.by)}`);
+    if (s.done_before_ajiya) ev.push('done before Ajiya');
+    if (s.date) ev.push(esc(s.date));
+    if (s.tests_passed) ev.push('<span class="badge done">tests passed</span>');
+    add('Evidence', ev.join(' <span style="color:var(--c-faint)">·</span> '));
+    if (s.link) add('Link', isWeb(s.link) ? `<a href="${esc(s.link)}" target="_blank" rel="noopener noreferrer">${esc(s.link)}</a>` : esc(s.link), true);
+    if (arr(s.aliases).length) add('Was', s.aliases.map(a => `<span class="mono">${esc(a)}</span>`).join(', '));
+    add('Depends on', arr(t.depends).map(d => chip(d, true)).join(''));
+    if (!closed(t) && arr(t.waiting_on).length) add('Waiting on', t.waiting_on.map(d => chip(d, true)).join(''));
+    add('Needed by', arr(t.dependants).map(d => chip(d, true)).join(''));
+    if (!closed(t) && t.unblocks) add('Unblocks', `${plural(t.unblocks, 'open ticket')}, directly or not`);
+    const commits = activity.filter(e => arr(e.refs).includes(t.id) || arr(e.changes).some(c => c.id === t.id));
+    if (commits.length) add('Commits', commits.map(e => `<span class="mono" title="${esc(e.date)}">${esc(e.short)}</span> ${esc(e.subject)}`).join('<br>'), true);
+    $('dlgBody').innerHTML = `<div class="kv">${rows.join('')}</div>`;
+    if (!dlg.open) { if (dlg.showModal) dlg.showModal(); else dlg.setAttribute('open', ''); }
+    dlg.scrollTop = 0;
+  }
+  const closeDlg = () => { if (dlg.close) dlg.close(); else dlg.removeAttribute('open'); };
+  $('dlgClose').onclick = closeDlg;
+  dlg.addEventListener('click', e => {
+    if (e.target === dlg) return closeDlg();
+    const c = e.target.closest('[data-open]');
+    if (c) openTicket(c.dataset.open);
+  });
+
+  /* Clicks in the main view: ticket chips and cards, KPI shortcuts, phase and app rows. */
+  view.addEventListener('click', e => {
+    const op = e.target.closest('[data-open]');
+    if (op) { e.stopPropagation(); return openTicket(op.dataset.open); }
+    const g = e.target.closest('[data-go]');
+    if (g) return go(g.dataset.go);
+    const ph = e.target.closest('[data-phase-go]');
+    if (ph) { F.phase = ph.dataset.phaseGo; store.set(key('phase'), F.phase); $('phaseF').value = F.phase; return go('phases'); }
+    const ap = e.target.closest('[data-app-go]');
+    if (ap) { F.app = ap.dataset.appGo; store.set(key('app'), F.app); $('appF').value = F.app; return go('tickets'); }
+  });
+
+  // Keyboard: Enter or Space on a chip opens its ticket, like a button.
+  document.addEventListener('keydown', e => {
+    if ((e.key === 'Enter' || e.key === ' ') && e.target.matches && e.target.matches('span[data-open]')) { e.preventDefault(); e.target.click(); }
+  });
+
+  render();
+})();
 </script>
 </body>
 </html>

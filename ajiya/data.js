@@ -42,12 +42,12 @@ window.AJIYA = {
       "goal": "PROGRESS.md, data.js, the dashboard and serve show the plan and its activity",
       "counts": {
         "total": 7,
-        "done": 3,
-        "in_progress": 2,
+        "done": 5,
+        "in_progress": 0,
         "pending": 2,
         "dropped": 0
       },
-      "percent": 42,
+      "percent": 71,
       "milestone": ""
     },
     {
@@ -127,8 +127,8 @@ window.AJIYA = {
       "path": ".",
       "counts": {
         "total": 59,
-        "done": 28,
-        "in_progress": 2,
+        "done": 30,
+        "in_progress": 0,
         "pending": 29,
         "dropped": 0
       }
@@ -562,19 +562,21 @@ window.AJIYA = {
         "AJ-0038"
       ],
       "status": {
-        "state": "in_progress",
-        "text": "🟨 In progress: in a parallel worktree",
-        "note": "in a parallel worktree"
+        "state": "done",
+        "text": "🟩 Done · 994ad17 · 2026-09-29 · tests passed",
+        "commit": "994ad17",
+        "date": "2026-09-29",
+        "tests_passed": true
       },
       "milestone": "",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0020",
         "AJ-0036",
         "AJ-0057"
       ],
-      "unblocks": 30
+      "unblocks": 0
     },
     {
       "id": "AJ-0020",
@@ -586,19 +588,19 @@ window.AJIYA = {
         "AJ-0019"
       ],
       "status": {
-        "state": "in_progress",
-        "text": "🟨 In progress: in a parallel worktree",
-        "note": "in a parallel worktree"
+        "state": "done",
+        "text": "🟩 Done · 28b8618 · 2026-09-29 · tests passed",
+        "commit": "28b8618",
+        "date": "2026-09-29",
+        "tests_passed": true
       },
       "milestone": "",
       "ready": false,
-      "waiting_on": [
-        "AJ-0019"
-      ],
+      "waiting_on": [],
       "dependants": [
         "AJ-0021"
       ],
-      "unblocks": 28
+      "unblocks": 0
     },
     {
       "id": "AJ-0021",
@@ -615,10 +617,8 @@ window.AJIYA = {
         "text": "🟥 Pending"
       },
       "milestone": "",
-      "ready": false,
-      "waiting_on": [
-        "AJ-0020"
-      ],
+      "ready": true,
+      "waiting_on": [],
       "dependants": [
         "AJ-0022",
         "AJ-0023"
@@ -973,10 +973,8 @@ window.AJIYA = {
         "text": "🟥 Pending"
       },
       "milestone": "",
-      "ready": false,
-      "waiting_on": [
-        "AJ-0019"
-      ],
+      "ready": true,
+      "waiting_on": [],
       "dependants": [],
       "unblocks": 0
     },
@@ -1514,7 +1512,6 @@ window.AJIYA = {
       "milestone": "",
       "ready": false,
       "waiting_on": [
-        "AJ-0019",
         "AJ-0055"
       ],
       "dependants": [],
@@ -1585,10 +1582,95 @@ window.AJIYA = {
     }
   ],
   "next": [
-    "AJ-0019"
+    "AJ-0021",
+    "AJ-0036"
   ],
   "checks": [],
   "activity": [
+    {
+      "hash": "d7460c014521727273a1116bdeefc70c40581f10",
+      "short": "d7460c0",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Merge branch 'worktree-agent-acd57cf3aab521d30'",
+      "refs": [],
+      "chore": false,
+      "merge": true,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790690389
+    },
+    {
+      "hash": "994ad178f88893af8326629994fda168f9b4e3a3",
+      "short": "994ad17",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Dashboard: overview by milestone, next up, board, phases, tickets, apps, checks and activity",
+      "refs": [
+        "AJ-0019"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790690340
+    },
+    {
+      "hash": "b7778308492f2ffe099418b70aee10fd689e7d6e",
+      "short": "b777830",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Merge branch 'worktree-agent-a236161fb3f4ab13d'",
+      "refs": [],
+      "chore": false,
+      "merge": true,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790690327
+    },
+    {
+      "hash": "28b8618e51bd805c183763b88d54a82c0bfa877f",
+      "short": "28b8618",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Add ajiya serve: dashboard on 127.0.0.1 with Host check and rebuild on change",
+      "refs": [
+        "AJ-0020"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790689552
+    },
+    {
+      "hash": "9d3407229e86fe3001c36741af1fc86f6d514091",
+      "short": "9d34072",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "AJ-0059 done",
+      "refs": [
+        "AJ-0059"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0059",
+          "phase": "apps-launch",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · 57776dc · 2026-09-29 · tests passed"
+        }
+      ],
+      "time": 1790670902
+    },
     {
       "hash": "57776dcc4dd367fcca69ecf281808a2b6955830f",
       "short": "57776dc",

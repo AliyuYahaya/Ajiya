@@ -13,7 +13,7 @@ No milestones. Set one with `ajiya launch set <phase|ticket>`.
 |---|---|---|---|---|---|---|
 | Commit-rule | 7 | 0 | 0 | 7 | 100% | - |
 | Apps-launch | 14 | 0 | 0 | 14 | 100% | - |
-| Outputs | 3 | 2 | 2 | 7 | 42% | - |
+| Outputs | 5 | 0 | 2 | 7 | 71% | - |
 | Onboarding | 3 | 0 | 6 | 9 | 33% | - |
 | Release | 1 | 0 | 4 | 5 | 20% | - |
 | Agent-access | 0 | 0 | 3 | 3 | 0% | - |
@@ -22,12 +22,11 @@ No milestones. Set one with `ajiya launch set <phase|ticket>`.
 
 ## Can start now
 
-- **AJ-0019** Dashboard (ajiya) · in progress
+- **AJ-0021** Milestones v0-1, v0-2 and v0-3 set and the dashboard in use on this repo (ajiya)
+- **AJ-0036** Dependencies view in the dashboard (ajiya)
 
 ## Waiting
 
-- **AJ-0020** ajiya serve (ajiya) waits on AJ-0019
-- **AJ-0021** Milestones v0-1, v0-2 and v0-3 set and the dashboard in use on this repo (ajiya) waits on AJ-0020
 - **AJ-0022** Setup guide (ajiya) waits on AJ-0021
 - **AJ-0023** Daily guide (ajiya) waits on AJ-0021
 - **AJ-0024** Skill and agent instruction blocks (ajiya) waits on AJ-0022, AJ-0023
@@ -37,7 +36,6 @@ No milestones. Set one with `ajiya launch set <phase|ticket>`.
 - **AJ-0031** Homebrew cask config (ajiya) waits on AJ-0030
 - **AJ-0033** README walkthroughs (ajiya) waits on AJ-0029
 - **AJ-0034** v0.1 definition of done (ajiya) waits on AJ-0030, AJ-0031, AJ-0033, AJ-0041
-- **AJ-0036** Dependencies view in the dashboard (ajiya) waits on AJ-0019
 - **AJ-0041** import legacy maps each RO package to a phase (ajiya) waits on AJ-0022
 - **AJ-0042** ajiya status (ajiya) waits on AJ-0034
 - **AJ-0043** ajiya mcp server (ajiya) waits on AJ-0042
@@ -54,7 +52,7 @@ No milestones. Set one with `ajiya launch set <phase|ticket>`.
 - **AJ-0054** change assess (ajiya) waits on AJ-0053
 - **AJ-0055** change approve and change reject (ajiya) waits on AJ-0054
 - **AJ-0056** Guides and skill for decisions and changes (ajiya) waits on AJ-0055
-- **AJ-0057** Dashboard: open changes and decisions (ajiya) waits on AJ-0019, AJ-0055
+- **AJ-0057** Dashboard: open changes and decisions (ajiya) waits on AJ-0055
 - **AJ-0058** v0.3 definition of done (ajiya) waits on AJ-0048, AJ-0049, AJ-0050, AJ-0051, AJ-0052, AJ-0053, AJ-0054, AJ-0055, AJ-0056
 
 ## Needs a human
@@ -65,6 +63,12 @@ No milestones. Set one with `ajiya launch set <phase|ticket>`.
 
 ## Recent activity
 
+- 2026-09-29 `d7460c0` Merge branch 'worktree-agent-acd57cf3aab521d30' (-)
+- 2026-09-29 `994ad17` Dashboard: overview by milestone, next up, board, phases, tickets, apps, checks and activity (AJ-0019)
+- 2026-09-29 `b777830` Merge branch 'worktree-agent-a236161fb3f4ab13d' (-)
+- 2026-09-29 `28b8618` Add ajiya serve: dashboard on 127.0.0.1 with Host check and rebuild on change (AJ-0020)
+- 2026-09-29 `9d34072` AJ-0059 done (AJ-0059)
+  - AJ-0059: in_progress → done
 - 2026-09-29 `57776dc` phase rename updates milestone targets (AJ-0059)
 - 2026-09-29 `4ddeb1f` Start AJ-0019, AJ-0020 and AJ-0059 (AJ-0019, AJ-0020, AJ-0059)
   - AJ-0019: pending → in_progress
@@ -82,14 +86,7 @@ No milestones. Set one with `ajiya launch set <phase|ticket>`.
 - 2026-09-29 `999e8f1` Phase display order (AJ-0040)
 - 2026-09-29 `4cdb518` AJ-0038 done (AJ-0038)
   - AJ-0038: in_progress → done
-- 2026-09-29 `04df5bf` Merge branch 'worktree-agent-a2ad244a3eb91f538' (-)
-- 2026-09-29 `899acd5` ajiya build: PROGRESS.md and data.js (AJ-0018)
-  - AJ-0018: pending → in_progress
-- 2026-09-29 `37cbb47` Edit [[milestones]] tables in ajiya.toml, keeping comments (AJ-0038)
-- 2026-09-29 `a36d139` Milestone commands and next by milestone (AJ-0038)
-- 2026-09-29 `9afaf59` AJ-0039 done (AJ-0039)
-  - AJ-0039: in_progress → done
-- and 70 more in data.js
+- and 75 more in data.js
 
 ## Checks
 
