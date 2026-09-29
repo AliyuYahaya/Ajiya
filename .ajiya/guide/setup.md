@@ -38,8 +38,8 @@ between `<!-- ajiya:start -->` and `<!-- ajiya:end -->` in `AGENTS.md` and
 brings those up to date: it keeps `ajiya.toml` and the plan as they are, and
 never touches text outside the markers. Then:
 
-- Register any app that `init` missed: `ajiya app add <name> --path <dir>`
-  (add `--library` for a shared package).
+- Register any app that `init` missed: create its folder first, then
+  `ajiya app add <name> --path <dir>` (add `--library` for a shared package).
 - Use the app `infra` for work outside app folders: hosting, CI, DNS.
 - Run `ajiya hook install`. The hooks check every commit message for the
   `Ajiya:` trailer and pre-fill it from the tickets in progress.
@@ -180,19 +180,23 @@ Imports never reword items, and you should not either.
 
 After an import:
 
-1. Read the import report. It lists duplicates, loops it left out, and old IDs.
-   To see the imported tickets, run `ajiya ticket list --phase inbox` (add `--json`
-   to read them in a script); do not read the files in `ajiya/`.
+1. Read what it printed. Imports print a "Using app X."
+   line and an "Imported N item(s) into inbox ..." line; they do not list
+   duplicates, so review the tickets yourself: `ajiya ticket list --phase inbox`
+   (add `--json` to read them in a script). Do not read the files in `ajiya/`.
+   `import legacy` also prints a report with left-out loops and old IDs.
 2. Create the feature phases (section 3) and move each ticket out of `inbox`:
    `ajiya ticket edit <ID> --phase <slug>`. Set the right app with `--app`.
-3. Add the dependencies the source did not have:
+3. Imported tickets have no "done when" (it shows as `-`). Give each one a check
+   someone can run or see: `ajiya ticket edit <ID> --done-when "<check>"`.
+4. Add the dependencies the source did not have:
    `ajiya ticket edit <ID> --depends <IDs>`. This replaces the list, so include the
    ones already there (`ajiya ticket show <ID>` lists them).
-4. Add tickets for gaps, including the forgotten work in section 4.
-5. Duplicates and items that are no longer needed: list them for the user. Only a
+5. Add tickets for gaps, including the forgotten work in section 4.
+6. Duplicates and items that are no longer needed: list them for the user. Only a
    person decides to drop a ticket (`ajiya ticket drop <ID> --reason "..." --by "<name>"`).
-6. When `inbox` is empty, remove it: `ajiya phase remove inbox`.
-7. Set milestones (section 5), check (section 6), and hand over (section 7).
+7. When `inbox` is empty, remove it: `ajiya phase remove inbox`.
+8. Set milestones (section 5), check (section 6), and hand over (section 7).
 
 Old IDs stay as aliases, so `ajiya ticket show MI3-185` still finds the ticket.
 

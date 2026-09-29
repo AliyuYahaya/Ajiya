@@ -18,7 +18,8 @@ ajiya next
 
 It lists the tickets that can start now: open, not blocked, every dependency
 done. The earliest milestone comes first, then what unblocks the most work. Take
-the first one unless the user asked for something else.
+the first one unless the user asked for something else. Skip tickets marked
+`Needs a human` unless the user asks for them: tell the user about them instead.
 
 If the user asks for work that is not in the plan, find the ticket
 (`ajiya ticket show <ID>` also finds old IDs) or add one first (step 6).
@@ -70,6 +71,10 @@ work itself with the trailer before you close the ticket. `--test` runs the
 project's test command and refuses if it fails. Never mark a ticket done any
 other way, and never before its "done when" is met.
 
+`done` changes files in `ajiya/` (the phase files, `PROGRESS.md`, `data.js` and
+`index.html`). Commit them with the same ticket's trailer (`Ajiya: <ID>`) so the
+tree is clean.
+
 If `done --test` says there is no `[test]` command, the project has not set one
 yet. Set it in `ajiya.toml` as `setup.md` section 2 describes (ask the user if you
 cannot tell the command), then run `done --test` again. Leave out `--test` only
@@ -114,7 +119,12 @@ ajiya ticket done <ID> --by "<name>" --note "<what was done>"
 `ajiya ticket drop <ID> --reason "<why>" --by "<name>"`.
 
 **Created a new app folder?** Register it in the same task:
-`ajiya app add <name> --path <dir>` (`--library` for a shared package).
+`ajiya app add <name> --path <dir>` (`--library` for a shared package). Create the
+folder first: `app add` only warns when the path is not a folder yet. For work outside app
+folders (hosting, CI, DNS) use the app `infra` instead.
+
+**Ticket has no "done when"?** Imported tickets show `-`. Set one before you start:
+`ajiya ticket edit <ID> --done-when "<check>"`.
 
 **Plan wrong?** Fix it with commands: `ajiya ticket edit <ID>` changes the title,
 "done when", dependencies, app or phase. `--depends` replaces the whole list, so
