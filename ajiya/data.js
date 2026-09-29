@@ -1879,7 +1879,7 @@ window.AJIYA = {
       "phase": "install",
       "app": "ajiya",
       "title": "npm account and package names",
-      "done_when": "npm account with 2FA; the name ajiya claimed; platform package names chosen (scoped @ajiya/* or unscoped ajiya-\u003cos\u003e-\u003carch\u003e) and written in the ticket note",
+      "done_when": "npm account haidardotdev has 2FA on; an npm org ajiya exists (free, public packages) for the @ajiya/* platform packages; the name ajiya is claimed",
       "depends": [
         "AJ-0034"
       ],
@@ -2040,7 +2040,7 @@ window.AJIYA = {
       "phase": "install",
       "app": "ajiya",
       "title": "npm packages: a wrapper and one package per platform",
-      "done_when": "A script verifies every release archive against checksums.txt, then writes six platform packages (os and cpu set, binary mode 755) and the ajiya wrapper with exact optionalDependencies, all versioned from the tag; npm pack --dry-run succeeds for all seven; a bad checksum fails it",
+      "done_when": "A script verifies every release archive against checksums.txt, then writes six platform packages @ajiya/darwin-arm64, @ajiya/darwin-x64, @ajiya/linux-arm64, @ajiya/linux-x64, @ajiya/win32-arm64 and @ajiya/win32-x64 (os and cpu set, binary mode 755) and the ajiya wrapper with exact optionalDependencies on them, all versioned from the tag; npm pack --dry-run succeeds for all seven; a bad checksum fails it",
       "depends": [
         "AJ-0030",
         "AJ-0067",
