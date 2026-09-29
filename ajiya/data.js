@@ -28,14 +28,14 @@ window.AJIYA = {
         "AJ-0047"
       ],
       "required": {
-        "total": 61,
+        "total": 68,
         "done": 38,
         "in_progress": 0,
-        "pending": 23,
+        "pending": 30,
         "dropped": 0
       },
-      "percent": 62,
-      "ready": 6
+      "percent": 55,
+      "ready": 12
     },
     {
       "name": "v0-3",
@@ -43,14 +43,14 @@ window.AJIYA = {
         "AJ-0058"
       ],
       "required": {
-        "total": 71,
+        "total": 78,
         "done": 38,
         "in_progress": 0,
-        "pending": 33,
+        "pending": 40,
         "dropped": 0
       },
-      "percent": 53,
-      "ready": 6
+      "percent": 48,
+      "ready": 12
     },
     {
       "name": "after-v0-3",
@@ -58,14 +58,14 @@ window.AJIYA = {
         "AJ-0057"
       ],
       "required": {
-        "total": 70,
+        "total": 77,
         "done": 38,
         "in_progress": 0,
-        "pending": 32,
+        "pending": 39,
         "dropped": 0
       },
-      "percent": 54,
-      "ready": 6
+      "percent": 49,
+      "ready": 12
     }
   ],
   "phases": [
@@ -116,13 +116,13 @@ window.AJIYA = {
       "title": "Onboarding",
       "goal": "A new or existing project can be set up by an agent using only the installed kit and importers",
       "counts": {
-        "total": 10,
+        "total": 17,
         "done": 10,
         "in_progress": 0,
-        "pending": 0,
+        "pending": 7,
         "dropped": 0
       },
-      "percent": 100,
+      "percent": 58,
       "milestone": "v0-1"
     },
     {
@@ -187,10 +187,10 @@ window.AJIYA = {
       "name": "ajiya",
       "path": ".",
       "counts": {
-        "total": 84,
+        "total": 91,
         "done": 50,
         "in_progress": 0,
-        "pending": 34,
+        "pending": 41,
         "dropped": 0
       }
     }
@@ -1027,7 +1027,13 @@ window.AJIYA = {
         "AJ-0069",
         "AJ-0070",
         "AJ-0071",
-        "AJ-0072"
+        "AJ-0072",
+        "AJ-0085",
+        "AJ-0086",
+        "AJ-0087",
+        "AJ-0088",
+        "AJ-0089",
+        "AJ-0090"
       ],
       "unblocks": 0
     },
@@ -1351,7 +1357,14 @@ window.AJIYA = {
         "AJ-0044",
         "AJ-0045",
         "AJ-0046",
-        "AJ-0082"
+        "AJ-0082",
+        "AJ-0085",
+        "AJ-0086",
+        "AJ-0087",
+        "AJ-0088",
+        "AJ-0089",
+        "AJ-0090",
+        "AJ-0091"
       ],
       "status": {
         "state": "pending",
@@ -1366,7 +1379,14 @@ window.AJIYA = {
         "AJ-0044",
         "AJ-0045",
         "AJ-0046",
-        "AJ-0082"
+        "AJ-0082",
+        "AJ-0085",
+        "AJ-0086",
+        "AJ-0087",
+        "AJ-0088",
+        "AJ-0089",
+        "AJ-0090",
+        "AJ-0091"
       ],
       "dependants": [
         "AJ-0048"
@@ -2299,6 +2319,162 @@ window.AJIYA = {
         "AJ-0081"
       ],
       "unblocks": 14
+    },
+    {
+      "id": "AJ-0085",
+      "phase": "onboarding",
+      "app": "ajiya",
+      "title": "Imports use the project's app",
+      "done_when": "import github and import todo default --app to the only registered app when there is exactly one (infra otherwise) and say which app they used; tests cover one app, several apps and none",
+      "depends": [
+        "AJ-0034"
+      ],
+      "status": {
+        "state": "pending",
+        "text": "🟥 Pending"
+      },
+      "milestone": "v0-2",
+      "ready": true,
+      "waiting_on": [],
+      "dependants": [
+        "AJ-0047",
+        "AJ-0091"
+      ],
+      "unblocks": 13
+    },
+    {
+      "id": "AJ-0086",
+      "phase": "onboarding",
+      "app": "ajiya",
+      "title": "ajiya phase remove for an empty phase",
+      "done_when": "ajiya phase remove \u003cslug\u003e deletes an empty phase file and its [phases] order entry; refused while the phase holds tickets or a milestone targets it; the guides mention it",
+      "depends": [
+        "AJ-0034"
+      ],
+      "status": {
+        "state": "pending",
+        "text": "🟥 Pending"
+      },
+      "milestone": "v0-2",
+      "ready": true,
+      "waiting_on": [],
+      "dependants": [
+        "AJ-0047",
+        "AJ-0091"
+      ],
+      "unblocks": 13
+    },
+    {
+      "id": "AJ-0087",
+      "phase": "onboarding",
+      "app": "ajiya",
+      "title": "Group help: ajiya ticket --help and ajiya phase --help",
+      "done_when": "ajiya \u003cgroup\u003e --help lists the group's subcommands with their summaries for every command group; each command's usage marks required flags apart from optional ones",
+      "depends": [
+        "AJ-0034"
+      ],
+      "status": {
+        "state": "pending",
+        "text": "🟥 Pending"
+      },
+      "milestone": "v0-2",
+      "ready": true,
+      "waiting_on": [],
+      "dependants": [
+        "AJ-0047"
+      ],
+      "unblocks": 12
+    },
+    {
+      "id": "AJ-0088",
+      "phase": "onboarding",
+      "app": "ajiya",
+      "title": "ajiya ticket list",
+      "done_when": "ajiya ticket list [--phase] [--app] [--state] [--milestone] [--json] lists tickets in plan order with ID, app, state and title, so agents never read ajiya/ files; the guides use it where they now say to read the files",
+      "depends": [
+        "AJ-0034"
+      ],
+      "status": {
+        "state": "pending",
+        "text": "🟥 Pending"
+      },
+      "milestone": "v0-2",
+      "ready": true,
+      "waiting_on": [],
+      "dependants": [
+        "AJ-0047",
+        "AJ-0091"
+      ],
+      "unblocks": 13
+    },
+    {
+      "id": "AJ-0089",
+      "phase": "onboarding",
+      "app": "ajiya",
+      "title": "ticket edit always prints the ticket",
+      "done_when": "ajiya ticket edit prints the edited ticket for every flag combination, including --phase or --app alone; tests cover both",
+      "depends": [
+        "AJ-0034"
+      ],
+      "status": {
+        "state": "pending",
+        "text": "🟥 Pending"
+      },
+      "milestone": "v0-2",
+      "ready": true,
+      "waiting_on": [],
+      "dependants": [
+        "AJ-0047"
+      ],
+      "unblocks": 12
+    },
+    {
+      "id": "AJ-0090",
+      "phase": "onboarding",
+      "app": "ajiya",
+      "title": "init suggests the test command",
+      "done_when": "init writes an uncommented [test] command when it can tell it (go.mod: go test ./..., package.json test script: npm test, pyproject.toml with pytest: pytest) and says so; otherwise it leaves the commented example; tests cover each",
+      "depends": [
+        "AJ-0034"
+      ],
+      "status": {
+        "state": "pending",
+        "text": "🟥 Pending"
+      },
+      "milestone": "v0-2",
+      "ready": true,
+      "waiting_on": [],
+      "dependants": [
+        "AJ-0047"
+      ],
+      "unblocks": 12
+    },
+    {
+      "id": "AJ-0091",
+      "phase": "onboarding",
+      "app": "ajiya",
+      "title": "Guide fixes from the walkthrough test",
+      "done_when": "The kit says: give imported tickets a done-when; commit the ajiya/ changes that ticket done makes with the ticket's trailer; create an app's folder before ajiya app add (or use infra); skip Needs a human tickets in ajiya next unless asked; what import actually prints",
+      "depends": [
+        "AJ-0085",
+        "AJ-0086",
+        "AJ-0088"
+      ],
+      "status": {
+        "state": "pending",
+        "text": "🟥 Pending"
+      },
+      "milestone": "v0-2",
+      "ready": false,
+      "waiting_on": [
+        "AJ-0085",
+        "AJ-0086",
+        "AJ-0088"
+      ],
+      "dependants": [
+        "AJ-0047"
+      ],
+      "unblocks": 12
     }
   ],
   "next": [
@@ -2307,7 +2483,13 @@ window.AJIYA = {
     "AJ-0069",
     "AJ-0071",
     "AJ-0072",
-    "AJ-0070"
+    "AJ-0070",
+    "AJ-0085",
+    "AJ-0086",
+    "AJ-0088",
+    "AJ-0087",
+    "AJ-0089",
+    "AJ-0090"
   ],
   "checks": [],
   "activity": [
