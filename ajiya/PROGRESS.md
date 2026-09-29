@@ -62,6 +62,8 @@ Generated 2026-09-29.
 
 ## Recent activity
 
+- 2026-09-29 `d18ad9e` AJ-0029 done (AJ-0029)
+  - AJ-0029: in_progress → done
 - 2026-09-29 `c93b4be` This repository runs the kit it ships (AJ-0029)
   - AJ-0029: pending → in_progress
 - 2026-09-29 `298f56f` AJ-0025 done (AJ-0025)
@@ -98,8 +100,7 @@ Generated 2026-09-29.
   - AJ-0062: new → pending
   - AJ-0063: new → pending
   - AJ-0064: new → pending
-- 2026-09-29 `8ced233` Merge branch 'worktree-agent-a658cbd8dac8f5d6c' (-)
-- and 97 more in data.js
+- and 98 more in data.js
 
 ## Checks
 
