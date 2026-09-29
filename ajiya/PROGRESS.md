@@ -5,25 +5,30 @@ Generated 2026-09-29.
 
 ## Milestones
 
-No milestones. Set one with `ajiya launch set <phase|ticket>`.
+| Milestone | Closed | Required | % | Can start now |
+|---|---|---|---|---|
+| v0-1 | 18 | 31 | 58% | 2 |
+| v0-2 | 18 | 37 | 48% | 2 |
+| v0-3 | 18 | 47 | 38% | 2 |
+| after-v0-3 | 18 | 46 | 39% | 2 |
 
 ## Phases
 
 | Phase | Done | In progress | Pending | Total | % | Milestone |
 |---|---|---|---|---|---|---|
-| Commit-rule | 7 | 0 | 0 | 7 | 100% | - |
-| Apps-launch | 14 | 0 | 0 | 14 | 100% | - |
-| Outputs | 5 | 2 | 1 | 8 | 62% | - |
-| Onboarding | 3 | 0 | 6 | 9 | 33% | - |
-| Release | 1 | 0 | 4 | 5 | 20% | - |
-| Agent-access | 0 | 0 | 3 | 3 | 0% | - |
-| Install | 0 | 0 | 3 | 3 | 0% | - |
-| Decisions-and-changes | 0 | 0 | 11 | 11 | 0% | - |
+| Commit-rule | 7 | 0 | 0 | 7 | 100% | v0-1 |
+| Apps-launch | 14 | 0 | 0 | 14 | 100% | v0-1 |
+| Outputs | 5 | 2 | 1 | 8 | 62% | v0-1 |
+| Onboarding | 3 | 0 | 6 | 9 | 33% | v0-1 |
+| Release | 1 | 0 | 4 | 5 | 20% | v0-1 |
+| Agent-access | 0 | 0 | 3 | 3 | 0% | v0-2 |
+| Install | 0 | 0 | 3 | 3 | 0% | v0-2 |
+| Decisions-and-changes | 0 | 0 | 11 | 11 | 0% | v0-3 |
 
 ## Can start now
 
-- **AJ-0036** Dependencies view in the dashboard (ajiya) · in progress
-- **AJ-0060** Dashboard live refresh under ajiya serve (ajiya) · in progress
+- **AJ-0036** Dependencies view in the dashboard (ajiya) · v0-1 · in progress
+- **AJ-0060** Dashboard live refresh under ajiya serve (ajiya) · v0-1 · in progress
 
 ## Waiting
 
@@ -64,6 +69,9 @@ No milestones. Set one with `ajiya launch set <phase|ticket>`.
 
 ## Recent activity
 
+- 2026-09-29 `3aa3572` Plan dashboard live refresh; AJ-0021 waits for the dependencies view again (AJ-0021, AJ-0036, AJ-0060)
+  - AJ-0036: pending → in_progress
+  - AJ-0060: new → in_progress
 - 2026-09-29 `1a7db96` AJ-0019 and AJ-0020 done (AJ-0019, AJ-0020)
   - AJ-0019: in_progress → done
   - AJ-0020: in_progress → done
@@ -87,8 +95,7 @@ No milestones. Set one with `ajiya launch set <phase|ticket>`.
   - AJ-0040: in_progress → done
 - 2026-09-29 `a939eb5` Merge branch 'worktree-agent-a2dda545491c21789' (-)
 - 2026-09-29 `2d78fb0` v0.3 spec update: keep ticket context light (AJ-0048, AJ-0053, AJ-0056)
-- 2026-09-29 `999e8f1` Phase display order (AJ-0040)
-- and 76 more in data.js
+- and 77 more in data.js
 
 ## Checks
 

@@ -6,7 +6,68 @@ window.AJIYA = {
     "name": "Ajiya",
     "prefix": "AJ"
   },
-  "milestones": [],
+  "milestones": [
+    {
+      "name": "v0-1",
+      "targets": [
+        "AJ-0034"
+      ],
+      "required": {
+        "total": 31,
+        "done": 18,
+        "in_progress": 2,
+        "pending": 11,
+        "dropped": 0
+      },
+      "percent": 58,
+      "ready": 2
+    },
+    {
+      "name": "v0-2",
+      "targets": [
+        "AJ-0047"
+      ],
+      "required": {
+        "total": 37,
+        "done": 18,
+        "in_progress": 2,
+        "pending": 17,
+        "dropped": 0
+      },
+      "percent": 48,
+      "ready": 2
+    },
+    {
+      "name": "v0-3",
+      "targets": [
+        "AJ-0058"
+      ],
+      "required": {
+        "total": 47,
+        "done": 18,
+        "in_progress": 2,
+        "pending": 27,
+        "dropped": 0
+      },
+      "percent": 38,
+      "ready": 2
+    },
+    {
+      "name": "after-v0-3",
+      "targets": [
+        "AJ-0057"
+      ],
+      "required": {
+        "total": 46,
+        "done": 18,
+        "in_progress": 2,
+        "pending": 26,
+        "dropped": 0
+      },
+      "percent": 39,
+      "ready": 2
+    }
+  ],
   "phases": [
     {
       "slug": "commit-rule",
@@ -20,7 +81,7 @@ window.AJIYA = {
         "dropped": 0
       },
       "percent": 100,
-      "milestone": ""
+      "milestone": "v0-1"
     },
     {
       "slug": "apps-launch",
@@ -34,7 +95,7 @@ window.AJIYA = {
         "dropped": 0
       },
       "percent": 100,
-      "milestone": ""
+      "milestone": "v0-1"
     },
     {
       "slug": "outputs",
@@ -48,7 +109,7 @@ window.AJIYA = {
         "dropped": 0
       },
       "percent": 62,
-      "milestone": ""
+      "milestone": "v0-1"
     },
     {
       "slug": "onboarding",
@@ -62,7 +123,7 @@ window.AJIYA = {
         "dropped": 0
       },
       "percent": 33,
-      "milestone": ""
+      "milestone": "v0-1"
     },
     {
       "slug": "release",
@@ -76,7 +137,7 @@ window.AJIYA = {
         "dropped": 0
       },
       "percent": 20,
-      "milestone": ""
+      "milestone": "v0-1"
     },
     {
       "slug": "agent-access",
@@ -90,7 +151,7 @@ window.AJIYA = {
         "dropped": 0
       },
       "percent": 0,
-      "milestone": ""
+      "milestone": "v0-2"
     },
     {
       "slug": "install",
@@ -104,7 +165,7 @@ window.AJIYA = {
         "dropped": 0
       },
       "percent": 0,
-      "milestone": ""
+      "milestone": "v0-2"
     },
     {
       "slug": "decisions-and-changes",
@@ -118,7 +179,7 @@ window.AJIYA = {
         "dropped": 0
       },
       "percent": 0,
-      "milestone": ""
+      "milestone": "v0-3"
     }
   ],
   "apps": [
@@ -148,7 +209,7 @@ window.AJIYA = {
         "commit": "4cc2b3f",
         "date": "2026-09-28"
       },
-      "milestone": "",
+      "milestone": "v0-1",
       "ready": false,
       "waiting_on": [],
       "dependants": [
@@ -313,7 +374,7 @@ window.AJIYA = {
         "date": "2026-09-29",
         "tests_passed": true
       },
-      "milestone": "",
+      "milestone": "v0-1",
       "ready": false,
       "waiting_on": [],
       "dependants": [
@@ -334,7 +395,7 @@ window.AJIYA = {
         "commit": "57e4454",
         "date": "2026-09-29"
       },
-      "milestone": "",
+      "milestone": "v0-1",
       "ready": false,
       "waiting_on": [],
       "dependants": [
@@ -355,7 +416,7 @@ window.AJIYA = {
         "commit": "3349f60",
         "date": "2026-09-29"
       },
-      "milestone": "",
+      "milestone": "v0-1",
       "ready": false,
       "waiting_on": [],
       "dependants": [
@@ -380,7 +441,7 @@ window.AJIYA = {
         "commit": "d32c066",
         "date": "2026-09-29"
       },
-      "milestone": "",
+      "milestone": "v0-1",
       "ready": false,
       "waiting_on": [],
       "dependants": [
@@ -405,7 +466,7 @@ window.AJIYA = {
         "date": "2026-09-29",
         "tests_passed": true
       },
-      "milestone": "",
+      "milestone": "v0-1",
       "ready": false,
       "waiting_on": [],
       "dependants": [
@@ -430,7 +491,7 @@ window.AJIYA = {
         "date": "2026-09-29",
         "tests_passed": true
       },
-      "milestone": "",
+      "milestone": "v0-1",
       "ready": false,
       "waiting_on": [],
       "dependants": [
@@ -516,7 +577,7 @@ window.AJIYA = {
         "date": "2026-09-29",
         "tests_passed": true
       },
-      "milestone": "",
+      "milestone": "v0-1",
       "ready": false,
       "waiting_on": [],
       "dependants": [
@@ -543,7 +604,7 @@ window.AJIYA = {
         "date": "2026-09-29",
         "tests_passed": true
       },
-      "milestone": "",
+      "milestone": "v0-1",
       "ready": false,
       "waiting_on": [],
       "dependants": [
@@ -568,7 +629,7 @@ window.AJIYA = {
         "date": "2026-09-29",
         "tests_passed": true
       },
-      "milestone": "",
+      "milestone": "v0-1",
       "ready": false,
       "waiting_on": [],
       "dependants": [
@@ -595,7 +656,7 @@ window.AJIYA = {
         "date": "2026-09-29",
         "tests_passed": true
       },
-      "milestone": "",
+      "milestone": "v0-1",
       "ready": false,
       "waiting_on": [],
       "dependants": [
@@ -620,7 +681,7 @@ window.AJIYA = {
         "state": "pending",
         "text": "🟥 Pending"
       },
-      "milestone": "",
+      "milestone": "v0-1",
       "ready": false,
       "waiting_on": [
         "AJ-0036",
@@ -645,7 +706,7 @@ window.AJIYA = {
         "state": "pending",
         "text": "🟥 Pending"
       },
-      "milestone": "",
+      "milestone": "v0-1",
       "ready": false,
       "waiting_on": [
         "AJ-0021"
@@ -669,7 +730,7 @@ window.AJIYA = {
         "state": "pending",
         "text": "🟥 Pending"
       },
-      "milestone": "",
+      "milestone": "v0-1",
       "ready": false,
       "waiting_on": [
         "AJ-0021"
@@ -693,7 +754,7 @@ window.AJIYA = {
         "state": "pending",
         "text": "🟥 Pending"
       },
-      "milestone": "",
+      "milestone": "v0-1",
       "ready": false,
       "waiting_on": [
         "AJ-0022",
@@ -718,7 +779,7 @@ window.AJIYA = {
         "state": "pending",
         "text": "🟥 Pending"
       },
-      "milestone": "",
+      "milestone": "v0-1",
       "ready": false,
       "waiting_on": [
         "AJ-0024"
@@ -801,7 +862,7 @@ window.AJIYA = {
         "state": "pending",
         "text": "🟥 Pending"
       },
-      "milestone": "",
+      "milestone": "v0-1",
       "ready": false,
       "waiting_on": [
         "AJ-0025"
@@ -825,7 +886,7 @@ window.AJIYA = {
         "state": "pending",
         "text": "🟥 Pending"
       },
-      "milestone": "",
+      "milestone": "v0-1",
       "ready": false,
       "waiting_on": [
         "AJ-0029"
@@ -850,7 +911,7 @@ window.AJIYA = {
         "state": "pending",
         "text": "🟥 Pending"
       },
-      "milestone": "",
+      "milestone": "v0-1",
       "ready": false,
       "waiting_on": [
         "AJ-0030"
@@ -877,7 +938,7 @@ window.AJIYA = {
         "date": "2026-09-29",
         "tests_passed": true
       },
-      "milestone": "",
+      "milestone": "v0-1",
       "ready": false,
       "waiting_on": [],
       "dependants": [
@@ -898,7 +959,7 @@ window.AJIYA = {
         "state": "pending",
         "text": "🟥 Pending"
       },
-      "milestone": "",
+      "milestone": "v0-1",
       "ready": false,
       "waiting_on": [
         "AJ-0029"
@@ -931,7 +992,7 @@ window.AJIYA = {
         "text": "🟥 Pending · Needs a human: final sign-off before publishing",
         "human": "final sign-off before publishing"
       },
-      "milestone": "",
+      "milestone": "v0-1",
       "ready": false,
       "waiting_on": [
         "AJ-0030",
@@ -958,7 +1019,7 @@ window.AJIYA = {
         "date": "2026-09-29",
         "tests_passed": true
       },
-      "milestone": "",
+      "milestone": "v0-1",
       "ready": false,
       "waiting_on": [],
       "dependants": [
@@ -980,7 +1041,7 @@ window.AJIYA = {
         "text": "🟨 In progress: in a parallel worktree",
         "note": "in a parallel worktree"
       },
-      "milestone": "",
+      "milestone": "v0-1",
       "ready": true,
       "waiting_on": [],
       "dependants": [
@@ -1004,7 +1065,7 @@ window.AJIYA = {
         "date": "2026-09-29",
         "tests_passed": true
       },
-      "milestone": "",
+      "milestone": "v0-1",
       "ready": false,
       "waiting_on": [],
       "dependants": [
@@ -1032,7 +1093,7 @@ window.AJIYA = {
         "date": "2026-09-29",
         "tests_passed": true
       },
-      "milestone": "",
+      "milestone": "v0-1",
       "ready": false,
       "waiting_on": [],
       "dependants": [
@@ -1062,7 +1123,7 @@ window.AJIYA = {
         "date": "2026-09-29",
         "tests_passed": true
       },
-      "milestone": "",
+      "milestone": "v0-1",
       "ready": false,
       "waiting_on": [],
       "dependants": [
@@ -1086,7 +1147,7 @@ window.AJIYA = {
         "date": "2026-09-29",
         "tests_passed": true
       },
-      "milestone": "",
+      "milestone": "v0-1",
       "ready": false,
       "waiting_on": [],
       "dependants": [
@@ -1111,7 +1172,7 @@ window.AJIYA = {
         "state": "pending",
         "text": "🟥 Pending"
       },
-      "milestone": "",
+      "milestone": "v0-1",
       "ready": false,
       "waiting_on": [
         "AJ-0022"
@@ -1135,7 +1196,7 @@ window.AJIYA = {
         "state": "pending",
         "text": "🟥 Pending"
       },
-      "milestone": "",
+      "milestone": "v0-2",
       "ready": false,
       "waiting_on": [
         "AJ-0034"
@@ -1160,7 +1221,7 @@ window.AJIYA = {
         "state": "pending",
         "text": "🟥 Pending"
       },
-      "milestone": "",
+      "milestone": "v0-2",
       "ready": false,
       "waiting_on": [
         "AJ-0042"
@@ -1185,7 +1246,7 @@ window.AJIYA = {
         "state": "pending",
         "text": "🟥 Pending"
       },
-      "milestone": "",
+      "milestone": "v0-2",
       "ready": false,
       "waiting_on": [
         "AJ-0043"
@@ -1211,7 +1272,7 @@ window.AJIYA = {
         "state": "pending",
         "text": "🟥 Pending"
       },
-      "milestone": "",
+      "milestone": "v0-2",
       "ready": false,
       "waiting_on": [
         "AJ-0030",
@@ -1237,7 +1298,7 @@ window.AJIYA = {
         "state": "pending",
         "text": "🟥 Pending"
       },
-      "milestone": "",
+      "milestone": "v0-2",
       "ready": false,
       "waiting_on": [
         "AJ-0042",
@@ -1266,7 +1327,7 @@ window.AJIYA = {
         "text": "🟥 Pending · Needs a human: final sign-off before publishing v0.2",
         "human": "final sign-off before publishing v0.2"
       },
-      "milestone": "",
+      "milestone": "v0-2",
       "ready": false,
       "waiting_on": [
         "AJ-0042",
@@ -1293,7 +1354,7 @@ window.AJIYA = {
         "state": "pending",
         "text": "🟥 Pending"
       },
-      "milestone": "",
+      "milestone": "v0-3",
       "ready": false,
       "waiting_on": [
         "AJ-0047"
@@ -1319,7 +1380,7 @@ window.AJIYA = {
         "state": "pending",
         "text": "🟥 Pending"
       },
-      "milestone": "",
+      "milestone": "v0-3",
       "ready": false,
       "waiting_on": [
         "AJ-0048"
@@ -1343,7 +1404,7 @@ window.AJIYA = {
         "state": "pending",
         "text": "🟥 Pending"
       },
-      "milestone": "",
+      "milestone": "v0-3",
       "ready": false,
       "waiting_on": [
         "AJ-0048"
@@ -1367,7 +1428,7 @@ window.AJIYA = {
         "state": "pending",
         "text": "🟥 Pending"
       },
-      "milestone": "",
+      "milestone": "v0-3",
       "ready": false,
       "waiting_on": [
         "AJ-0048"
@@ -1392,7 +1453,7 @@ window.AJIYA = {
         "state": "pending",
         "text": "🟥 Pending"
       },
-      "milestone": "",
+      "milestone": "v0-3",
       "ready": false,
       "waiting_on": [
         "AJ-0051"
@@ -1419,7 +1480,7 @@ window.AJIYA = {
         "state": "pending",
         "text": "🟥 Pending"
       },
-      "milestone": "",
+      "milestone": "v0-3",
       "ready": false,
       "waiting_on": [
         "AJ-0049",
@@ -1446,7 +1507,7 @@ window.AJIYA = {
         "state": "pending",
         "text": "🟥 Pending"
       },
-      "milestone": "",
+      "milestone": "v0-3",
       "ready": false,
       "waiting_on": [
         "AJ-0053"
@@ -1470,7 +1531,7 @@ window.AJIYA = {
         "state": "pending",
         "text": "🟥 Pending"
       },
-      "milestone": "",
+      "milestone": "v0-3",
       "ready": false,
       "waiting_on": [
         "AJ-0054"
@@ -1495,7 +1556,7 @@ window.AJIYA = {
         "state": "pending",
         "text": "🟥 Pending"
       },
-      "milestone": "",
+      "milestone": "v0-3",
       "ready": false,
       "waiting_on": [
         "AJ-0055"
@@ -1519,7 +1580,7 @@ window.AJIYA = {
         "state": "pending",
         "text": "🟥 Pending"
       },
-      "milestone": "",
+      "milestone": "after-v0-3",
       "ready": false,
       "waiting_on": [
         "AJ-0055"
@@ -1549,7 +1610,7 @@ window.AJIYA = {
         "text": "🟥 Pending · Needs a human: final sign-off before publishing v0.3",
         "human": "final sign-off before publishing v0.3"
       },
-      "milestone": "",
+      "milestone": "v0-3",
       "ready": false,
       "waiting_on": [
         "AJ-0048",
@@ -1582,7 +1643,7 @@ window.AJIYA = {
         "date": "2026-09-29",
         "tests_passed": true
       },
-      "milestone": "",
+      "milestone": "v0-1",
       "ready": false,
       "waiting_on": [],
       "dependants": [
@@ -1605,7 +1666,7 @@ window.AJIYA = {
         "text": "🟨 In progress: in a parallel worktree",
         "note": "in a parallel worktree"
       },
-      "milestone": "",
+      "milestone": "v0-1",
       "ready": true,
       "waiting_on": [],
       "dependants": [
@@ -1620,6 +1681,39 @@ window.AJIYA = {
   ],
   "checks": [],
   "activity": [
+    {
+      "hash": "3aa35723493ecf7b5c285dc6959eace07a3c5a74",
+      "short": "3aa3572",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Plan dashboard live refresh; AJ-0021 waits for the dependencies view again",
+      "refs": [
+        "AJ-0021",
+        "AJ-0036",
+        "AJ-0060"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0036",
+          "phase": "outputs",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress: in a parallel worktree"
+        },
+        {
+          "id": "AJ-0060",
+          "phase": "outputs",
+          "from": "",
+          "to": "in_progress",
+          "text": "🟨 In progress: in a parallel worktree"
+        }
+      ],
+      "time": 1790690441
+    },
     {
       "hash": "1a7db969d60d9bf9b1f7eb4b637c63fc02d224cc",
       "short": "1a7db96",
