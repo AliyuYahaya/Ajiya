@@ -2312,6 +2312,30 @@ window.AJIYA = {
   "checks": [],
   "activity": [
     {
+      "hash": "6a75e6037a1643a56ba57e1315f6852f5b676e43",
+      "short": "6a75e60",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "v0.1 signed off",
+      "refs": [
+        "AJ-0034"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0034",
+          "phase": "release",
+          "from": "pending",
+          "to": "done",
+          "text": "🟩 Done · by Aliyu Yahaya · 2026-09-29 · Note: v0.1 approved by the maintainer; check --strict and check --commits since M2 pass; agent-only walkthrough test runs after sign-off"
+        }
+      ],
+      "time": 1790716084
+    },
+    {
       "hash": "e803fc9d4044184273e19ce1779ab0f715a7ca3f",
       "short": "e803fc9",
       "date": "2026-09-29",

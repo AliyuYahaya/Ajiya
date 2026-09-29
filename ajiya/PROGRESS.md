@@ -79,6 +79,8 @@ Generated 2026-09-29.
 
 ## Recent activity
 
+- 2026-09-29 `6a75e60` v0.1 signed off (AJ-0034)
+  - AJ-0034: pending → done
 - 2026-09-29 `e803fc9` Merge branch 'worktree-agent-a658cbd8dac8f5d6c' (-)
 - 2026-09-29 `e0873df` Licence held by Yavid PTY Ltd; the name and logo are not licensed (chore)
 - 2026-09-29 `2603a19` MIT licence (chore)
@@ -114,8 +116,7 @@ Generated 2026-09-29.
   - AJ-0080: new → pending
   - AJ-0081: new → pending
   - AJ-0082: new → pending
-- 2026-09-29 `7748eae` Merge branch 'worktree-agent-a658cbd8dac8f5d6c' (-)
-- and 122 more in data.js
+- and 123 more in data.js
 
 ## Checks
 
