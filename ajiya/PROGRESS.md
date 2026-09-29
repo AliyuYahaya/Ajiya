@@ -8,9 +8,9 @@ Generated 2026-09-29.
 | Milestone | Closed | Required | % | Can start now |
 |---|---|---|---|---|
 | v0-1 | 37 | 37 | 100% | 0 |
-| v0-2 | 48 | 68 | 70% | 5 |
-| v0-3 | 48 | 78 | 61% | 5 |
-| after-v0-3 | 48 | 77 | 62% | 5 |
+| v0-2 | 49 | 68 | 72% | 4 |
+| v0-3 | 49 | 78 | 62% | 4 |
+| after-v0-3 | 49 | 77 | 63% | 4 |
 
 ## Phases
 
@@ -22,14 +22,13 @@ Generated 2026-09-29.
 | Onboarding | 16 | 0 | 1 | 17 | 94% | v0-1 |
 | Release | 5 | 0 | 0 | 5 | 100% | v0-1 |
 | Agent-access | 0 | 0 | 3 | 3 | 0% | v0-2 |
-| Install | 5 | 0 | 16 | 21 | 23% | v0-2 |
+| Install | 6 | 0 | 15 | 21 | 28% | v0-2 |
 | Decisions-and-changes | 0 | 0 | 11 | 11 | 0% | v0-3 |
 
 ## Can start now
 
 - **AJ-0042** ajiya status (ajiya) · v0-2
 - **AJ-0075** npm packages: @ajiya/cli and one package per platform (ajiya) · v0-2
-- **AJ-0072** Release workflow: build to a draft release (ajiya) · v0-2
 - **AJ-0083** Apple signing credentials as release secrets (ajiya) · v0-2
 - **AJ-0091** Guide fixes from the walkthrough test (ajiya) · v0-2
 
@@ -56,11 +55,11 @@ Generated 2026-09-29.
 - **AJ-0076** npm launcher tests (ajiya) waits on AJ-0075
 - **AJ-0077** Homebrew tap wiring (ajiya) waits on AJ-0044
 - **AJ-0078** Install scripts attached to every release (ajiya) waits on AJ-0045, AJ-0073
-- **AJ-0079** Gated publish jobs (ajiya) waits on AJ-0072, AJ-0075, AJ-0077
+- **AJ-0079** Gated publish jobs (ajiya) waits on AJ-0075, AJ-0077
 - **AJ-0080** npm trusted publishing (ajiya) waits on AJ-0075
 - **AJ-0081** Release rehearsal on a release candidate (ajiya) waits on AJ-0074, AJ-0076, AJ-0078, AJ-0079, AJ-0080, AJ-0084
 - **AJ-0082** Install docs for every channel (ajiya) waits on AJ-0081
-- **AJ-0084** Sign and notarise the macOS binaries (ajiya) waits on AJ-0072, AJ-0077, AJ-0083
+- **AJ-0084** Sign and notarise the macOS binaries (ajiya) waits on AJ-0077, AJ-0083
 
 ## Needs a human
 

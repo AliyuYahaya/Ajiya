@@ -29,13 +29,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 68,
-        "done": 48,
+        "done": 49,
         "in_progress": 0,
-        "pending": 20,
+        "pending": 19,
         "dropped": 0
       },
-      "percent": 70,
-      "ready": 5
+      "percent": 72,
+      "ready": 4
     },
     {
       "name": "v0-3",
@@ -44,13 +44,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 78,
-        "done": 48,
+        "done": 49,
         "in_progress": 0,
-        "pending": 30,
+        "pending": 29,
         "dropped": 0
       },
-      "percent": 61,
-      "ready": 5
+      "percent": 62,
+      "ready": 4
     },
     {
       "name": "after-v0-3",
@@ -59,13 +59,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 77,
-        "done": 48,
+        "done": 49,
         "in_progress": 0,
-        "pending": 29,
+        "pending": 28,
         "dropped": 0
       },
-      "percent": 62,
-      "ready": 5
+      "percent": 63,
+      "ready": 4
     }
   ],
   "phases": [
@@ -159,12 +159,12 @@ window.AJIYA = {
       "goal": "Ajiya installs in one step, with a Claude Code plugin",
       "counts": {
         "total": 21,
-        "done": 5,
+        "done": 6,
         "in_progress": 0,
-        "pending": 16,
+        "pending": 15,
         "dropped": 0
       },
-      "percent": 23,
+      "percent": 28,
       "milestone": "v0-2"
     },
     {
@@ -188,9 +188,9 @@ window.AJIYA = {
       "path": ".",
       "counts": {
         "total": 91,
-        "done": 60,
+        "done": 61,
         "in_progress": 0,
-        "pending": 31,
+        "pending": 30,
         "dropped": 0
       }
     }
@@ -1995,17 +1995,20 @@ window.AJIYA = {
         "AJ-0034"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · d1df3f0 · 2026-09-29 · tests passed",
+        "commit": "d1df3f0",
+        "date": "2026-09-29",
+        "tests_passed": true
       },
       "milestone": "v0-2",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0079",
         "AJ-0084"
       ],
-      "unblocks": 16
+      "unblocks": 0
     },
     {
       "id": "AJ-0073",
@@ -2176,7 +2179,6 @@ window.AJIYA = {
       "milestone": "v0-2",
       "ready": false,
       "waiting_on": [
-        "AJ-0072",
         "AJ-0075",
         "AJ-0077"
       ],
@@ -2306,7 +2308,6 @@ window.AJIYA = {
       "milestone": "v0-2",
       "ready": false,
       "waiting_on": [
-        "AJ-0072",
         "AJ-0077",
         "AJ-0083"
       ],
@@ -2489,7 +2490,6 @@ window.AJIYA = {
   "next": [
     "AJ-0042",
     "AJ-0075",
-    "AJ-0072",
     "AJ-0083",
     "AJ-0091"
   ],
