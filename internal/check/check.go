@@ -113,7 +113,7 @@ func Run(cfg *config.Config, p *plan.Plan) []Finding {
 	}
 	if target := cfg.Launch.Target; target != "" {
 		if _, _, err := p.Required(target); err != nil {
-			add("E012", config.FileName, "ajiya launch set <phase|ticket>", "%v", err)
+			add("E012", config.FileName, "ajiya launch set <phase|ticket>", "launch %v", err)
 		}
 	}
 	for _, c := range plan.NewGraph(tickets).Cycles() {

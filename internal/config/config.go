@@ -30,6 +30,10 @@ type Config struct {
 	Test    Test    `toml:"test"`
 	Apps    []App   `toml:"apps"`
 
+	// Milestones are named gates, in order. The older [launch] target is read
+	// as one milestone named "launch"; see MilestoneList.
+	Milestones []Milestone `toml:"milestones"`
+
 	// Root is the directory holding ajiya.toml. Set by Load.
 	Root string `toml:"-"`
 }
@@ -47,6 +51,24 @@ type Test struct {
 	Command string `toml:"command"`
 }
 
+// Milestone is a named gate: its targets are phase slugs or ticket IDs.
+type Milestone struct {
+	Name    string   `toml:"name"`
+	Targets []string `toml:"targets"`
+}
+
+// LaunchMilestone is the name of the milestone that [launch] target stands for.
+const LaunchMilestone = "launch"
+
+// MilestoneList returns the milestones in order: the [[milestones]] list, or
+// the older [launch] target as a milestone named launch.
+func (c *Config) MilestoneList() []Milestone {
+	if c.Launch.Target != "" {
+		return []Milestone{{Name: LaunchMilestone, Targets: []string{c.Launch.Target}}}
+	}
+	return c.Milestones
+}
+
 type App struct {
 	Name string `toml:"name"`
 	Path string `toml:"path"`
@@ -56,6 +78,8 @@ type App struct {
 var (
 	prefixRE  = regexp.MustCompile(`^[A-Z][A-Z0-9]{0,9}$`)
 	appNameRE = regexp.MustCompile(`^[a-z0-9][a-z0-9._-]*$`)
+	// milestoneRE matches a milestone name: the same form as a phase slug.
+	milestoneRE = regexp.MustCompile(`^[a-z0-9]+(-[a-z0-9]+)*$`)
 )
 
 // Find walks up from dir to the nearest directory containing ajiya.toml.
@@ -119,6 +143,26 @@ func (c *Config) Validate() error {
 	}
 	if !prefixRE.MatchString(c.Project.Prefix) {
 		return fail("[project] prefix %q must be 1 to 10 capital letters or digits, starting with a letter", c.Project.Prefix)
+	}
+	if c.Launch.Target != "" && len(c.Milestones) > 0 {
+		return fail("both [launch] and [[milestones]] are set; move the launch target into the list as name = %q", LaunchMilestone)
+	}
+	names := map[string]bool{}
+	for i, m := range c.Milestones {
+		switch {
+		case !milestoneRE.MatchString(m.Name):
+			return fail("milestone %d: name %q must be lower case letters and digits separated by single hyphens, like staging-proven", i+1, m.Name)
+		case names[m.Name]:
+			return fail("milestone %q is listed twice; names must be unique", m.Name)
+		case len(m.Targets) == 0:
+			return fail("milestone %q has no targets; give phase slugs or ticket IDs", m.Name)
+		}
+		for _, t := range m.Targets {
+			if strings.TrimSpace(t) == "" {
+				return fail("milestone %q has an empty target", m.Name)
+			}
+		}
+		names[m.Name] = true
 	}
 	seen := map[string]bool{}
 	for i, a := range c.Apps {

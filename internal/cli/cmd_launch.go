@@ -18,7 +18,7 @@ func runLaunchSet(e *env, args []string) error {
 	}
 	target := pos[0]
 	if _, _, err := pr.plan.Required(target); err != nil {
-		return refused("%v; give a phase slug or a ticket ID", err)
+		return refused("launch %v; give a phase slug or a ticket ID", err)
 	}
 	if err := config.SetLaunchTarget(pr.cfg.Root, target); err != nil {
 		return err
@@ -56,7 +56,7 @@ func launchJSON(e *env, pr *project) error {
 	if target := pr.cfg.Launch.Target; target != "" {
 		req, kind, err := pr.plan.Required(target)
 		if err != nil {
-			return refused("%v; set another with 'ajiya launch set <phase|ticket>'", err)
+			return refused("launch %v; set another with 'ajiya launch set <phase|ticket>'", err)
 		}
 		out.Target, out.Kind, out.Required = &target, kind, len(req)
 		for _, t := range pr.plan.Tickets() {
@@ -84,7 +84,7 @@ func showLaunch(e *env, pr *project) error {
 	}
 	req, kind, err := pr.plan.Required(target)
 	if err != nil {
-		return refused("%v; set another with 'ajiya launch set <phase|ticket>'", err)
+		return refused("launch %v; set another with 'ajiya launch set <phase|ticket>'", err)
 	}
 	closed, open := 0, []*plan.Ticket{}
 	for _, t := range pr.plan.Tickets() {

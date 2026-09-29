@@ -131,3 +131,41 @@ func TestSuggestPrefix(t *testing.T) {
 		}
 	}
 }
+
+func TestMilestones(t *testing.T) {
+	const head = "[project]\nname = \"X\"\nprefix = \"X\"\n"
+	c, err := Parse([]byte(head + `
+[[milestones]]
+name = "staging-proven"
+targets = ["gate-0"]
+
+[[milestones]]
+name = "launch"
+targets = ["go-live", "X-0142"]
+`))
+	if err != nil {
+		t.Fatal(err)
+	}
+	ms := c.MilestoneList()
+	if len(ms) != 2 || ms[0].Name != "staging-proven" || ms[1].Targets[1] != "X-0142" {
+		t.Errorf("MilestoneList = %+v", ms)
+	}
+	old, err := Parse([]byte(head + "[launch]\ntarget = \"go-live\"\n"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if ms := old.MilestoneList(); len(ms) != 1 || ms[0].Name != LaunchMilestone || ms[0].Targets[0] != "go-live" {
+		t.Errorf("old [launch] form = %+v", ms)
+	}
+	for name, tt := range map[string]struct{ in, want string }{
+		"both forms":   {"[launch]\ntarget = \"a\"\n[[milestones]]\nname = \"b\"\ntargets = [\"b\"]\n", "move the launch target into the list"},
+		"bad name":     {"[[milestones]]\nname = \"Gate 0\"\ntargets = [\"a\"]\n", `name "Gate 0" must be lower case`},
+		"duplicate":    {"[[milestones]]\nname = \"a\"\ntargets = [\"a\"]\n[[milestones]]\nname = \"a\"\ntargets = [\"b\"]\n", "listed twice"},
+		"no targets":   {"[[milestones]]\nname = \"a\"\ntargets = []\n", "has no targets"},
+		"empty target": {"[[milestones]]\nname = \"a\"\ntargets = [\" \"]\n", "empty target"},
+	} {
+		if _, err := Parse([]byte(head + tt.in)); err == nil || !strings.Contains(err.Error(), tt.want) {
+			t.Errorf("%s: err = %v, want %q", name, err, tt.want)
+		}
+	}
+}

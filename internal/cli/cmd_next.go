@@ -35,7 +35,7 @@ func runNext(e *env, args []string) error {
 	required := map[string]bool{}
 	if target := pr.cfg.Launch.Target; target != "" {
 		if required, _, err = pr.plan.Required(target); err != nil {
-			return refused("%v; set another with 'ajiya launch set <phase|ticket>'", err)
+			return refused("launch %v; set another with 'ajiya launch set <phase|ticket>'", err)
 		}
 	} else if *launchOnly {
 		return refused("no launch target; set one with 'ajiya launch set <phase|ticket>'")
