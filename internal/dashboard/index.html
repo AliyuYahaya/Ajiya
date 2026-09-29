@@ -248,6 +248,46 @@ td .sub { color: var(--c-faint); font-size: 12px; }
 .commit .ch div { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
 .commit.dim .s { color: var(--c-muted); font-weight: 500; }
 
+/* Dependencies: HTML nodes over an SVG edge layer, laid out in columns by
+   dependency depth. The canvas scrolls inside .g-wrap. */
+.g-tools { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; color: var(--c-muted); font-size: 13px; }
+.g-tools .select { max-width: 260px; }
+.g-tools .back { display: inline-flex; align-items: center; gap: 6px; }
+.g-legend { display: flex; gap: 14px; flex-wrap: wrap; margin-left: auto; font-size: 12px; }
+.g-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.g-legend i.ln { display: inline-block; width: 18px; height: 0; border-top: 2px solid var(--c-dash); }
+.g-legend i.ln.ok { border-color: var(--c-green); opacity: .6; }
+.g-legend i.ln.ms { border-color: var(--c-blue); }
+.g-wrap { overflow: auto; background: var(--c-card); border: 1px solid var(--c-line); border-radius: 16px; max-height: calc(100vh - 230px); min-height: 360px; }
+.g-canvas { position: relative; }
+.g-canvas svg.edges { position: absolute; left: 0; top: 0; pointer-events: none; overflow: visible; }
+.g-canvas path.e { fill: none; stroke: var(--c-dash); stroke-width: 1.6; marker-end: url(#g-arrow); }
+.g-canvas path.e.ok { stroke: var(--c-green); stroke-opacity: .55; marker-end: url(#g-arrow-ok); }
+.g-canvas path.e.ms { stroke: var(--c-blue); stroke-opacity: .8; marker-end: url(#g-arrow-hot); }
+.g-canvas path.e.hot { stroke: var(--c-blue); stroke-opacity: 1; stroke-width: 2.4; marker-end: url(#g-arrow-hot); }
+.g-canvas path.e.dim, .g-canvas text.dim { opacity: .1; }
+.g-canvas text.cnt { font-size: 11px; font-weight: 700; fill: var(--c-muted); stroke: var(--c-card); stroke-width: 4px; paint-order: stroke; pointer-events: auto; cursor: default; }
+.g-canvas text.cnt.hot { fill: var(--c-blue); }
+.g-col { position: absolute; top: 12px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--c-faint); white-space: nowrap; }
+.gnode {
+  position: absolute; padding: 7px 10px 7px 14px; border: 1px solid var(--c-line); border-radius: 12px; background: var(--c-card); color: var(--c-text);
+  cursor: pointer; text-align: left; display: flex; flex-direction: column; gap: 3px; overflow: hidden; transition: opacity .12s, border-color .12s;
+}
+.gnode::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--c-faint); }
+.gnode.done::before { background: var(--c-green); } .gnode.in_progress::before { background: var(--c-amber); } .gnode.pending::before { background: var(--c-red); }
+.gnode.ready { border-color: var(--c-blue-line); box-shadow: 0 0 0 2px var(--c-blue-pale); }
+.gnode:hover, .gnode:focus-visible, .gnode.hot { border-color: var(--c-blue); outline: none; }
+.gnode .top { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--c-muted); min-width: 0; white-space: nowrap; }
+.gnode .top b { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; color: var(--c-text); }
+.gnode .top .r { margin-left: auto; overflow: hidden; text-overflow: ellipsis; }
+.gnode .nm { font-size: 12.5px; font-weight: 600; line-height: 1.35; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.gnode.phase .nm { font-size: 14px; font-weight: 800; }
+/* Faded nodes stay opaque so links behind them do not show through. */
+.gnode.ext { border-style: dashed; }
+.gnode.ext > *, .gnode.ext::before { opacity: .55; }
+.gnode.dim { border-color: var(--c-line); box-shadow: none; }
+.gnode.dim > *, .gnode.dim::before { opacity: .18; }
+
 /* Detail dialog */
 dialog { border: 1px solid var(--c-line); border-radius: 16px; padding: 0; width: min(760px, calc(100vw - 32px)); max-height: calc(100vh - 48px); background: var(--c-card); color: var(--c-text); }
 dialog::backdrop { background: var(--c-backdrop); }
@@ -295,6 +335,7 @@ dialog::backdrop { background: var(--c-backdrop); }
   <symbol id="i-zap" viewBox="0 0 24 24"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></symbol>
   <symbol id="i-kanban" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M8 7v7"/><path d="M12 7v4"/><path d="M16 7v9"/></symbol>
   <symbol id="i-layers" viewBox="0 0 24 24"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/></symbol>
+  <symbol id="i-flow" viewBox="0 0 24 24"><rect width="8" height="8" x="3" y="3" rx="2"/><path d="M7 11v4a2 2 0 0 0 2 2h4"/><rect width="8" height="8" x="13" y="13" rx="2"/></symbol>
   <symbol id="i-list" viewBox="0 0 24 24"><path d="M3 6h.01"/><path d="M3 12h.01"/><path d="M3 18h.01"/><path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/></symbol>
   <symbol id="i-box" viewBox="0 0 24 24"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></symbol>
   <symbol id="i-check" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></symbol>
@@ -316,11 +357,11 @@ dialog::backdrop { background: var(--c-backdrop); }
     </div>
     <nav id="nav">
       <!-- One button per view. Each data-tab must match a key in VIEWS below
-           (dashboard_test.go checks this). The Dependencies view (AJ-0036)
-           goes after Board: add its button here and its entry in VIEWS. -->
+           (dashboard_test.go checks this). -->
       <button class="nav-item" type="button" data-tab="overview" title="Overview"><svg class="i"><use href="#i-dash"/></svg><span class="hide-c">Overview</span><span class="n hide-c"></span></button>
       <button class="nav-item" type="button" data-tab="next" title="Next up"><svg class="i"><use href="#i-zap"/></svg><span class="hide-c">Next up</span><span class="n hide-c"></span></button>
       <button class="nav-item" type="button" data-tab="board" title="Board"><svg class="i"><use href="#i-kanban"/></svg><span class="hide-c">Board</span><span class="n hide-c"></span></button>
+      <button class="nav-item" type="button" data-tab="deps" title="Dependencies"><svg class="i"><use href="#i-flow"/></svg><span class="hide-c">Dependencies</span><span class="n hide-c"></span></button>
       <button class="nav-item" type="button" data-tab="phases" title="Phases"><svg class="i"><use href="#i-layers"/></svg><span class="hide-c">Phases</span><span class="n hide-c"></span></button>
       <button class="nav-item" type="button" data-tab="tickets" title="Tickets"><svg class="i"><use href="#i-list"/></svg><span class="hide-c">Tickets</span><span class="n hide-c"></span></button>
       <button class="nav-item" type="button" data-tab="apps" title="Apps"><svg class="i"><use href="#i-box"/></svg><span class="hide-c">Apps</span><span class="n hide-c"></span></button>
@@ -497,13 +538,13 @@ dialog::backdrop { background: var(--c-backdrop); }
   };
 
   /* -------------------------------------------------------------------------
-     Views. Keys match the nav buttons' data-tab. Add the Dependencies view
-     (AJ-0036) here as well as in the nav.
+     Views. Keys match the nav buttons' data-tab.
      ----------------------------------------------------------------------- */
   const VIEWS = {
     overview: { label: 'Overview', sub: 'Progress per milestone, in order, and per phase.', filters: false },
     next: { label: 'Next up', sub: 'Tickets that can start now, in the order ajiya next gives: earliest milestone first, then what unblocks most.', filters: true },
     board: { label: 'Board', sub: 'Every ticket by where it stands.', filters: true },
+    deps: { label: 'Dependencies', sub: 'What waits on what. An arrow points from a dependency to what needs it; columns go left to right by depth.', filters: false },
     phases: { label: 'Phases', sub: 'Tickets by phase, in display order.', filters: true },
     tickets: { label: 'Tickets', sub: 'Every ticket in the plan.', filters: true },
     apps: { label: 'Apps', sub: 'Tickets per app.', filters: false },
@@ -511,7 +552,7 @@ dialog::backdrop { background: var(--c-backdrop); }
     activity: { label: 'Activity', sub: 'Commits from the last 30 days, newest first, with the status changes they made.', filters: false },
   };
   const renderers = {
-    overview: renderOverview, next: renderNext, board: renderBoard, phases: renderPhases,
+    overview: renderOverview, next: renderNext, board: renderBoard, deps: renderDeps, phases: renderPhases,
     tickets: renderTickets, apps: renderApps, checks: renderChecks, activity: renderActivity,
   };
 
@@ -724,6 +765,282 @@ dialog::backdrop { background: var(--c-backdrop); }
         <span>${plural(list.length, 'ticket')}</span></div>
       <div class="board">${cols.map(colHTML).join('')}</div>`;
     $('laneBtn').onclick = () => { lanes = !lanes; store.set(key('lanes'), lanes ? '1' : '0'); renderBoard(); };
+  }
+
+  /* -------------------------------------------------------------------------
+     Dependencies. Two graphs: the phases (the default, readable at any size)
+     and the tickets of one phase with, faded, their direct dependencies and
+     dependants in other phases. An arrow points from a dependency to what
+     needs it.
+
+     Layout: nodes that wait on each other (a cycle, found as a strongly
+     connected component) share a column; every other node sits one column
+     right of its deepest dependency, so arrows point right. Within a column:
+     display order, then a few barycentre sweeps so arrows cross less. Nodes
+     have a fixed size on a grid, so labels never overlap; long titles are cut
+     and shown in full on hover. The canvas scrolls.
+     ----------------------------------------------------------------------- */
+  let depPhase = store.get(key('depphase')) || '';
+  let depMs = store.get(key('depms')) || '';
+
+  // Tickets a milestone needs: its targets' tickets (a phase's tickets, or
+  // the ticket) and everything they depend on, directly or not.
+  function requiredSet(name) {
+    const m = milestones.find(x => x.name === name);
+    if (!m) return null;
+    const set = new Set(), stack = [];
+    arr(m.targets).forEach(tg => {
+      if (phaseBySlug.has(tg)) tickets.forEach(t => { if (t.phase === tg) stack.push(t.id); });
+      else {
+        const t = byID.get(tg) || tickets.find(x => arr(x.status.aliases).includes(tg));
+        if (t) stack.push(t.id);
+      }
+    });
+    while (stack.length) {
+      const id = stack.pop();
+      if (set.has(id)) continue;
+      set.add(id);
+      arr((byID.get(id) || {}).depends).forEach(d => { if (byID.has(d) && !set.has(d)) stack.push(d); });
+    }
+    return set;
+  }
+
+  // Everything reachable from id through next(id), not counting id.
+  const reach = (id, next) => {
+    const seen = new Set(), stack = [id];
+    while (stack.length) next(stack.pop()).forEach(y => { if (y !== id && !seen.has(y)) { seen.add(y); stack.push(y); } });
+    return seen;
+  };
+
+  // Columns for a graph. ids: node IDs in display order; ups: ID -> IDs it
+  // depends on. Returns the columns (lists of IDs) and the IDs in a cycle.
+  function layout(ids, ups) {
+    const n = ids.length, ix = new Map(ids.map((id, i) => [id, i]));
+    const adj = ids.map(id => [...new Set(ups.get(id) || [])].map(d => ix.get(d)).filter(j => j !== undefined));
+    // Tarjan's strongly connected components, without recursion. Components
+    // come out dependencies first.
+    const num = new Array(n).fill(-1), low = new Array(n), on = new Array(n).fill(false), comp = new Array(n);
+    const stack = [];
+    let counter = 0, nc = 0;
+    for (let s0 = 0; s0 < n; s0++) {
+      if (num[s0] >= 0) continue;
+      num[s0] = low[s0] = counter++; stack.push(s0); on[s0] = true;
+      const work = [[s0, 0]];
+      while (work.length) {
+        const top = work[work.length - 1], v = top[0];
+        if (top[1] < adj[v].length) {
+          const w = adj[v][top[1]++];
+          if (num[w] < 0) { num[w] = low[w] = counter++; stack.push(w); on[w] = true; work.push([w, 0]); }
+          else if (on[w]) low[v] = Math.min(low[v], num[w]);
+        } else {
+          work.pop();
+          if (work.length) { const u = work[work.length - 1][0]; low[u] = Math.min(low[u], low[v]); }
+          if (low[v] === num[v]) { let w; do { w = stack.pop(); on[w] = false; comp[w] = nc; } while (w !== v); nc++; }
+        }
+      }
+    }
+    const members = Array.from({ length: nc }, () => []);
+    comp.forEach((c, i) => members[c].push(i));
+    const lvl = new Array(nc).fill(0);
+    for (let c = 0; c < nc; c++) members[c].forEach(v => adj[v].forEach(w => { if (comp[w] !== c) lvl[c] = Math.max(lvl[c], lvl[comp[w]] + 1); }));
+    const depth = ids.map((_, i) => lvl[comp[i]]);
+    const cyclic = new Set();
+    members.forEach(m => { if (m.length > 1) m.forEach(v => cyclic.add(ids[v])); });
+
+    const cols = [];
+    ids.forEach((_, i) => (cols[depth[i]] = cols[depth[i]] || []).push(i));
+    const downs = ids.map(() => []);
+    adj.forEach((ds, i) => ds.forEach(j => downs[j].push(i)));
+    const pos = new Array(n);
+    cols.forEach(c => c.forEach((v, r) => { pos[v] = r; }));
+    const sweep = (c, nb) => {
+      const k = new Map(c.map(v => {
+        const o = nb[v].filter(j => depth[j] !== depth[v]);
+        return [v, o.length ? o.reduce((a, j) => a + pos[j], 0) / o.length : pos[v]];
+      }));
+      c.sort((a, b) => k.get(a) - k.get(b) || a - b);
+      c.forEach((v, r) => { pos[v] = r; });
+    };
+    for (let pass = 0; pass < 4; pass++) {
+      for (let i = 1; i < cols.length; i++) sweep(cols[i], adj);
+      for (let i = cols.length - 2; i >= 0; i--) sweep(cols[i], downs);
+    }
+    return { cols: cols.map(c => c.map(i => ids[i])), cyclic };
+  }
+
+  // Draws a graph. nodes: [{ id, cls, title, html, attr }] in display order;
+  // edges: [{ from, to, cls, ms, label, title }] where to depends on from.
+  function graphHTML(nodes, edges, size) {
+    const ups = new Map();
+    edges.forEach(e => { if (!ups.has(e.to)) ups.set(e.to, []); ups.get(e.to).push(e.from); });
+    const { cols, cyclic } = layout(nodes.map(n => n.id), ups);
+    const { W, H } = size, GX = 90, GY = 12, PAD = 20, TOP = 40, LOOP = 70;
+    const xy = new Map();
+    let rows = 0;
+    cols.forEach((c, i) => { rows = Math.max(rows, c.length); c.forEach((id, r) => xy.set(id, { x: PAD + i * (W + GX), y: TOP + r * (H + GY), d: i })); });
+    const width = PAD * 2 + cols.length * W + Math.max(0, cols.length - 1) * GX + (cyclic.size ? LOOP : 0);
+    const height = TOP + rows * (H + GY) + PAD;
+    const paths = [], labels = [];
+    edges.forEach(e => {
+      const a = xy.get(e.from), b = xy.get(e.to);
+      if (!a || !b) return;
+      let d, lx;
+      const y1 = a.y + H / 2, y2 = b.y + H / 2;
+      if (a.d < b.d) {
+        const x1 = a.x + W, x2 = b.x - 4, mx = (x1 + x2) / 2;
+        d = `M${x1},${y1} C${mx},${y1} ${mx},${y2} ${x2},${y2}`; lx = mx;
+      } else {
+        // Same column: the two wait on each other. Loop out to the right,
+        // downward links wider than upward ones so a pair does not overlap.
+        const x1 = a.x + W, x2 = b.x + W + 4, bx = x1 + (y2 > y1 ? 56 : 28) + Math.min(14, Math.abs(y2 - y1) / 20);
+        d = `M${x1},${y1} C${bx},${y1} ${bx},${y2} ${x2},${y2}`; lx = x1 + (bx - x1) * .75;
+      }
+      const at = `data-from="${esc(e.from)}" data-to="${esc(e.to)}"${e.ms ? ' data-ms="1"' : ''}`;
+      paths.push(`<path class="e${e.cls ? ' ' + e.cls : ''}" ${at} d="${d}"/>`);
+      if (e.label) labels.push(`<text class="cnt" ${at} x="${lx}" y="${(y1 + y2) / 2 + 4}" text-anchor="middle"><title>${esc(e.title || '')}</title>${esc(e.label)}</text>`);
+    });
+    const colTitle = i => i === 0 ? 'Nothing before' : `${i} step${i > 1 ? 's' : ''} in`;
+    const heads = cols.map((c, i) => `<div class="g-col" style="left:${PAD + i * (W + GX)}px">${colTitle(i)}</div>`).join('');
+    const body = nodes.map(nd => {
+      const p = xy.get(nd.id);
+      return `<button type="button" class="gnode ${nd.cls}" data-node="${esc(nd.id)}" ${nd.attr || ''} style="left:${p.x}px;top:${p.y}px;width:${W}px;height:${H}px"
+        title="${esc(nd.title)}${cyclic.has(nd.id) ? '\n(in a cycle: these wait on each other)' : ''}">${nd.html}</button>`;
+    }).join('');
+    const marker = (id, v) => `<marker id="${id}" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(${v});stroke:none"/></marker>`;
+    return {
+      cyclic,
+      html: `<div class="g-wrap" id="gWrap"><div class="g-canvas" id="gCanvas" style="width:${width}px;height:${height}px">
+        <svg class="edges" width="${width}" height="${height}" aria-hidden="true"><defs>${marker('g-arrow', '--c-dash')}${marker('g-arrow-ok', '--c-green')}${marker('g-arrow-hot', '--c-blue')}</defs>
+        ${paths.join('')}${labels.join('')}</svg>${heads}${body}</div></div>`,
+    };
+  }
+
+  // Hover and focus trace a node's chain; the milestone path is the resting state.
+  function wireGraph(up, down, msSet) {
+    const canvas = $('gCanvas');
+    if (!canvas) return;
+    const nodeEls = [...canvas.querySelectorAll('.gnode')];
+    const edgeEls = [...canvas.querySelectorAll('[data-from]')];
+    const memo = new Map();
+    const chainOf = id => {
+      if (!memo.has(id)) memo.set(id, new Set([id, ...reach(id, up), ...reach(id, down)]));
+      return memo.get(id);
+    };
+    const paint = chain => {
+      nodeEls.forEach(el => {
+        const on = chain ? chain.has(el.dataset.node) : !msSet || msSet.has(el.dataset.node);
+        el.classList.toggle('dim', !on); el.classList.toggle('hot', !!chain && on);
+      });
+      edgeEls.forEach(el => {
+        const on = chain ? chain.has(el.dataset.from) && chain.has(el.dataset.to) : !msSet || el.dataset.ms === '1';
+        el.classList.toggle('dim', !on); el.classList.toggle('hot', !!chain && on); el.classList.toggle('ms', !chain && !!msSet && on);
+      });
+    };
+    let cur = null;
+    const enter = e => { const n = e.target.closest('.gnode'); if (n && n.dataset.node !== cur) { cur = n.dataset.node; paint(chainOf(cur)); } };
+    const leave = () => { if (cur !== null) { cur = null; paint(null); } };
+    canvas.addEventListener('mouseover', enter);
+    canvas.addEventListener('focusin', enter);
+    canvas.addEventListener('mouseleave', leave);
+    canvas.addEventListener('focusout', e => { if (!canvas.contains(e.relatedTarget)) leave(); });
+    paint(null);
+  }
+
+  const plainTitle = s => String(s ?? '').replace(/`/g, '');
+  function renderDeps() {
+    if (depPhase && !phaseBySlug.has(depPhase)) depPhase = '';
+    if (depMs && !msIndex.has(depMs)) depMs = '';
+    const req = depMs ? requiredSet(depMs) : null;
+    const msSel = milestones.length ? `<select class="select" id="gMs" aria-label="Path to a milestone">${opt('', 'Path to a milestone: none', depMs)}${
+      milestones.map(m => opt(m.name, `Path to ${m.name}`, depMs)).join('')}</select>` : '';
+    const legend = `<div class="g-legend"><span><i class="ln ok"></i>Dependency closed</span><span><i class="ln"></i>Still open</span>${
+      req ? '<span><i class="ln ms"></i>Milestone path</span>' : ''}<span><i class="dot done"></i>Done</span><span><i class="dot in_progress"></i>In progress</span><span><i class="dot pending"></i>Pending</span></div>`;
+    const tUp = id => arr((byID.get(id) || {}).depends).filter(d => byID.has(d));
+    const tDown = id => arr((byID.get(id) || {}).dependants).filter(d => byID.has(d));
+    let tools, g, up, down, msNodes = null;
+
+    if (!depPhase) {
+      // Phase graph: an arrow from A to B when a ticket in B depends on one in A.
+      const ph = new Map(phases.map(p => [p.slug, { inside: 0, reqN: 0, ups: new Set(), downs: new Set() }]));
+      const links = new Map();
+      tickets.forEach(t => {
+        const b = ph.get(t.phase);
+        if (!b) return;
+        if (req && req.has(t.id)) b.reqN++;
+        arr(t.depends).forEach(d => {
+          const u = byID.get(d);
+          if (!u || !ph.has(u.phase)) return;
+          if (u.phase === t.phase) { b.inside++; return; }
+          const k = u.phase + '\n' + t.phase;
+          if (!links.has(k)) links.set(k, { from: u.phase, to: t.phase, n: 0, open: 0, ms: 0 });
+          const l = links.get(k);
+          l.n++;
+          if (!closed(u)) l.open++;
+          if (req && req.has(t.id) && req.has(u.id)) l.ms++;
+          b.ups.add(u.phase); ph.get(u.phase).downs.add(t.phase);
+        });
+      });
+      const edges = [...links.values()].map(l => ({
+        from: l.from, to: l.to, cls: l.open ? '' : 'ok', ms: l.ms > 0, label: String(l.n),
+        title: `${plural(l.n, 'link')}: tickets in ${phaseTitle(l.to)} depend on tickets in ${phaseTitle(l.from)}${l.open ? ` (${l.open} still open)` : ' (all closed)'}${req ? ` · ${l.ms} on the path to ${depMs}` : ''}`,
+      }));
+      const nodes = phases.map(p => {
+        const c = p.counts, b = ph.get(p.slug);
+        const st = c.total && c.done + c.dropped === c.total ? 'done' : c.in_progress || c.done ? 'in_progress' : 'pending';
+        const meta = req ? `${b.reqN} of ${c.total} needed for ${depMs}` : `${plural(c.total, 'ticket')} · ${plural(b.inside, 'link')} inside`;
+        return {
+          id: p.slug, cls: 'phase ' + st, attr: `data-dep-phase="${esc(p.slug)}"`,
+          title: `${p.title || p.slug}${p.goal ? '\n' + p.goal : ''}\n${countText(c)}\nDepends on ${plural(b.ups.size, 'phase')}, needed by ${b.downs.size}. Click to see its tickets.`,
+          html: `<span class="top"><b>${esc(p.slug)}</b><span class="r">${c.done + c.dropped}/${c.total}</span></span>
+            <span class="nm">${esc(p.title || p.slug)}</span>${barHTML(c)}<span class="top">${esc(meta)}</span>`,
+        };
+      });
+      if (req) msNodes = new Set(phases.filter(p => ph.get(p.slug).reqN).map(p => p.slug));
+      g = graphHTML(nodes, edges, { W: 240, H: 88 });
+      up = id => [...(ph.get(id) || { ups: [] }).ups];
+      down = id => [...(ph.get(id) || { downs: [] }).downs];
+      tools = `${msSel}<span>${plural(phases.length, 'phase')} · ${plural(edges.length, 'link')} between phases${g.cyclic.size ? ` · ${g.cyclic.size} phases wait on each other` : ''} · click a phase to see its tickets</span>`;
+      if (!phases.length) g.html = '<div class="empty">No phases yet. Add one with <span class="mono">ajiya phase add</span>.</div>';
+    } else {
+      // One phase's tickets, with their direct dependencies and dependants in
+      // other phases, faded. Links between two outside tickets are left out.
+      const p = phaseBySlug.get(depPhase);
+      const inside = tickets.filter(t => t.phase === depPhase);
+      const inSet = new Set(inside.map(t => t.id));
+      const ext = new Set();
+      inside.forEach(t => [...tUp(t.id), ...tDown(t.id)].forEach(d => { if (!inSet.has(d)) ext.add(d); }));
+      const shown = [...inside, ...[...ext].map(id => byID.get(id))].sort(byPlan);
+      const edges = [];
+      shown.forEach(t => tUp(t.id).forEach(d => {
+        if (!(inSet.has(d) || ext.has(d)) || !(inSet.has(t.id) || inSet.has(d))) return;
+        edges.push({ from: d, to: t.id, cls: closed(byID.get(d)) ? 'ok' : '', ms: !!req && req.has(d) && req.has(t.id) });
+      }));
+      const nodes = shown.map(t => {
+        const out = !inSet.has(t.id);
+        return {
+          id: t.id, cls: `${state(t)}${t.ready ? ' ready' : ''}${out ? ' ext' : ''}`, attr: `data-open="${esc(t.id)}"`,
+          title: `${t.id} ${plainTitle(t.title)}\n${stateLabel[state(t)] || state(t)}${t.ready ? ', can start now' : ''}${out ? `\nIn phase ${phaseTitle(t.phase)}` : ''}${t.milestone ? `\nMilestone ${t.milestone}` : ''}`,
+          html: `<span class="top"><b>${esc(t.id)}</b>${t.milestone ? `<span>${esc(t.milestone)}</span>` : ''}<span class="r">${out ? esc(phaseTitle(t.phase)) : t.ready ? 'can start now' : esc(stateLabel[state(t)] || state(t))}</span></span>
+            <span class="nm">${esc(plainTitle(t.title))}</span>`,
+        };
+      });
+      if (req) msNodes = req;
+      g = graphHTML(nodes, edges, { W: 230, H: 54 });
+      up = tUp; down = tDown;
+      tools = `<button type="button" class="pill-toggle back" id="gBack">${icon('left')}All phases</button>
+        <select class="select" id="gPhase" aria-label="Phase">${phases.map(x => opt(x.slug, x.title || x.slug, depPhase)).join('')}</select>${msSel}
+        <span>${plural(inside.length, 'ticket')}${ext.size ? ` · ${ext.size} in other phases (dashed)` : ''}${g.cyclic.size ? ` · ${g.cyclic.size} wait on each other` : ''}</span>`;
+      if (!inside.length) g.html = `<div class="empty">${esc(p.title || p.slug)} has no tickets yet.</div>`;
+    }
+
+    view.innerHTML = `<div class="g-tools">${tools}${legend}</div>${g.html}`;
+    wireGraph(up, down, msNodes);
+    const setPhase = v => { depPhase = v; store.set(key('depphase'), v); renderDeps(); };
+    const canvas = $('gCanvas');
+    if (canvas) canvas.addEventListener('click', e => { const n = e.target.closest('[data-dep-phase]'); if (n) setPhase(n.dataset.depPhase); });
+    if ($('gBack')) $('gBack').onclick = () => setPhase('');
+    if ($('gPhase')) $('gPhase').onchange = e => setPhase(e.target.value);
+    if ($('gMs')) $('gMs').onchange = e => { depMs = e.target.value; store.set(key('depms'), depMs); renderDeps(); };
   }
 
   /* Phases: each phase in display order with its tickets. */

@@ -100,7 +100,7 @@ func TestViewsInNav(t *testing.T) {
 	for _, m := range regexp.MustCompile(`(?m)^\s*(\w+): \{ label:`).FindAllStringSubmatch(reg, -1) {
 		views = append(views, m[1])
 	}
-	want := []string{"overview", "next", "board", "phases", "tickets", "apps", "checks", "activity"}
+	want := []string{"overview", "next", "board", "deps", "phases", "tickets", "apps", "checks", "activity"}
 	if strings.Join(views, " ") != strings.Join(want, " ") {
 		t.Errorf("views = %v, want %v", views, want)
 	}
