@@ -14,13 +14,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 37,
-        "done": 34,
+        "done": 35,
         "in_progress": 0,
-        "pending": 3,
+        "pending": 2,
         "dropped": 0
       },
-      "percent": 91,
-      "ready": 2
+      "percent": 94,
+      "ready": 1
     },
     {
       "name": "v0-2",
@@ -29,13 +29,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 43,
-        "done": 34,
+        "done": 35,
         "in_progress": 0,
-        "pending": 9,
+        "pending": 8,
         "dropped": 0
       },
-      "percent": 79,
-      "ready": 2
+      "percent": 81,
+      "ready": 1
     },
     {
       "name": "v0-3",
@@ -44,13 +44,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 53,
-        "done": 34,
+        "done": 35,
         "in_progress": 0,
-        "pending": 19,
+        "pending": 18,
         "dropped": 0
       },
-      "percent": 64,
-      "ready": 2
+      "percent": 66,
+      "ready": 1
     },
     {
       "name": "after-v0-3",
@@ -59,13 +59,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 52,
-        "done": 34,
+        "done": 35,
         "in_progress": 0,
-        "pending": 18,
+        "pending": 17,
         "dropped": 0
       },
-      "percent": 65,
-      "ready": 2
+      "percent": 67,
+      "ready": 1
     }
   ],
   "phases": [
@@ -75,12 +75,12 @@ window.AJIYA = {
       "goal": "Every commit names 1 to 3 tickets, enforced by hooks with a CI check as backup",
       "counts": {
         "total": 8,
-        "done": 7,
+        "done": 8,
         "in_progress": 0,
-        "pending": 1,
+        "pending": 0,
         "dropped": 0
       },
-      "percent": 87,
+      "percent": 100,
       "milestone": "v0-1"
     },
     {
@@ -188,9 +188,9 @@ window.AJIYA = {
       "path": ".",
       "counts": {
         "total": 66,
-        "done": 46,
+        "done": 47,
         "in_progress": 0,
-        "pending": 20,
+        "pending": 19,
         "dropped": 0
       }
     }
@@ -1015,8 +1015,7 @@ window.AJIYA = {
       "milestone": "v0-1",
       "ready": false,
       "waiting_on": [
-        "AJ-0041",
-        "AJ-0065"
+        "AJ-0041"
       ],
       "dependants": [
         "AJ-0042"
@@ -1794,19 +1793,22 @@ window.AJIYA = {
       "phase": "commit-rule",
       "app": "ajiya",
       "title": "ticket done takes evidence only from commits after the ticket started",
-      "done_when": "ticket done refuses when the only commits naming the ticket predate the commit that set it in progress (for example a planning or reference commit), and says to commit the work; tests cover a pre-start commit alone and a pre-start plus a later commit",
+      "done_when": "ticket start records the start time locally (in the git directory); ticket done refuses when every commit naming the ticket predates it and names the ignored commit; tests cover a pre-start commit alone, a pre-start plus a later commit, and a ticket with no start record",
       "depends": [],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · 5c1af99 · 2026-09-29 · tests passed",
+        "commit": "5c1af99",
+        "date": "2026-09-29",
+        "tests_passed": true
       },
       "milestone": "v0-1",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0034"
       ],
-      "unblocks": 18
+      "unblocks": 0
     },
     {
       "id": "AJ-0066",
@@ -1834,11 +1836,26 @@ window.AJIYA = {
     }
   ],
   "next": [
-    "AJ-0041",
-    "AJ-0065"
+    "AJ-0041"
   ],
   "checks": [],
   "activity": [
+    {
+      "hash": "5c1af9978623670e6ad96f84e17d4d641d1871bf",
+      "short": "5c1af99",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Ticket done counts only commits made after the ticket started",
+      "refs": [
+        "AJ-0065"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790713063
+    },
     {
       "hash": "d0c5d61ab6f51a54a306aafb9392197706f50f5f",
       "short": "d0c5d61",
