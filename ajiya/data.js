@@ -28,13 +28,13 @@ window.AJIYA = {
         "AJ-0047"
       ],
       "required": {
-        "total": 59,
+        "total": 61,
         "done": 36,
         "in_progress": 0,
-        "pending": 23,
+        "pending": 25,
         "dropped": 0
       },
-      "percent": 61,
+      "percent": 59,
       "ready": 1
     },
     {
@@ -43,13 +43,13 @@ window.AJIYA = {
         "AJ-0058"
       ],
       "required": {
-        "total": 69,
+        "total": 71,
         "done": 36,
         "in_progress": 0,
-        "pending": 33,
+        "pending": 35,
         "dropped": 0
       },
-      "percent": 52,
+      "percent": 50,
       "ready": 1
     },
     {
@@ -58,13 +58,13 @@ window.AJIYA = {
         "AJ-0057"
       ],
       "required": {
-        "total": 68,
+        "total": 70,
         "done": 36,
         "in_progress": 0,
-        "pending": 32,
+        "pending": 34,
         "dropped": 0
       },
-      "percent": 52,
+      "percent": 51,
       "ready": 1
     }
   ],
@@ -158,13 +158,13 @@ window.AJIYA = {
       "title": "Install",
       "goal": "Ajiya installs in one step, with a Claude Code plugin",
       "counts": {
-        "total": 19,
+        "total": 21,
         "done": 1,
         "in_progress": 0,
-        "pending": 18,
+        "pending": 20,
         "dropped": 0
       },
-      "percent": 5,
+      "percent": 4,
       "milestone": "v0-2"
     },
     {
@@ -187,10 +187,10 @@ window.AJIYA = {
       "name": "ajiya",
       "path": ".",
       "counts": {
-        "total": 82,
+        "total": 84,
         "done": 48,
         "in_progress": 0,
-        "pending": 34,
+        "pending": 36,
         "dropped": 0
       }
     }
@@ -1029,7 +1029,7 @@ window.AJIYA = {
         "AJ-0071",
         "AJ-0072"
       ],
-      "unblocks": 32
+      "unblocks": 34
     },
     {
       "id": "AJ-0035",
@@ -1207,7 +1207,7 @@ window.AJIYA = {
       "dependants": [
         "AJ-0034"
       ],
-      "unblocks": 33
+      "unblocks": 35
     },
     {
       "id": "AJ-0042",
@@ -1233,7 +1233,7 @@ window.AJIYA = {
         "AJ-0046",
         "AJ-0047"
       ],
-      "unblocks": 23
+      "unblocks": 24
     },
     {
       "id": "AJ-0043",
@@ -1258,7 +1258,7 @@ window.AJIYA = {
         "AJ-0046",
         "AJ-0047"
       ],
-      "unblocks": 22
+      "unblocks": 23
     },
     {
       "id": "AJ-0044",
@@ -1284,7 +1284,7 @@ window.AJIYA = {
         "AJ-0073",
         "AJ-0077"
       ],
-      "unblocks": 20
+      "unblocks": 21
     },
     {
       "id": "AJ-0045",
@@ -1921,7 +1921,7 @@ window.AJIYA = {
       "dependants": [
         "AJ-0077"
       ],
-      "unblocks": 16
+      "unblocks": 17
     },
     {
       "id": "AJ-0070",
@@ -1967,9 +1967,10 @@ window.AJIYA = {
         "AJ-0034"
       ],
       "dependants": [
-        "AJ-0079"
+        "AJ-0079",
+        "AJ-0083"
       ],
-      "unblocks": 15
+      "unblocks": 17
     },
     {
       "id": "AJ-0072",
@@ -1990,9 +1991,10 @@ window.AJIYA = {
         "AJ-0034"
       ],
       "dependants": [
-        "AJ-0079"
+        "AJ-0079",
+        "AJ-0084"
       ],
-      "unblocks": 15
+      "unblocks": 16
     },
     {
       "id": "AJ-0073",
@@ -2116,9 +2118,10 @@ window.AJIYA = {
         "AJ-0069"
       ],
       "dependants": [
-        "AJ-0079"
+        "AJ-0079",
+        "AJ-0084"
       ],
-      "unblocks": 15
+      "unblocks": 16
     },
     {
       "id": "AJ-0078",
@@ -2211,7 +2214,8 @@ window.AJIYA = {
         "AJ-0076",
         "AJ-0078",
         "AJ-0079",
-        "AJ-0080"
+        "AJ-0080",
+        "AJ-0084"
       ],
       "status": {
         "state": "pending",
@@ -2225,7 +2229,8 @@ window.AJIYA = {
         "AJ-0076",
         "AJ-0078",
         "AJ-0079",
-        "AJ-0080"
+        "AJ-0080",
+        "AJ-0084"
       ],
       "dependants": [
         "AJ-0082"
@@ -2254,6 +2259,57 @@ window.AJIYA = {
         "AJ-0047"
       ],
       "unblocks": 12
+    },
+    {
+      "id": "AJ-0083",
+      "phase": "install",
+      "app": "ajiya",
+      "title": "Apple signing credentials as release secrets",
+      "done_when": "A Developer ID Application certificate (.p12) and its password, and an App Store Connect API key (.p8) with its key ID and issuer ID, are stored as secrets in a release environment",
+      "depends": [
+        "AJ-0071"
+      ],
+      "status": {
+        "state": "pending",
+        "text": "🟥 Pending · Needs a human: needs the maintainer's Apple Developer account",
+        "human": "needs the maintainer's Apple Developer account"
+      },
+      "milestone": "v0-2",
+      "ready": false,
+      "waiting_on": [
+        "AJ-0071"
+      ],
+      "dependants": [
+        "AJ-0084"
+      ],
+      "unblocks": 15
+    },
+    {
+      "id": "AJ-0084",
+      "phase": "install",
+      "app": "ajiya",
+      "title": "Sign and notarise the macOS binaries",
+      "done_when": "GoReleaser signs and notarises the darwin binaries (notarize.macos) in the release workflow; spctl -a -vv accepts a binary downloaded from a test release; the cask's quarantine-removal hook is removed",
+      "depends": [
+        "AJ-0072",
+        "AJ-0077",
+        "AJ-0083"
+      ],
+      "status": {
+        "state": "pending",
+        "text": "🟥 Pending"
+      },
+      "milestone": "v0-2",
+      "ready": false,
+      "waiting_on": [
+        "AJ-0072",
+        "AJ-0077",
+        "AJ-0083"
+      ],
+      "dependants": [
+        "AJ-0081"
+      ],
+      "unblocks": 14
     }
   ],
   "next": [

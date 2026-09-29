@@ -8,9 +8,9 @@ Generated 2026-09-29.
 | Milestone | Closed | Required | % | Can start now |
 |---|---|---|---|---|
 | v0-1 | 35 | 37 | 94% | 1 |
-| v0-2 | 36 | 59 | 61% | 1 |
-| v0-3 | 36 | 69 | 52% | 1 |
-| after-v0-3 | 36 | 68 | 52% | 1 |
+| v0-2 | 36 | 61 | 59% | 1 |
+| v0-3 | 36 | 71 | 50% | 1 |
+| after-v0-3 | 36 | 70 | 51% | 1 |
 
 ## Phases
 
@@ -22,7 +22,7 @@ Generated 2026-09-29.
 | Onboarding | 9 | 0 | 1 | 10 | 90% | v0-1 |
 | Release | 4 | 0 | 1 | 5 | 80% | v0-1 |
 | Agent-access | 0 | 0 | 3 | 3 | 0% | v0-2 |
-| Install | 1 | 0 | 18 | 19 | 5% | v0-2 |
+| Install | 1 | 0 | 20 | 21 | 4% | v0-2 |
 | Decisions-and-changes | 0 | 0 | 11 | 11 | 0% | v0-3 |
 
 ## Can start now
@@ -62,8 +62,10 @@ Generated 2026-09-29.
 - **AJ-0078** Install scripts served at a stable URL (ajiya) waits on AJ-0045, AJ-0070, AJ-0073
 - **AJ-0079** Gated publish jobs (ajiya) waits on AJ-0071, AJ-0072, AJ-0075, AJ-0077
 - **AJ-0080** npm trusted publishing (ajiya) waits on AJ-0075
-- **AJ-0081** Release rehearsal on a release candidate (ajiya) waits on AJ-0074, AJ-0076, AJ-0078, AJ-0079, AJ-0080
+- **AJ-0081** Release rehearsal on a release candidate (ajiya) waits on AJ-0074, AJ-0076, AJ-0078, AJ-0079, AJ-0080, AJ-0084
 - **AJ-0082** Install docs for every channel (ajiya) waits on AJ-0081
+- **AJ-0083** Apple signing credentials as release secrets (ajiya) waits on AJ-0071
+- **AJ-0084** Sign and notarise the macOS binaries (ajiya) waits on AJ-0072, AJ-0077, AJ-0083
 
 ## Needs a human
 
@@ -76,6 +78,7 @@ Generated 2026-09-29.
 - **AJ-0071** Release environments with required reviewers (ajiya): repository settings need the maintainer
 - **AJ-0080** npm trusted publishing (ajiya): needs the maintainer's npm account
 - **AJ-0081** Release rehearsal on a release candidate (ajiya): publishing anything needs the maintainer's approval
+- **AJ-0083** Apple signing credentials as release secrets (ajiya): needs the maintainer's Apple Developer account
 
 ## Recent activity
 
