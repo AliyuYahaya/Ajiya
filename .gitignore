@@ -17,3 +17,7 @@ ajiya-build-prompt.md
 !.claude/
 .claude/*
 !.claude/skills/
+
+# The agent kit writes CLAUDE.md (a marked block); keep it even where a global
+# gitignore leaves CLAUDE.md out.
+!CLAUDE.md
