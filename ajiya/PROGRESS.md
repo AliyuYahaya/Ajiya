@@ -79,6 +79,7 @@ Generated 2026-09-29.
 
 ## Recent activity
 
+- 2026-09-29 `cc18043` npm names: ajiya plus @ajiya/<os>-<arch> under an ajiya org (AJ-0068, AJ-0075)
 - 2026-09-29 `6a75e60` v0.1 signed off (AJ-0034)
   - AJ-0034: pending → done
 - 2026-09-29 `e803fc9` Merge branch 'worktree-agent-a658cbd8dac8f5d6c' (-)
@@ -99,24 +100,7 @@ Generated 2026-09-29.
 - 2026-09-29 `140a432` AJ-0065 done (AJ-0065)
   - AJ-0065: pending → done
 - 2026-09-29 `5c1af99` Ticket done counts only commits made after the ticket started (AJ-0065)
-- 2026-09-29 `619df03` Plan the install channels: npm, Homebrew and the install script (chore)
-  - AJ-0067: new → pending
-  - AJ-0068: new → pending
-  - AJ-0069: new → pending
-  - AJ-0070: new → pending
-  - AJ-0071: new → pending
-  - AJ-0072: new → pending
-  - AJ-0073: new → pending
-  - AJ-0074: new → pending
-  - AJ-0075: new → pending
-  - AJ-0076: new → pending
-  - AJ-0077: new → pending
-  - AJ-0078: new → pending
-  - AJ-0079: new → pending
-  - AJ-0080: new → pending
-  - AJ-0081: new → pending
-  - AJ-0082: new → pending
-- and 123 more in data.js
+- and 124 more in data.js
 
 ## Checks
 

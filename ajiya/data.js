@@ -2312,6 +2312,23 @@ window.AJIYA = {
   "checks": [],
   "activity": [
     {
+      "hash": "cc18043a054d384e3fa98266bd9324b9d6aa53a6",
+      "short": "cc18043",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "npm names: ajiya plus @ajiya/\u003cos\u003e-\u003carch\u003e under an ajiya org",
+      "refs": [
+        "AJ-0068",
+        "AJ-0075"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790716611
+    },
+    {
       "hash": "6a75e6037a1643a56ba57e1315f6852f5b676e43",
       "short": "6a75e60",
       "date": "2026-09-29",
