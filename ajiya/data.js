@@ -14,13 +14,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 37,
-        "done": 34,
+        "done": 35,
         "in_progress": 0,
-        "pending": 3,
+        "pending": 2,
         "dropped": 0
       },
-      "percent": 91,
-      "ready": 2
+      "percent": 94,
+      "ready": 1
     },
     {
       "name": "v0-2",
@@ -29,13 +29,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 43,
-        "done": 34,
+        "done": 35,
         "in_progress": 0,
-        "pending": 9,
+        "pending": 8,
         "dropped": 0
       },
-      "percent": 79,
-      "ready": 2
+      "percent": 81,
+      "ready": 1
     },
     {
       "name": "v0-3",
@@ -44,13 +44,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 53,
-        "done": 34,
+        "done": 35,
         "in_progress": 0,
-        "pending": 19,
+        "pending": 18,
         "dropped": 0
       },
-      "percent": 64,
-      "ready": 2
+      "percent": 66,
+      "ready": 1
     },
     {
       "name": "after-v0-3",
@@ -59,13 +59,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 52,
-        "done": 34,
+        "done": 35,
         "in_progress": 0,
-        "pending": 18,
+        "pending": 17,
         "dropped": 0
       },
-      "percent": 65,
-      "ready": 2
+      "percent": 67,
+      "ready": 1
     }
   ],
   "phases": [
@@ -117,12 +117,12 @@ window.AJIYA = {
       "goal": "A new or existing project can be set up by an agent using only the installed kit and importers",
       "counts": {
         "total": 10,
-        "done": 9,
+        "done": 10,
         "in_progress": 0,
-        "pending": 1,
+        "pending": 0,
         "dropped": 0
       },
-      "percent": 90,
+      "percent": 100,
       "milestone": "v0-1"
     },
     {
@@ -188,9 +188,9 @@ window.AJIYA = {
       "path": ".",
       "counts": {
         "total": 66,
-        "done": 46,
+        "done": 47,
         "in_progress": 0,
-        "pending": 20,
+        "pending": 19,
         "dropped": 0
       }
     }
@@ -1015,7 +1015,6 @@ window.AJIYA = {
       "milestone": "v0-1",
       "ready": false,
       "waiting_on": [
-        "AJ-0041",
         "AJ-0065"
       ],
       "dependants": [
@@ -1190,16 +1189,19 @@ window.AJIYA = {
         "AJ-0040"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · 7d547a5 · 2026-09-29 · tests passed",
+        "commit": "7d547a5",
+        "date": "2026-09-29",
+        "tests_passed": true
       },
       "milestone": "v0-1",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0034"
       ],
-      "unblocks": 18
+      "unblocks": 0
     },
     {
       "id": "AJ-0042",
@@ -1834,11 +1836,26 @@ window.AJIYA = {
     }
   ],
   "next": [
-    "AJ-0041",
     "AJ-0065"
   ],
   "checks": [],
   "activity": [
+    {
+      "hash": "7d547a524020425284e59f1ad64d5112ffb32b62",
+      "short": "7d547a5",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "import legacy: map each RO package to a phase",
+      "refs": [
+        "AJ-0041"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790714670
+    },
     {
       "hash": "d0c5d61ab6f51a54a306aafb9392197706f50f5f",
       "short": "d0c5d61",

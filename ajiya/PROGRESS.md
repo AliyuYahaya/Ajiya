@@ -7,10 +7,10 @@ Generated 2026-09-29.
 
 | Milestone | Closed | Required | % | Can start now |
 |---|---|---|---|---|
-| v0-1 | 34 | 37 | 91% | 2 |
-| v0-2 | 34 | 43 | 79% | 2 |
-| v0-3 | 34 | 53 | 64% | 2 |
-| after-v0-3 | 34 | 52 | 65% | 2 |
+| v0-1 | 35 | 37 | 94% | 1 |
+| v0-2 | 35 | 43 | 81% | 1 |
+| v0-3 | 35 | 53 | 66% | 1 |
+| after-v0-3 | 35 | 52 | 67% | 1 |
 
 ## Phases
 
@@ -19,7 +19,7 @@ Generated 2026-09-29.
 | Commit-rule | 7 | 0 | 1 | 8 | 87% | v0-1 |
 | Apps-launch | 14 | 0 | 0 | 14 | 100% | v0-1 |
 | Outputs | 12 | 0 | 0 | 12 | 100% | v0-1 |
-| Onboarding | 9 | 0 | 1 | 10 | 90% | v0-1 |
+| Onboarding | 10 | 0 | 0 | 10 | 100% | v0-1 |
 | Release | 4 | 0 | 1 | 5 | 80% | v0-1 |
 | Agent-access | 0 | 0 | 3 | 3 | 0% | v0-2 |
 | Install | 0 | 0 | 3 | 3 | 0% | v0-2 |
@@ -27,12 +27,11 @@ Generated 2026-09-29.
 
 ## Can start now
 
-- **AJ-0041** import legacy maps each RO package to a phase (ajiya) · v0-1
 - **AJ-0065** ticket done takes evidence only from commits after the ticket started (ajiya) · v0-1
 
 ## Waiting
 
-- **AJ-0034** v0.1 definition of done (ajiya) waits on AJ-0041, AJ-0065
+- **AJ-0034** v0.1 definition of done (ajiya) waits on AJ-0065
 - **AJ-0042** ajiya status (ajiya) waits on AJ-0034
 - **AJ-0043** ajiya mcp server (ajiya) waits on AJ-0042
 - **AJ-0044** ajiya mcp install, uninstall and status (ajiya) waits on AJ-0043
@@ -59,6 +58,7 @@ Generated 2026-09-29.
 
 ## Recent activity
 
+- 2026-09-29 `7d547a5` import legacy: map each RO package to a phase (AJ-0041)
 - 2026-09-29 `d0c5d61` AJ-0066 done (AJ-0066)
   - AJ-0066: in_progress → done
 - 2026-09-29 `5a75b38` Guides: how to set the test command (AJ-0066)
@@ -87,8 +87,7 @@ Generated 2026-09-29.
   - AJ-0025: pending → in_progress
 - 2026-09-29 `4f9b1a6` Plan: ticket done evidence must come after the ticket started (chore)
   - AJ-0065: new → pending
-- 2026-09-29 `5556d64` CLAUDE.md with the Ajiya block (AJ-0024)
-- and 107 more in data.js
+- and 108 more in data.js
 
 ## Checks
 
