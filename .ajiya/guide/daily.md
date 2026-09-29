@@ -119,9 +119,9 @@ ajiya ticket done <ID> --by "<name>" --note "<what was done>"
 `ajiya ticket drop <ID> --reason "<why>" --by "<name>"`.
 
 **Created a new app folder?** Register it in the same task:
-`ajiya app add <name> --path <dir>` (`--library` for a shared package). Create the
-folder first: `app add` only warns when the path is not a folder yet. For work outside app
-folders (hosting, CI, DNS) use the app `infra` instead.
+`ajiya app add <name> --path <dir>` (`--library` for a shared package). Create
+the folder first: `app add` only warns when the path is not a folder yet. For
+work outside app folders (hosting, CI, DNS), use the app `infra` instead.
 
 **Ticket has no "done when"?** Imported tickets show `-`. Set one before you start:
 `ajiya ticket edit <ID> --done-when "<check>"`.

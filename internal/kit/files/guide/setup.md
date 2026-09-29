@@ -180,11 +180,11 @@ Imports never reword items, and you should not either.
 
 After an import:
 
-1. Read what it printed. Imports print a "Using app X."
-   line and an "Imported N item(s) into inbox ..." line; they do not list
-   duplicates, so review the tickets yourself: `ajiya ticket list --phase inbox`
-   (add `--json` to read them in a script). Do not read the files in `ajiya/`.
-   `import legacy` also prints a report with left-out loops and old IDs.
+1. Read what it printed: the app it used ("Using app X.") and how many items it
+   imported into `inbox`. It does not list duplicates, so review the tickets
+   yourself with `ajiya ticket list --phase inbox` (add `--json` to read them in a
+   script); do not read the files in `ajiya/`. `import legacy` also prints a
+   report with the links it left out and the old IDs.
 2. Create the feature phases (section 3) and move each ticket out of `inbox`:
    `ajiya ticket edit <ID> --phase <slug>`. Set the right app with `--app`.
 3. Imported tickets have no "done when" (it shows as `-`). Give each one a check
