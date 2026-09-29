@@ -64,6 +64,9 @@ Generated 2026-09-29.
 
 ## Recent activity
 
+- 2026-09-29 `f6b5387` AJ-0022 and AJ-0023 done (AJ-0022, AJ-0023)
+  - AJ-0022: in_progress → done
+  - AJ-0023: in_progress → done
 - 2026-09-29 `8d5cafe` Setup and daily guides for agents (AJ-0022, AJ-0023)
   - AJ-0022: pending → in_progress
   - AJ-0023: pending → in_progress
@@ -97,10 +100,7 @@ Generated 2026-09-29.
 - 2026-09-29 `3aa3572` Plan dashboard live refresh; AJ-0021 waits for the dependencies view again (AJ-0021, AJ-0036, AJ-0060)
   - AJ-0036: pending → in_progress
   - AJ-0060: new → in_progress
-- 2026-09-29 `1a7db96` AJ-0019 and AJ-0020 done (AJ-0019, AJ-0020)
-  - AJ-0019: in_progress → done
-  - AJ-0020: in_progress → done
-- and 90 more in data.js
+- and 91 more in data.js
 
 ## Checks
 
