@@ -7,10 +7,10 @@ Generated 2026-09-29.
 
 | Milestone | Closed | Required | % | Can start now |
 |---|---|---|---|---|
-| v0-1 | 24 | 35 | 68% | 1 |
-| v0-2 | 24 | 41 | 58% | 1 |
-| v0-3 | 24 | 51 | 47% | 1 |
-| after-v0-3 | 24 | 50 | 48% | 1 |
+| v0-1 | 25 | 35 | 71% | 2 |
+| v0-2 | 25 | 41 | 60% | 2 |
+| v0-3 | 25 | 51 | 49% | 2 |
+| after-v0-3 | 25 | 50 | 50% | 2 |
 
 ## Phases
 
@@ -18,7 +18,7 @@ Generated 2026-09-29.
 |---|---|---|---|---|---|---|
 | Commit-rule | 7 | 0 | 0 | 7 | 100% | v0-1 |
 | Apps-launch | 14 | 0 | 0 | 14 | 100% | v0-1 |
-| Outputs | 11 | 0 | 1 | 12 | 91% | v0-1 |
+| Outputs | 12 | 0 | 0 | 12 | 100% | v0-1 |
 | Onboarding | 3 | 0 | 6 | 9 | 33% | v0-1 |
 | Release | 1 | 0 | 4 | 5 | 20% | v0-1 |
 | Agent-access | 0 | 0 | 3 | 3 | 0% | v0-2 |
@@ -27,12 +27,11 @@ Generated 2026-09-29.
 
 ## Can start now
 
-- **AJ-0021** Milestones v0-1, v0-2 and v0-3 set and the dashboard in use on this repo (ajiya) · v0-1
+- **AJ-0022** Setup guide (ajiya) · v0-1
+- **AJ-0023** Daily guide (ajiya) · v0-1
 
 ## Waiting
 
-- **AJ-0022** Setup guide (ajiya) waits on AJ-0021
-- **AJ-0023** Daily guide (ajiya) waits on AJ-0021
 - **AJ-0024** Skill and agent instruction blocks (ajiya) waits on AJ-0022, AJ-0023
 - **AJ-0025** init writes and updates the agent kit (ajiya) waits on AJ-0024
 - **AJ-0029** Re-run init on this repo (ajiya) waits on AJ-0025

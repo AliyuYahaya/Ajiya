@@ -14,13 +14,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 35,
-        "done": 24,
+        "done": 25,
         "in_progress": 0,
-        "pending": 11,
+        "pending": 10,
         "dropped": 0
       },
-      "percent": 68,
-      "ready": 1
+      "percent": 71,
+      "ready": 2
     },
     {
       "name": "v0-2",
@@ -29,13 +29,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 41,
-        "done": 24,
+        "done": 25,
         "in_progress": 0,
-        "pending": 17,
+        "pending": 16,
         "dropped": 0
       },
-      "percent": 58,
-      "ready": 1
+      "percent": 60,
+      "ready": 2
     },
     {
       "name": "v0-3",
@@ -44,13 +44,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 51,
-        "done": 24,
+        "done": 25,
         "in_progress": 0,
-        "pending": 27,
+        "pending": 26,
         "dropped": 0
       },
-      "percent": 47,
-      "ready": 1
+      "percent": 49,
+      "ready": 2
     },
     {
       "name": "after-v0-3",
@@ -59,13 +59,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 50,
-        "done": 24,
+        "done": 25,
         "in_progress": 0,
-        "pending": 26,
+        "pending": 25,
         "dropped": 0
       },
-      "percent": 48,
-      "ready": 1
+      "percent": 50,
+      "ready": 2
     }
   ],
   "phases": [
@@ -103,12 +103,12 @@ window.AJIYA = {
       "goal": "PROGRESS.md, data.js, the dashboard and serve show the plan and its activity",
       "counts": {
         "total": 12,
-        "done": 11,
+        "done": 12,
         "in_progress": 0,
-        "pending": 1,
+        "pending": 0,
         "dropped": 0
       },
-      "percent": 91,
+      "percent": 100,
       "milestone": "v0-1"
     },
     {
@@ -188,9 +188,9 @@ window.AJIYA = {
       "path": ".",
       "counts": {
         "total": 64,
-        "done": 36,
+        "done": 37,
         "in_progress": 0,
-        "pending": 28,
+        "pending": 27,
         "dropped": 0
       }
     }
@@ -685,17 +685,21 @@ window.AJIYA = {
         "AJ-0064"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · 61d1f54 · 2026-09-29 · tests passed · Note: milestone list shows v0-1, v0-2, v0-3 in order; ajiya serve shows this repo's plan live",
+        "note": "milestone list shows v0-1, v0-2, v0-3 in order; ajiya serve shows this repo's plan live",
+        "commit": "61d1f54",
+        "date": "2026-09-29",
+        "tests_passed": true
       },
       "milestone": "v0-1",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0022",
         "AJ-0023"
       ],
-      "unblocks": 27
+      "unblocks": 0
     },
     {
       "id": "AJ-0022",
@@ -711,10 +715,8 @@ window.AJIYA = {
         "text": "🟥 Pending"
       },
       "milestone": "v0-1",
-      "ready": false,
-      "waiting_on": [
-        "AJ-0021"
-      ],
+      "ready": true,
+      "waiting_on": [],
       "dependants": [
         "AJ-0024",
         "AJ-0041"
@@ -735,10 +737,8 @@ window.AJIYA = {
         "text": "🟥 Pending"
       },
       "milestone": "v0-1",
-      "ready": false,
-      "waiting_on": [
-        "AJ-0021"
-      ],
+      "ready": true,
+      "waiting_on": [],
       "dependants": [
         "AJ-0024"
       ],
@@ -1781,7 +1781,8 @@ window.AJIYA = {
     }
   ],
   "next": [
-    "AJ-0021"
+    "AJ-0022",
+    "AJ-0023"
   ],
   "checks": [],
   "activity": [
