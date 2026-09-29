@@ -2495,6 +2495,20 @@ window.AJIYA = {
   "checks": [],
   "activity": [
     {
+      "hash": "607c7b67f025eb42f87569d253533e06af950257",
+      "short": "607c7b6",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Merge branch 'worktree-agent-af1c1cc18e0e82a16' into worktree-agent-a658cbd8dac8f5d6c",
+      "refs": [],
+      "chore": false,
+      "merge": true,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790717524
+    },
+    {
       "hash": "47eac13433feef751d31055e61555a5b7d1b1988",
       "short": "47eac13",
       "date": "2026-09-29",
@@ -2510,6 +2524,64 @@ window.AJIYA = {
       "agent": "",
       "changes": [],
       "time": 1790717473
+    },
+    {
+      "hash": "45d9f00e390c4ecea15fa97e0af0bc31d2f0828c",
+      "short": "45d9f00",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Mark AJ-0087, AJ-0088 and AJ-0089 done",
+      "refs": [
+        "AJ-0087",
+        "AJ-0088",
+        "AJ-0089"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0087",
+          "phase": "onboarding",
+          "from": "pending",
+          "to": "done",
+          "text": "🟩 Done · ac6842b · 2026-09-29 · tests passed"
+        },
+        {
+          "id": "AJ-0088",
+          "phase": "onboarding",
+          "from": "pending",
+          "to": "done",
+          "text": "🟩 Done · ac6842b · 2026-09-29 · tests passed"
+        },
+        {
+          "id": "AJ-0089",
+          "phase": "onboarding",
+          "from": "pending",
+          "to": "done",
+          "text": "🟩 Done · ac6842b · 2026-09-29 · tests passed"
+        }
+      ],
+      "time": 1790717421
+    },
+    {
+      "hash": "ac6842bb36ac856bf0c7638c0cea089d37141a3b",
+      "short": "ac6842b",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Add ticket list, group help and required-flag usage lines",
+      "refs": [
+        "AJ-0087",
+        "AJ-0088",
+        "AJ-0089"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790717274
     },
     {
       "hash": "7f1ede778b36c488b48549625c5a57d076245014",
