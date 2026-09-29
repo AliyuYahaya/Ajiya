@@ -1,0 +1,19 @@
+# phase rename updates [[milestones]] targets, keeping comments.
+
+exec ajiya init --name Demo --prefix DE
+exec ajiya phase add gate-0 'Staging proven'
+exec ajiya phase add go-live 'Live'
+exec ajiya ticket add --phase gate-0 --app infra --done-when x 'Staging'
+exec ajiya ticket add --phase go-live --app infra --done-when x 'Deploy to production' --depends DE-0001
+exec ajiya milestone add staging --targets gate-0
+exec ajiya milestone add launch --targets go-live,DE-0001
+
+exec ajiya phase rename go-live release
+stdout 'Milestone launch now targets release.'
+! stdout 'Milestone staging'
+grep '^targets = \["release", "DE-0001"\]$' ajiya.toml
+grep '^targets = \["gate-0"\]$' ajiya.toml
+exec ajiya milestone list
+stdout 'launch'
+exec ajiya check --strict
+stdout 'No problems found.'

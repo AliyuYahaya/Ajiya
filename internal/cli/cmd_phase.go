@@ -53,6 +53,25 @@ func runPhaseRename(e *env, args []string) error {
 		}
 		fmt.Fprintf(e.stdout, "Launch target is now %s.\n", slug)
 	}
+	for _, m := range pr.cfg.Milestones {
+		if !slices.Contains(m.Targets, old) {
+			continue
+		}
+		targets := slices.Clone(m.Targets)
+		for i, t := range targets {
+			if t == old {
+				targets[i] = slug
+			}
+		}
+		name := m.Name
+		if err := writeConfig(pr, func(text string) (string, bool) {
+			out, err := config.SetMilestoneTargetsText(text, name, slices.Compact(targets))
+			return out, err == nil
+		}); err != nil {
+			return err
+		}
+		fmt.Fprintf(e.stdout, "Milestone %s now targets %s.\n", name, slug)
+	}
 	if i := slices.Index(pr.cfg.Phases.Order, old); i >= 0 {
 		order := slices.Clone(pr.cfg.Phases.Order)
 		order[i] = slug
