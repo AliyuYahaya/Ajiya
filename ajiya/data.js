@@ -29,13 +29,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 68,
-        "done": 38,
+        "done": 41,
         "in_progress": 0,
-        "pending": 30,
+        "pending": 27,
         "dropped": 0
       },
-      "percent": 55,
-      "ready": 12
+      "percent": 60,
+      "ready": 9
     },
     {
       "name": "v0-3",
@@ -44,13 +44,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 78,
-        "done": 38,
+        "done": 41,
         "in_progress": 0,
-        "pending": 40,
+        "pending": 37,
         "dropped": 0
       },
-      "percent": 48,
-      "ready": 12
+      "percent": 52,
+      "ready": 9
     },
     {
       "name": "after-v0-3",
@@ -59,13 +59,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 77,
-        "done": 38,
+        "done": 41,
         "in_progress": 0,
-        "pending": 39,
+        "pending": 36,
         "dropped": 0
       },
-      "percent": 49,
-      "ready": 12
+      "percent": 53,
+      "ready": 9
     }
   ],
   "phases": [
@@ -117,12 +117,12 @@ window.AJIYA = {
       "goal": "A new or existing project can be set up by an agent using only the installed kit and importers",
       "counts": {
         "total": 17,
-        "done": 10,
+        "done": 13,
         "in_progress": 0,
-        "pending": 7,
+        "pending": 4,
         "dropped": 0
       },
-      "percent": 58,
+      "percent": 76,
       "milestone": "v0-1"
     },
     {
@@ -188,9 +188,9 @@ window.AJIYA = {
       "path": ".",
       "counts": {
         "total": 91,
-        "done": 50,
+        "done": 53,
         "in_progress": 0,
-        "pending": 41,
+        "pending": 38,
         "dropped": 0
       }
     }
@@ -1380,12 +1380,9 @@ window.AJIYA = {
         "AJ-0045",
         "AJ-0046",
         "AJ-0082",
-        "AJ-0085",
-        "AJ-0086",
         "AJ-0087",
         "AJ-0088",
         "AJ-0089",
-        "AJ-0090",
         "AJ-0091"
       ],
       "dependants": [
@@ -2330,17 +2327,20 @@ window.AJIYA = {
         "AJ-0034"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · 980c627 · 2026-09-29 · tests passed",
+        "commit": "980c627",
+        "date": "2026-09-29",
+        "tests_passed": true
       },
       "milestone": "v0-2",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0047",
         "AJ-0091"
       ],
-      "unblocks": 13
+      "unblocks": 0
     },
     {
       "id": "AJ-0086",
@@ -2352,17 +2352,20 @@ window.AJIYA = {
         "AJ-0034"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · 4e23e52 · 2026-09-29 · tests passed",
+        "commit": "4e23e52",
+        "date": "2026-09-29",
+        "tests_passed": true
       },
       "milestone": "v0-2",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0047",
         "AJ-0091"
       ],
-      "unblocks": 13
+      "unblocks": 0
     },
     {
       "id": "AJ-0087",
@@ -2438,16 +2441,19 @@ window.AJIYA = {
         "AJ-0034"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · 23f1de8 · 2026-09-29 · tests passed",
+        "commit": "23f1de8",
+        "date": "2026-09-29",
+        "tests_passed": true
       },
       "milestone": "v0-2",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0047"
       ],
-      "unblocks": 12
+      "unblocks": 0
     },
     {
       "id": "AJ-0091",
@@ -2467,8 +2473,6 @@ window.AJIYA = {
       "milestone": "v0-2",
       "ready": false,
       "waiting_on": [
-        "AJ-0085",
-        "AJ-0086",
         "AJ-0088"
       ],
       "dependants": [
@@ -2484,15 +2488,84 @@ window.AJIYA = {
     "AJ-0071",
     "AJ-0072",
     "AJ-0070",
-    "AJ-0085",
-    "AJ-0086",
     "AJ-0088",
     "AJ-0087",
-    "AJ-0089",
-    "AJ-0090"
+    "AJ-0089"
   ],
   "checks": [],
   "activity": [
+    {
+      "hash": "23f1de8c73692270dc9db062489038d24736267e",
+      "short": "23f1de8",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "ajiya init suggests the test command",
+      "refs": [
+        "AJ-0090"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0090",
+          "phase": "onboarding",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        }
+      ],
+      "time": 1790717481
+    },
+    {
+      "hash": "4e23e52f39edb01a092ecac788c82ff2ef3b00d2",
+      "short": "4e23e52",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Add ajiya phase remove for an empty phase",
+      "refs": [
+        "AJ-0086"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0086",
+          "phase": "onboarding",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        }
+      ],
+      "time": 1790717428
+    },
+    {
+      "hash": "980c6274c11d368abb266ee2b9990ae5e41c3cb6",
+      "short": "980c627",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Imports default to the project's only app and say which app they used",
+      "refs": [
+        "AJ-0085"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0085",
+          "phase": "onboarding",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        }
+      ],
+      "time": 1790717160
+    },
     {
       "hash": "c245c5ec07a398504ae85a3e23623dcad35055d1",
       "short": "c245c5e",
