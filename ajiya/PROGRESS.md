@@ -84,6 +84,9 @@ Generated 2026-09-29.
 
 ## Recent activity
 
+- 2026-09-29 `df2e9dc` Release environments created; the tap repository exists (AJ-0069, AJ-0071)
+  - AJ-0069: pending → in_progress
+  - AJ-0071: pending → done
 - 2026-09-29 `c245c5e` Plan the fixes from the agent-only walkthrough test (chore)
   - AJ-0085: new → pending
   - AJ-0086: new → pending
@@ -110,9 +113,7 @@ Generated 2026-09-29.
   - AJ-0067: pending → done
 - 2026-09-29 `2ba31d5` Reflow the daily guide's done paragraph (AJ-0065)
 - 2026-09-29 `622e678` Merge branch 'worktree-agent-af0c9a6c1037d2858' into worktree-agent-a658cbd8dac8f5d6c (-)
-- 2026-09-29 `140a432` AJ-0065 done (AJ-0065)
-  - AJ-0065: pending → done
-- and 125 more in data.js
+- and 126 more in data.js
 
 ## Checks
 
