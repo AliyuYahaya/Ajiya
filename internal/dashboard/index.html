@@ -288,6 +288,14 @@ td .sub { color: var(--c-faint); font-size: 12px; }
 .gnode.dim { border-color: var(--c-line); box-shadow: none; }
 .gnode.dim > *, .gnode.dim::before { opacity: .18; }
 
+/* Live refresh: a small note after data.js reloads under ajiya serve. */
+.live-note {
+  position: fixed; right: 16px; bottom: 16px; z-index: 30; pointer-events: none; opacity: 0; transition: opacity .3s;
+  background: var(--c-card); color: var(--c-muted); border: 1px solid var(--c-line); border-radius: 99px;
+  padding: 5px 12px; font-size: 12px; font-weight: 600; box-shadow: 0 4px 16px var(--c-shadow);
+}
+.live-note.show { opacity: 1; }
+
 /* Detail dialog */
 dialog { border: 1px solid var(--c-line); border-radius: 16px; padding: 0; width: min(760px, calc(100vw - 32px)); max-height: calc(100vh - 48px); background: var(--c-card); color: var(--c-text); }
 dialog::backdrop { background: var(--c-backdrop); }
@@ -411,6 +419,8 @@ dialog::backdrop { background: var(--c-backdrop); }
   </main>
 </div>
 
+<div class="live-note" id="liveNote" role="status" aria-live="polite"></div>
+
 <dialog id="dlg" aria-labelledby="dlgTitle">
   <div class="dlg-head">
     <button class="icon-btn close" type="button" aria-label="Close" id="dlgClose"><svg class="i"><use href="#i-x"/></svg></button>
@@ -477,7 +487,7 @@ dialog::backdrop { background: var(--c-backdrop); }
   /* -------------------------------------------------------------------------
      Data
      ----------------------------------------------------------------------- */
-  const D = window.AJIYA;
+  let D = window.AJIYA;
   const view = $('view');
   if (!D || !Array.isArray(D.tickets)) {
     $('title').textContent = 'No data';
@@ -488,17 +498,26 @@ dialog::backdrop { background: var(--c-backdrop); }
     $('banner').innerHTML = `<div class="banner">This page expects data schema 1 but data.js has schema ${esc(D.schema)}. Run <span class="mono">ajiya build</span> with the same ajiya version.</div>`;
   }
   const arr = v => Array.isArray(v) ? v : [];
-  const milestones = arr(D.milestones), phases = arr(D.phases), apps = arr(D.apps);
-  const tickets = D.tickets, checks = arr(D.checks), activity = arr(D.activity), nextIDs = arr(D.next);
-  const project = D.project || {};
+  // The data and its indexes. setData runs again when live refresh loads a
+  // new data.js.
+  let milestones, phases, apps, tickets, checks, activity, nextIDs, project;
+  let byID, phaseBySlug, phaseIndex, msIndex, idIndex, nextIndex;
+  function setData(d) {
+    D = d;
+    milestones = arr(d.milestones); phases = arr(d.phases); apps = arr(d.apps);
+    tickets = d.tickets; checks = arr(d.checks); activity = arr(d.activity); nextIDs = arr(d.next);
+    project = d.project || {};
+    byID = new Map(tickets.map(t => [t.id, t]));
+    phaseBySlug = new Map(phases.map(p => [p.slug, p]));
+    phaseIndex = new Map(phases.map((p, i) => [p.slug, i]));
+    msIndex = new Map(milestones.map((m, i) => [m.name, i]));
+    idIndex = new Map(tickets.map((t, i) => [t.id, i]));
+    nextIndex = new Map(nextIDs.map((id, i) => [id, i]));
+  }
+  setData(D);
+  // Served by 'ajiya serve' (http or https) rather than opened from disk.
+  const live = location.protocol === 'http:' || location.protocol === 'https:';
   const key = k => `ajiya:${project.prefix || project.name || ''}:${k}`; // localStorage key per project
-
-  const byID = new Map(tickets.map(t => [t.id, t]));
-  const phaseBySlug = new Map(phases.map(p => [p.slug, p]));
-  const phaseIndex = new Map(phases.map((p, i) => [p.slug, i]));
-  const msIndex = new Map(milestones.map((m, i) => [m.name, i]));
-  const idIndex = new Map(tickets.map((t, i) => [t.id, i]));
-  const nextIndex = new Map(nextIDs.map((id, i) => [id, i]));
   const phaseTitle = slug => (phaseBySlug.get(slug) || {}).title || slug;
 
   const state = t => t.status.state;
@@ -574,18 +593,22 @@ dialog::backdrop { background: var(--c-backdrop); }
      except the search text.
      ----------------------------------------------------------------------- */
   const F = { q: '', app: store.get(key('app')) || '', phase: store.get(key('phase')) || '', ms: store.get(key('ms')) || '', state: store.get(key('state')) || '' };
-  if (!apps.some(a => a.name === F.app)) F.app = '';
-  if (!phaseBySlug.has(F.phase)) F.phase = '';
-  if (F.ms !== '-' && !msIndex.has(F.ms)) F.ms = '';
   const opt = (v, label, cur) => `<option value="${esc(v)}"${v === cur ? ' selected' : ''}>${esc(label)}</option>`;
-  const appNames = [...new Set([...apps.map(a => a.name), ...tickets.map(t => t.app)])].filter(Boolean);
-  $('appF').innerHTML = opt('', 'Any app', F.app) + appNames.map(a => opt(a, a, F.app)).join('');
-  $('phaseF').innerHTML = opt('', 'Any phase', F.phase) + phases.map(p => opt(p.slug, p.title || p.slug, F.phase)).join('');
-  $('msF').innerHTML = opt('', 'Any milestone', F.ms) + milestones.map(m => opt(m.name, m.name, F.ms)).join('') + opt('-', 'Not in a milestone', F.ms);
-  $('msF').hidden = !milestones.length;
-  $('appF').hidden = appNames.length < 2;
-  $('stateF').value = F.state;
-  if ($('stateF').value !== F.state) F.state = '';
+  // Fill the filter menus from the data, dropping a choice that no longer exists.
+  function fillFilters() {
+    const appNames = [...new Set([...apps.map(a => a.name), ...tickets.map(t => t.app)])].filter(Boolean);
+    if (!appNames.includes(F.app)) F.app = '';
+    if (!phaseBySlug.has(F.phase)) F.phase = '';
+    if (F.ms !== '-' && !msIndex.has(F.ms)) F.ms = '';
+    $('appF').innerHTML = opt('', 'Any app', F.app) + appNames.map(a => opt(a, a, F.app)).join('');
+    $('phaseF').innerHTML = opt('', 'Any phase', F.phase) + phases.map(p => opt(p.slug, p.title || p.slug, F.phase)).join('');
+    $('msF').innerHTML = opt('', 'Any milestone', F.ms) + milestones.map(m => opt(m.name, m.name, F.ms)).join('') + opt('-', 'Not in a milestone', F.ms);
+    $('msF').hidden = !milestones.length;
+    $('appF').hidden = appNames.length < 2;
+    $('stateF').value = F.state;
+    if ($('stateF').value !== F.state) F.state = '';
+  }
+  fillFilters();
 
   const textOf = t => [t.id, t.title, t.done_when, t.phase, phaseTitle(t.phase), t.app, t.milestone, t.status.text, ...(t.status.aliases || [])].join(' ').toLowerCase();
   const match = t => {
@@ -616,10 +639,11 @@ dialog::backdrop { background: var(--c-backdrop); }
   /* -------------------------------------------------------------------------
      Sidebar: counts on the nav and phase links in display order.
      ----------------------------------------------------------------------- */
-  const project$ = project.name || 'Ajiya';
-  $('brand').textContent = project$; $('mobileBrand').textContent = project$;
-  const errors = checks.filter(c => c.level === 'error').length;
+  let project$, errors;
   function renderNav() {
+    project$ = project.name || 'Ajiya';
+    $('brand').textContent = project$; $('mobileBrand').textContent = project$;
+    errors = checks.filter(c => c.level === 'error').length;
     const n = {
       next: nextIDs.length, board: tickets.length, phases: phases.length, tickets: tickets.length,
       apps: apps.length, checks: checks.length, activity: activity.length,
@@ -633,7 +657,7 @@ dialog::backdrop { background: var(--c-backdrop); }
     $('phaseNav').innerHTML = phases.length ? `<div class="nav-label hide-c">Phases</div>` + phases.map(p =>
       `<button class="phase-link hide-c" type="button" data-phase="${esc(p.slug)}" aria-current="${F.phase === p.slug}" title="${esc(p.goal)}">
         <span class="t"><span>${esc(p.title || p.slug)}</span><span>${p.counts.done + p.counts.dropped}/${p.counts.total}</span></span>${barHTML(p.counts)}</button>`).join('') : '';
-    $('sideFoot').innerHTML = `Generated <b>${esc(D.generated)}</b><br>Refresh: <span class="mono">ajiya build</span>`;
+    $('sideFoot').innerHTML = `Generated <b>${esc(D.generated)}</b><br>${live ? 'Live: follows <span class="mono">ajiya serve</span>' : 'Refresh: <span class="mono">ajiya build</span>'}`;
   }
   $('nav').addEventListener('click', e => {
     const t = e.target.closest('[data-tab]');
@@ -1158,9 +1182,11 @@ dialog::backdrop { background: var(--c-backdrop); }
      Ticket detail dialog.
      ----------------------------------------------------------------------- */
   const dlg = $('dlg');
+  let dlgID = null; // the ticket the dialog shows
   function openTicket(id) {
     const t = byID.get(id);
     if (!t) return;
+    dlgID = id;
     const s = t.status;
     const colName = { ready: 'Can start now', doing: '', waiting: 'Waiting', human: 'Needs a human', done: '' }[column(t)];
     $('dlgBadges').innerHTML = `<span class="mono" style="font-weight:700">${esc(t.id)}</span>${stateBadge(t)}${msBadge(t.milestone)}${
@@ -1221,6 +1247,58 @@ dialog::backdrop { background: var(--c-backdrop); }
   document.addEventListener('keydown', e => {
     if ((e.key === 'Enter' || e.key === ' ') && e.target.matches && e.target.matches('span[data-open]')) { e.preventDefault(); e.target.click(); }
   });
+
+  /* -------------------------------------------------------------------------
+     Live refresh under 'ajiya serve'. Served over http(s), the page polls
+     /version every 2 seconds while the tab is visible; when the string
+     changes it loads data.js again (a new script tag, which the server's
+     content security policy allows) and re-renders in place, keeping the
+     view, filters, scroll position and open ticket. Opened from disk
+     (file:) it never polls: see live above.
+     ----------------------------------------------------------------------- */
+  function refresh(d) {
+    const main = document.querySelector('main'), top = main.scrollTop, wy = window.scrollY;
+    const gw = $('gWrap'), gx = gw ? gw.scrollLeft : 0, gy = gw ? gw.scrollTop : 0;
+    setData(d);
+    render();
+    main.scrollTop = top;
+    if (window.scrollY !== wy) window.scrollTo(0, wy);
+    const gw2 = $('gWrap');
+    if (gw && gw2) { gw2.scrollLeft = gx; gw2.scrollTop = gy; }
+    if (dlg.open) {
+      if (byID.has(dlgID)) { const s = dlg.scrollTop; openTicket(dlgID); dlg.scrollTop = s; } else closeDlg();
+    }
+    const n = $('liveNote');
+    n.textContent = 'Updated ' + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    n.classList.add('show');
+    clearTimeout(refresh.t);
+    refresh.t = setTimeout(() => n.classList.remove('show'), 4000);
+  }
+  if (live) {
+    let version = null, timer = null, busy = false;
+    const load = v => new Promise(done => {
+      const s = document.createElement('script');
+      s.src = 'data.js?v=' + encodeURIComponent(v);
+      s.onload = () => { s.remove(); const d = window.AJIYA; if (d && Array.isArray(d.tickets)) refresh(d); done(); };
+      s.onerror = () => { s.remove(); done(); };
+      document.head.appendChild(s);
+    });
+    const poll = async () => {
+      if (busy) return;
+      busy = true;
+      try {
+        const r = await fetch('version', { cache: 'no-store' });
+        const v = r.ok ? (await r.text()).trim() : '';
+        if (v && version === null) version = v;
+        else if (v && v !== version) { version = v; await load(v); }
+      } catch (e) { /* server stopped: keep the last data and try again */ }
+      busy = false;
+    };
+    const start = () => { if (!timer) { poll(); timer = setInterval(poll, 2000); } };
+    const stop = () => { clearInterval(timer); timer = null; };
+    document.addEventListener('visibilitychange', () => { if (document.hidden) stop(); else start(); });
+    if (!document.hidden) start();
+  }
 
   render();
 })();
