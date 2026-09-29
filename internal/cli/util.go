@@ -127,6 +127,18 @@ func (pr *project) checkApp(app string) error {
 	return nil
 }
 
+// importApp returns the app an import files its tickets under: the one given
+// with --app, else the only registered app when there is exactly one, else infra.
+func (pr *project) importApp(flag string) string {
+	if flag != "" {
+		return flag
+	}
+	if len(pr.cfg.Apps) == 1 {
+		return pr.cfg.Apps[0].Name
+	}
+	return config.InfraApp
+}
+
 func (pr *project) phase(slug string) (*plan.Phase, error) {
 	ph := pr.plan.Phase(slug)
 	if ph == nil {

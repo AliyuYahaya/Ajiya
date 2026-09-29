@@ -21,7 +21,7 @@ import (
 func runImportGitHub(e *env, args []string) error {
 	fs := newFlags("import github")
 	repo := fs.String("repo", "", "the repository as owner/name; default: the one gh finds from the current directory")
-	app := fs.String("app", "infra", "the app the tickets belong to")
+	app := fs.String("app", "", "the app the tickets belong to; default: the only registered app, else infra")
 	limit := fs.Int("limit", 1000, "the most issues to ask gh for")
 	if _, err := parse(fs, args, 0); err != nil {
 		return err
@@ -33,7 +33,8 @@ func runImportGitHub(e *env, args []string) error {
 	if err != nil {
 		return err
 	}
-	if err := pr.checkApp(*app); err != nil {
+	appName := pr.importApp(*app)
+	if err := pr.checkApp(appName); err != nil {
 		return err
 	}
 	gh, err := exec.LookPath("gh")
@@ -84,7 +85,7 @@ func runImportGitHub(e *env, args []string) error {
 		if ph == nil {
 			ph = pr.ensurePhase(inboxPhase, inboxGoal)
 		}
-		t := pr.newTicket(ph, *app, is.Title, "-", nil, importer.GitHubStatus(is))
+		t := pr.newTicket(ph, appName, is.Title, "-", nil, importer.GitHubStatus(is))
 		linked[is.URL] = true
 		added++
 		if t.Status.State == plan.Done {
@@ -96,6 +97,7 @@ func runImportGitHub(e *env, args []string) error {
 			return err
 		}
 	}
+	fmt.Fprintf(e.stdout, "Using app %s.\n", appName)
 	fmt.Fprintf(e.stdout, "Imported %d issue(s) into %s (%d closed); skipped %d already imported.\n", added, inboxPhase, closed, skipped)
 	return nil
 }

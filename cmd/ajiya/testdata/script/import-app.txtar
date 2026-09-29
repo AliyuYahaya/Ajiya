@@ -1,0 +1,32 @@
+# import todo: --app defaults to the only registered app, else infra, and the
+# output says which app was used.
+
+# No app registered: infra.
+exec ajiya init --name Demo --prefix DE
+exec ajiya import todo a.md
+stdout '^Using app infra\.$'
+grep 'DE-0001 \| infra \|' ajiya/inbox.md
+
+# Exactly one app: that app.
+exec ajiya app add web --path apps/web
+exec ajiya import todo b.md
+stdout '^Using app web\.$'
+grep 'DE-0002 \| web \|' ajiya/inbox.md
+
+# Several apps: infra again, and --app still wins.
+exec ajiya app add api --path apps/api
+exec ajiya import todo c.md
+stdout '^Using app infra\.$'
+grep 'DE-0003 \| infra \|' ajiya/inbox.md
+exec ajiya import todo d.md --app api
+stdout '^Using app api\.$'
+grep 'DE-0004 \| api \|' ajiya/inbox.md
+
+-- a.md --
+- [ ] one
+-- b.md --
+- [ ] two
+-- c.md --
+- [ ] three
+-- d.md --
+- [ ] four
