@@ -14,13 +14,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 37,
-        "done": 34,
+        "done": 36,
         "in_progress": 0,
-        "pending": 3,
+        "pending": 1,
         "dropped": 0
       },
-      "percent": 91,
-      "ready": 2
+      "percent": 97,
+      "ready": 1
     },
     {
       "name": "v0-2",
@@ -28,14 +28,14 @@ window.AJIYA = {
         "AJ-0047"
       ],
       "required": {
-        "total": 43,
-        "done": 34,
+        "total": 61,
+        "done": 37,
         "in_progress": 0,
-        "pending": 9,
+        "pending": 24,
         "dropped": 0
       },
-      "percent": 79,
-      "ready": 2
+      "percent": 60,
+      "ready": 1
     },
     {
       "name": "v0-3",
@@ -43,14 +43,14 @@ window.AJIYA = {
         "AJ-0058"
       ],
       "required": {
-        "total": 53,
-        "done": 34,
+        "total": 71,
+        "done": 37,
         "in_progress": 0,
-        "pending": 19,
+        "pending": 34,
         "dropped": 0
       },
-      "percent": 64,
-      "ready": 2
+      "percent": 52,
+      "ready": 1
     },
     {
       "name": "after-v0-3",
@@ -58,14 +58,14 @@ window.AJIYA = {
         "AJ-0057"
       ],
       "required": {
-        "total": 52,
-        "done": 34,
+        "total": 70,
+        "done": 37,
         "in_progress": 0,
-        "pending": 18,
+        "pending": 33,
         "dropped": 0
       },
-      "percent": 65,
-      "ready": 2
+      "percent": 52,
+      "ready": 1
     }
   ],
   "phases": [
@@ -75,12 +75,12 @@ window.AJIYA = {
       "goal": "Every commit names 1 to 3 tickets, enforced by hooks with a CI check as backup",
       "counts": {
         "total": 8,
-        "done": 7,
+        "done": 8,
         "in_progress": 0,
-        "pending": 1,
+        "pending": 0,
         "dropped": 0
       },
-      "percent": 87,
+      "percent": 100,
       "milestone": "v0-1"
     },
     {
@@ -117,12 +117,12 @@ window.AJIYA = {
       "goal": "A new or existing project can be set up by an agent using only the installed kit and importers",
       "counts": {
         "total": 10,
-        "done": 9,
+        "done": 10,
         "in_progress": 0,
-        "pending": 1,
+        "pending": 0,
         "dropped": 0
       },
-      "percent": 90,
+      "percent": 100,
       "milestone": "v0-1"
     },
     {
@@ -158,13 +158,13 @@ window.AJIYA = {
       "title": "Install",
       "goal": "Ajiya installs in one step, with a Claude Code plugin",
       "counts": {
-        "total": 3,
-        "done": 0,
+        "total": 21,
+        "done": 1,
         "in_progress": 0,
-        "pending": 3,
+        "pending": 20,
         "dropped": 0
       },
-      "percent": 0,
+      "percent": 4,
       "milestone": "v0-2"
     },
     {
@@ -187,10 +187,10 @@ window.AJIYA = {
       "name": "ajiya",
       "path": ".",
       "counts": {
-        "total": 66,
-        "done": 46,
+        "total": 84,
+        "done": 49,
         "in_progress": 0,
-        "pending": 20,
+        "pending": 35,
         "dropped": 0
       }
     }
@@ -909,7 +909,9 @@ window.AJIYA = {
       "dependants": [
         "AJ-0031",
         "AJ-0034",
-        "AJ-0045"
+        "AJ-0045",
+        "AJ-0073",
+        "AJ-0075"
       ],
       "unblocks": 0
     },
@@ -935,7 +937,8 @@ window.AJIYA = {
       "waiting_on": [],
       "dependants": [
         "AJ-0034",
-        "AJ-0045"
+        "AJ-0045",
+        "AJ-0077"
       ],
       "unblocks": 0
     },
@@ -1013,15 +1016,18 @@ window.AJIYA = {
         "human": "final sign-off before publishing"
       },
       "milestone": "v0-1",
-      "ready": false,
-      "waiting_on": [
-        "AJ-0041",
-        "AJ-0065"
-      ],
+      "ready": true,
+      "waiting_on": [],
       "dependants": [
-        "AJ-0042"
+        "AJ-0042",
+        "AJ-0067",
+        "AJ-0068",
+        "AJ-0069",
+        "AJ-0070",
+        "AJ-0071",
+        "AJ-0072"
       ],
-      "unblocks": 17
+      "unblocks": 34
     },
     {
       "id": "AJ-0035",
@@ -1190,16 +1196,19 @@ window.AJIYA = {
         "AJ-0040"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · 7d547a5 · 2026-09-29 · tests passed",
+        "commit": "7d547a5",
+        "date": "2026-09-29",
+        "tests_passed": true
       },
       "milestone": "v0-1",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0034"
       ],
-      "unblocks": 18
+      "unblocks": 0
     },
     {
       "id": "AJ-0042",
@@ -1225,7 +1234,7 @@ window.AJIYA = {
         "AJ-0046",
         "AJ-0047"
       ],
-      "unblocks": 16
+      "unblocks": 24
     },
     {
       "id": "AJ-0043",
@@ -1250,7 +1259,7 @@ window.AJIYA = {
         "AJ-0046",
         "AJ-0047"
       ],
-      "unblocks": 15
+      "unblocks": 23
     },
     {
       "id": "AJ-0044",
@@ -1272,16 +1281,18 @@ window.AJIYA = {
       ],
       "dependants": [
         "AJ-0045",
-        "AJ-0047"
+        "AJ-0047",
+        "AJ-0073",
+        "AJ-0077"
       ],
-      "unblocks": 13
+      "unblocks": 21
     },
     {
       "id": "AJ-0045",
       "phase": "install",
       "app": "ajiya",
-      "title": "Install script and npm package",
-      "done_when": "Script verifies checksums and offers mcp install --all; npm package fetches the verified binary; Homebrew prints the register command; README install lines; nothing published without approval",
+      "title": "install.sh for macOS and Linux",
+      "done_when": "POSIX sh: detects OS and arch, resolves the latest tag or AJIYA_VERSION, downloads the archive and checksums.txt, refuses on a checksum mismatch, installs to AJIYA_INSTALL_DIR or ~/.local/bin without sudo, prints PATH advice, offers ajiya mcp install --all only on a terminal; --uninstall; installs from a local snapshot fixture in a test",
       "depends": [
         "AJ-0030",
         "AJ-0031",
@@ -1297,9 +1308,11 @@ window.AJIYA = {
         "AJ-0044"
       ],
       "dependants": [
-        "AJ-0047"
+        "AJ-0047",
+        "AJ-0074",
+        "AJ-0078"
       ],
-      "unblocks": 12
+      "unblocks": 16
     },
     {
       "id": "AJ-0046",
@@ -1337,7 +1350,8 @@ window.AJIYA = {
         "AJ-0043",
         "AJ-0044",
         "AJ-0045",
-        "AJ-0046"
+        "AJ-0046",
+        "AJ-0082"
       ],
       "status": {
         "state": "pending",
@@ -1351,7 +1365,8 @@ window.AJIYA = {
         "AJ-0043",
         "AJ-0044",
         "AJ-0045",
-        "AJ-0046"
+        "AJ-0046",
+        "AJ-0082"
       ],
       "dependants": [
         "AJ-0048"
@@ -1794,19 +1809,22 @@ window.AJIYA = {
       "phase": "commit-rule",
       "app": "ajiya",
       "title": "ticket done takes evidence only from commits after the ticket started",
-      "done_when": "ticket done refuses when the only commits naming the ticket predate the commit that set it in progress (for example a planning or reference commit), and says to commit the work; tests cover a pre-start commit alone and a pre-start plus a later commit",
+      "done_when": "ticket start records the start time locally (in the git directory); ticket done refuses when every commit naming the ticket predates it and names the ignored commit; tests cover a pre-start commit alone, a pre-start plus a later commit, and a ticket with no start record",
       "depends": [],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · 5c1af99 · 2026-09-29 · tests passed",
+        "commit": "5c1af99",
+        "date": "2026-09-29",
+        "tests_passed": true
       },
       "milestone": "v0-1",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0034"
       ],
-      "unblocks": 18
+      "unblocks": 0
     },
     {
       "id": "AJ-0066",
@@ -1831,11 +1849,472 @@ window.AJIYA = {
         "AJ-0034"
       ],
       "unblocks": 0
+    },
+    {
+      "id": "AJ-0067",
+      "phase": "install",
+      "app": "ajiya",
+      "title": "Decide how the npm package ships the binary",
+      "done_when": "Decision recorded: per-platform optional packages behind a wrapper (recommended: works with --ignore-scripts and registry mirrors) or a postinstall download as spec 02 words it",
+      "depends": [
+        "AJ-0034"
+      ],
+      "status": {
+        "state": "done",
+        "text": "🟩 Done · by Aliyu Yahaya · 2026-09-29 · Note: npm ships per-platform optional packages behind a small ajiya wrapper, not a postinstall download (agreed in session)",
+        "note": "npm ships per-platform optional packages behind a small ajiya wrapper, not a postinstall download (agreed in session)",
+        "by": "Aliyu Yahaya",
+        "date": "2026-09-29"
+      },
+      "milestone": "v0-2",
+      "ready": false,
+      "waiting_on": [
+        "AJ-0034"
+      ],
+      "dependants": [
+        "AJ-0075"
+      ],
+      "unblocks": 0
+    },
+    {
+      "id": "AJ-0068",
+      "phase": "install",
+      "app": "ajiya",
+      "title": "npm account and package names",
+      "done_when": "npm account with 2FA; the name ajiya claimed; platform package names chosen (scoped @ajiya/* or unscoped ajiya-\u003cos\u003e-\u003carch\u003e) and written in the ticket note",
+      "depends": [
+        "AJ-0034"
+      ],
+      "status": {
+        "state": "pending",
+        "text": "🟥 Pending · Needs a human: needs the maintainer's npm account",
+        "human": "needs the maintainer's npm account"
+      },
+      "milestone": "v0-2",
+      "ready": false,
+      "waiting_on": [
+        "AJ-0034"
+      ],
+      "dependants": [
+        "AJ-0075"
+      ],
+      "unblocks": 18
+    },
+    {
+      "id": "AJ-0069",
+      "phase": "install",
+      "app": "ajiya",
+      "title": "Homebrew tap repository and token",
+      "done_when": "AliyuYahaya/homebrew-tap exists; a fine-grained token with Contents read and write on it alone is stored as HOMEBREW_TAP_TOKEN in a homebrew-release environment",
+      "depends": [
+        "AJ-0034"
+      ],
+      "status": {
+        "state": "pending",
+        "text": "🟥 Pending · Needs a human: needs the maintainer's GitHub account",
+        "human": "needs the maintainer's GitHub account"
+      },
+      "milestone": "v0-2",
+      "ready": false,
+      "waiting_on": [
+        "AJ-0034"
+      ],
+      "dependants": [
+        "AJ-0077"
+      ],
+      "unblocks": 17
+    },
+    {
+      "id": "AJ-0070",
+      "phase": "install",
+      "app": "ajiya",
+      "title": "Choose the install script URL",
+      "done_when": "Decision recorded: a custom domain served by GitHub Pages, or the release asset URL releases/latest/download/install.sh",
+      "depends": [
+        "AJ-0034"
+      ],
+      "status": {
+        "state": "pending",
+        "text": "🟥 Pending · Needs a human: a domain costs money and is the maintainer's choice",
+        "human": "a domain costs money and is the maintainer's choice"
+      },
+      "milestone": "v0-2",
+      "ready": false,
+      "waiting_on": [
+        "AJ-0034"
+      ],
+      "dependants": [
+        "AJ-0078"
+      ],
+      "unblocks": 15
+    },
+    {
+      "id": "AJ-0071",
+      "phase": "install",
+      "app": "ajiya",
+      "title": "Release environments with required reviewers",
+      "done_when": "GitHub environments npm-release and homebrew-release exist with the maintainer as required reviewer",
+      "depends": [
+        "AJ-0034"
+      ],
+      "status": {
+        "state": "pending",
+        "text": "🟥 Pending · Needs a human: repository settings need the maintainer",
+        "human": "repository settings need the maintainer"
+      },
+      "milestone": "v0-2",
+      "ready": false,
+      "waiting_on": [
+        "AJ-0034"
+      ],
+      "dependants": [
+        "AJ-0079",
+        "AJ-0083"
+      ],
+      "unblocks": 17
+    },
+    {
+      "id": "AJ-0072",
+      "phase": "install",
+      "app": "ajiya",
+      "title": "Release workflow: build to a draft release",
+      "done_when": "release.yml on a v* tag writes release notes with ajiya changelog, runs GoReleaser to a draft release and keeps dist/ as an artifact; on pull requests it runs a snapshot build; a test run publishes nothing",
+      "depends": [
+        "AJ-0034"
+      ],
+      "status": {
+        "state": "pending",
+        "text": "🟥 Pending"
+      },
+      "milestone": "v0-2",
+      "ready": false,
+      "waiting_on": [
+        "AJ-0034"
+      ],
+      "dependants": [
+        "AJ-0079",
+        "AJ-0084"
+      ],
+      "unblocks": 16
+    },
+    {
+      "id": "AJ-0073",
+      "phase": "install",
+      "app": "ajiya",
+      "title": "install.ps1 for Windows",
+      "done_when": "Detects arch, downloads the zip and checksums.txt, refuses on a mismatch, installs to LOCALAPPDATA\\Programs\\ajiya\\bin and adds it to the user PATH; AJIYA_VERSION; installs from a local snapshot fixture on a Windows runner",
+      "depends": [
+        "AJ-0030",
+        "AJ-0044"
+      ],
+      "status": {
+        "state": "pending",
+        "text": "🟥 Pending"
+      },
+      "milestone": "v0-2",
+      "ready": false,
+      "waiting_on": [
+        "AJ-0044"
+      ],
+      "dependants": [
+        "AJ-0074",
+        "AJ-0078"
+      ],
+      "unblocks": 16
+    },
+    {
+      "id": "AJ-0074",
+      "phase": "install",
+      "app": "ajiya",
+      "title": "Installer CI",
+      "done_when": "shellcheck and PSScriptAnalyzer pass; a macOS, Linux and Windows matrix installs from a snapshot fixture served locally, runs ajiya version, and a tampered archive makes the script fail without installing",
+      "depends": [
+        "AJ-0045",
+        "AJ-0073"
+      ],
+      "status": {
+        "state": "pending",
+        "text": "🟥 Pending"
+      },
+      "milestone": "v0-2",
+      "ready": false,
+      "waiting_on": [
+        "AJ-0045",
+        "AJ-0073"
+      ],
+      "dependants": [
+        "AJ-0081"
+      ],
+      "unblocks": 14
+    },
+    {
+      "id": "AJ-0075",
+      "phase": "install",
+      "app": "ajiya",
+      "title": "npm packages: a wrapper and one package per platform",
+      "done_when": "A script verifies every release archive against checksums.txt, then writes six platform packages (os and cpu set, binary mode 755) and the ajiya wrapper with exact optionalDependencies, all versioned from the tag; npm pack --dry-run succeeds for all seven; a bad checksum fails it",
+      "depends": [
+        "AJ-0030",
+        "AJ-0067",
+        "AJ-0068"
+      ],
+      "status": {
+        "state": "pending",
+        "text": "🟥 Pending"
+      },
+      "milestone": "v0-2",
+      "ready": false,
+      "waiting_on": [
+        "AJ-0068"
+      ],
+      "dependants": [
+        "AJ-0076",
+        "AJ-0079",
+        "AJ-0080"
+      ],
+      "unblocks": 17
+    },
+    {
+      "id": "AJ-0076",
+      "phase": "install",
+      "app": "ajiya",
+      "title": "npm launcher tests",
+      "done_when": "node --test on Linux, macOS and Windows: the launcher runs the binary with its arguments and exit code, and a missing platform binary gives a clear error that points to the install script and Homebrew",
+      "depends": [
+        "AJ-0075"
+      ],
+      "status": {
+        "state": "pending",
+        "text": "🟥 Pending"
+      },
+      "milestone": "v0-2",
+      "ready": false,
+      "waiting_on": [
+        "AJ-0075"
+      ],
+      "dependants": [
+        "AJ-0081"
+      ],
+      "unblocks": 14
+    },
+    {
+      "id": "AJ-0077",
+      "phase": "install",
+      "app": "ajiya",
+      "title": "Homebrew tap wiring",
+      "done_when": "skip_upload: auto; the cask caveat prints the one command to register with agents (ajiya mcp install); brew install --cask from a local tap installs a snapshot build",
+      "depends": [
+        "AJ-0031",
+        "AJ-0044",
+        "AJ-0069"
+      ],
+      "status": {
+        "state": "pending",
+        "text": "🟥 Pending"
+      },
+      "milestone": "v0-2",
+      "ready": false,
+      "waiting_on": [
+        "AJ-0044",
+        "AJ-0069"
+      ],
+      "dependants": [
+        "AJ-0079",
+        "AJ-0084"
+      ],
+      "unblocks": 16
+    },
+    {
+      "id": "AJ-0078",
+      "phase": "install",
+      "app": "ajiya",
+      "title": "Install scripts served at a stable URL",
+      "done_when": "install.sh and install.ps1 are attached to every release, and served from the chosen URL; curl -I on a test release resolves them",
+      "depends": [
+        "AJ-0045",
+        "AJ-0070",
+        "AJ-0073"
+      ],
+      "status": {
+        "state": "pending",
+        "text": "🟥 Pending"
+      },
+      "milestone": "v0-2",
+      "ready": false,
+      "waiting_on": [
+        "AJ-0045",
+        "AJ-0070",
+        "AJ-0073"
+      ],
+      "dependants": [
+        "AJ-0081"
+      ],
+      "unblocks": 14
+    },
+    {
+      "id": "AJ-0079",
+      "phase": "install",
+      "app": "ajiya",
+      "title": "Gated publish jobs",
+      "done_when": "npm and tap jobs in release.yml run only after approval in their environments; a workflow_dispatch dry run reaches the gate and, approved, completes npm publish --dry-run without publishing",
+      "depends": [
+        "AJ-0071",
+        "AJ-0072",
+        "AJ-0075",
+        "AJ-0077"
+      ],
+      "status": {
+        "state": "pending",
+        "text": "🟥 Pending"
+      },
+      "milestone": "v0-2",
+      "ready": false,
+      "waiting_on": [
+        "AJ-0071",
+        "AJ-0072",
+        "AJ-0075",
+        "AJ-0077"
+      ],
+      "dependants": [
+        "AJ-0081"
+      ],
+      "unblocks": 14
+    },
+    {
+      "id": "AJ-0080",
+      "phase": "install",
+      "app": "ajiya",
+      "title": "npm trusted publishing",
+      "done_when": "Each npm package has had its first publish and a trusted-publisher entry for release.yml on npmjs.com, so releases need no npm token",
+      "depends": [
+        "AJ-0075"
+      ],
+      "status": {
+        "state": "pending",
+        "text": "🟥 Pending · Needs a human: needs the maintainer's npm account",
+        "human": "needs the maintainer's npm account"
+      },
+      "milestone": "v0-2",
+      "ready": false,
+      "waiting_on": [
+        "AJ-0075"
+      ],
+      "dependants": [
+        "AJ-0081"
+      ],
+      "unblocks": 14
+    },
+    {
+      "id": "AJ-0081",
+      "phase": "install",
+      "app": "ajiya",
+      "title": "Release rehearsal on a release candidate",
+      "done_when": "A v0.2.0-rc tag produces a draft release, npm packages under the next dist-tag with provenance, and a tap pull request; nothing is public until the maintainer publishes",
+      "depends": [
+        "AJ-0074",
+        "AJ-0076",
+        "AJ-0078",
+        "AJ-0079",
+        "AJ-0080",
+        "AJ-0084"
+      ],
+      "status": {
+        "state": "pending",
+        "text": "🟥 Pending · Needs a human: publishing anything needs the maintainer's approval",
+        "human": "publishing anything needs the maintainer's approval"
+      },
+      "milestone": "v0-2",
+      "ready": false,
+      "waiting_on": [
+        "AJ-0074",
+        "AJ-0076",
+        "AJ-0078",
+        "AJ-0079",
+        "AJ-0080",
+        "AJ-0084"
+      ],
+      "dependants": [
+        "AJ-0082"
+      ],
+      "unblocks": 13
+    },
+    {
+      "id": "AJ-0082",
+      "phase": "install",
+      "app": "ajiya",
+      "title": "Install docs for every channel",
+      "done_when": "README (and landing page if chosen) has one install line each for Homebrew, npm, the install script and Windows, plus the what-just-happened note from spec 02; each line matches a tested command",
+      "depends": [
+        "AJ-0081"
+      ],
+      "status": {
+        "state": "pending",
+        "text": "🟥 Pending"
+      },
+      "milestone": "v0-2",
+      "ready": false,
+      "waiting_on": [
+        "AJ-0081"
+      ],
+      "dependants": [
+        "AJ-0047"
+      ],
+      "unblocks": 12
+    },
+    {
+      "id": "AJ-0083",
+      "phase": "install",
+      "app": "ajiya",
+      "title": "Apple signing credentials as release secrets",
+      "done_when": "A Developer ID Application certificate (.p12) and its password, and an App Store Connect API key (.p8) with its key ID and issuer ID, are stored as secrets in a release environment",
+      "depends": [
+        "AJ-0071"
+      ],
+      "status": {
+        "state": "pending",
+        "text": "🟥 Pending · Needs a human: needs the maintainer's Apple Developer account",
+        "human": "needs the maintainer's Apple Developer account"
+      },
+      "milestone": "v0-2",
+      "ready": false,
+      "waiting_on": [
+        "AJ-0071"
+      ],
+      "dependants": [
+        "AJ-0084"
+      ],
+      "unblocks": 15
+    },
+    {
+      "id": "AJ-0084",
+      "phase": "install",
+      "app": "ajiya",
+      "title": "Sign and notarise the macOS binaries",
+      "done_when": "GoReleaser signs and notarises the darwin binaries (notarize.macos) in the release workflow; spctl -a -vv accepts a binary downloaded from a test release; the cask's quarantine-removal hook is removed",
+      "depends": [
+        "AJ-0072",
+        "AJ-0077",
+        "AJ-0083"
+      ],
+      "status": {
+        "state": "pending",
+        "text": "🟥 Pending"
+      },
+      "milestone": "v0-2",
+      "ready": false,
+      "waiting_on": [
+        "AJ-0072",
+        "AJ-0077",
+        "AJ-0083"
+      ],
+      "dependants": [
+        "AJ-0081"
+      ],
+      "unblocks": 14
     }
   ],
   "next": [
-    "AJ-0041",
-    "AJ-0065"
+    "AJ-0034"
   ],
   "checks": [],
   "activity": [

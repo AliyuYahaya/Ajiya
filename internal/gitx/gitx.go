@@ -12,6 +12,7 @@ import (
 	"io"
 	"os/exec"
 	"slices"
+	"strconv"
 	"strings"
 )
 
@@ -30,6 +31,7 @@ type Refs struct {
 type Commit struct {
 	Hash    string // full hash
 	Date    string // committer date, YYYY-MM-DD
+	Time    int64  // committer time, Unix seconds
 	Subject string
 	Merge   bool // more than one parent
 	Refs
@@ -140,7 +142,7 @@ func LogRange(dir, revRange string) ([]Commit, error) {
 }
 
 func logRevs(dir string, revs ...string) ([]Commit, error) {
-	format := "--format=%H%x1f%cs%x1f%P%x1f%s%x1f%(trailers:key=" + TrailerKey + ",valueonly,unfold,separator=%x1f)%x1e"
+	format := "--format=%H%x1f%cs%x1f%ct%x1f%P%x1f%s%x1f%(trailers:key=" + TrailerKey + ",valueonly,unfold,separator=%x1f)%x1e"
 	out, err := git(dir, nil, append([]string{"log", format}, revs...)...)
 	if err != nil {
 		return nil, err
@@ -152,11 +154,12 @@ func logRevs(dir string, revs ...string) ([]Commit, error) {
 			continue
 		}
 		f := strings.Split(rec, "\x1f")
-		if len(f) < 4 {
+		if len(f) < 5 {
 			return nil, fmt.Errorf("git log: unexpected output %q", rec)
 		}
-		c := Commit{Hash: f[0], Date: f[1], Merge: len(strings.Fields(f[2])) > 1, Subject: f[3]}
-		c.Refs = parseValues(f[4:])
+		ct, _ := strconv.ParseInt(f[2], 10, 64)
+		c := Commit{Hash: f[0], Date: f[1], Time: ct, Merge: len(strings.Fields(f[3])) > 1, Subject: f[4]}
+		c.Refs = parseValues(f[5:])
 		c.Revert = IsRevert(c.Subject)
 		commits = append(commits, c)
 	}

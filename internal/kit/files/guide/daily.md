@@ -65,9 +65,10 @@ ajiya ticket done <ID> --test
 ```
 
 `done` refuses unless a commit names the ticket, and records the newest such
-commit as evidence. `--test` runs the project's test command and refuses if it
-fails. Never mark a ticket done any other way, and never before its "done when" is
-met.
+commit as evidence. Only commits made after `ticket start` count, so commit the
+work itself with the trailer before you close the ticket. `--test` runs the
+project's test command and refuses if it fails. Never mark a ticket done any
+other way, and never before its "done when" is met.
 
 If `done --test` says there is no `[test]` command, the project has not set one
 yet. Set it in `ajiya.toml` as `setup.md` section 2 describes (ask the user if you

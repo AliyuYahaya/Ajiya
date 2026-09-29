@@ -221,3 +221,38 @@ func TestParseLegacyRollout(t *testing.T) {
 		t.Errorf("notes:\n%q\nwant\n%q", notes, wantNotes)
 	}
 }
+
+func TestParseLegacyRolloutHeadingsAndApp(t *testing.T) {
+	c, err := ParseLegacyConfig([]byte("prefixes = [\"API\"]\n[[sources]]\narea = \"API\"\npath = \"a.md\"\napp = \"backend\"\n"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if c.Sources[0].App != "backend" {
+		t.Errorf("app = %q", c.Sources[0].App)
+	}
+	rollout := `# Rollout
+
+| RO-0 | Before any heading | - | - | Required | Done |
+
+## Gate 0: Staging proven
+
+| RO-1 | One | - | - | Required | Done |
+
+### A sub-heading is not a milestone
+
+| RO-2 | Two | - | RO-1 | Required | Done |
+
+## Phase A: Safety
+
+| RO-3 | Three | - | RO-2 | Required | Done |
+`
+	pkgs, _ := ParseLegacyRollout(rollout, "r.md", nil, c.Prefixes)
+	var got []string
+	for _, p := range pkgs {
+		got = append(got, p.ID+"="+p.Heading)
+	}
+	want := []string{"RO-0=", "RO-1=Gate 0: Staging proven", "RO-2=Gate 0: Staging proven", "RO-3=Phase A: Safety"}
+	if !reflect.DeepEqual(got, want) {
+		t.Errorf("headings = %q, want %q", got, want)
+	}
+}
