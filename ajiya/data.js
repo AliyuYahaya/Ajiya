@@ -29,13 +29,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 68,
-        "done": 47,
+        "done": 48,
         "in_progress": 0,
-        "pending": 21,
+        "pending": 20,
         "dropped": 0
       },
-      "percent": 69,
-      "ready": 6
+      "percent": 70,
+      "ready": 5
     },
     {
       "name": "v0-3",
@@ -44,13 +44,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 78,
-        "done": 47,
+        "done": 48,
         "in_progress": 0,
-        "pending": 31,
+        "pending": 30,
         "dropped": 0
       },
-      "percent": 60,
-      "ready": 6
+      "percent": 61,
+      "ready": 5
     },
     {
       "name": "after-v0-3",
@@ -59,13 +59,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 77,
-        "done": 47,
+        "done": 48,
         "in_progress": 0,
-        "pending": 30,
+        "pending": 29,
         "dropped": 0
       },
-      "percent": 61,
-      "ready": 6
+      "percent": 62,
+      "ready": 5
     }
   ],
   "phases": [
@@ -159,12 +159,12 @@ window.AJIYA = {
       "goal": "Ajiya installs in one step, with a Claude Code plugin",
       "counts": {
         "total": 21,
-        "done": 4,
+        "done": 5,
         "in_progress": 0,
-        "pending": 17,
+        "pending": 16,
         "dropped": 0
       },
-      "percent": 19,
+      "percent": 23,
       "milestone": "v0-2"
     },
     {
@@ -188,9 +188,9 @@ window.AJIYA = {
       "path": ".",
       "counts": {
         "total": 91,
-        "done": 59,
+        "done": 60,
         "in_progress": 0,
-        "pending": 32,
+        "pending": 31,
         "dropped": 0
       }
     }
@@ -1946,17 +1946,19 @@ window.AJIYA = {
         "AJ-0034"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending · Needs a human: a domain costs money and is the maintainer's choice",
-        "human": "a domain costs money and is the maintainer's choice"
+        "state": "done",
+        "text": "🟩 Done · by Aliyu Yahaya · 2026-09-29 · Note: install scripts live on GitHub as release assets: releases/latest/download/install.sh and install.ps1; no domain for now",
+        "note": "install scripts live on GitHub as release assets: releases/latest/download/install.sh and install.ps1; no domain for now",
+        "by": "Aliyu Yahaya",
+        "date": "2026-09-29"
       },
       "milestone": "v0-2",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0078"
       ],
-      "unblocks": 15
+      "unblocks": 0
     },
     {
       "id": "AJ-0071",
@@ -2133,8 +2135,8 @@ window.AJIYA = {
       "id": "AJ-0078",
       "phase": "install",
       "app": "ajiya",
-      "title": "Install scripts served at a stable URL",
-      "done_when": "install.sh and install.ps1 are attached to every release, and served from the chosen URL; curl -I on a test release resolves them",
+      "title": "Install scripts attached to every release",
+      "done_when": "GoReleaser attaches install.sh and install.ps1 to every release, so https://github.com/AliyuYahaya/Ajiya/releases/latest/download/install.sh (and install.ps1) always serve the latest; curl -I resolves them on a test release; the README gives the curl | sh and irm | iex lines",
       "depends": [
         "AJ-0045",
         "AJ-0070",
@@ -2148,7 +2150,6 @@ window.AJIYA = {
       "ready": false,
       "waiting_on": [
         "AJ-0045",
-        "AJ-0070",
         "AJ-0073"
       ],
       "dependants": [
@@ -2489,7 +2490,6 @@ window.AJIYA = {
     "AJ-0042",
     "AJ-0075",
     "AJ-0072",
-    "AJ-0070",
     "AJ-0083",
     "AJ-0091"
   ],
