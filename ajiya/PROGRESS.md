@@ -13,7 +13,7 @@ No milestones. Set one with `ajiya launch set <phase|ticket>`.
 |---|---|---|---|---|---|---|
 | Commit-rule | 7 | 0 | 0 | 7 | 100% | - |
 | Apps-launch | 14 | 0 | 0 | 14 | 100% | - |
-| Outputs | 5 | 0 | 2 | 7 | 71% | - |
+| Outputs | 5 | 2 | 1 | 8 | 62% | - |
 | Onboarding | 3 | 0 | 6 | 9 | 33% | - |
 | Release | 1 | 0 | 4 | 5 | 20% | - |
 | Agent-access | 0 | 0 | 3 | 3 | 0% | - |
@@ -22,11 +22,12 @@ No milestones. Set one with `ajiya launch set <phase|ticket>`.
 
 ## Can start now
 
-- **AJ-0021** Milestones v0-1, v0-2 and v0-3 set and the dashboard in use on this repo (ajiya)
-- **AJ-0036** Dependencies view in the dashboard (ajiya)
+- **AJ-0036** Dependencies view in the dashboard (ajiya) · in progress
+- **AJ-0060** Dashboard live refresh under ajiya serve (ajiya) · in progress
 
 ## Waiting
 
+- **AJ-0021** Milestones v0-1, v0-2 and v0-3 set and the dashboard in use on this repo (ajiya) waits on AJ-0036, AJ-0060
 - **AJ-0022** Setup guide (ajiya) waits on AJ-0021
 - **AJ-0023** Daily guide (ajiya) waits on AJ-0021
 - **AJ-0024** Skill and agent instruction blocks (ajiya) waits on AJ-0022, AJ-0023
@@ -63,6 +64,9 @@ No milestones. Set one with `ajiya launch set <phase|ticket>`.
 
 ## Recent activity
 
+- 2026-09-29 `1a7db96` AJ-0019 and AJ-0020 done (AJ-0019, AJ-0020)
+  - AJ-0019: in_progress → done
+  - AJ-0020: in_progress → done
 - 2026-09-29 `d7460c0` Merge branch 'worktree-agent-acd57cf3aab521d30' (-)
 - 2026-09-29 `994ad17` Dashboard: overview by milestone, next up, board, phases, tickets, apps, checks and activity (AJ-0019)
 - 2026-09-29 `b777830` Merge branch 'worktree-agent-a236161fb3f4ab13d' (-)
@@ -84,9 +88,7 @@ No milestones. Set one with `ajiya launch set <phase|ticket>`.
 - 2026-09-29 `a939eb5` Merge branch 'worktree-agent-a2dda545491c21789' (-)
 - 2026-09-29 `2d78fb0` v0.3 spec update: keep ticket context light (AJ-0048, AJ-0053, AJ-0056)
 - 2026-09-29 `999e8f1` Phase display order (AJ-0040)
-- 2026-09-29 `4cdb518` AJ-0038 done (AJ-0038)
-  - AJ-0038: in_progress → done
-- and 75 more in data.js
+- and 76 more in data.js
 
 ## Checks
 

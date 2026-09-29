@@ -41,13 +41,13 @@ window.AJIYA = {
       "title": "Outputs",
       "goal": "PROGRESS.md, data.js, the dashboard and serve show the plan and its activity",
       "counts": {
-        "total": 7,
+        "total": 8,
         "done": 5,
-        "in_progress": 0,
-        "pending": 2,
+        "in_progress": 2,
+        "pending": 1,
         "dropped": 0
       },
-      "percent": 71,
+      "percent": 62,
       "milestone": ""
     },
     {
@@ -126,10 +126,10 @@ window.AJIYA = {
       "name": "ajiya",
       "path": ".",
       "counts": {
-        "total": 59,
+        "total": 60,
         "done": 30,
-        "in_progress": 0,
-        "pending": 29,
+        "in_progress": 2,
+        "pending": 28,
         "dropped": 0
       }
     }
@@ -574,7 +574,8 @@ window.AJIYA = {
       "dependants": [
         "AJ-0020",
         "AJ-0036",
-        "AJ-0057"
+        "AJ-0057",
+        "AJ-0060"
       ],
       "unblocks": 0
     },
@@ -598,7 +599,8 @@ window.AJIYA = {
       "ready": false,
       "waiting_on": [],
       "dependants": [
-        "AJ-0021"
+        "AJ-0021",
+        "AJ-0060"
       ],
       "unblocks": 0
     },
@@ -610,15 +612,20 @@ window.AJIYA = {
       "done_when": "Milestones v0-1, v0-2 and v0-3 target the three version sign-off tickets; ajiya milestone list shows them in order; ajiya serve shows this repo's plan",
       "depends": [
         "AJ-0020",
-        "AJ-0038"
+        "AJ-0036",
+        "AJ-0038",
+        "AJ-0060"
       ],
       "status": {
         "state": "pending",
         "text": "🟥 Pending"
       },
       "milestone": "",
-      "ready": true,
-      "waiting_on": [],
+      "ready": false,
+      "waiting_on": [
+        "AJ-0036",
+        "AJ-0060"
+      ],
       "dependants": [
         "AJ-0022",
         "AJ-0023"
@@ -969,14 +976,17 @@ window.AJIYA = {
         "AJ-0019"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "in_progress",
+        "text": "🟨 In progress: in a parallel worktree",
+        "note": "in a parallel worktree"
       },
       "milestone": "",
       "ready": true,
       "waiting_on": [],
-      "dependants": [],
-      "unblocks": 0
+      "dependants": [
+        "AJ-0021"
+      ],
+      "unblocks": 28
     },
     {
       "id": "AJ-0037",
@@ -1579,14 +1589,69 @@ window.AJIYA = {
         "AJ-0034"
       ],
       "unblocks": 0
+    },
+    {
+      "id": "AJ-0060",
+      "phase": "outputs",
+      "app": "ajiya",
+      "title": "Dashboard live refresh under ajiya serve",
+      "done_when": "The dashboard served by ajiya serve polls /version and reloads its data when it changes, without losing the current view or filters; opened from disk it does not poll; tested in the dashboard tests",
+      "depends": [
+        "AJ-0019",
+        "AJ-0020"
+      ],
+      "status": {
+        "state": "in_progress",
+        "text": "🟨 In progress: in a parallel worktree",
+        "note": "in a parallel worktree"
+      },
+      "milestone": "",
+      "ready": true,
+      "waiting_on": [],
+      "dependants": [
+        "AJ-0021"
+      ],
+      "unblocks": 28
     }
   ],
   "next": [
-    "AJ-0021",
-    "AJ-0036"
+    "AJ-0036",
+    "AJ-0060"
   ],
   "checks": [],
   "activity": [
+    {
+      "hash": "1a7db969d60d9bf9b1f7eb4b637c63fc02d224cc",
+      "short": "1a7db96",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "AJ-0019 and AJ-0020 done",
+      "refs": [
+        "AJ-0019",
+        "AJ-0020"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0019",
+          "phase": "outputs",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · 994ad17 · 2026-09-29 · tests passed"
+        },
+        {
+          "id": "AJ-0020",
+          "phase": "outputs",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · 28b8618 · 2026-09-29 · tests passed"
+        }
+      ],
+      "time": 1790690406
+    },
     {
       "hash": "d7460c014521727273a1116bdeefc70c40581f10",
       "short": "d7460c0",
