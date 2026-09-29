@@ -7,7 +7,7 @@ Goal: A new or existing project can be set up by an agent using only the install
 |---|---|---|---|---|---|
 | AJ-0022 | ajiya | Setup guide | .ajiya/guide/setup.md covers planning from a goal and organising imported tickets, per spec section 6 | AJ-0021 | 🟩 Done · 8d5cafe · 2026-09-29 · tests passed |
 | AJ-0023 | ajiya | Daily guide | .ajiya/guide/daily.md covers the loop from ajiya next to ajiya check, per spec section 6 | AJ-0021 | 🟩 Done · 8d5cafe · 2026-09-29 · tests passed |
-| AJ-0024 | ajiya | Skill and agent instruction blocks | SKILL.md and the marked AGENTS.md and CLAUDE.md blocks point to the guides and list the rules | AJ-0022, AJ-0023 | 🟥 Pending |
+| AJ-0024 | ajiya | Skill and agent instruction blocks | SKILL.md and the marked AGENTS.md and CLAUDE.md blocks point to the guides and list the rules | AJ-0022, AJ-0023 | 🟩 Done · 39cb092 · 2026-09-28 · tests passed |
 | AJ-0025 | ajiya | init writes and updates the agent kit | Re-running init updates the kit and marked blocks without touching the user's text | AJ-0008, AJ-0024 | 🟥 Pending |
 | AJ-0026 | ajiya | ajiya import todo | Checkbox and bullet items land in the inbox phase unchanged; ticked items are done before Ajiya | - | 🟩 Done · 5cf99f1 · 2026-09-29 · tests passed |
 | AJ-0027 | ajiya | ajiya import github | Uses gh to import open issues as pending and closed issues as done, each keeping its URL | - | 🟩 Done · da34caf · 2026-09-29 · tests passed |

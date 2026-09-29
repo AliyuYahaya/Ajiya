@@ -7,10 +7,10 @@ Generated 2026-09-29.
 
 | Milestone | Closed | Required | % | Can start now |
 |---|---|---|---|---|
-| v0-1 | 27 | 35 | 77% | 2 |
-| v0-2 | 27 | 41 | 65% | 2 |
-| v0-3 | 27 | 51 | 52% | 2 |
-| after-v0-3 | 27 | 50 | 54% | 2 |
+| v0-1 | 28 | 35 | 80% | 2 |
+| v0-2 | 28 | 41 | 68% | 2 |
+| v0-3 | 28 | 51 | 54% | 2 |
+| after-v0-3 | 28 | 50 | 56% | 2 |
 
 ## Phases
 
@@ -19,7 +19,7 @@ Generated 2026-09-29.
 | Commit-rule | 7 | 0 | 0 | 7 | 100% | v0-1 |
 | Apps-launch | 14 | 0 | 0 | 14 | 100% | v0-1 |
 | Outputs | 12 | 0 | 0 | 12 | 100% | v0-1 |
-| Onboarding | 5 | 0 | 4 | 9 | 55% | v0-1 |
+| Onboarding | 6 | 0 | 3 | 9 | 66% | v0-1 |
 | Release | 1 | 0 | 4 | 5 | 20% | v0-1 |
 | Agent-access | 0 | 0 | 3 | 3 | 0% | v0-2 |
 | Install | 0 | 0 | 3 | 3 | 0% | v0-2 |
@@ -27,12 +27,11 @@ Generated 2026-09-29.
 
 ## Can start now
 
-- **AJ-0024** Skill and agent instruction blocks (ajiya) · v0-1
+- **AJ-0025** init writes and updates the agent kit (ajiya) · v0-1
 - **AJ-0041** import legacy maps each RO package to a phase (ajiya) · v0-1
 
 ## Waiting
 
-- **AJ-0025** init writes and updates the agent kit (ajiya) waits on AJ-0024
 - **AJ-0029** Re-run init on this repo (ajiya) waits on AJ-0025
 - **AJ-0030** GoReleaser config (ajiya) waits on AJ-0029
 - **AJ-0031** Homebrew cask config (ajiya) waits on AJ-0030

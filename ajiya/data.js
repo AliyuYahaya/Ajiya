@@ -14,12 +14,12 @@ window.AJIYA = {
       ],
       "required": {
         "total": 35,
-        "done": 27,
+        "done": 28,
         "in_progress": 0,
-        "pending": 8,
+        "pending": 7,
         "dropped": 0
       },
-      "percent": 77,
+      "percent": 80,
       "ready": 2
     },
     {
@@ -29,12 +29,12 @@ window.AJIYA = {
       ],
       "required": {
         "total": 41,
-        "done": 27,
+        "done": 28,
         "in_progress": 0,
-        "pending": 14,
+        "pending": 13,
         "dropped": 0
       },
-      "percent": 65,
+      "percent": 68,
       "ready": 2
     },
     {
@@ -44,12 +44,12 @@ window.AJIYA = {
       ],
       "required": {
         "total": 51,
-        "done": 27,
+        "done": 28,
         "in_progress": 0,
-        "pending": 24,
+        "pending": 23,
         "dropped": 0
       },
-      "percent": 52,
+      "percent": 54,
       "ready": 2
     },
     {
@@ -59,12 +59,12 @@ window.AJIYA = {
       ],
       "required": {
         "total": 50,
-        "done": 27,
+        "done": 28,
         "in_progress": 0,
-        "pending": 23,
+        "pending": 22,
         "dropped": 0
       },
-      "percent": 54,
+      "percent": 56,
       "ready": 2
     }
   ],
@@ -117,12 +117,12 @@ window.AJIYA = {
       "goal": "A new or existing project can be set up by an agent using only the installed kit and importers",
       "counts": {
         "total": 9,
-        "done": 5,
+        "done": 6,
         "in_progress": 0,
-        "pending": 4,
+        "pending": 3,
         "dropped": 0
       },
-      "percent": 55,
+      "percent": 66,
       "milestone": "v0-1"
     },
     {
@@ -188,9 +188,9 @@ window.AJIYA = {
       "path": ".",
       "counts": {
         "total": 64,
-        "done": 39,
+        "done": 40,
         "in_progress": 0,
-        "pending": 25,
+        "pending": 24,
         "dropped": 0
       }
     }
@@ -761,16 +761,19 @@ window.AJIYA = {
         "AJ-0023"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · 39cb092 · 2026-09-28 · tests passed",
+        "commit": "39cb092",
+        "date": "2026-09-28",
+        "tests_passed": true
       },
       "milestone": "v0-1",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0025"
       ],
-      "unblocks": 23
+      "unblocks": 0
     },
     {
       "id": "AJ-0025",
@@ -787,10 +790,8 @@ window.AJIYA = {
         "text": "🟥 Pending"
       },
       "milestone": "v0-1",
-      "ready": false,
-      "waiting_on": [
-        "AJ-0024"
-      ],
+      "ready": true,
+      "waiting_on": [],
       "dependants": [
         "AJ-0029"
       ],
@@ -1782,7 +1783,7 @@ window.AJIYA = {
     }
   ],
   "next": [
-    "AJ-0024",
+    "AJ-0025",
     "AJ-0041"
   ],
   "checks": [],
