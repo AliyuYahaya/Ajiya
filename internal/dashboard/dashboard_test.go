@@ -219,6 +219,17 @@ func TestViewFilters(t *testing.T) {
 	}
 }
 
+// Ticket cards carry no side stripe; only Dependencies graph nodes do.
+func TestNoCardSideStripe(t *testing.T) {
+	s := pageText(t)
+	if regexp.MustCompile(`\.card[^{\n]*\{[^}]*inset 3px 0 0`).MatchString(s) {
+		t.Error("a .card rule still draws an inset side stripe")
+	}
+	if !strings.Contains(s, ".gnode::before {") {
+		t.Error("Dependencies graph nodes lost their state stripe")
+	}
+}
+
 // Dependencies toggles between ticket links and phase links.
 func TestDepsModeToggle(t *testing.T) {
 	s := pageText(t)
