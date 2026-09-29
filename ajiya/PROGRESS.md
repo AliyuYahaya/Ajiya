@@ -8,9 +8,9 @@ Generated 2026-09-29.
 | Milestone | Closed | Required | % | Can start now |
 |---|---|---|---|---|
 | v0-1 | 37 | 37 | 100% | 0 |
-| v0-2 | 46 | 68 | 67% | 6 |
-| v0-3 | 46 | 78 | 58% | 6 |
-| after-v0-3 | 46 | 77 | 59% | 6 |
+| v0-2 | 47 | 68 | 69% | 6 |
+| v0-3 | 47 | 78 | 60% | 6 |
+| after-v0-3 | 47 | 77 | 61% | 6 |
 
 ## Phases
 
@@ -22,13 +22,13 @@ Generated 2026-09-29.
 | Onboarding | 16 | 0 | 1 | 17 | 94% | v0-1 |
 | Release | 5 | 0 | 0 | 5 | 100% | v0-1 |
 | Agent-access | 0 | 0 | 3 | 3 | 0% | v0-2 |
-| Install | 3 | 0 | 18 | 21 | 14% | v0-2 |
+| Install | 4 | 0 | 17 | 21 | 19% | v0-2 |
 | Decisions-and-changes | 0 | 0 | 11 | 11 | 0% | v0-3 |
 
 ## Can start now
 
 - **AJ-0042** ajiya status (ajiya) · v0-2
-- **AJ-0068** npm account and package names (ajiya) · v0-2
+- **AJ-0075** npm packages: @ajiya/cli and one package per platform (ajiya) · v0-2
 - **AJ-0072** Release workflow: build to a draft release (ajiya) · v0-2
 - **AJ-0070** Choose the install script URL (ajiya) · v0-2
 - **AJ-0083** Apple signing credentials as release secrets (ajiya) · v0-2
@@ -54,7 +54,6 @@ Generated 2026-09-29.
 - **AJ-0058** v0.3 definition of done (ajiya) waits on AJ-0048, AJ-0049, AJ-0050, AJ-0051, AJ-0052, AJ-0053, AJ-0054, AJ-0055, AJ-0056
 - **AJ-0073** install.ps1 for Windows (ajiya) waits on AJ-0044
 - **AJ-0074** Installer CI (ajiya) waits on AJ-0045, AJ-0073
-- **AJ-0075** npm packages: @ajiya/cli and one package per platform (ajiya) waits on AJ-0068
 - **AJ-0076** npm launcher tests (ajiya) waits on AJ-0075
 - **AJ-0077** Homebrew tap wiring (ajiya) waits on AJ-0044
 - **AJ-0078** Install scripts served at a stable URL (ajiya) waits on AJ-0045, AJ-0070, AJ-0073
@@ -68,7 +67,6 @@ Generated 2026-09-29.
 
 - **AJ-0047** v0.2 definition of done (ajiya): final sign-off before publishing v0.2
 - **AJ-0058** v0.3 definition of done (ajiya): final sign-off before publishing v0.3
-- **AJ-0068** npm account and package names (ajiya): needs the maintainer's npm account
 - **AJ-0070** Choose the install script URL (ajiya): a domain costs money and is the maintainer's choice
 - **AJ-0080** npm trusted publishing (ajiya): needs the maintainer's npm account
 - **AJ-0081** Release rehearsal on a release candidate (ajiya): publishing anything needs the maintainer's approval

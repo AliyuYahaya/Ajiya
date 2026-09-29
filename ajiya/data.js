@@ -29,12 +29,12 @@ window.AJIYA = {
       ],
       "required": {
         "total": 68,
-        "done": 46,
+        "done": 47,
         "in_progress": 0,
-        "pending": 22,
+        "pending": 21,
         "dropped": 0
       },
-      "percent": 67,
+      "percent": 69,
       "ready": 6
     },
     {
@@ -44,12 +44,12 @@ window.AJIYA = {
       ],
       "required": {
         "total": 78,
-        "done": 46,
+        "done": 47,
         "in_progress": 0,
-        "pending": 32,
+        "pending": 31,
         "dropped": 0
       },
-      "percent": 58,
+      "percent": 60,
       "ready": 6
     },
     {
@@ -59,12 +59,12 @@ window.AJIYA = {
       ],
       "required": {
         "total": 77,
-        "done": 46,
+        "done": 47,
         "in_progress": 0,
-        "pending": 31,
+        "pending": 30,
         "dropped": 0
       },
-      "percent": 59,
+      "percent": 61,
       "ready": 6
     }
   ],
@@ -159,12 +159,12 @@ window.AJIYA = {
       "goal": "Ajiya installs in one step, with a Claude Code plugin",
       "counts": {
         "total": 21,
-        "done": 3,
+        "done": 4,
         "in_progress": 0,
-        "pending": 18,
+        "pending": 17,
         "dropped": 0
       },
-      "percent": 14,
+      "percent": 19,
       "milestone": "v0-2"
     },
     {
@@ -188,9 +188,9 @@ window.AJIYA = {
       "path": ".",
       "counts": {
         "total": 91,
-        "done": 58,
+        "done": 59,
         "in_progress": 0,
-        "pending": 33,
+        "pending": 32,
         "dropped": 0
       }
     }
@@ -1898,17 +1898,19 @@ window.AJIYA = {
         "AJ-0034"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending · Needs a human: needs the maintainer's npm account",
-        "human": "needs the maintainer's npm account"
+        "state": "done",
+        "text": "🟩 Done · by Aliyu Yahaya · 2026-09-29 · Note: haidardotdev has 2FA; npm org ajiya created; @ajiya/cli 0.0.0 placeholder published (ajiya was refused as too similar to tjika)",
+        "note": "haidardotdev has 2FA; npm org ajiya created; @ajiya/cli 0.0.0 placeholder published (ajiya was refused as too similar to tjika)",
+        "by": "Aliyu Yahaya",
+        "date": "2026-09-29"
       },
       "milestone": "v0-2",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0075"
       ],
-      "unblocks": 18
+      "unblocks": 0
     },
     {
       "id": "AJ-0069",
@@ -2069,10 +2071,8 @@ window.AJIYA = {
         "text": "🟥 Pending"
       },
       "milestone": "v0-2",
-      "ready": false,
-      "waiting_on": [
-        "AJ-0068"
-      ],
+      "ready": true,
+      "waiting_on": [],
       "dependants": [
         "AJ-0076",
         "AJ-0079",
@@ -2487,7 +2487,7 @@ window.AJIYA = {
   ],
   "next": [
     "AJ-0042",
-    "AJ-0068",
+    "AJ-0075",
     "AJ-0072",
     "AJ-0070",
     "AJ-0083",
