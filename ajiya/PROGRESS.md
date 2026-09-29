@@ -83,6 +83,10 @@ Generated 2026-09-29.
 
 ## Recent activity
 
+- 2026-09-29 `8a67799` Record AJ-0085, AJ-0086 and AJ-0090 as done (AJ-0085, AJ-0086, AJ-0090)
+  - AJ-0085: in_progress → done
+  - AJ-0086: in_progress → done
+  - AJ-0090: in_progress → done
 - 2026-09-29 `23f1de8` ajiya init suggests the test command (AJ-0090)
   - AJ-0090: pending → in_progress
 - 2026-09-29 `4e23e52` Add ajiya phase remove for an empty phase (AJ-0086)
@@ -111,9 +115,7 @@ Generated 2026-09-29.
 - 2026-09-29 `ff9cdca` Plan: sign and notarise the macOS binaries (chore)
   - AJ-0083: new → pending
   - AJ-0084: new → pending
-- 2026-09-29 `810c3c0` npm packaging decided: per-platform packages behind a wrapper (AJ-0067, AJ-0075)
-  - AJ-0067: pending → done
-- and 128 more in data.js
+- and 129 more in data.js
 
 ## Checks
 

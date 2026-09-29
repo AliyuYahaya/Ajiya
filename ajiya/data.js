@@ -2495,6 +2495,46 @@ window.AJIYA = {
   "checks": [],
   "activity": [
     {
+      "hash": "8a67799e20c751472f9c36f268a1b62efe6a044f",
+      "short": "8a67799",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Record AJ-0085, AJ-0086 and AJ-0090 as done",
+      "refs": [
+        "AJ-0085",
+        "AJ-0086",
+        "AJ-0090"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0085",
+          "phase": "onboarding",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · 980c627 · 2026-09-29 · tests passed"
+        },
+        {
+          "id": "AJ-0086",
+          "phase": "onboarding",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · 4e23e52 · 2026-09-29 · tests passed"
+        },
+        {
+          "id": "AJ-0090",
+          "phase": "onboarding",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · 23f1de8 · 2026-09-29 · tests passed"
+        }
+      ],
+      "time": 1790717513
+    },
+    {
       "hash": "23f1de8c73692270dc9db062489038d24736267e",
       "short": "23f1de8",
       "date": "2026-09-29",
