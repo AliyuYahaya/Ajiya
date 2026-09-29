@@ -178,6 +178,8 @@ Imports never reword items, and you should not either.
 After an import:
 
 1. Read the import report. It lists duplicates, loops it left out, and old IDs.
+   To see the imported tickets, run `ajiya ticket list --phase inbox` (add `--json`
+   to read them in a script); do not read the files in `ajiya/`.
 2. Create the feature phases (section 3) and move each ticket out of `inbox`:
    `ajiya ticket edit <ID> --phase <slug>`. Set the right app with `--app`.
 3. Add the dependencies the source did not have:
@@ -217,4 +219,4 @@ by feature, so most of steps 2 and 3 are done:
 Without a rollout file, each source file becomes one phase.
 
 After this import, read the report, then check the phases and milestones
-(`ajiya phase list`, `ajiya milestone list`), organise `inbox`, and run `ajiya check`.
+(`ajiya phase list`, `ajiya milestone list`), organise `inbox` (`ajiya ticket list --phase inbox`), and run `ajiya check`.

@@ -1,0 +1,120 @@
+# ticket list: plan order, filters, JSON; group help; usage lines; edit output.
+
+exec ajiya init --name Demo --prefix DE
+cp apps.toml ajiya.toml
+exec ajiya phase add api 'API works'
+exec ajiya phase add go-live 'Live'
+exec ajiya phase move go-live --first
+exec ajiya ticket add --phase api --app api --done-when x 'Schema'
+exec ajiya ticket add --phase api --app api --done-when x 'Endpoint' --depends DE-0001
+exec ajiya ticket add --phase go-live --app infra --done-when x 'Deploy' --human keys
+exec ajiya ticket add --phase go-live --app infra --done-when x 'Announce' --depends DE-0003
+exec ajiya ticket start DE-0001
+exec ajiya milestone add gate --targets api
+
+# Phase display order first (go-live is first), then ID.
+exec ajiya ticket list
+cmp stdout all.golden
+
+exec ajiya ticket list --phase api
+stdout 'DE-0001'
+! stdout 'DE-0003'
+exec ajiya ticket list --app infra
+! stdout 'DE-0001'
+stdout 'DE-0004'
+exec ajiya ticket list --state in_progress
+stdout 'DE-0001'
+! stdout 'DE-0002'
+exec ajiya ticket list --state pending
+! stdout 'DE-0001'
+stdout 'DE-0002'
+exec ajiya ticket list --state ready
+stdout 'DE-0001'
+stdout 'DE-0003'
+! stdout 'DE-0002'
+exec ajiya ticket list --state human
+stdout 'DE-0003'
+! stdout 'DE-0004'
+exec ajiya ticket list --milestone gate
+stdout 'DE-0002'
+! stdout 'DE-0003'
+exec ajiya ticket list --phase api --app infra
+stdout 'No tickets match'
+exec ajiya ticket list --state done
+stdout 'No tickets match'
+exec ajiya ticket list --state done --json
+stdout '^\[\]$'
+exec ajiya ticket list --phase api --json
+stdout '"id": "DE-0001"'
+stdout '"state": "in_progress"'
+! stdout 'DE-0003'
+! exec ajiya ticket list --state bogus
+stderr 'not one of pending'
+! exec ajiya ticket list --phase nope
+stderr 'nope'
+! exec ajiya ticket list --milestone nope
+stderr 'no milestone'
+
+# Group help lists the subcommands with their summaries.
+exec ajiya ticket --help
+stdout 'ticket add +Add a ticket'
+stdout 'ticket list +List tickets'
+stdout 'ticket edit +Change a ticket'
+! stdout 'phase add'
+exec ajiya phase --help
+stdout 'phase list'
+exec ajiya app --help
+stdout 'app add'
+exec ajiya milestone --help
+stdout 'milestone show'
+exec ajiya launch --help
+stdout 'launch set'
+exec ajiya import --help
+stdout 'import todo'
+exec ajiya hook --help
+stdout 'hook install'
+! exec ajiya ticket
+stderr 'ticket add'
+! exec ajiya ticket frobnicate
+stderr 'unknown command "ticket frobnicate"'
+! exec ajiya frobnicate
+stderr 'unknown command'
+
+# Usage lines: required outside [ ], optional inside.
+exec ajiya ticket add --help
+stdout 'usage: ajiya ticket add --phase <slug> --app <app> "<title>" --done-when "<check>" \[--depends <IDs>\] \[--human "<reason>"\]'
+stdout 'outside \[ \] are required'
+exec ajiya ticket edit --help
+stdout 'at least one flag'
+
+# ticket edit prints the ticket for every flag combination.
+exec ajiya ticket edit DE-0002 --phase go-live
+stdout 'DE-0002  Endpoint'
+stdout 'phase go-live'
+exec ajiya ticket edit DE-0002 --app infra
+stdout 'DE-0002  Endpoint'
+stdout 'app infra'
+exec ajiya ticket edit DE-0002 --app api --phase api
+stdout 'phase api · app api'
+exec ajiya ticket edit DE-0002 --phase api
+stdout 'DE-0002  Endpoint'
+exec ajiya ticket edit DE-0002 --app api
+stdout 'app api'
+
+-- apps.toml --
+[project]
+name = "Demo"
+prefix = "DE"
+
+[[apps]]
+name = "api"
+path = "api"
+
+[[apps]]
+name = "web"
+path = "web"
+-- all.golden --
+🟥 DE-0003  infra  pending      Deploy
+🟥 DE-0004  infra  pending      Announce
+🟨 DE-0001  api    in_progress  Schema
+🟥 DE-0002  api    pending      Endpoint
