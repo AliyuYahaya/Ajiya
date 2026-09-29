@@ -14,13 +14,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 31,
-        "done": 18,
-        "in_progress": 2,
+        "done": 20,
+        "in_progress": 0,
         "pending": 11,
         "dropped": 0
       },
-      "percent": 58,
-      "ready": 2
+      "percent": 64,
+      "ready": 1
     },
     {
       "name": "v0-2",
@@ -29,13 +29,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 37,
-        "done": 18,
-        "in_progress": 2,
+        "done": 20,
+        "in_progress": 0,
         "pending": 17,
         "dropped": 0
       },
-      "percent": 48,
-      "ready": 2
+      "percent": 54,
+      "ready": 1
     },
     {
       "name": "v0-3",
@@ -44,13 +44,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 47,
-        "done": 18,
-        "in_progress": 2,
+        "done": 20,
+        "in_progress": 0,
         "pending": 27,
         "dropped": 0
       },
-      "percent": 38,
-      "ready": 2
+      "percent": 42,
+      "ready": 1
     },
     {
       "name": "after-v0-3",
@@ -59,13 +59,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 46,
-        "done": 18,
-        "in_progress": 2,
+        "done": 20,
+        "in_progress": 0,
         "pending": 26,
         "dropped": 0
       },
-      "percent": 39,
-      "ready": 2
+      "percent": 43,
+      "ready": 1
     }
   ],
   "phases": [
@@ -103,12 +103,12 @@ window.AJIYA = {
       "goal": "PROGRESS.md, data.js, the dashboard and serve show the plan and its activity",
       "counts": {
         "total": 8,
-        "done": 5,
-        "in_progress": 2,
+        "done": 7,
+        "in_progress": 0,
         "pending": 1,
         "dropped": 0
       },
-      "percent": 62,
+      "percent": 87,
       "milestone": "v0-1"
     },
     {
@@ -188,8 +188,8 @@ window.AJIYA = {
       "path": ".",
       "counts": {
         "total": 60,
-        "done": 30,
-        "in_progress": 2,
+        "done": 32,
+        "in_progress": 0,
         "pending": 28,
         "dropped": 0
       }
@@ -682,11 +682,8 @@ window.AJIYA = {
         "text": "🟥 Pending"
       },
       "milestone": "v0-1",
-      "ready": false,
-      "waiting_on": [
-        "AJ-0036",
-        "AJ-0060"
-      ],
+      "ready": true,
+      "waiting_on": [],
       "dependants": [
         "AJ-0022",
         "AJ-0023"
@@ -1037,17 +1034,19 @@ window.AJIYA = {
         "AJ-0019"
       ],
       "status": {
-        "state": "in_progress",
-        "text": "🟨 In progress: in a parallel worktree",
-        "note": "in a parallel worktree"
+        "state": "done",
+        "text": "🟩 Done · a0210e3 · 2026-09-29 · tests passed",
+        "commit": "a0210e3",
+        "date": "2026-09-29",
+        "tests_passed": true
       },
       "milestone": "v0-1",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0021"
       ],
-      "unblocks": 28
+      "unblocks": 0
     },
     {
       "id": "AJ-0037",
@@ -1662,25 +1661,42 @@ window.AJIYA = {
         "AJ-0020"
       ],
       "status": {
-        "state": "in_progress",
-        "text": "🟨 In progress: in a parallel worktree",
-        "note": "in a parallel worktree"
+        "state": "done",
+        "text": "🟩 Done · 3ae5531 · 2026-09-29 · tests passed",
+        "commit": "3ae5531",
+        "date": "2026-09-29",
+        "tests_passed": true
       },
       "milestone": "v0-1",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0021"
       ],
-      "unblocks": 28
+      "unblocks": 0
     }
   ],
   "next": [
-    "AJ-0036",
-    "AJ-0060"
+    "AJ-0021"
   ],
   "checks": [],
   "activity": [
+    {
+      "hash": "61d1f5477f38e4fa2a5ce359e8a453209b815dd8",
+      "short": "61d1f54",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Milestones v0-1, v0-2, v0-3 for this repository",
+      "refs": [
+        "AJ-0021"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790690491
+    },
     {
       "hash": "3aa35723493ecf7b5c285dc6959eace07a3c5a74",
       "short": "3aa3572",

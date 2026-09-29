@@ -7,10 +7,10 @@ Generated 2026-09-29.
 
 | Milestone | Closed | Required | % | Can start now |
 |---|---|---|---|---|
-| v0-1 | 18 | 31 | 58% | 2 |
-| v0-2 | 18 | 37 | 48% | 2 |
-| v0-3 | 18 | 47 | 38% | 2 |
-| after-v0-3 | 18 | 46 | 39% | 2 |
+| v0-1 | 20 | 31 | 64% | 1 |
+| v0-2 | 20 | 37 | 54% | 1 |
+| v0-3 | 20 | 47 | 42% | 1 |
+| after-v0-3 | 20 | 46 | 43% | 1 |
 
 ## Phases
 
@@ -18,7 +18,7 @@ Generated 2026-09-29.
 |---|---|---|---|---|---|---|
 | Commit-rule | 7 | 0 | 0 | 7 | 100% | v0-1 |
 | Apps-launch | 14 | 0 | 0 | 14 | 100% | v0-1 |
-| Outputs | 5 | 2 | 1 | 8 | 62% | v0-1 |
+| Outputs | 7 | 0 | 1 | 8 | 87% | v0-1 |
 | Onboarding | 3 | 0 | 6 | 9 | 33% | v0-1 |
 | Release | 1 | 0 | 4 | 5 | 20% | v0-1 |
 | Agent-access | 0 | 0 | 3 | 3 | 0% | v0-2 |
@@ -27,12 +27,10 @@ Generated 2026-09-29.
 
 ## Can start now
 
-- **AJ-0036** Dependencies view in the dashboard (ajiya) · v0-1 · in progress
-- **AJ-0060** Dashboard live refresh under ajiya serve (ajiya) · v0-1 · in progress
+- **AJ-0021** Milestones v0-1, v0-2 and v0-3 set and the dashboard in use on this repo (ajiya) · v0-1
 
 ## Waiting
 
-- **AJ-0021** Milestones v0-1, v0-2 and v0-3 set and the dashboard in use on this repo (ajiya) waits on AJ-0036, AJ-0060
 - **AJ-0022** Setup guide (ajiya) waits on AJ-0021
 - **AJ-0023** Daily guide (ajiya) waits on AJ-0021
 - **AJ-0024** Skill and agent instruction blocks (ajiya) waits on AJ-0022, AJ-0023
@@ -69,6 +67,7 @@ Generated 2026-09-29.
 
 ## Recent activity
 
+- 2026-09-29 `61d1f54` Milestones v0-1, v0-2, v0-3 for this repository (AJ-0021)
 - 2026-09-29 `3aa3572` Plan dashboard live refresh; AJ-0021 waits for the dependencies view again (AJ-0021, AJ-0036, AJ-0060)
   - AJ-0036: pending → in_progress
   - AJ-0060: new → in_progress
@@ -94,8 +93,7 @@ Generated 2026-09-29.
 - 2026-09-29 `7d048ab` AJ-0040 done (AJ-0040)
   - AJ-0040: in_progress → done
 - 2026-09-29 `a939eb5` Merge branch 'worktree-agent-a2dda545491c21789' (-)
-- 2026-09-29 `2d78fb0` v0.3 spec update: keep ticket context light (AJ-0048, AJ-0053, AJ-0056)
-- and 77 more in data.js
+- and 78 more in data.js
 
 ## Checks
 

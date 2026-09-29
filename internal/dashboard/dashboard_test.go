@@ -100,7 +100,7 @@ func TestViewsInNav(t *testing.T) {
 	for _, m := range regexp.MustCompile(`(?m)^\s*(\w+): \{ label:`).FindAllStringSubmatch(reg, -1) {
 		views = append(views, m[1])
 	}
-	want := []string{"overview", "next", "board", "phases", "tickets", "apps", "checks", "activity"}
+	want := []string{"overview", "next", "board", "deps", "phases", "tickets", "apps", "checks", "activity"}
 	if strings.Join(views, " ") != strings.Join(want, " ") {
 		t.Errorf("views = %v, want %v", views, want)
 	}
@@ -120,5 +120,60 @@ func TestViewsInNav(t *testing.T) {
 	}
 	for v := range nav {
 		t.Errorf("nav button %q has no view", v)
+	}
+}
+
+// Live refresh must poll only when served over http(s), never when the page
+// is opened from disk (file:), and the polling code must fetch /version with
+// cache: 'no-store' and pause/resume on visibilitychange.
+func TestLiveRefreshGuardedByProtocol(t *testing.T) {
+	s := pageText(t)
+	liveDecl := regexp.MustCompile(`const live = location\.protocol === 'http:' \|\| location\.protocol === 'https:';`)
+	if !liveDecl.MatchString(s) {
+		t.Fatal("page does not define 'live' from location.protocol (http/https only)")
+	}
+	i := strings.Index(s, "if (live) {")
+	if i < 0 {
+		t.Fatal("polling code is not guarded by 'if (live)'")
+	}
+	// The block gating polling on 'live' must contain the fetch/version and
+	// visibilitychange wiring, so that a file: page never runs any of it.
+	end := strings.Index(s[i:], "\n  render();")
+	if end < 0 {
+		t.Fatal("could not find end of the live-refresh block")
+	}
+	liveBlock := s[i : i+end]
+	if !strings.Contains(liveBlock, "fetch('version', { cache: 'no-store' })") {
+		t.Error("live-refresh block does not fetch 'version' with cache: 'no-store'")
+	}
+	if !strings.Contains(liveBlock, "visibilitychange") {
+		t.Error("live-refresh block does not handle visibilitychange (pause/resume polling)")
+	}
+	if !strings.Contains(liveBlock, "setInterval") {
+		t.Error("live-refresh block does not poll on an interval")
+	}
+}
+
+// The polling loop must not overlap requests (a 'busy' guard) and must load
+// a fresh data.js by version, without leaving the loaded <script> tag behind.
+func TestLiveRefreshLoadsDataJS(t *testing.T) {
+	s := pageText(t)
+	if !strings.Contains(s, "if (busy) return;") {
+		t.Error("poll() does not guard against overlapping requests")
+	}
+	if !regexp.MustCompile(`s\.src = 'data\.js\?v=' \+ encodeURIComponent\(v\)`).MatchString(s) {
+		t.Error("live refresh does not load data.js with a version query string")
+	}
+	if !strings.Contains(s, "s.remove();") {
+		t.Error("live refresh does not remove the injected <script> tag after loading")
+	}
+}
+
+// A live refresh must rebuild the filter menus from the new data, so an app,
+// phase or milestone added since the page loaded can be picked.
+func TestLiveRefreshRefillsFilters(t *testing.T) {
+	s := pageText(t)
+	if !strings.Contains(s, "setData(d);\n    fillFilters();\n    render();") {
+		t.Error("refresh() does not call fillFilters() after setData()")
 	}
 }
