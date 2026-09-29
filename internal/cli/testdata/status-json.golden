@@ -1,0 +1,90 @@
+{
+  "project": "Demo",
+  "milestones": [
+    {
+      "name": "staging",
+      "closed": 0,
+      "required": 1,
+      "can_start": 1
+    },
+    {
+      "name": "launch",
+      "closed": 0,
+      "required": 6,
+      "can_start": 4
+    }
+  ],
+  "in_progress": [
+    {
+      "id": "DE-0002",
+      "app": "infra",
+      "title": "Schema",
+      "since_seconds": 18000,
+      "since_source": "local"
+    },
+    {
+      "id": "DE-0003",
+      "app": "infra",
+      "title": "Endpoint",
+      "since_seconds": 172800,
+      "since_source": "history"
+    },
+    {
+      "id": "DE-0004",
+      "app": "infra",
+      "title": "Auth",
+      "since_seconds": null,
+      "since_source": ""
+    }
+  ],
+  "can_start": {
+    "count": 4,
+    "first": [
+      {
+        "id": "DE-0001",
+        "app": "infra",
+        "title": "Staging host"
+      },
+      {
+        "id": "DE-0002",
+        "app": "infra",
+        "title": "Schema"
+      },
+      {
+        "id": "DE-0004",
+        "app": "infra",
+        "title": "Auth"
+      }
+    ]
+  },
+  "needs_human": [
+    {
+      "id": "DE-0005",
+      "app": "infra",
+      "title": "Deploy",
+      "reason": "needs the production keys"
+    }
+  ],
+  "checks": {
+    "errors": 0,
+    "warnings": 1
+  },
+  "activity": [
+    {
+      "short": "HASH",
+      "date": "2026-03-09",
+      "subject": "Start the schema work",
+      "refs": [
+        "DE-0002"
+      ]
+    },
+    {
+      "short": "HASH",
+      "date": "2026-03-08",
+      "subject": "Start the endpoint work",
+      "refs": [
+        "DE-0003"
+      ]
+    }
+  ]
+}

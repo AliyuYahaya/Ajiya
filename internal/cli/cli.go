@@ -8,6 +8,7 @@ import (
 	"io"
 	"os"
 	"strings"
+	"time"
 )
 
 // Exit codes shared by every command.
@@ -46,8 +47,9 @@ func (s silent) Error() string { return "" }
 type env struct {
 	stdin          io.Reader
 	stdout, stderr io.Writer
-	dir            string // working directory
-	interactive    bool   // a person is typing at stdin
+	dir            string           // working directory
+	interactive    bool             // a person is typing at stdin
+	now            func() time.Time // the clock; nil means time.Now
 }
 
 type command struct {
@@ -79,6 +81,7 @@ func init() {
 		{"ticket show", "<ID> [--json]", "Show a ticket, its dependencies and dependants", runTicketShow},
 		{"ticket edit", `<ID> [--title "<title>"] [--done-when "<check>"] [--depends <IDs>|-] [--app <app>] [--phase <slug>]  (at least one flag)`, "Change a ticket", runTicketEdit},
 		{"ticket list", "[--phase <slug>] [--app <app>] [--state <state>] [--milestone <name>] [--json]", "List tickets in plan order with ID, app, state and title", runTicketList},
+		{"status", "[--brief | --json]", "Summarise the project: milestones, work in progress, what can start, checks and recent activity", runStatus},
 		{"next", "[--app <app>] [--launch | --milestone <name>] [--json]", "List tickets that can start now", runNext},
 		{"launch set", "<phase|ticket>", "Set the launch target", runLaunchSet},
 		{"launch show", "[--json]", "Show the launch target and what it still needs", runLaunchShow},
