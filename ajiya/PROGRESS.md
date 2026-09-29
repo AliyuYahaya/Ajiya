@@ -61,6 +61,8 @@ Generated 2026-09-29.
 
 ## Recent activity
 
+- 2026-09-29 `03b432d` AJ-0030 done (AJ-0030)
+  - AJ-0030: in_progress → done
 - 2026-09-29 `9a2c69c` GoReleaser config (AJ-0030)
   - AJ-0030: pending → in_progress
 - 2026-09-29 `d18ad9e` AJ-0029 done (AJ-0029)
@@ -91,12 +93,7 @@ Generated 2026-09-29.
   - AJ-0063: in_progress → done
   - AJ-0064: in_progress → done
 - 2026-09-29 `40d743d` Ticket cards without the side stripe (AJ-0064)
-- 2026-09-29 `d84de11` Dashboard: logo, filters on every view, ticket and phase dependency graphs (AJ-0061, AJ-0062, AJ-0063)
-  - AJ-0061: pending → in_progress
-  - AJ-0062: pending → in_progress
-  - AJ-0063: pending → in_progress
-  - AJ-0064: pending → in_progress
-- and 99 more in data.js
+- and 100 more in data.js
 
 ## Checks
 
