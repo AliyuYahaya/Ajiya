@@ -7,10 +7,10 @@ Generated 2026-09-29.
 
 | Milestone | Closed | Required | % | Can start now |
 |---|---|---|---|---|
-| v0-1 | 36 | 37 | 97% | 1 |
-| v0-2 | 37 | 61 | 60% | 1 |
-| v0-3 | 37 | 71 | 52% | 1 |
-| after-v0-3 | 37 | 70 | 52% | 1 |
+| v0-1 | 37 | 37 | 100% | 0 |
+| v0-2 | 38 | 61 | 62% | 6 |
+| v0-3 | 38 | 71 | 53% | 6 |
+| after-v0-3 | 38 | 70 | 54% | 6 |
 
 ## Phases
 
@@ -20,18 +20,22 @@ Generated 2026-09-29.
 | Apps-launch | 14 | 0 | 0 | 14 | 100% | v0-1 |
 | Outputs | 12 | 0 | 0 | 12 | 100% | v0-1 |
 | Onboarding | 10 | 0 | 0 | 10 | 100% | v0-1 |
-| Release | 4 | 0 | 1 | 5 | 80% | v0-1 |
+| Release | 5 | 0 | 0 | 5 | 100% | v0-1 |
 | Agent-access | 0 | 0 | 3 | 3 | 0% | v0-2 |
 | Install | 1 | 0 | 20 | 21 | 4% | v0-2 |
 | Decisions-and-changes | 0 | 0 | 11 | 11 | 0% | v0-3 |
 
 ## Can start now
 
-- **AJ-0034** v0.1 definition of done (ajiya) · v0-1
+- **AJ-0042** ajiya status (ajiya) · v0-2
+- **AJ-0068** npm account and package names (ajiya) · v0-2
+- **AJ-0069** Homebrew tap repository and token (ajiya) · v0-2
+- **AJ-0071** Release environments with required reviewers (ajiya) · v0-2
+- **AJ-0072** Release workflow: build to a draft release (ajiya) · v0-2
+- **AJ-0070** Choose the install script URL (ajiya) · v0-2
 
 ## Waiting
 
-- **AJ-0042** ajiya status (ajiya) waits on AJ-0034
 - **AJ-0043** ajiya mcp server (ajiya) waits on AJ-0042
 - **AJ-0044** ajiya mcp install, uninstall and status (ajiya) waits on AJ-0043
 - **AJ-0045** install.sh for macOS and Linux (ajiya) waits on AJ-0044
@@ -48,11 +52,6 @@ Generated 2026-09-29.
 - **AJ-0056** Guides and skill for decisions and changes (ajiya) waits on AJ-0055
 - **AJ-0057** Dashboard: open changes and decisions (ajiya) waits on AJ-0055
 - **AJ-0058** v0.3 definition of done (ajiya) waits on AJ-0048, AJ-0049, AJ-0050, AJ-0051, AJ-0052, AJ-0053, AJ-0054, AJ-0055, AJ-0056
-- **AJ-0068** npm account and package names (ajiya) waits on AJ-0034
-- **AJ-0069** Homebrew tap repository and token (ajiya) waits on AJ-0034
-- **AJ-0070** Choose the install script URL (ajiya) waits on AJ-0034
-- **AJ-0071** Release environments with required reviewers (ajiya) waits on AJ-0034
-- **AJ-0072** Release workflow: build to a draft release (ajiya) waits on AJ-0034
 - **AJ-0073** install.ps1 for Windows (ajiya) waits on AJ-0044
 - **AJ-0074** Installer CI (ajiya) waits on AJ-0045, AJ-0073
 - **AJ-0075** npm packages: a wrapper and one package per platform (ajiya) waits on AJ-0068
@@ -68,7 +67,6 @@ Generated 2026-09-29.
 
 ## Needs a human
 
-- **AJ-0034** v0.1 definition of done (ajiya): final sign-off before publishing
 - **AJ-0047** v0.2 definition of done (ajiya): final sign-off before publishing v0.2
 - **AJ-0058** v0.3 definition of done (ajiya): final sign-off before publishing v0.3
 - **AJ-0068** npm account and package names (ajiya): needs the maintainer's npm account

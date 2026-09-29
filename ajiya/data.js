@@ -14,13 +14,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 37,
-        "done": 36,
+        "done": 37,
         "in_progress": 0,
-        "pending": 1,
+        "pending": 0,
         "dropped": 0
       },
-      "percent": 97,
-      "ready": 1
+      "percent": 100,
+      "ready": 0
     },
     {
       "name": "v0-2",
@@ -29,13 +29,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 61,
-        "done": 37,
+        "done": 38,
         "in_progress": 0,
-        "pending": 24,
+        "pending": 23,
         "dropped": 0
       },
-      "percent": 60,
-      "ready": 1
+      "percent": 62,
+      "ready": 6
     },
     {
       "name": "v0-3",
@@ -44,13 +44,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 71,
-        "done": 37,
+        "done": 38,
         "in_progress": 0,
-        "pending": 34,
+        "pending": 33,
         "dropped": 0
       },
-      "percent": 52,
-      "ready": 1
+      "percent": 53,
+      "ready": 6
     },
     {
       "name": "after-v0-3",
@@ -59,13 +59,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 70,
-        "done": 37,
+        "done": 38,
         "in_progress": 0,
-        "pending": 33,
+        "pending": 32,
         "dropped": 0
       },
-      "percent": 52,
-      "ready": 1
+      "percent": 54,
+      "ready": 6
     }
   ],
   "phases": [
@@ -131,12 +131,12 @@ window.AJIYA = {
       "goal": "v0.1 is ready to publish: binaries, Homebrew cask, README walkthroughs and changelog",
       "counts": {
         "total": 5,
-        "done": 4,
+        "done": 5,
         "in_progress": 0,
-        "pending": 1,
+        "pending": 0,
         "dropped": 0
       },
-      "percent": 80,
+      "percent": 100,
       "milestone": "v0-1"
     },
     {
@@ -188,9 +188,9 @@ window.AJIYA = {
       "path": ".",
       "counts": {
         "total": 84,
-        "done": 49,
+        "done": 50,
         "in_progress": 0,
-        "pending": 35,
+        "pending": 34,
         "dropped": 0
       }
     }
@@ -1011,12 +1011,14 @@ window.AJIYA = {
         "AJ-0066"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending · Needs a human: final sign-off before publishing",
-        "human": "final sign-off before publishing"
+        "state": "done",
+        "text": "🟩 Done · by Aliyu Yahaya · 2026-09-29 · Note: v0.1 approved by the maintainer; check --strict and check --commits since M2 pass; agent-only walkthrough test runs after sign-off",
+        "note": "v0.1 approved by the maintainer; check --strict and check --commits since M2 pass; agent-only walkthrough test runs after sign-off",
+        "by": "Aliyu Yahaya",
+        "date": "2026-09-29"
       },
       "milestone": "v0-1",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0042",
@@ -1027,7 +1029,7 @@ window.AJIYA = {
         "AJ-0071",
         "AJ-0072"
       ],
-      "unblocks": 34
+      "unblocks": 0
     },
     {
       "id": "AJ-0035",
@@ -1225,10 +1227,8 @@ window.AJIYA = {
         "text": "🟥 Pending"
       },
       "milestone": "v0-2",
-      "ready": false,
-      "waiting_on": [
-        "AJ-0034"
-      ],
+      "ready": true,
+      "waiting_on": [],
       "dependants": [
         "AJ-0043",
         "AJ-0046",
@@ -1868,9 +1868,7 @@ window.AJIYA = {
       },
       "milestone": "v0-2",
       "ready": false,
-      "waiting_on": [
-        "AJ-0034"
-      ],
+      "waiting_on": [],
       "dependants": [
         "AJ-0075"
       ],
@@ -1891,10 +1889,8 @@ window.AJIYA = {
         "human": "needs the maintainer's npm account"
       },
       "milestone": "v0-2",
-      "ready": false,
-      "waiting_on": [
-        "AJ-0034"
-      ],
+      "ready": true,
+      "waiting_on": [],
       "dependants": [
         "AJ-0075"
       ],
@@ -1915,10 +1911,8 @@ window.AJIYA = {
         "human": "needs the maintainer's GitHub account"
       },
       "milestone": "v0-2",
-      "ready": false,
-      "waiting_on": [
-        "AJ-0034"
-      ],
+      "ready": true,
+      "waiting_on": [],
       "dependants": [
         "AJ-0077"
       ],
@@ -1939,10 +1933,8 @@ window.AJIYA = {
         "human": "a domain costs money and is the maintainer's choice"
       },
       "milestone": "v0-2",
-      "ready": false,
-      "waiting_on": [
-        "AJ-0034"
-      ],
+      "ready": true,
+      "waiting_on": [],
       "dependants": [
         "AJ-0078"
       ],
@@ -1963,10 +1955,8 @@ window.AJIYA = {
         "human": "repository settings need the maintainer"
       },
       "milestone": "v0-2",
-      "ready": false,
-      "waiting_on": [
-        "AJ-0034"
-      ],
+      "ready": true,
+      "waiting_on": [],
       "dependants": [
         "AJ-0079",
         "AJ-0083"
@@ -1987,10 +1977,8 @@ window.AJIYA = {
         "text": "🟥 Pending"
       },
       "milestone": "v0-2",
-      "ready": false,
-      "waiting_on": [
-        "AJ-0034"
-      ],
+      "ready": true,
+      "waiting_on": [],
       "dependants": [
         "AJ-0079",
         "AJ-0084"
@@ -2314,7 +2302,12 @@ window.AJIYA = {
     }
   ],
   "next": [
-    "AJ-0034"
+    "AJ-0042",
+    "AJ-0068",
+    "AJ-0069",
+    "AJ-0071",
+    "AJ-0072",
+    "AJ-0070"
   ],
   "checks": [],
   "activity": [
