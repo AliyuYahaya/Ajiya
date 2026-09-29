@@ -47,3 +47,27 @@ changelog:
 
 release:
   draft: true
+
+# Homebrew cask for the tap. Not published: skip_upload stays true until the
+# maintainer says to publish. The tap repository name is an assumption.
+homebrew_casks:
+  - name: ajiya
+    ids: [ajiya]
+    binaries: [ajiya]
+    homepage: https://github.com/AliyuYahaya/Ajiya
+    description: Keeps a project's phases and tickets as markdown in the repository, for coding agents and people
+    repository:
+      owner: AliyuYahaya
+      name: homebrew-tap
+      token: "{{ .Env.HOMEBREW_TAP_TOKEN }}"
+    skip_upload: true
+    hooks:
+      post:
+        # The binaries are not notarised, so macOS would block them on first
+        # run; remove the quarantine attribute Homebrew's download sets.
+        install: |
+          if OS.mac?
+            system_command "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "#{staged_path}/ajiya"]
+          end
+    caveats: |
+      Set up a project with: ajiya init
