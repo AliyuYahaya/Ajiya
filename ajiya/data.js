@@ -1787,6 +1787,30 @@ window.AJIYA = {
   "checks": [],
   "activity": [
     {
+      "hash": "4b321be611a5f9f1cf6ed8de1260a5d3cbb4a2bf",
+      "short": "4b321be",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "AJ-0021 done",
+      "refs": [
+        "AJ-0021"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0021",
+          "phase": "outputs",
+          "from": "pending",
+          "to": "done",
+          "text": "🟩 Done · 61d1f54 · 2026-09-29 · tests passed · Note: milestone list shows v0-1, v0-2, v0-3 in order; ajiya serve shows this repo's plan live"
+        }
+      ],
+      "time": 1790708918
+    },
+    {
       "hash": "dcb35011bec7eae072c99a4be9cb170514b2472c",
       "short": "dcb3501",
       "date": "2026-09-29",
