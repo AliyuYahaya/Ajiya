@@ -42,12 +42,12 @@ window.AJIYA = {
       "goal": "PROGRESS.md, data.js, the dashboard and serve show the plan and its activity",
       "counts": {
         "total": 8,
-        "done": 5,
-        "in_progress": 2,
+        "done": 7,
+        "in_progress": 0,
         "pending": 1,
         "dropped": 0
       },
-      "percent": 62,
+      "percent": 87,
       "milestone": ""
     },
     {
@@ -127,8 +127,8 @@ window.AJIYA = {
       "path": ".",
       "counts": {
         "total": 60,
-        "done": 30,
-        "in_progress": 2,
+        "done": 32,
+        "in_progress": 0,
         "pending": 28,
         "dropped": 0
       }
@@ -621,11 +621,8 @@ window.AJIYA = {
         "text": "🟥 Pending"
       },
       "milestone": "",
-      "ready": false,
-      "waiting_on": [
-        "AJ-0036",
-        "AJ-0060"
-      ],
+      "ready": true,
+      "waiting_on": [],
       "dependants": [
         "AJ-0022",
         "AJ-0023"
@@ -976,17 +973,19 @@ window.AJIYA = {
         "AJ-0019"
       ],
       "status": {
-        "state": "in_progress",
-        "text": "🟨 In progress: in a parallel worktree",
-        "note": "in a parallel worktree"
+        "state": "done",
+        "text": "🟩 Done · a0210e3 · 2026-09-29 · tests passed",
+        "commit": "a0210e3",
+        "date": "2026-09-29",
+        "tests_passed": true
       },
       "milestone": "",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0021"
       ],
-      "unblocks": 28
+      "unblocks": 0
     },
     {
       "id": "AJ-0037",
@@ -1601,25 +1600,107 @@ window.AJIYA = {
         "AJ-0020"
       ],
       "status": {
-        "state": "in_progress",
-        "text": "🟨 In progress: in a parallel worktree",
-        "note": "in a parallel worktree"
+        "state": "done",
+        "text": "🟩 Done · 3ae5531 · 2026-09-29 · tests passed",
+        "commit": "3ae5531",
+        "date": "2026-09-29",
+        "tests_passed": true
       },
       "milestone": "",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0021"
       ],
-      "unblocks": 28
+      "unblocks": 0
     }
   ],
   "next": [
-    "AJ-0036",
-    "AJ-0060"
+    "AJ-0021"
   ],
   "checks": [],
   "activity": [
+    {
+      "hash": "3ae5531716610ec103b17e7c24e4909bbed44123",
+      "short": "3ae5531",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Refill filter menus on live refresh",
+      "refs": [
+        "AJ-0060"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790706832
+    },
+    {
+      "hash": "7207ba63f5060b34d665cfa6ee724bd4bc39fcbf",
+      "short": "7207ba6",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Dashboard live refresh under ajiya serve",
+      "refs": [
+        "AJ-0060"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790706600
+    },
+    {
+      "hash": "a0210e3923b9d5790ba827ff3e8c73b4a5e2d143",
+      "short": "a0210e3",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Dependencies view in the dashboard",
+      "refs": [
+        "AJ-0036"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790691355
+    },
+    {
+      "hash": "3aa35723493ecf7b5c285dc6959eace07a3c5a74",
+      "short": "3aa3572",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Plan dashboard live refresh; AJ-0021 waits for the dependencies view again",
+      "refs": [
+        "AJ-0021",
+        "AJ-0036",
+        "AJ-0060"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0036",
+          "phase": "outputs",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress: in a parallel worktree"
+        },
+        {
+          "id": "AJ-0060",
+          "phase": "outputs",
+          "from": "",
+          "to": "in_progress",
+          "text": "🟨 In progress: in a parallel worktree"
+        }
+      ],
+      "time": 1790690441
+    },
     {
       "hash": "1a7db969d60d9bf9b1f7eb4b637c63fc02d224cc",
       "short": "1a7db96",
