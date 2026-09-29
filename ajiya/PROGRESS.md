@@ -76,8 +76,18 @@ Generated 2026-09-29.
 
 ## Recent activity
 
+- 2026-09-29 `2680bc1` phase remove updates [phases] order before deleting the file (AJ-0086)
+- 2026-09-29 `184720e` Merge branch 'worktree-agent-ac75a90c83d346edb' into worktree-agent-a658cbd8dac8f5d6c (-)
 - 2026-09-29 `607c7b6` Merge branch 'worktree-agent-af1c1cc18e0e82a16' into worktree-agent-a658cbd8dac8f5d6c (-)
+- 2026-09-29 `8a67799` Record AJ-0085, AJ-0086 and AJ-0090 as done (AJ-0085, AJ-0086, AJ-0090)
+  - AJ-0085: in_progress → done
+  - AJ-0086: in_progress → done
+  - AJ-0090: in_progress → done
+- 2026-09-29 `23f1de8` ajiya init suggests the test command (AJ-0090)
+  - AJ-0090: pending → in_progress
 - 2026-09-29 `47eac13` npm wrapper is @ajiya/cli (AJ-0068, AJ-0075)
+- 2026-09-29 `4e23e52` Add ajiya phase remove for an empty phase (AJ-0086)
+  - AJ-0086: pending → in_progress
 - 2026-09-29 `45d9f00` Mark AJ-0087, AJ-0088 and AJ-0089 done (AJ-0087, AJ-0088, AJ-0089)
   - AJ-0087: pending → done
   - AJ-0088: pending → done
@@ -85,6 +95,8 @@ Generated 2026-09-29.
 - 2026-09-29 `ac6842b` Add ticket list, group help and required-flag usage lines (AJ-0087, AJ-0088, AJ-0089)
 - 2026-09-29 `7f1ede7` Homebrew tap and its token in place (AJ-0069)
   - AJ-0069: in_progress → done
+- 2026-09-29 `980c627` Imports default to the project's only app and say which app they used (AJ-0085)
+  - AJ-0085: pending → in_progress
 - 2026-09-29 `df2e9dc` Release environments created; the tap repository exists (AJ-0069, AJ-0071)
   - AJ-0069: pending → in_progress
   - AJ-0071: pending → done
@@ -99,14 +111,7 @@ Generated 2026-09-29.
 - 2026-09-29 `cc18043` npm names: ajiya plus @ajiya/<os>-<arch> under an ajiya org (AJ-0068, AJ-0075)
 - 2026-09-29 `6a75e60` v0.1 signed off (AJ-0034)
   - AJ-0034: pending → done
-- 2026-09-29 `e803fc9` Merge branch 'worktree-agent-a658cbd8dac8f5d6c' (-)
-- 2026-09-29 `e0873df` Licence held by Yavid PTY Ltd; the name and logo are not licensed (chore)
-- 2026-09-29 `2603a19` MIT licence (chore)
-- 2026-09-29 `110dcb2` Rebuild plan outputs after the merge (chore)
-- 2026-09-29 `cc33bdb` Merge branch 'worktree-agent-a5a988be55680e087' into worktree-agent-a658cbd8dac8f5d6c (-)
-- 2026-09-29 `2d65774` Plan: AJ-0041 done (AJ-0041)
-  - AJ-0041: pending → done
-- and 131 more in data.js
+- and 137 more in data.js
 
 ## Checks
 

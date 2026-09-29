@@ -2496,6 +2496,36 @@ window.AJIYA = {
   "checks": [],
   "activity": [
     {
+      "hash": "2680bc195f7426f6e0f46f03bc117b814d32dc9d",
+      "short": "2680bc1",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "phase remove updates [phases] order before deleting the file",
+      "refs": [
+        "AJ-0086"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790717800
+    },
+    {
+      "hash": "184720ee757e7886f3606d34c7a4ee0014e17393",
+      "short": "184720e",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Merge branch 'worktree-agent-ac75a90c83d346edb' into worktree-agent-a658cbd8dac8f5d6c",
+      "refs": [],
+      "chore": false,
+      "merge": true,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790717766
+    },
+    {
       "hash": "607c7b67f025eb42f87569d253533e06af950257",
       "short": "607c7b6",
       "date": "2026-09-29",
@@ -2508,6 +2538,70 @@ window.AJIYA = {
       "agent": "",
       "changes": [],
       "time": 1790717524
+    },
+    {
+      "hash": "8a67799e20c751472f9c36f268a1b62efe6a044f",
+      "short": "8a67799",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Record AJ-0085, AJ-0086 and AJ-0090 as done",
+      "refs": [
+        "AJ-0085",
+        "AJ-0086",
+        "AJ-0090"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0085",
+          "phase": "onboarding",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · 980c627 · 2026-09-29 · tests passed"
+        },
+        {
+          "id": "AJ-0086",
+          "phase": "onboarding",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · 4e23e52 · 2026-09-29 · tests passed"
+        },
+        {
+          "id": "AJ-0090",
+          "phase": "onboarding",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · 23f1de8 · 2026-09-29 · tests passed"
+        }
+      ],
+      "time": 1790717513
+    },
+    {
+      "hash": "23f1de8c73692270dc9db062489038d24736267e",
+      "short": "23f1de8",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "ajiya init suggests the test command",
+      "refs": [
+        "AJ-0090"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0090",
+          "phase": "onboarding",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        }
+      ],
+      "time": 1790717481
     },
     {
       "hash": "47eac13433feef751d31055e61555a5b7d1b1988",
@@ -2525,6 +2619,30 @@ window.AJIYA = {
       "agent": "",
       "changes": [],
       "time": 1790717473
+    },
+    {
+      "hash": "4e23e52f39edb01a092ecac788c82ff2ef3b00d2",
+      "short": "4e23e52",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Add ajiya phase remove for an empty phase",
+      "refs": [
+        "AJ-0086"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0086",
+          "phase": "onboarding",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        }
+      ],
+      "time": 1790717428
     },
     {
       "hash": "45d9f00e390c4ecea15fa97e0af0bc31d2f0828c",
@@ -2607,6 +2725,30 @@ window.AJIYA = {
         }
       ],
       "time": 1790717251
+    },
+    {
+      "hash": "980c6274c11d368abb266ee2b9990ae5e41c3cb6",
+      "short": "980c627",
+      "date": "2026-09-29",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Imports default to the project's only app and say which app they used",
+      "refs": [
+        "AJ-0085"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0085",
+          "phase": "onboarding",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        }
+      ],
+      "time": 1790717160
     },
     {
       "hash": "df2e9dc7b60ec9dd01144df62ee7d3d5b3a6405d",
