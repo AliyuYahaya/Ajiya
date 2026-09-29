@@ -74,6 +74,8 @@ Generated 2026-09-29.
 
 ## Recent activity
 
+- 2026-09-29 `ab57528` npm account, org and @ajiya/cli placeholder in place (AJ-0068)
+  - AJ-0068: pending → done
 - 2026-09-29 `2680bc1` phase remove updates [phases] order before deleting the file (AJ-0086)
 - 2026-09-29 `184720e` Merge branch 'worktree-agent-ac75a90c83d346edb' into worktree-agent-a658cbd8dac8f5d6c (-)
 - 2026-09-29 `607c7b6` Merge branch 'worktree-agent-af1c1cc18e0e82a16' into worktree-agent-a658cbd8dac8f5d6c (-)
@@ -107,9 +109,7 @@ Generated 2026-09-29.
   - AJ-0090: new → pending
   - AJ-0091: new → pending
 - 2026-09-29 `cc18043` npm names: ajiya plus @ajiya/<os>-<arch> under an ajiya org (AJ-0068, AJ-0075)
-- 2026-09-29 `6a75e60` v0.1 signed off (AJ-0034)
-  - AJ-0034: pending → done
-- and 137 more in data.js
+- and 138 more in data.js
 
 ## Checks
 
