@@ -81,6 +81,8 @@ Generated 2026-09-29.
 
 ## Recent activity
 
+- 2026-09-29 `e803fc9` Merge branch 'worktree-agent-a658cbd8dac8f5d6c' (-)
+- 2026-09-29 `e0873df` Licence held by Yavid PTY Ltd; the name and logo are not licensed (chore)
 - 2026-09-29 `2603a19` MIT licence (chore)
 - 2026-09-29 `110dcb2` Rebuild plan outputs after the merge (chore)
 - 2026-09-29 `cc33bdb` Merge branch 'worktree-agent-a5a988be55680e087' into worktree-agent-a658cbd8dac8f5d6c (-)
@@ -115,11 +117,7 @@ Generated 2026-09-29.
   - AJ-0081: new → pending
   - AJ-0082: new → pending
 - 2026-09-29 `7748eae` Merge branch 'worktree-agent-a658cbd8dac8f5d6c' (-)
-- 2026-09-29 `d0c5d61` AJ-0066 done (AJ-0066)
-  - AJ-0066: in_progress → done
-- 2026-09-29 `5a75b38` Guides: how to set the test command (AJ-0066)
-  - AJ-0066: pending → in_progress
-- and 120 more in data.js
+- and 122 more in data.js
 
 ## Checks
 
