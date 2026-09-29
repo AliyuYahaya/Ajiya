@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ajiya</title>
+</head>
+<body>
+<p id="msg">Placeholder: the dashboard is being built (AJ-0019).</p>
+<script src="data.js"></script>
+<script>
+  if (window.AJIYA) document.getElementById('msg').textContent += ' ' + window.AJIYA.tickets.length + ' tickets loaded.';
+</script>
+</body>
+</html>

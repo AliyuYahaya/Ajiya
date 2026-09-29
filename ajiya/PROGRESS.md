@@ -12,7 +12,7 @@ No milestones. Set one with `ajiya launch set <phase|ticket>`.
 | Phase | Done | In progress | Pending | Total | % | Milestone |
 |---|---|---|---|---|---|---|
 | Commit-rule | 7 | 0 | 0 | 7 | 100% | - |
-| Apps-launch | 13 | 0 | 0 | 13 | 100% | - |
+| Apps-launch | 13 | 0 | 1 | 14 | 92% | - |
 | Outputs | 3 | 0 | 4 | 7 | 42% | - |
 | Onboarding | 3 | 0 | 6 | 9 | 33% | - |
 | Release | 1 | 0 | 4 | 5 | 20% | - |
@@ -23,6 +23,7 @@ No milestones. Set one with `ajiya launch set <phase|ticket>`.
 ## Can start now
 
 - **AJ-0019** Dashboard (ajiya)
+- **AJ-0059** phase rename updates milestone targets (ajiya)
 
 ## Waiting
 
@@ -36,7 +37,7 @@ No milestones. Set one with `ajiya launch set <phase|ticket>`.
 - **AJ-0030** GoReleaser config (ajiya) waits on AJ-0029
 - **AJ-0031** Homebrew cask config (ajiya) waits on AJ-0030
 - **AJ-0033** README walkthroughs (ajiya) waits on AJ-0029
-- **AJ-0034** v0.1 definition of done (ajiya) waits on AJ-0030, AJ-0031, AJ-0033, AJ-0041
+- **AJ-0034** v0.1 definition of done (ajiya) waits on AJ-0030, AJ-0031, AJ-0033, AJ-0041, AJ-0059
 - **AJ-0036** Dependencies view in the dashboard (ajiya) waits on AJ-0019
 - **AJ-0041** import legacy maps each RO package to a phase (ajiya) waits on AJ-0022
 - **AJ-0042** ajiya status (ajiya) waits on AJ-0034

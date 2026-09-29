@@ -19,6 +19,8 @@ exec git commit -q -m 'Schema done' -m 'Ajiya: DE-0001'
 exec ajiya build
 stdout 'Wrote ajiya/PROGRESS.md'
 stdout 'Wrote ajiya/data.js'
+stdout 'Wrote ajiya/index.html'
+grep '<script src="data.js"></script>' ajiya/index.html
 grep '^Generated 2026-09-01\.$' ajiya/PROGRESS.md
 grep '^\| launch \| 1 \| 3 \| 33% \| 1 \|$' ajiya/PROGRESS.md
 grep '^\| Core \| 1 \| 0 \| 2 \| 3 \| 33% \| launch \|$' ajiya/PROGRESS.md
@@ -37,7 +39,7 @@ stdout '^Up to date.$'
 # Committing the output changes nothing either: it is not activity.
 env GIT_COMMITTER_DATE=2026-09-20T10:00:00
 env GIT_AUTHOR_DATE=2026-09-20T10:00:00
-exec git add ajiya/PROGRESS.md ajiya/data.js
+exec git add ajiya/PROGRESS.md ajiya/data.js ajiya/index.html
 exec git commit -q -m 'Build output' -m 'Ajiya: chore'
 exec ajiya build
 stdout '^Up to date.$'

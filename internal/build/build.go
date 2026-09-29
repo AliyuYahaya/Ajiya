@@ -18,6 +18,7 @@ import (
 	"github.com/AliyuYahaya/Ajiya/internal/activity"
 	"github.com/AliyuYahaya/Ajiya/internal/check"
 	"github.com/AliyuYahaya/Ajiya/internal/config"
+	"github.com/AliyuYahaya/Ajiya/internal/dashboard"
 	"github.com/AliyuYahaya/Ajiya/internal/gitx"
 	"github.com/AliyuYahaya/Ajiya/internal/plan"
 	"github.com/AliyuYahaya/Ajiya/internal/view"
@@ -298,7 +299,7 @@ func Files(d *Data) (progress, dataJS []byte, err error) {
 	return []byte(Markdown(d)), b.Bytes(), nil
 }
 
-// Write writes both files into root/ajiya when their content changed, and
+// Write writes PROGRESS.md, data.js and the dashboard page into root/ajiya when their content changed, and
 // returns the paths it wrote.
 func Write(root string, d *Data) ([]string, error) {
 	progress, dataJS, err := Files(d)
@@ -309,7 +310,7 @@ func Write(root string, d *Data) ([]string, error) {
 	for _, f := range []struct {
 		path string
 		data []byte
-	}{{activity.Generated[0], progress}, {activity.Generated[1], dataJS}} {
+	}{{activity.Generated[0], progress}, {activity.Generated[1], dataJS}, {activity.Generated[2], dashboard.HTML()}} {
 		full := filepath.Join(root, filepath.FromSlash(f.path))
 		if old, err := os.ReadFile(full); err == nil && bytes.Equal(old, f.data) {
 			continue

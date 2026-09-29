@@ -27,13 +27,13 @@ window.AJIYA = {
       "title": "Apps-launch",
       "goal": "Apps are detected and managed, launch readiness is defined, and every check in the spec runs",
       "counts": {
-        "total": 13,
+        "total": 14,
         "done": 13,
         "in_progress": 0,
-        "pending": 0,
+        "pending": 1,
         "dropped": 0
       },
-      "percent": 100,
+      "percent": 92,
       "milestone": ""
     },
     {
@@ -126,10 +126,10 @@ window.AJIYA = {
       "name": "ajiya",
       "path": ".",
       "counts": {
-        "total": 58,
+        "total": 59,
         "done": 27,
         "in_progress": 0,
-        "pending": 31,
+        "pending": 32,
         "dropped": 0
       }
     }
@@ -914,7 +914,8 @@ window.AJIYA = {
         "AJ-0038",
         "AJ-0039",
         "AJ-0040",
-        "AJ-0041"
+        "AJ-0041",
+        "AJ-0059"
       ],
       "status": {
         "state": "pending",
@@ -927,7 +928,8 @@ window.AJIYA = {
         "AJ-0030",
         "AJ-0031",
         "AJ-0033",
-        "AJ-0041"
+        "AJ-0041",
+        "AJ-0059"
       ],
       "dependants": [
         "AJ-0042"
@@ -951,7 +953,9 @@ window.AJIYA = {
       "milestone": "",
       "ready": false,
       "waiting_on": [],
-      "dependants": [],
+      "dependants": [
+        "AJ-0059"
+      ],
       "unblocks": 0
     },
     {
@@ -1028,7 +1032,8 @@ window.AJIYA = {
         "AJ-0021",
         "AJ-0034",
         "AJ-0041",
-        "AJ-0042"
+        "AJ-0042",
+        "AJ-0059"
       ],
       "unblocks": 0
     },
@@ -1551,10 +1556,33 @@ window.AJIYA = {
       ],
       "dependants": [],
       "unblocks": 0
+    },
+    {
+      "id": "AJ-0059",
+      "phase": "apps-launch",
+      "app": "ajiya",
+      "title": "phase rename updates milestone targets",
+      "done_when": "phase rename also renames the phase in every [[milestones]] targets list, keeping comments; script test",
+      "depends": [
+        "AJ-0035",
+        "AJ-0038"
+      ],
+      "status": {
+        "state": "pending",
+        "text": "🟥 Pending"
+      },
+      "milestone": "",
+      "ready": true,
+      "waiting_on": [],
+      "dependants": [
+        "AJ-0034"
+      ],
+      "unblocks": 18
     }
   ],
   "next": [
-    "AJ-0019"
+    "AJ-0019",
+    "AJ-0059"
   ],
   "checks": [],
   "activity": [

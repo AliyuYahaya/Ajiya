@@ -55,7 +55,7 @@ var stateNames = map[plan.State]string{plan.Pending: "pending", plan.InProgress:
 
 // Generated are the files ajiya build writes. A commit that changes only these
 // is not activity: otherwise committing the build output would change it.
-var Generated = []string{plan.Dir + "/PROGRESS.md", plan.Dir + "/data.js"}
+var Generated = []string{plan.Dir + "/PROGRESS.md", plan.Dir + "/data.js", plan.Dir + "/index.html"}
 
 func generatedOnly(files []string) bool {
 	if len(files) == 0 {
