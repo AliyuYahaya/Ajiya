@@ -24,9 +24,6 @@ param(
     [switch]$Help
 )
 
-$ErrorActionPreference = 'Stop'
-$ProgressPreference = 'SilentlyContinue'   # the progress bar makes Windows PowerShell 5.1 downloads very slow
-
 $RepoUrl = 'https://github.com/AliyuYahaya/Ajiya'
 
 function Get-Setting([string]$Name, [string]$Default) {
@@ -85,16 +82,16 @@ function Get-LatestTag {
     throw 'could not find the latest release; set AJIYA_VERSION, for example $env:AJIYA_VERSION = "v0.2.0"'
 }
 
-function Normalize-Dir([string]$Path) {
+function Get-NormalizedDir([string]$Path) {
     return $Path.TrimEnd('\', '/')
 }
 
 function Test-OnUserPath([string]$Dir) {
     $userPath = [Environment]::GetEnvironmentVariable('Path', 'User')
     if ([string]::IsNullOrEmpty($userPath)) { return $false }
-    $want = Normalize-Dir $Dir
+    $want = Get-NormalizedDir $Dir
     foreach ($entry in $userPath.Split(';')) {
-        if ($entry -ne '' -and (Normalize-Dir $entry) -ieq $want) { return $true }
+        if ($entry -ne '' -and (Get-NormalizedDir $entry) -ieq $want) { return $true }
     }
     return $false
 }
@@ -108,7 +105,7 @@ function Add-ToUserPath([string]$Dir) {
         Write-Host "Added $Dir to your user PATH. Open a new terminal to use it."
     }
     # Make ajiya usable in this session too.
-    if (-not (($env:Path.Split(';') | ForEach-Object { Normalize-Dir $_ }) -contains (Normalize-Dir $Dir))) {
+    if (-not (($env:Path.Split(';') | ForEach-Object { Get-NormalizedDir $_ }) -contains (Get-NormalizedDir $Dir))) {
         $env:Path = $env:Path.TrimEnd(';') + ';' + $Dir
     }
 }
@@ -117,8 +114,8 @@ function Remove-FromUserPath([string]$Dir) {
     if ((Get-Setting 'AJIYA_NO_PATH' '') -eq '1') { return }
     $userPath = [Environment]::GetEnvironmentVariable('Path', 'User')
     if ([string]::IsNullOrEmpty($userPath)) { return }
-    $want = Normalize-Dir $Dir
-    $kept = @($userPath.Split(';') | Where-Object { $_ -ne '' -and (Normalize-Dir $_) -ine $want })
+    $want = Get-NormalizedDir $Dir
+    $kept = @($userPath.Split(';') | Where-Object { $_ -ne '' -and (Get-NormalizedDir $_) -ine $want })
     if ($kept.Count -ne @($userPath.Split(';') | Where-Object { $_ -ne '' }).Count) {
         [Environment]::SetEnvironmentVariable('Path', ($kept -join ';'), 'User')
         Write-Host "Removed $Dir from your user PATH."
@@ -214,7 +211,17 @@ function Invoke-Install {
 
 function Main {
     if ($Help) { Show-Usage; return }
-    if ($Uninstall) { Invoke-Uninstall } else { Invoke-Install }
+    # Run through iex this script shares the caller's session, so put back what it changed.
+    $savedError = $ErrorActionPreference
+    $savedProgress = $ProgressPreference
+    $ErrorActionPreference = 'Stop'
+    $ProgressPreference = 'SilentlyContinue'   # the progress bar makes Windows PowerShell 5.1 downloads very slow
+    try {
+        if ($Uninstall) { Invoke-Uninstall } else { Invoke-Install }
+    } finally {
+        $ErrorActionPreference = $savedError
+        $ProgressPreference = $savedProgress
+    }
 }
 
 Main

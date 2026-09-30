@@ -22,7 +22,7 @@ Generated 2026-09-30.
 | Onboarding | 17 | 0 | 0 | 17 | 100% | v0-1 |
 | Release | 5 | 0 | 0 | 5 | 100% | v0-1 |
 | Agent-access | 5 | 0 | 1 | 6 | 83% | v0-2 |
-| Install | 15 | 1 | 8 | 24 | 62% | v0-2 |
+| Install | 15 | 2 | 7 | 24 | 62% | v0-2 |
 | Decisions-and-changes | 0 | 0 | 11 | 11 | 0% | v0-3 |
 
 ## Can start now
@@ -60,6 +60,10 @@ Generated 2026-09-30.
 
 ## Recent activity
 
+- 2026-09-30 `72ed8c7` Start AJ-0074 and rebuild plan outputs (AJ-0074)
+  - AJ-0074: pending → in_progress
+- 2026-09-30 `8bbf335` install.ps1: restore the caller's preferences and use an approved verb (AJ-0073)
+- 2026-09-30 `fb07b1e` Add the installer CI job and harden test-install.ps1 (AJ-0074)
 - 2026-09-30 `634ca27` Resolve the agent-access plan conflict left in the last merge (AJ-0094, AJ-0095, AJ-0096)
   - AJ-0042: new → done
   - AJ-0043: new → done
@@ -84,12 +88,7 @@ Generated 2026-09-30.
 - 2026-09-30 `262b8ce` Mark AJ-0077 done (AJ-0077)
   - AJ-0077: pending → done
 - 2026-09-30 `0ae147d` Add install.sh for macOS and Linux (AJ-0045)
-- 2026-09-30 `7e61f39` Merge branch 'worktree-agent-a3a05b52f4045e08c' into worktree-agent-a658cbd8dac8f5d6c (-)
-- 2026-09-30 `f805edf` Wire the Homebrew cask to the tap without publishing (AJ-0077)
-- 2026-09-30 `cf289d1` Mark AJ-0092 and AJ-0093 done (AJ-0092, AJ-0093)
-  - AJ-0092: pending → done
-  - AJ-0093: pending → done
-- and 192 more in data.js
+- and 195 more in data.js
 
 ## Checks
 

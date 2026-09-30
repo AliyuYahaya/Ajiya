@@ -30,8 +30,8 @@ window.AJIYA = {
       "required": {
         "total": 74,
         "done": 64,
-        "in_progress": 1,
-        "pending": 9,
+        "in_progress": 2,
+        "pending": 8,
         "dropped": 0
       },
       "percent": 86,
@@ -45,8 +45,8 @@ window.AJIYA = {
       "required": {
         "total": 84,
         "done": 64,
-        "in_progress": 1,
-        "pending": 19,
+        "in_progress": 2,
+        "pending": 18,
         "dropped": 0
       },
       "percent": 76,
@@ -60,8 +60,8 @@ window.AJIYA = {
       "required": {
         "total": 83,
         "done": 64,
-        "in_progress": 1,
-        "pending": 18,
+        "in_progress": 2,
+        "pending": 17,
         "dropped": 0
       },
       "percent": 77,
@@ -160,8 +160,8 @@ window.AJIYA = {
       "counts": {
         "total": 24,
         "done": 15,
-        "in_progress": 1,
-        "pending": 8,
+        "in_progress": 2,
+        "pending": 7,
         "dropped": 0
       },
       "percent": 62,
@@ -189,8 +189,8 @@ window.AJIYA = {
       "counts": {
         "total": 97,
         "done": 76,
-        "in_progress": 1,
-        "pending": 20,
+        "in_progress": 2,
+        "pending": 19,
         "dropped": 0
       }
     }
@@ -2058,8 +2058,8 @@ window.AJIYA = {
         "AJ-0073"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "in_progress",
+        "text": "🟨 In progress"
       },
       "milestone": "v0-2",
       "ready": false,
@@ -2648,6 +2648,62 @@ window.AJIYA = {
   ],
   "checks": [],
   "activity": [
+    {
+      "hash": "72ed8c7821f66ff3ceb2f851ebe21554ae5a4910",
+      "short": "72ed8c7",
+      "date": "2026-09-30",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Start AJ-0074 and rebuild plan outputs",
+      "refs": [
+        "AJ-0074"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0074",
+          "phase": "install",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        }
+      ],
+      "time": 1790789437
+    },
+    {
+      "hash": "8bbf33514874f3c67d61e60d8f3d78f41887f643",
+      "short": "8bbf335",
+      "date": "2026-09-30",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "install.ps1: restore the caller's preferences and use an approved verb",
+      "refs": [
+        "AJ-0073"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790785305
+    },
+    {
+      "hash": "fb07b1e11c487c4960ff37d0522e874c3ef577a8",
+      "short": "fb07b1e",
+      "date": "2026-09-30",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Add the installer CI job and harden test-install.ps1",
+      "refs": [
+        "AJ-0074"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790785305
+    },
     {
       "hash": "634ca2704b531ef39fb8f2a312a6c26d5903620b",
       "short": "634ca27",

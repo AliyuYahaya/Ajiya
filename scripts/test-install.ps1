@@ -42,30 +42,68 @@ Copy-Item (Join-Path $dist 'ajiya_*.zip'), (Join-Path $dist 'checksums.txt') -De
 Copy-Item (Join-Path $good '*') -Destination $bad
 [IO.File]::AppendAllText((Join-Path $bad $zip.Name), 'tampered')
 
-$port = Get-Random -Minimum 20000 -Maximum 40000
-$server = Start-Process -FilePath python -ArgumentList '-m', 'http.server', $port, '--bind', '127.0.0.1', '--directory', $site -PassThru -WindowStyle Hidden
+# The server also answers /releases/latest with a redirect to /releases/tag/<tag>, like GitHub.
+$servePy = Join-Path $work 'serve.py'
+$portFile = Join-Path $work 'port'
+$pyLines = @(
+    'import http.server, socketserver, sys',
+    'tag, site, portfile = sys.argv[1:4]',
+    'class H(http.server.SimpleHTTPRequestHandler):',
+    '    def do_GET(self):',
+    '        if self.path == "/releases/latest":',
+    '            self.send_response(302)',
+    '            self.send_header("Location", "/releases/tag/" + tag)',
+    '            self.end_headers()',
+    '        elif self.path.startswith("/releases/tag/"):',
+    '            self.send_response(200)',
+    '            self.send_header("Content-Length", "0")',
+    '            self.end_headers()',
+    '        else:',
+    '            super().do_GET()',
+    '    def log_message(self, *a): pass',
+    'socketserver.TCPServer.allow_reuse_address = True',
+    'with socketserver.TCPServer(("127.0.0.1", 0), lambda *a, **k: H(*a, directory=site, **k)) as s:',
+    '    open(portfile, "w").write(str(s.server_address[1]))',
+    '    s.serve_forever()'
+)
+[IO.File]::WriteAllLines($servePy, $pyLines)
+$server = Start-Process -FilePath python -ArgumentList "`"$servePy`"", $tag, "`"$site`"", "`"$portFile`"" -PassThru -WindowStyle Hidden
 $originalUserPath = [Environment]::GetEnvironmentVariable('Path', 'User')
 $originalSessionPath = $env:Path
 try {
-    Start-Sleep -Seconds 2
+    $waited = 0
+    while (-not (Test-Path -LiteralPath $portFile) -or (Get-Item -LiteralPath $portFile).Length -eq 0) {
+        Start-Sleep -Milliseconds 200
+        $waited++
+        if ($waited -gt 50) { throw 'fixture server did not start' }
+    }
+    $port = (Get-Content -LiteralPath $portFile -Raw).Trim()
     $env:AJIYA_NO_PROMPT = '1'
     $env:AJIYA_BASE_URL = "http://127.0.0.1:$port/releases/download"
+    $env:AJIYA_LATEST_URL = "http://127.0.0.1:$port/releases/latest"
     $env:AJIYA_VERSION = $tag
     $installDir = Join-Path $work 'bin'
     $env:AJIYA_INSTALL_DIR = $installDir
     if (-not $env:CI) { $env:AJIYA_NO_PATH = '1' }
 
-    # Run in a child process so a thrown error or exit cannot end this test.
-    function Run-Installer([string[]]$Args1) {
-        $shell = if (Get-Command pwsh -ErrorAction SilentlyContinue) { 'pwsh' } else { 'powershell' }
-        & $shell -NoProfile -ExecutionPolicy Bypass -File $installPs1 @Args1 2>&1 | Out-Host
-        return $LASTEXITCODE
+    # Run in a child process (the same PowerShell that runs this test) so a thrown
+    # error or exit cannot end this test. Output goes to $script:lastOut.
+    function Run-Installer([string[]]$ScriptArgs) {
+        $shell = (Get-Process -Id $PID).Path
+        $saved = $ErrorActionPreference
+        $ErrorActionPreference = 'Continue'   # Windows PowerShell 5.1 turns native stderr into a terminating error under 'Stop'
+        try {
+            $script:lastOut = & $shell -NoProfile -ExecutionPolicy Bypass -File $installPs1 @ScriptArgs 2>&1 | Out-String
+            $code = $LASTEXITCODE
+        } finally { $ErrorActionPreference = $saved }
+        Write-Host $script:lastOut
+        return $code
     }
 
     Check 'install exits 0' ((Run-Installer @()) -eq 0)
     $exe = Join-Path $installDir 'ajiya.exe'
     Check 'ajiya.exe exists' (Test-Path $exe)
-    Check "ajiya version reports $version" ((& $exe version 2>&1 | Out-String) -like "*$version*")
+    Check "ajiya version reports $version" ((& $exe version | Out-String) -like "*$version*")
     if ($env:CI) {
         $userPath = [Environment]::GetEnvironmentVariable('Path', 'User')
         Check 'install dir is on the user PATH' (($userPath.Split(';') | ForEach-Object { $_.TrimEnd('\') }) -contains $installDir.TrimEnd('\'))
@@ -81,12 +119,20 @@ try {
     # A tampered archive is refused and nothing is installed.
     $env:AJIYA_BASE_URL = "http://127.0.0.1:$port/tampered"
     Check 'tampered archive is refused' ((Run-Installer @()) -ne 0)
+    Check 'mismatch is reported' ($script:lastOut -match 'checksum mismatch')
     Check 'nothing installed after a mismatch' (-not (Test-Path $exe))
 
-    # An unknown version fails.
+    # The latest release is resolved through the redirect.
     $env:AJIYA_BASE_URL = "http://127.0.0.1:$port/releases/download"
+    Remove-Item Env:AJIYA_VERSION
+    Check 'latest release resolved' ((Run-Installer @()) -eq 0)
+    Check 'latest binary exists' (Test-Path $exe)
+    Check 'uninstall after latest exits 0' ((Run-Installer @('-Uninstall')) -eq 0)
+
+    # An unknown version fails.
     $env:AJIYA_VERSION = 'v9.9.9'
     Check 'unknown version fails' ((Run-Installer @()) -ne 0)
+    Check 'nothing installed for an unknown version' (-not (Test-Path $exe))
 } finally {
     if ($server) { Stop-Process -Id $server.Id -Force -ErrorAction SilentlyContinue }
     if ($env:CI) { [Environment]::SetEnvironmentVariable('Path', $originalUserPath, 'User') }
