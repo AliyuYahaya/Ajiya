@@ -60,6 +60,8 @@ Generated 2026-09-30.
 
 ## Recent activity
 
+- 2026-09-30 `7ab4260` Installer CI: setup-python v7, the current major (AJ-0074)
+- 2026-09-30 `74a4e46` Merge branch 'worktree-agent-a8cf3a95133ce824d' into worktree-agent-a658cbd8dac8f5d6c (-)
 - 2026-09-30 `72ed8c7` Start AJ-0074 and rebuild plan outputs (AJ-0074)
   - AJ-0074: pending → in_progress
 - 2026-09-30 `8bbf335` install.ps1: restore the caller's preferences and use an approved verb (AJ-0073)
@@ -85,10 +87,7 @@ Generated 2026-09-30.
 - 2026-09-30 `7f92963` Add install.ps1 for Windows (AJ-0073)
 - 2026-09-30 `6e41253` mcp install honours CLAUDE_CONFIG_DIR (AJ-0095)
 - 2026-09-30 `3c274b9` Merge branch 'worktree-agent-af876fcf91ec1c89b' into worktree-agent-a658cbd8dac8f5d6c (-)
-- 2026-09-30 `262b8ce` Mark AJ-0077 done (AJ-0077)
-  - AJ-0077: pending → done
-- 2026-09-30 `0ae147d` Add install.sh for macOS and Linux (AJ-0045)
-- and 195 more in data.js
+- and 197 more in data.js
 
 ## Checks
 
