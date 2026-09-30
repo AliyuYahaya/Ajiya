@@ -63,6 +63,8 @@ Generated 2026-09-30.
 
 ## Recent activity
 
+- 2026-09-30 `1dc25ba` npm trusted publishing set up for all seven packages (AJ-0080)
+  - AJ-0080: in_progress → done
 - 2026-09-30 `1b8142e` MCP roots: read Windows file URIs (AJ-0043)
 - 2026-09-30 `5958462` Merge branch 'worktree-agent-a052d49d096e57329' into worktree-agent-a658cbd8dac8f5d6c (-)
 - 2026-09-30 `2f1791a` Mark AJ-0043 done (AJ-0043)
@@ -83,9 +85,7 @@ Generated 2026-09-30.
   - AJ-0083: pending → done
 - 2026-09-29 `4136ead` Merge branch 'worktree-agent-afd29651f0fa7ef3e' into worktree-agent-a658cbd8dac8f5d6c (-)
 - 2026-09-29 `7cb789f` Windows CI: accept Windows' missing-file wording in import-legacy (chore)
-- 2026-09-29 `555ce43` Mark AJ-0042 done (AJ-0042)
-  - AJ-0042: in_progress → done
-- and 162 more in data.js
+- and 163 more in data.js
 
 ## Checks
 

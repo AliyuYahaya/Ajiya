@@ -2494,6 +2494,30 @@ window.AJIYA = {
   "checks": [],
   "activity": [
     {
+      "hash": "1dc25bada3feecfa23bccf931c1ff2d67c82c1b8",
+      "short": "1dc25ba",
+      "date": "2026-09-30",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "npm trusted publishing set up for all seven packages",
+      "refs": [
+        "AJ-0080"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0080",
+          "phase": "install",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · by Aliyu Yahaya · 2026-09-30 · Note: all 7 @ajiya packages published once and linked with npm trust github to AliyuYahaya/Ajiya release.yml, environment npm-release, publish allowed"
+        }
+      ],
+      "time": 1790782852
+    },
+    {
       "hash": "1b8142efb7507f55c3c4929d0db5ded1115fda28",
       "short": "1b8142e",
       "date": "2026-09-30",
