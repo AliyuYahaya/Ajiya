@@ -63,6 +63,8 @@ Generated 2026-09-30.
 
 ## Recent activity
 
+- 2026-09-30 `a961c6f` Plan: the plugin leaves MCP registration to ajiya mcp install (chore)
+  - AJ-0097: new → pending
 - 2026-09-30 `3c274b9` Merge branch 'worktree-agent-af876fcf91ec1c89b' into worktree-agent-a658cbd8dac8f5d6c (-)
 - 2026-09-30 `262b8ce` Mark AJ-0077 done (AJ-0077)
   - AJ-0077: pending → done
@@ -87,8 +89,7 @@ Generated 2026-09-30.
 - 2026-09-30 `97cc733` Merge branch 'worktree-agent-af05af07a9f264de4' into worktree-agent-a658cbd8dac8f5d6c (-)
 - 2026-09-30 `c46c998` Mark AJ-0046 done, rebuild plan outputs (AJ-0046)
   - AJ-0046: pending → done
-- 2026-09-30 `83cfc3f` Add Claude Code plugin (AJ-0046)
-- and 181 more in data.js
+- and 182 more in data.js
 
 ## Checks
 

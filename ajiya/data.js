@@ -2648,6 +2648,28 @@ window.AJIYA = {
   "checks": [],
   "activity": [
     {
+      "hash": "a961c6f6f63d9ebbd26aab76c0ced9952665def5",
+      "short": "a961c6f",
+      "date": "2026-09-30",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Plan: the plugin leaves MCP registration to ajiya mcp install",
+      "refs": [],
+      "chore": true,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0097",
+          "phase": "install",
+          "from": "",
+          "to": "pending",
+          "text": "🟥 Pending"
+        }
+      ],
+      "time": 1790784693
+    },
+    {
       "hash": "3c274b948e988da99a8856b35d236b2c0d856594",
       "short": "3c274b9",
       "date": "2026-09-30",
