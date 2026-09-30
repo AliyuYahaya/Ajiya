@@ -2654,6 +2654,38 @@ window.AJIYA = {
   "checks": [],
   "activity": [
     {
+      "hash": "f311c8309f5c9ff728e03a6941844b2f87fe91d7",
+      "short": "f311c83",
+      "date": "2026-09-30",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "AJ-0073 and AJ-0074 done: installers green on three systems",
+      "refs": [
+        "AJ-0073",
+        "AJ-0074"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0073",
+          "phase": "install",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · 321e6bc · 2026-09-30 · tests passed · Note: install.ps1 passes installer CI run 36756977435 on windows-latest under PowerShell 7 and 5.1"
+        },
+        {
+          "id": "AJ-0074",
+          "phase": "install",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · 36e4c5f · 2026-09-30 · tests passed · Note: installers job green on ubuntu, macOS and Windows in run 36756977435"
+        }
+      ],
+      "time": 1790792613
+    },
+    {
       "hash": "321e6bca4e170ab9030b96b2b33af7aecfa49591",
       "short": "321e6bc",
       "date": "2026-09-30",

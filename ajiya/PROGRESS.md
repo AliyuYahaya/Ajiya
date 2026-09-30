@@ -56,6 +56,9 @@ Generated 2026-09-30.
 
 ## Recent activity
 
+- 2026-09-30 `f311c83` AJ-0073 and AJ-0074 done: installers green on three systems (AJ-0073, AJ-0074)
+  - AJ-0073: in_progress → done
+  - AJ-0074: in_progress → done
 - 2026-09-30 `321e6bc` install.ps1: a failed install always exits 1 (AJ-0073)
 - 2026-09-30 `36e4c5f` Installer CI: analyze each PowerShell script; shellcheck fails on warnings (AJ-0074)
 - 2026-09-30 `d83da99` Merge branch 'worktree-agent-a920ee3d0cb59f8ae' into worktree-agent-a658cbd8dac8f5d6c (-)
@@ -77,14 +80,7 @@ Generated 2026-09-30.
   - AJ-0074: pending → in_progress
 - 2026-09-30 `8bbf335` install.ps1: restore the caller's preferences and use an approved verb (AJ-0073)
 - 2026-09-30 `fb07b1e` Add the installer CI job and harden test-install.ps1 (AJ-0074)
-- 2026-09-30 `634ca27` Resolve the agent-access plan conflict left in the last merge (AJ-0094, AJ-0095, AJ-0096)
-  - AJ-0042: new → done
-  - AJ-0043: new → done
-  - AJ-0044: new → done
-  - AJ-0094: new → done
-  - AJ-0095: new → done
-  - AJ-0096: new → pending
-- and 206 more in data.js
+- and 207 more in data.js
 
 ## Checks
 
