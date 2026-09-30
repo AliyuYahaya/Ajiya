@@ -2621,6 +2621,84 @@ window.AJIYA = {
   "checks": [],
   "activity": [
     {
+      "hash": "7e61f393da37c575c76eb675091e9da486458d87",
+      "short": "7e61f39",
+      "date": "2026-09-30",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Merge branch 'worktree-agent-a3a05b52f4045e08c' into worktree-agent-a658cbd8dac8f5d6c",
+      "refs": [],
+      "chore": false,
+      "merge": true,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790784606
+    },
+    {
+      "hash": "cf289d12281b01ed4a4ce649d2ff27db791c2bff",
+      "short": "cf289d1",
+      "date": "2026-09-30",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Mark AJ-0092 and AJ-0093 done",
+      "refs": [
+        "AJ-0092",
+        "AJ-0093"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0092",
+          "phase": "install",
+          "from": "pending",
+          "to": "done",
+          "text": "🟩 Done · 39f18c9 · 2026-09-30 · tests passed"
+        },
+        {
+          "id": "AJ-0093",
+          "phase": "install",
+          "from": "pending",
+          "to": "done",
+          "text": "🟩 Done · 5cff5a1 · 2026-09-30 · tests passed"
+        }
+      ],
+      "time": 1790784525
+    },
+    {
+      "hash": "5cff5a149373162f162aac327e37b0c2f0f30382",
+      "short": "5cff5a1",
+      "date": "2026-09-30",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Add an Add to Cursor link for the ajiya MCP server to the README",
+      "refs": [
+        "AJ-0093"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790784462
+    },
+    {
+      "hash": "39f18c996853ece380ca5d2c66cec1532c5ba556",
+      "short": "39f18c9",
+      "date": "2026-09-30",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Run the plugin session-start hook on Windows without Git Bash",
+      "refs": [
+        "AJ-0092"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790784458
+    },
+    {
       "hash": "fd5a919a783044023986d2fc95d325aa3de37606",
       "short": "fd5a919",
       "date": "2026-09-30",

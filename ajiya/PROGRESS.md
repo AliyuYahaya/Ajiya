@@ -63,6 +63,12 @@ Generated 2026-09-30.
 
 ## Recent activity
 
+- 2026-09-30 `7e61f39` Merge branch 'worktree-agent-a3a05b52f4045e08c' into worktree-agent-a658cbd8dac8f5d6c (-)
+- 2026-09-30 `cf289d1` Mark AJ-0092 and AJ-0093 done (AJ-0092, AJ-0093)
+  - AJ-0092: pending → done
+  - AJ-0093: pending → done
+- 2026-09-30 `5cff5a1` Add an Add to Cursor link for the ajiya MCP server to the README (AJ-0093)
+- 2026-09-30 `39f18c9` Run the plugin session-start hook on Windows without Git Bash (AJ-0092)
 - 2026-09-30 `fd5a919` Plan: registering says how to undo it (chore)
   - AJ-0096: new → pending
 - 2026-09-30 `0a18e51` Plan the gaps left by the plugin and mcp install (chore)
@@ -83,13 +89,7 @@ Generated 2026-09-30.
   - AJ-0076: in_progress → done
 - 2026-09-30 `6956c08` Test the npm launcher with a real stand-in binary on every OS (AJ-0076)
   - AJ-0076: pending → in_progress
-- 2026-09-30 `1dc25ba` npm trusted publishing set up for all seven packages (AJ-0080)
-  - AJ-0080: in_progress → done
-- 2026-09-30 `1b8142e` MCP roots: read Windows file URIs (AJ-0043)
-- 2026-09-30 `5958462` Merge branch 'worktree-agent-a052d49d096e57329' into worktree-agent-a658cbd8dac8f5d6c (-)
-- 2026-09-30 `2f1791a` Mark AJ-0043 done (AJ-0043)
-  - AJ-0043: in_progress → done
-- and 174 more in data.js
+- and 178 more in data.js
 
 ## Checks
 
