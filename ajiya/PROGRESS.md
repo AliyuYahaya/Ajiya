@@ -60,6 +60,8 @@ Generated 2026-09-30.
 
 ## Recent activity
 
+- 2026-09-30 `72ed8c7` Start AJ-0074 and rebuild plan outputs (AJ-0074)
+  - AJ-0074: pending → in_progress
 - 2026-09-30 `8bbf335` install.ps1: restore the caller's preferences and use an approved verb (AJ-0073)
 - 2026-09-30 `fb07b1e` Add the installer CI job and harden test-install.ps1 (AJ-0074)
 - 2026-09-30 `634ca27` Resolve the agent-access plan conflict left in the last merge (AJ-0094, AJ-0095, AJ-0096)
@@ -86,8 +88,7 @@ Generated 2026-09-30.
 - 2026-09-30 `262b8ce` Mark AJ-0077 done (AJ-0077)
   - AJ-0077: pending → done
 - 2026-09-30 `0ae147d` Add install.sh for macOS and Linux (AJ-0045)
-- 2026-09-30 `7e61f39` Merge branch 'worktree-agent-a3a05b52f4045e08c' into worktree-agent-a658cbd8dac8f5d6c (-)
-- and 194 more in data.js
+- and 195 more in data.js
 
 ## Checks
 
