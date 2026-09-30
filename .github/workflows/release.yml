@@ -60,18 +60,20 @@ jobs:
       - run: go build -o "$RUNNER_TEMP/ajiya" ./cmd/ajiya
       - name: Write release notes
         run: |
+          # Written outside the checkout: GoReleaser refuses a dirty tree, and an
+          # untracked notes.md counts as dirty.
           # The newest tag before this one. The first release has none, so the
           # notes then cover the whole history.
           if prev=$(git describe --tags --abbrev=0 "$GITHUB_REF_NAME^" 2>/dev/null); then
-            "$RUNNER_TEMP/ajiya" changelog "$prev..$GITHUB_REF_NAME" > notes.md
+            "$RUNNER_TEMP/ajiya" changelog "$prev..$GITHUB_REF_NAME" > "$RUNNER_TEMP/notes.md"
           else
-            "$RUNNER_TEMP/ajiya" changelog > notes.md
+            "$RUNNER_TEMP/ajiya" changelog > "$RUNNER_TEMP/notes.md"
           fi
-          cat notes.md
+          cat "$RUNNER_TEMP/notes.md"
       - uses: goreleaser/goreleaser-action@v7
         with:
           version: "~> v2"
-          args: release --clean --release-notes notes.md
+          args: release --clean --release-notes ${{ runner.temp }}/notes.md
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # GoReleaser writes the cask but never pushes it (skip_upload: true in
