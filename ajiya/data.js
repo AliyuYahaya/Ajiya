@@ -29,13 +29,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 72,
-        "done": 58,
-        "in_progress": 0,
-        "pending": 14,
+        "done": 59,
+        "in_progress": 1,
+        "pending": 12,
         "dropped": 0
       },
-      "percent": 80,
-      "ready": 7
+      "percent": 81,
+      "ready": 6
     },
     {
       "name": "v0-3",
@@ -44,13 +44,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 82,
-        "done": 58,
-        "in_progress": 0,
-        "pending": 24,
+        "done": 59,
+        "in_progress": 1,
+        "pending": 22,
         "dropped": 0
       },
-      "percent": 70,
-      "ready": 7
+      "percent": 71,
+      "ready": 6
     },
     {
       "name": "after-v0-3",
@@ -59,13 +59,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 81,
-        "done": 58,
-        "in_progress": 0,
-        "pending": 23,
+        "done": 59,
+        "in_progress": 1,
+        "pending": 21,
         "dropped": 0
       },
-      "percent": 71,
-      "ready": 7
+      "percent": 72,
+      "ready": 6
     }
   ],
   "phases": [
@@ -159,12 +159,12 @@ window.AJIYA = {
       "goal": "Ajiya installs in one step, with a Claude Code plugin",
       "counts": {
         "total": 23,
-        "done": 11,
-        "in_progress": 0,
-        "pending": 12,
+        "done": 12,
+        "in_progress": 1,
+        "pending": 10,
         "dropped": 0
       },
-      "percent": 47,
+      "percent": 52,
       "milestone": "v0-2"
     },
     {
@@ -188,9 +188,9 @@ window.AJIYA = {
       "path": ".",
       "counts": {
         "total": 95,
-        "done": 70,
-        "in_progress": 0,
-        "pending": 25,
+        "done": 71,
+        "in_progress": 1,
+        "pending": 23,
         "dropped": 0
       }
     }
@@ -1313,18 +1313,21 @@ window.AJIYA = {
         "AJ-0044"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · 0ae147d · 2026-09-30 · tests passed",
+        "commit": "0ae147d",
+        "date": "2026-09-30",
+        "tests_passed": true
       },
       "milestone": "v0-2",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0047",
         "AJ-0074",
         "AJ-0078"
       ],
-      "unblocks": 16
+      "unblocks": 0
     },
     {
       "id": "AJ-0046",
@@ -1385,7 +1388,6 @@ window.AJIYA = {
       "milestone": "v0-2",
       "ready": false,
       "waiting_on": [
-        "AJ-0045",
         "AJ-0082",
         "AJ-0092",
         "AJ-0093",
@@ -2031,8 +2033,8 @@ window.AJIYA = {
         "AJ-0044"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "in_progress",
+        "text": "🟨 In progress"
       },
       "milestone": "v0-2",
       "ready": true,
@@ -2060,7 +2062,6 @@ window.AJIYA = {
       "milestone": "v0-2",
       "ready": false,
       "waiting_on": [
-        "AJ-0045",
         "AJ-0073"
       ],
       "dependants": [
@@ -2162,7 +2163,6 @@ window.AJIYA = {
       "milestone": "v0-2",
       "ready": false,
       "waiting_on": [
-        "AJ-0045",
         "AJ-0073"
       ],
       "dependants": [
@@ -2583,7 +2583,6 @@ window.AJIYA = {
     }
   ],
   "next": [
-    "AJ-0045",
     "AJ-0073",
     "AJ-0077",
     "AJ-0092",
@@ -2593,6 +2592,38 @@ window.AJIYA = {
   ],
   "checks": [],
   "activity": [
+    {
+      "hash": "7f92963408dfe706f749b166903f7a738c9b92af",
+      "short": "7f92963",
+      "date": "2026-09-30",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Add install.ps1 for Windows",
+      "refs": [
+        "AJ-0073"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790784674
+    },
+    {
+      "hash": "0ae147d03d6ee2f24f1a438d6f5df6215e7ca40a",
+      "short": "0ae147d",
+      "date": "2026-09-30",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Add install.sh for macOS and Linux",
+      "refs": [
+        "AJ-0045"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790784607
+    },
     {
       "hash": "0a18e51c797896eee1dbefb0abdcf7256ccf438b",
       "short": "0a18e51",

@@ -8,9 +8,9 @@ Generated 2026-09-30.
 | Milestone | Closed | Required | % | Can start now |
 |---|---|---|---|---|
 | v0-1 | 37 | 37 | 100% | 0 |
-| v0-2 | 58 | 72 | 80% | 7 |
-| v0-3 | 58 | 82 | 70% | 7 |
-| after-v0-3 | 58 | 81 | 71% | 7 |
+| v0-2 | 59 | 72 | 81% | 6 |
+| v0-3 | 59 | 82 | 71% | 6 |
+| after-v0-3 | 59 | 81 | 72% | 6 |
 
 ## Phases
 
@@ -22,13 +22,12 @@ Generated 2026-09-30.
 | Onboarding | 17 | 0 | 0 | 17 | 100% | v0-1 |
 | Release | 5 | 0 | 0 | 5 | 100% | v0-1 |
 | Agent-access | 3 | 0 | 2 | 5 | 60% | v0-2 |
-| Install | 11 | 0 | 12 | 23 | 47% | v0-2 |
+| Install | 12 | 1 | 10 | 23 | 52% | v0-2 |
 | Decisions-and-changes | 0 | 0 | 11 | 11 | 0% | v0-3 |
 
 ## Can start now
 
-- **AJ-0045** install.sh for macOS and Linux (ajiya) · v0-2
-- **AJ-0073** install.ps1 for Windows (ajiya) · v0-2
+- **AJ-0073** install.ps1 for Windows (ajiya) · v0-2 · in progress
 - **AJ-0077** Homebrew tap wiring (ajiya) · v0-2
 - **AJ-0092** Plugin session-start hook on Windows (ajiya) · v0-2
 - **AJ-0093** Add to Cursor link (ajiya) · v0-2
@@ -37,7 +36,7 @@ Generated 2026-09-30.
 
 ## Waiting
 
-- **AJ-0047** v0.2 definition of done (ajiya) waits on AJ-0045, AJ-0082, AJ-0092, AJ-0093, AJ-0094, AJ-0095
+- **AJ-0047** v0.2 definition of done (ajiya) waits on AJ-0082, AJ-0092, AJ-0093, AJ-0094, AJ-0095
 - **AJ-0048** Tags column (ajiya) waits on AJ-0047
 - **AJ-0049** ajiya ticket files (ajiya) waits on AJ-0048
 - **AJ-0050** Decision records and commands (ajiya) waits on AJ-0048
@@ -49,8 +48,8 @@ Generated 2026-09-30.
 - **AJ-0056** Guides and skill for decisions and changes (ajiya) waits on AJ-0055
 - **AJ-0057** Dashboard: open changes and decisions (ajiya) waits on AJ-0055
 - **AJ-0058** v0.3 definition of done (ajiya) waits on AJ-0048, AJ-0049, AJ-0050, AJ-0051, AJ-0052, AJ-0053, AJ-0054, AJ-0055, AJ-0056
-- **AJ-0074** Installer CI (ajiya) waits on AJ-0045, AJ-0073
-- **AJ-0078** Install scripts attached to every release (ajiya) waits on AJ-0045, AJ-0073
+- **AJ-0074** Installer CI (ajiya) waits on AJ-0073
+- **AJ-0078** Install scripts attached to every release (ajiya) waits on AJ-0073
 - **AJ-0079** Gated publish jobs (ajiya) waits on AJ-0077
 - **AJ-0081** Release rehearsal on a release candidate (ajiya) waits on AJ-0074, AJ-0078, AJ-0079, AJ-0084
 - **AJ-0082** Install docs for every channel (ajiya) waits on AJ-0081
@@ -64,6 +63,8 @@ Generated 2026-09-30.
 
 ## Recent activity
 
+- 2026-09-30 `7f92963` Add install.ps1 for Windows (AJ-0073)
+- 2026-09-30 `0ae147d` Add install.sh for macOS and Linux (AJ-0045)
 - 2026-09-30 `0a18e51` Plan the gaps left by the plugin and mcp install (chore)
   - AJ-0092: new → pending
   - AJ-0093: new → pending
@@ -86,11 +87,7 @@ Generated 2026-09-30.
   - AJ-0080: in_progress → done
 - 2026-09-30 `1b8142e` MCP roots: read Windows file URIs (AJ-0043)
 - 2026-09-30 `5958462` Merge branch 'worktree-agent-a052d49d096e57329' into worktree-agent-a658cbd8dac8f5d6c (-)
-- 2026-09-30 `2f1791a` Mark AJ-0043 done (AJ-0043)
-  - AJ-0043: in_progress → done
-- 2026-09-30 `0852975` Test the MCP server and mention it in the guide (AJ-0043)
-  - AJ-0043: pending → in_progress
-- and 173 more in data.js
+- and 175 more in data.js
 
 ## Checks
 
