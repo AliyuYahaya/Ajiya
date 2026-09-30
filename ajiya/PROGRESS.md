@@ -8,9 +8,9 @@ Generated 2026-09-30.
 | Milestone | Closed | Required | % | Can start now |
 |---|---|---|---|---|
 | v0-1 | 37 | 37 | 100% | 0 |
-| v0-2 | 52 | 68 | 76% | 2 |
-| v0-3 | 52 | 78 | 66% | 2 |
-| after-v0-3 | 52 | 77 | 67% | 2 |
+| v0-2 | 53 | 68 | 77% | 3 |
+| v0-3 | 53 | 78 | 67% | 3 |
+| after-v0-3 | 53 | 77 | 68% | 3 |
 
 ## Phases
 
@@ -21,21 +21,20 @@ Generated 2026-09-30.
 | Outputs | 12 | 0 | 0 | 12 | 100% | v0-1 |
 | Onboarding | 17 | 0 | 0 | 17 | 100% | v0-1 |
 | Release | 5 | 0 | 0 | 5 | 100% | v0-1 |
-| Agent-access | 1 | 0 | 2 | 3 | 33% | v0-2 |
+| Agent-access | 2 | 0 | 1 | 3 | 66% | v0-2 |
 | Install | 7 | 0 | 14 | 21 | 33% | v0-2 |
 | Decisions-and-changes | 0 | 0 | 11 | 11 | 0% | v0-3 |
 
 ## Can start now
 
-- **AJ-0043** ajiya mcp server (ajiya) · v0-2
+- **AJ-0044** ajiya mcp install, uninstall and status (ajiya) · v0-2
 - **AJ-0075** npm packages: @ajiya/cli and one package per platform (ajiya) · v0-2
+- **AJ-0046** Claude Code plugin (ajiya) · v0-2
 
 ## Waiting
 
-- **AJ-0044** ajiya mcp install, uninstall and status (ajiya) waits on AJ-0043
 - **AJ-0045** install.sh for macOS and Linux (ajiya) waits on AJ-0044
-- **AJ-0046** Claude Code plugin (ajiya) waits on AJ-0043
-- **AJ-0047** v0.2 definition of done (ajiya) waits on AJ-0043, AJ-0044, AJ-0045, AJ-0046, AJ-0082
+- **AJ-0047** v0.2 definition of done (ajiya) waits on AJ-0044, AJ-0045, AJ-0046, AJ-0082
 - **AJ-0048** Tags column (ajiya) waits on AJ-0047
 - **AJ-0049** ajiya ticket files (ajiya) waits on AJ-0048
 - **AJ-0050** Decision records and commands (ajiya) waits on AJ-0048
@@ -67,6 +66,9 @@ Generated 2026-09-30.
 
 ## Recent activity
 
+- 2026-09-30 `0852975` Test the MCP server and mention it in the guide (AJ-0043)
+  - AJ-0043: pending → in_progress
+- 2026-09-30 `df94ea7` Add the official MCP Go SDK (maintainer approved) and ajiya mcp server (AJ-0043)
 - 2026-09-30 `0e26867` Apple signing credentials stored (AJ-0083, AJ-0084)
   - AJ-0083: pending → done
 - 2026-09-29 `4136ead` Merge branch 'worktree-agent-afd29651f0fa7ef3e' into worktree-agent-a658cbd8dac8f5d6c (-)
@@ -86,10 +88,7 @@ Generated 2026-09-30.
 - 2026-09-29 `9f1c49a` Guide fixes from the walkthrough test (AJ-0091)
 - 2026-09-29 `7363ad4` Install scripts are served as GitHub release assets (AJ-0070, AJ-0078)
   - AJ-0070: pending → done
-- 2026-09-29 `ab57528` npm account, org and @ajiya/cli placeholder in place (AJ-0068)
-  - AJ-0068: pending → done
-- 2026-09-29 `2680bc1` phase remove updates [phases] order before deleting the file (AJ-0086)
-- and 151 more in data.js
+- and 153 more in data.js
 
 ## Checks
 

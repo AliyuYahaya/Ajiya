@@ -29,13 +29,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 68,
-        "done": 52,
+        "done": 53,
         "in_progress": 0,
-        "pending": 16,
+        "pending": 15,
         "dropped": 0
       },
-      "percent": 76,
-      "ready": 2
+      "percent": 77,
+      "ready": 3
     },
     {
       "name": "v0-3",
@@ -44,13 +44,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 78,
-        "done": 52,
+        "done": 53,
         "in_progress": 0,
-        "pending": 26,
+        "pending": 25,
         "dropped": 0
       },
-      "percent": 66,
-      "ready": 2
+      "percent": 67,
+      "ready": 3
     },
     {
       "name": "after-v0-3",
@@ -59,13 +59,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 77,
-        "done": 52,
+        "done": 53,
         "in_progress": 0,
-        "pending": 25,
+        "pending": 24,
         "dropped": 0
       },
-      "percent": 67,
-      "ready": 2
+      "percent": 68,
+      "ready": 3
     }
   ],
   "phases": [
@@ -145,12 +145,12 @@ window.AJIYA = {
       "goal": "Agents read and change the plan through ajiya status and an MCP server they register with in one step",
       "counts": {
         "total": 3,
-        "done": 1,
+        "done": 2,
         "in_progress": 0,
-        "pending": 2,
+        "pending": 1,
         "dropped": 0
       },
-      "percent": 33,
+      "percent": 66,
       "milestone": "v0-2"
     },
     {
@@ -188,9 +188,9 @@ window.AJIYA = {
       "path": ".",
       "counts": {
         "total": 91,
-        "done": 64,
+        "done": 65,
         "in_progress": 0,
-        "pending": 27,
+        "pending": 26,
         "dropped": 0
       }
     }
@@ -1255,18 +1255,21 @@ window.AJIYA = {
         "AJ-0042"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · 0852975 · 2026-09-30 · tests passed",
+        "commit": "0852975",
+        "date": "2026-09-30",
+        "tests_passed": true
       },
       "milestone": "v0-2",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0044",
         "AJ-0046",
         "AJ-0047"
       ],
-      "unblocks": 23
+      "unblocks": 0
     },
     {
       "id": "AJ-0044",
@@ -1282,10 +1285,8 @@ window.AJIYA = {
         "text": "🟥 Pending"
       },
       "milestone": "v0-2",
-      "ready": false,
-      "waiting_on": [
-        "AJ-0043"
-      ],
+      "ready": true,
+      "waiting_on": [],
       "dependants": [
         "AJ-0045",
         "AJ-0047",
@@ -1336,10 +1337,8 @@ window.AJIYA = {
         "text": "🟥 Pending"
       },
       "milestone": "v0-2",
-      "ready": false,
-      "waiting_on": [
-        "AJ-0043"
-      ],
+      "ready": true,
+      "waiting_on": [],
       "dependants": [
         "AJ-0047"
       ],
@@ -1374,7 +1373,6 @@ window.AJIYA = {
       "milestone": "v0-2",
       "ready": false,
       "waiting_on": [
-        "AJ-0043",
         "AJ-0044",
         "AJ-0045",
         "AJ-0046",
@@ -2490,11 +2488,52 @@ window.AJIYA = {
     }
   ],
   "next": [
-    "AJ-0043",
-    "AJ-0075"
+    "AJ-0044",
+    "AJ-0075",
+    "AJ-0046"
   ],
   "checks": [],
   "activity": [
+    {
+      "hash": "085297565a9eb388759ab6ffe4db0d5edb230f04",
+      "short": "0852975",
+      "date": "2026-09-30",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Test the MCP server and mention it in the guide",
+      "refs": [
+        "AJ-0043"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0043",
+          "phase": "agent-access",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        }
+      ],
+      "time": 1790781658
+    },
+    {
+      "hash": "df94ea72b2ecde1d4120869344abaafa375ff692",
+      "short": "df94ea7",
+      "date": "2026-09-30",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Add the official MCP Go SDK (maintainer approved) and ajiya mcp server",
+      "refs": [
+        "AJ-0043"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790781037
+    },
     {
       "hash": "0e26867b27ae21852d6749b4ad6081c862be2959",
       "short": "0e26867",
