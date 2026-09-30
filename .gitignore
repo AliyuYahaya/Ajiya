@@ -24,3 +24,6 @@ ajiya-build-prompt.md
 
 # npm packages built from dist/ (npm/build.mjs)
 /npm/dist/
+
+# Local signing keys and other secrets never go in git.
+Secrets/
