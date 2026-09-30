@@ -72,16 +72,21 @@ func TestPluginManifests(t *testing.T) {
 	}
 	readJSON(t, filepath.Join(pluginDir, "hooks", "hooks.json"), &hooks)
 	ss := hooks.Hooks["SessionStart"]
-	if len(ss) != 1 || len(ss[0].Hooks) != 1 {
-		t.Fatalf("hooks.json: want one SessionStart hook, got %+v", hooks)
+	// Two shell-form hooks, one per platform family, each ending in "exit 0" so
+	// a missing sh or powershell.exe is not reported as a hook failure:
+	// https://code.claude.com/docs/en/hooks (command hook fields)
+	if len(ss) != 1 || len(ss[0].Hooks) != 2 {
+		t.Fatalf("hooks.json: want one SessionStart group with two hooks, got %+v", hooks)
 	}
-	h := ss[0].Hooks[0]
-	if h.Type != "command" || h.Command != "sh" || len(h.Args) != 1 ||
-		h.Args[0] != "${CLAUDE_PLUGIN_ROOT}/hooks/session-start.sh" {
-		t.Errorf("hooks.json hook = %+v", h)
-	}
-	if _, err := os.Stat(filepath.Join(pluginDir, "hooks", "session-start.sh")); err != nil {
-		t.Error(err)
+	for i, script := range []string{"session-start.sh", "session-start.ps1"} {
+		h := ss[0].Hooks[i]
+		if h.Type != "command" || !strings.Contains(h.Command, "\"${CLAUDE_PLUGIN_ROOT}/hooks/"+script+"\"") ||
+			!strings.HasSuffix(h.Command, "; exit 0") {
+			t.Errorf("hooks.json hook %d = %+v", i, h)
+		}
+		if _, err := os.Stat(filepath.Join(pluginDir, "hooks", script)); err != nil {
+			t.Error(err)
+		}
 	}
 
 	var mk struct {
@@ -102,21 +107,49 @@ func TestPluginManifests(t *testing.T) {
 	}
 }
 
-// runHook runs the session-start script in dir, with a PATH of binDirs plus the
-// system directories, and returns its stdout.
-func runHook(t *testing.T, dir string, binDirs ...string) string {
+// hookCase is one behaviour of the session-start hook, for both platforms.
+type hookCase struct {
+	name    string
+	project bool // run in a folder with ajiya.toml
+	withBin bool // the fake ajiya is on PATH
+	want    string
+	install bool // want the install line instead of want
+}
+
+var hookCases = []hookCase{
+	{"ajiya on PATH, project", true, true, "FAKE STATUS\n", false},
+	{"ajiya on PATH, no ajiya.toml", false, true, "", false},
+	{"no ajiya, project", true, false, "", true},
+	{"no ajiya, no ajiya.toml", false, false, "", false},
+}
+
+func checkHookOutput(t *testing.T, tc hookCase, got string) {
 	t.Helper()
-	sh, err := exec.LookPath("sh")
-	if err != nil {
-		t.Skip("no sh on PATH")
+	got = strings.ReplaceAll(got, "\r\n", "\n")
+	if tc.install {
+		lines := strings.Split(strings.TrimRight(got, "\n"), "\n")
+		if len(lines) > 2 || !strings.Contains(got, "go install github.com/AliyuYahaya/Ajiya/cmd/ajiya@latest") {
+			t.Errorf("want the install line (at most two lines), got %q", got)
+		}
+		return
 	}
-	script, err := filepath.Abs(filepath.Join(pluginDir, "hooks", "session-start.sh"))
-	if err != nil {
+	if got != tc.want {
+		t.Errorf("stdout = %q, want %q", got, tc.want)
+	}
+}
+
+func newHookProject(t *testing.T) (project, plain string) {
+	t.Helper()
+	project, plain = t.TempDir(), t.TempDir()
+	if err := os.WriteFile(filepath.Join(project, "ajiya.toml"), []byte("name = \"x\"\n"), 0o644); err != nil {
 		t.Fatal(err)
 	}
-	cmd := exec.Command(sh, script)
-	cmd.Dir = dir
-	cmd.Env = []string{"PATH=" + strings.Join(append(binDirs, "/usr/bin", "/bin"), ":"), "HOME=" + dir}
+	return project, plain
+}
+
+// runHook runs cmd, which must exit 0, and returns its stdout.
+func runHook(t *testing.T, cmd *exec.Cmd) string {
+	t.Helper()
 	var out strings.Builder
 	cmd.Stdout = &out
 	if err := cmd.Run(); err != nil {
@@ -127,56 +160,108 @@ func runHook(t *testing.T, dir string, binDirs ...string) string {
 
 func TestSessionStartHook(t *testing.T) {
 	if runtime.GOOS == "windows" {
-		t.Skip("the hook is a POSIX sh script; on Windows Claude Code runs it through Git Bash, which CI does not exercise")
+		t.Skip("session-start.sh is for macOS and Linux; Windows runs session-start.ps1 (TestSessionStartHookPowerShell)")
+	}
+	sh, err := exec.LookPath("sh")
+	if err != nil {
+		t.Skip("no sh on PATH")
+	}
+	script, err := filepath.Abs(filepath.Join(pluginDir, "hooks", "session-start.sh"))
+	if err != nil {
+		t.Fatal(err)
 	}
 	bin := t.TempDir()
 	fake := "#!/bin/sh\n[ \"$1 $2\" = \"status --brief\" ] && echo 'FAKE STATUS'\nexit 0\n"
 	if err := os.WriteFile(filepath.Join(bin, "ajiya"), []byte(fake), 0o755); err != nil {
 		t.Fatal(err)
 	}
+	project, plain := newHookProject(t)
 
-	project := t.TempDir()
-	os.WriteFile(filepath.Join(project, "ajiya.toml"), []byte("name = \"x\"\n"), 0o644)
-	plain := t.TempDir()
-
-	tests := []struct {
-		name    string
-		dir     string
-		bins    []string
-		want    string // exact stdout, or a prefix when contains is set
-		install bool
-	}{
-		{"ajiya on PATH, project", project, []string{bin}, "FAKE STATUS\n", false},
-		{"ajiya on PATH, no ajiya.toml", plain, []string{bin}, "", false},
-		{"no ajiya, project", project, nil, "", true},
-		{"no ajiya, no ajiya.toml", plain, nil, "", false},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			got := runHook(t, tt.dir, tt.bins...)
-			if tt.install {
-				lines := strings.Split(strings.TrimRight(got, "\n"), "\n")
-				if len(lines) > 2 || !strings.Contains(got, "go install github.com/AliyuYahaya/Ajiya/cmd/ajiya@latest") {
-					t.Errorf("want the install line (at most two lines), got %q", got)
-				}
-				return
+	for _, tc := range hookCases {
+		t.Run(tc.name, func(t *testing.T) {
+			dir, path := plain, "/usr/bin:/bin"
+			if tc.project {
+				dir = project
 			}
-			if got != tt.want {
-				t.Errorf("stdout = %q, want %q", got, tt.want)
+			if tc.withBin {
+				path = bin + ":" + path
 			}
+			cmd := exec.Command(sh, script)
+			cmd.Dir = dir
+			cmd.Env = []string{"PATH=" + path, "HOME=" + dir}
+			checkHookOutput(t, tc, runHook(t, cmd))
 		})
 	}
 
 	// CLAUDE_PROJECT_DIR wins over the working directory.
 	t.Run("CLAUDE_PROJECT_DIR", func(t *testing.T) {
-		sh, _ := exec.LookPath("sh")
-		script, _ := filepath.Abs(filepath.Join(pluginDir, "hooks", "session-start.sh"))
 		cmd := exec.Command(sh, script)
 		cmd.Dir = plain
 		cmd.Env = []string{"PATH=" + bin + ":/usr/bin:/bin", "CLAUDE_PROJECT_DIR=" + project}
-		out, err := cmd.Output()
-		if err != nil || string(out) != "FAKE STATUS\n" {
-			t.Errorf("out %q err %v", out, err)
+		if got := runHook(t, cmd); got != "FAKE STATUS\n" {
+			t.Errorf("out %q", got)
+		}
+	})
+}
+
+// The same cases for session-start.ps1, which Claude Code runs on Windows
+// through powershell.exe (Windows PowerShell 5.1, see plugin/hooks/hooks.json).
+// It runs on the Windows CI runner and is skipped elsewhere: the script does
+// nothing off Windows.
+func TestSessionStartHookPowerShell(t *testing.T) {
+	if runtime.GOOS != "windows" {
+		t.Skip("session-start.ps1 only acts on Windows")
+	}
+	ps, err := exec.LookPath("powershell")
+	if err != nil {
+		t.Skip("no powershell on PATH")
+	}
+	script, err := filepath.Abs(filepath.Join(pluginDir, "hooks", "session-start.ps1"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	bin := t.TempDir()
+	fake := "@echo off\r\nif \"%1 %2\"==\"status --brief\" echo FAKE STATUS\r\nexit /b 0\r\n"
+	if err := os.WriteFile(filepath.Join(bin, "ajiya.cmd"), []byte(fake), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	project, plain := newHookProject(t)
+
+	root := os.Getenv("SystemRoot")
+	sys := filepath.Join(root, "System32")
+	sysPath := strings.Join([]string{sys, root, filepath.Join(sys, "WindowsPowerShell", "v1.0")}, ";")
+	run := func(t *testing.T, dir, path string, extra ...string) string {
+		cmd := exec.Command(ps, "-NoProfile", "-ExecutionPolicy", "Bypass", "-File", script)
+		cmd.Dir = dir
+		cmd.Env = append([]string{"PATH=" + path, "SystemRoot=" + root, "ComSpec=" + os.Getenv("ComSpec"), "PATHEXT=.COM;.EXE;.BAT;.CMD", "OS=Windows_NT"}, extra...)
+		return runHook(t, cmd)
+	}
+
+	for _, tc := range hookCases {
+		t.Run(tc.name, func(t *testing.T) {
+			dir, path := plain, sysPath
+			if tc.project {
+				dir = project
+			}
+			if tc.withBin {
+				path = bin + ";" + path
+			}
+			checkHookOutput(t, tc, run(t, dir, path))
+		})
+	}
+
+	// CLAUDE_PROJECT_DIR wins over the working directory.
+	t.Run("CLAUDE_PROJECT_DIR", func(t *testing.T) {
+		got := run(t, plain, bin+";"+sysPath, "CLAUDE_PROJECT_DIR="+project)
+		if strings.ReplaceAll(got, "\r\n", "\n") != "FAKE STATUS\n" {
+			t.Errorf("out %q", got)
+		}
+	})
+
+	// A CLAUDE_PROJECT_DIR that does not exist is silent and exits 0.
+	t.Run("bad CLAUDE_PROJECT_DIR", func(t *testing.T) {
+		if got := run(t, plain, bin+";"+sysPath, "CLAUDE_PROJECT_DIR="+filepath.Join(plain, "missing")); got != "" {
+			t.Errorf("out %q", got)
 		}
 	})
 }
