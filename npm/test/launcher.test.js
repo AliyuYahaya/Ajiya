@@ -51,17 +51,43 @@ test('with no platform package installed the launcher prints one error and exits
   assert.equal(r.stdout, '');
 });
 
-test('the launcher runs the platform binary with its arguments and exit status', { skip: process.platform === 'win32' && 'needs a shell-script fake binary' }, () => {
+// buildFakeBinary compiles a tiny real program: it prints its arguments after
+// the first as JSON and exits with the code in the first argument. A real
+// executable works the same on every operating system, unlike a shell script.
+function buildFakeBinary(out) {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'ajiya-fake-'));
+  const src = path.join(dir, 'main.go');
+  fs.writeFileSync(src, [
+    'package main',
+    'import ("encoding/json"; "os"; "strconv")',
+    'func main() {',
+    '  code, _ := strconv.Atoi(os.Args[1])',
+    '  b, _ := json.Marshal(os.Args[2:])',
+    '  os.Stdout.Write(append(b, 10))',
+    '  os.Exit(code)',
+    '}',
+    '',
+  ].join('\n'));
+  return spawnSync('go', ['build', '-o', out, src], { cwd: dir, encoding: 'utf8' });
+}
+
+const goCheck = spawnSync('go', ['version'], { encoding: 'utf8' });
+const hasGo = !goCheck.error && goCheck.status === 0;
+
+test('the launcher runs the platform binary with its arguments and exit status', { skip: !hasGo && 'go is not installed, so the stand-in binary cannot be built' }, () => {
   const { root, script } = installLauncher();
   const pkg = platformPackage(process.platform, process.arch);
-  if (!pkg) return;
+  assert.ok(pkg, 'this test needs a supported platform');
   const binDir = path.join(root, 'node_modules', pkg.name, 'bin');
   fs.mkdirSync(binDir, { recursive: true });
   fs.writeFileSync(path.join(root, 'node_modules', pkg.name, 'package.json'), JSON.stringify({ name: pkg.name, version: '0.0.0' }));
-  const fake = path.join(binDir, 'ajiya');
-  fs.writeFileSync(fake, '#!/bin/sh\necho "args: $@"\nexit 3\n');
-  fs.chmodSync(fake, 0o755);
-  const r = spawnSync(process.execPath, [script, 'ticket', 'show'], { encoding: 'utf8' });
-  assert.equal(r.stdout, 'args: ticket show\n');
-  assert.equal(r.status, 3);
+  const built = buildFakeBinary(path.join(binDir, path.basename(pkg.binary)));
+  assert.equal(built.status, 0, built.stderr);
+
+  const args = ['ticket', 'show', 'two words', '--flag', '-x', 'a"b'];
+  for (const code of [0, 3]) {
+    const r = spawnSync(process.execPath, [script, String(code), ...args], { encoding: 'utf8' });
+    assert.equal(r.status, code);
+    assert.deepEqual(JSON.parse(r.stdout), args);
+  }
 });
