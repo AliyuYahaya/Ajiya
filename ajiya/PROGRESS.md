@@ -8,9 +8,9 @@ Generated 2026-09-30.
 | Milestone | Closed | Required | % | Can start now |
 |---|---|---|---|---|
 | v0-1 | 37 | 37 | 100% | 0 |
-| v0-2 | 58 | 72 | 80% | 7 |
-| v0-3 | 58 | 82 | 70% | 7 |
-| after-v0-3 | 58 | 81 | 71% | 7 |
+| v0-2 | 60 | 72 | 83% | 5 |
+| v0-3 | 60 | 82 | 73% | 5 |
+| after-v0-3 | 60 | 81 | 74% | 5 |
 
 ## Phases
 
@@ -22,7 +22,7 @@ Generated 2026-09-30.
 | Onboarding | 17 | 0 | 0 | 17 | 100% | v0-1 |
 | Release | 5 | 0 | 0 | 5 | 100% | v0-1 |
 | Agent-access | 3 | 0 | 2 | 5 | 60% | v0-2 |
-| Install | 11 | 0 | 12 | 23 | 47% | v0-2 |
+| Install | 13 | 0 | 10 | 23 | 56% | v0-2 |
 | Decisions-and-changes | 0 | 0 | 11 | 11 | 0% | v0-3 |
 
 ## Can start now
@@ -30,14 +30,12 @@ Generated 2026-09-30.
 - **AJ-0045** install.sh for macOS and Linux (ajiya) · v0-2
 - **AJ-0073** install.ps1 for Windows (ajiya) · v0-2
 - **AJ-0077** Homebrew tap wiring (ajiya) · v0-2
-- **AJ-0092** Plugin session-start hook on Windows (ajiya) · v0-2
-- **AJ-0093** Add to Cursor link (ajiya) · v0-2
 - **AJ-0094** Terminal detection ignores /dev/null (ajiya) · v0-2
 - **AJ-0095** mcp install honours CLAUDE_CONFIG_DIR (ajiya) · v0-2
 
 ## Waiting
 
-- **AJ-0047** v0.2 definition of done (ajiya) waits on AJ-0045, AJ-0082, AJ-0092, AJ-0093, AJ-0094, AJ-0095
+- **AJ-0047** v0.2 definition of done (ajiya) waits on AJ-0045, AJ-0082, AJ-0094, AJ-0095
 - **AJ-0048** Tags column (ajiya) waits on AJ-0047
 - **AJ-0049** ajiya ticket files (ajiya) waits on AJ-0048
 - **AJ-0050** Decision records and commands (ajiya) waits on AJ-0048
@@ -64,6 +62,8 @@ Generated 2026-09-30.
 
 ## Recent activity
 
+- 2026-09-30 `5cff5a1` Add an Add to Cursor link for the ajiya MCP server to the README (AJ-0093)
+- 2026-09-30 `39f18c9` Run the plugin session-start hook on Windows without Git Bash (AJ-0092)
 - 2026-09-30 `0a18e51` Plan the gaps left by the plugin and mcp install (chore)
   - AJ-0092: new → pending
   - AJ-0093: new → pending
@@ -86,11 +86,7 @@ Generated 2026-09-30.
   - AJ-0080: in_progress → done
 - 2026-09-30 `1b8142e` MCP roots: read Windows file URIs (AJ-0043)
 - 2026-09-30 `5958462` Merge branch 'worktree-agent-a052d49d096e57329' into worktree-agent-a658cbd8dac8f5d6c (-)
-- 2026-09-30 `2f1791a` Mark AJ-0043 done (AJ-0043)
-  - AJ-0043: in_progress → done
-- 2026-09-30 `0852975` Test the MCP server and mention it in the guide (AJ-0043)
-  - AJ-0043: pending → in_progress
-- and 173 more in data.js
+- and 175 more in data.js
 
 ## Checks
 
