@@ -218,6 +218,13 @@ function Main {
     $ProgressPreference = 'SilentlyContinue'   # the progress bar makes Windows PowerShell 5.1 downloads very slow
     try {
         if ($Uninstall) { Invoke-Uninstall } else { Invoke-Install }
+    } catch {
+        # Make a failure unmistakable. Run as a file (-File, CI, scripts), exit 1
+        # so the caller sees it; run through 'irm | iex', re-throw instead, since
+        # exit would close the user's PowerShell window.
+        [Console]::Error.WriteLine("ajiya install: $($_.Exception.Message)")
+        if ($PSCommandPath) { $ErrorActionPreference = $savedError; $ProgressPreference = $savedProgress; exit 1 }
+        throw
     } finally {
         $ErrorActionPreference = $savedError
         $ProgressPreference = $savedProgress
