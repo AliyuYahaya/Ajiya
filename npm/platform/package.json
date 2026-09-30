@@ -1,0 +1,25 @@
+{
+  "name": "@ajiya/PLATFORM",
+  "version": "0.0.0",
+  "description": "The Ajiya binary for PLATFORM. Install @ajiya/cli, not this package.",
+  "license": "MIT",
+  "author": "Yavid PTY Ltd",
+  "homepage": "https://github.com/AliyuYahaya/Ajiya",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AliyuYahaya/Ajiya.git"
+  },
+  "os": [
+    "OS"
+  ],
+  "cpu": [
+    "CPU"
+  ],
+  "files": [
+    "bin"
+  ],
+  "preferUnplugged": true,
+  "publishConfig": {
+    "access": "public"
+  }
+}

@@ -21,3 +21,6 @@ ajiya-build-prompt.md
 # The agent kit writes CLAUDE.md (a marked block); keep it even where a global
 # gitignore leaves CLAUDE.md out.
 !CLAUDE.md
+
+# npm packages built from dist/ (npm/build.mjs)
+/npm/dist/
