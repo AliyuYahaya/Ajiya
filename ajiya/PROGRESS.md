@@ -50,6 +50,9 @@ Generated 2026-09-30.
 
 ## Recent activity
 
+- 2026-09-30 `90c0649` Merge branch 'worktree-agent-a096c68c0fcfd0eea' into worktree-agent-a658cbd8dac8f5d6c (-)
+- 2026-09-30 `81edb49` Mark AJ-0082 done (AJ-0082)
+  - AJ-0082: in_progress → done
 - 2026-09-30 `e3e65f6` Docs: install lines for every channel, cloud agents and agent prompts (AJ-0082)
 - 2026-09-30 `f64ee78` Release rehearsal passed: AJ-0078, AJ-0079, AJ-0084 and AJ-0081 done (AJ-0079, AJ-0084, AJ-0081)
   - AJ-0078: in_progress → done
@@ -74,10 +77,7 @@ Generated 2026-09-30.
   - AJ-0097: in_progress → done
 - 2026-09-30 `c5c8987` Plugin leaves MCP registration to ajiya mcp install (AJ-0097)
   - AJ-0097: pending → in_progress
-- 2026-09-30 `9e15dbf` Merge branch 'worktree-agent-ac065ef1f3558d188' into worktree-agent-a658cbd8dac8f5d6c (-)
-- 2026-09-30 `e6cbb0d` Sign and notarise the darwin binaries; drop the cask quarantine hook (AJ-0084)
-  - AJ-0084: pending → in_progress
-- and 214 more in data.js
+- and 216 more in data.js
 
 ## Checks
 
