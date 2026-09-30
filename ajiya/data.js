@@ -29,12 +29,12 @@ window.AJIYA = {
       ],
       "required": {
         "total": 74,
-        "done": 66,
-        "in_progress": 4,
+        "done": 68,
+        "in_progress": 2,
         "pending": 4,
         "dropped": 0
       },
-      "percent": 89,
+      "percent": 91,
       "ready": 3
     },
     {
@@ -44,12 +44,12 @@ window.AJIYA = {
       ],
       "required": {
         "total": 84,
-        "done": 66,
-        "in_progress": 4,
+        "done": 68,
+        "in_progress": 2,
         "pending": 14,
         "dropped": 0
       },
-      "percent": 78,
+      "percent": 80,
       "ready": 3
     },
     {
@@ -59,12 +59,12 @@ window.AJIYA = {
       ],
       "required": {
         "total": 83,
-        "done": 66,
-        "in_progress": 4,
+        "done": 68,
+        "in_progress": 2,
         "pending": 13,
         "dropped": 0
       },
-      "percent": 79,
+      "percent": 81,
       "ready": 3
     }
   ],
@@ -159,12 +159,12 @@ window.AJIYA = {
       "goal": "Ajiya installs in one step, with a Claude Code plugin",
       "counts": {
         "total": 24,
-        "done": 16,
-        "in_progress": 4,
+        "done": 18,
+        "in_progress": 2,
         "pending": 4,
         "dropped": 0
       },
-      "percent": 66,
+      "percent": 75,
       "milestone": "v0-2"
     },
     {
@@ -188,8 +188,8 @@ window.AJIYA = {
       "path": ".",
       "counts": {
         "total": 97,
-        "done": 78,
-        "in_progress": 4,
+        "done": 80,
+        "in_progress": 2,
         "pending": 15,
         "dropped": 0
       }
@@ -2033,17 +2033,21 @@ window.AJIYA = {
         "AJ-0044"
       ],
       "status": {
-        "state": "in_progress",
-        "text": "🟨 In progress"
+        "state": "done",
+        "text": "🟩 Done · 321e6bc · 2026-09-30 · tests passed · Note: install.ps1 passes installer CI run 36756977435 on windows-latest under PowerShell 7 and 5.1",
+        "note": "install.ps1 passes installer CI run 36756977435 on windows-latest under PowerShell 7 and 5.1",
+        "commit": "321e6bc",
+        "date": "2026-09-30",
+        "tests_passed": true
       },
       "milestone": "v0-2",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0074",
         "AJ-0078"
       ],
-      "unblocks": 16
+      "unblocks": 0
     },
     {
       "id": "AJ-0074",
@@ -2056,18 +2060,20 @@ window.AJIYA = {
         "AJ-0073"
       ],
       "status": {
-        "state": "in_progress",
-        "text": "🟨 In progress"
+        "state": "done",
+        "text": "🟩 Done · 36e4c5f · 2026-09-30 · tests passed · Note: installers job green on ubuntu, macOS and Windows in run 36756977435",
+        "note": "installers job green on ubuntu, macOS and Windows in run 36756977435",
+        "commit": "36e4c5f",
+        "date": "2026-09-30",
+        "tests_passed": true
       },
       "milestone": "v0-2",
       "ready": false,
-      "waiting_on": [
-        "AJ-0073"
-      ],
+      "waiting_on": [],
       "dependants": [
         "AJ-0081"
       ],
-      "unblocks": 14
+      "unblocks": 0
     },
     {
       "id": "AJ-0075",
@@ -2164,10 +2170,8 @@ window.AJIYA = {
         "text": "🟥 Pending"
       },
       "milestone": "v0-2",
-      "ready": false,
-      "waiting_on": [
-        "AJ-0073"
-      ],
+      "ready": true,
+      "waiting_on": [],
       "dependants": [
         "AJ-0081"
       ],
@@ -2243,7 +2247,6 @@ window.AJIYA = {
       "milestone": "v0-2",
       "ready": false,
       "waiting_on": [
-        "AJ-0074",
         "AJ-0078",
         "AJ-0079",
         "AJ-0084"
@@ -2644,12 +2647,44 @@ window.AJIYA = {
     }
   ],
   "next": [
-    "AJ-0073",
+    "AJ-0078",
     "AJ-0079",
     "AJ-0084"
   ],
   "checks": [],
   "activity": [
+    {
+      "hash": "321e6bca4e170ab9030b96b2b33af7aecfa49591",
+      "short": "321e6bc",
+      "date": "2026-09-30",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "install.ps1: a failed install always exits 1",
+      "refs": [
+        "AJ-0073"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790791977
+    },
+    {
+      "hash": "36e4c5f16a4f62d5cc7cdddee93ea1a2075d6f17",
+      "short": "36e4c5f",
+      "date": "2026-09-30",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Installer CI: analyze each PowerShell script; shellcheck fails on warnings",
+      "refs": [
+        "AJ-0074"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790790000
+    },
     {
       "hash": "d83da99a257aa0d8e9aa317725eb13e6da72cffa",
       "short": "d83da99",

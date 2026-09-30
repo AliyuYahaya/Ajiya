@@ -8,9 +8,9 @@ Generated 2026-09-30.
 | Milestone | Closed | Required | % | Can start now |
 |---|---|---|---|---|
 | v0-1 | 37 | 37 | 100% | 0 |
-| v0-2 | 66 | 74 | 89% | 3 |
-| v0-3 | 66 | 84 | 78% | 3 |
-| after-v0-3 | 66 | 83 | 79% | 3 |
+| v0-2 | 68 | 74 | 91% | 3 |
+| v0-3 | 68 | 84 | 80% | 3 |
+| after-v0-3 | 68 | 83 | 81% | 3 |
 
 ## Phases
 
@@ -22,12 +22,12 @@ Generated 2026-09-30.
 | Onboarding | 17 | 0 | 0 | 17 | 100% | v0-1 |
 | Release | 5 | 0 | 0 | 5 | 100% | v0-1 |
 | Agent-access | 6 | 0 | 0 | 6 | 100% | v0-2 |
-| Install | 16 | 4 | 4 | 24 | 66% | v0-2 |
+| Install | 18 | 2 | 4 | 24 | 75% | v0-2 |
 | Decisions-and-changes | 0 | 0 | 11 | 11 | 0% | v0-3 |
 
 ## Can start now
 
-- **AJ-0073** install.ps1 for Windows (ajiya) · v0-2 · in progress
+- **AJ-0078** Install scripts attached to every release (ajiya) · v0-2
 - **AJ-0079** Gated publish jobs (ajiya) · v0-2 · in progress
 - **AJ-0084** Sign and notarise the macOS binaries (ajiya) · v0-2 · in progress
 
@@ -45,9 +45,7 @@ Generated 2026-09-30.
 - **AJ-0056** Guides and skill for decisions and changes (ajiya) waits on AJ-0055
 - **AJ-0057** Dashboard: open changes and decisions (ajiya) waits on AJ-0055
 - **AJ-0058** v0.3 definition of done (ajiya) waits on AJ-0048, AJ-0049, AJ-0050, AJ-0051, AJ-0052, AJ-0053, AJ-0054, AJ-0055, AJ-0056
-- **AJ-0074** Installer CI (ajiya) waits on AJ-0073
-- **AJ-0078** Install scripts attached to every release (ajiya) waits on AJ-0073
-- **AJ-0081** Release rehearsal on a release candidate (ajiya) waits on AJ-0074, AJ-0078, AJ-0079, AJ-0084
+- **AJ-0081** Release rehearsal on a release candidate (ajiya) waits on AJ-0078, AJ-0079, AJ-0084
 - **AJ-0082** Install docs for every channel (ajiya) waits on AJ-0081
 
 ## Needs a human
@@ -58,6 +56,8 @@ Generated 2026-09-30.
 
 ## Recent activity
 
+- 2026-09-30 `321e6bc` install.ps1: a failed install always exits 1 (AJ-0073)
+- 2026-09-30 `36e4c5f` Installer CI: analyze each PowerShell script; shellcheck fails on warnings (AJ-0074)
 - 2026-09-30 `d83da99` Merge branch 'worktree-agent-a920ee3d0cb59f8ae' into worktree-agent-a658cbd8dac8f5d6c (-)
 - 2026-09-30 `5f3e837` Mark AJ-0096 and AJ-0097 done (AJ-0096, AJ-0097)
   - AJ-0096: in_progress → done
@@ -84,9 +84,7 @@ Generated 2026-09-30.
   - AJ-0094: new → done
   - AJ-0095: new → done
   - AJ-0096: new → pending
-- 2026-09-30 `4b5a995` Merge branch 'worktree-agent-a4b3db9090249aeb4' into worktree-agent-a658cbd8dac8f5d6c (-)
-- 2026-09-30 `1894907` Installers offer ajiya mcp install for the detected agents (AJ-0045, AJ-0073)
-- and 204 more in data.js
+- and 206 more in data.js
 
 ## Checks
 
