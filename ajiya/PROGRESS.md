@@ -52,6 +52,11 @@ Generated 2026-09-30.
 
 ## Recent activity
 
+- 2026-09-30 `56f5157` v0.2 signed off; plan v0.2.1 polish from the MCP walkthrough (AJ-0047)
+  - AJ-0047: pending → done
+  - AJ-0098: new → pending
+  - AJ-0099: new → pending
+  - AJ-0100: new → pending
 - 2026-09-30 `90c0649` Merge branch 'worktree-agent-a096c68c0fcfd0eea' into worktree-agent-a658cbd8dac8f5d6c (-)
 - 2026-09-30 `81edb49` Mark AJ-0082 done (AJ-0082)
   - AJ-0082: in_progress → done
@@ -77,9 +82,7 @@ Generated 2026-09-30.
 - 2026-09-30 `5f3e837` Mark AJ-0096 and AJ-0097 done (AJ-0096, AJ-0097)
   - AJ-0096: in_progress → done
   - AJ-0097: in_progress → done
-- 2026-09-30 `c5c8987` Plugin leaves MCP registration to ajiya mcp install (AJ-0097)
-  - AJ-0097: pending → in_progress
-- and 216 more in data.js
+- and 217 more in data.js
 
 ## Checks
 

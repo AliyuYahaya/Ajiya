@@ -2741,6 +2741,51 @@ window.AJIYA = {
   "checks": [],
   "activity": [
     {
+      "hash": "56f5157e1d186a039ff9e39ded4373bbc0918cd8",
+      "short": "56f5157",
+      "date": "2026-09-30",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "v0.2 signed off; plan v0.2.1 polish from the MCP walkthrough",
+      "refs": [
+        "AJ-0047"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0047",
+          "phase": "install",
+          "from": "pending",
+          "to": "done",
+          "text": "🟩 Done · by Aliyu Yahaya · 2026-09-30 · Note: v0.2 signed off by the maintainer: rc.4 rehearsal (signed, notarised, npm next, installs in test-app); MCP walkthrough in a fresh repo planned and finished a ticket through MCP tools in 34s; clean-account run not done"
+        },
+        {
+          "id": "AJ-0098",
+          "phase": "agent-access",
+          "from": "",
+          "to": "pending",
+          "text": "🟥 Pending"
+        },
+        {
+          "id": "AJ-0099",
+          "phase": "apps-launch",
+          "from": "",
+          "to": "pending",
+          "text": "🟥 Pending"
+        },
+        {
+          "id": "AJ-0100",
+          "phase": "onboarding",
+          "from": "",
+          "to": "pending",
+          "text": "🟥 Pending"
+        }
+      ],
+      "time": 1790804196
+    },
+    {
       "hash": "90c06494bf85d382dba7628afa860f5296125863",
       "short": "90c0649",
       "date": "2026-09-30",
