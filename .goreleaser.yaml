@@ -43,6 +43,26 @@ checksum:
 snapshot:
   version_template: "{{ incpatch .Version }}-snapshot+{{ .ShortCommit }}"
 
+# Sign and notarise the darwin binaries (cross-platform, runs on Linux; binaries
+# only, no app bundle). Needs the `release` environment's secrets: MACOS_SIGN_P12
+# (base64 .p12), MACOS_SIGN_PASSWORD, MACOS_NOTARY_KEY (base64 .p8),
+# MACOS_NOTARY_KEY_ID, MACOS_NOTARY_ISSUER_ID. Without MACOS_SIGN_P12 the block
+# is disabled, so `goreleaser release --snapshot` still builds unsigned.
+# https://goreleaser.com/customization/notarize/
+notarize:
+  macos:
+    - enabled: '{{ isEnvSet "MACOS_SIGN_P12" }}'
+      ids: [ajiya]
+      sign:
+        certificate: "{{ .Env.MACOS_SIGN_P12 }}"
+        password: "{{ .Env.MACOS_SIGN_PASSWORD }}"
+      notarize:
+        issuer_id: "{{ .Env.MACOS_NOTARY_ISSUER_ID }}"
+        key_id: "{{ .Env.MACOS_NOTARY_KEY_ID }}"
+        key: "{{ .Env.MACOS_NOTARY_KEY }}"
+        wait: true
+        timeout: 20m
+
 changelog:
   disable: true # see the release notes above
 
@@ -50,11 +70,11 @@ release:
   draft: true
 
 # Homebrew cask for the tap AliyuYahaya/homebrew-tap.
-# skip_upload: true pushes the cask for a stable tag and holds it back for a
-# prerelease tag such as v1.0.0-rc1
-# (https://goreleaser.com/customization/homebrew_casks/). The release job in
-# .github/workflows/release.yml passes --skip=homebrew, so nothing reaches the
-# tap until the gated publish job (AJ-0079) drops that flag.
+# skip_upload: true makes GoReleaser only WRITE the cask (dist/homebrew/Casks/
+# ajiya.rb) and never push it. The gated tap job in the release workflow commits
+# that file to the tap after the maintainer approves, and skips prerelease tags
+# such as v1.0.0-rc.1 (what skip_upload: auto would do). The binaries are signed
+# and notarised (notarize above), so the cask needs no quarantine hook.
 homebrew_casks:
   - name: ajiya
     ids: [ajiya]
@@ -67,14 +87,6 @@ homebrew_casks:
       name: homebrew-tap
       token: "{{ .Env.HOMEBREW_TAP_TOKEN }}"
     skip_upload: true
-    hooks:
-      post:
-        # The binaries are not notarised, so macOS would block them on first
-        # run; remove the quarantine attribute Homebrew's download sets.
-        install: |
-          if OS.mac?
-            system_command "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "#{staged_path}/ajiya"]
-          end
     caveats: |
       Register Ajiya with your coding agents: ajiya mcp install
       Set up a project: ajiya init
