@@ -32,6 +32,10 @@ jobs:
       - uses: actions/setup-node@v7
         with:
           node-version: 22
+      # The launcher test builds a small Go program as a stand-in binary.
+      - uses: actions/setup-go@v7
+        with:
+          go-version-file: go.mod
       - run: node --test npm/test/build.test.mjs npm/test/launcher.test.js
 
   # The commit rule, as a backup for hooks that can be skipped with --no-verify.
