@@ -60,6 +60,13 @@ Generated 2026-09-30.
 
 ## Recent activity
 
+- 2026-09-30 `634ca27` Resolve the agent-access plan conflict left in the last merge (AJ-0094, AJ-0095, AJ-0096)
+  - AJ-0042: new → done
+  - AJ-0043: new → done
+  - AJ-0044: new → done
+  - AJ-0094: new → done
+  - AJ-0095: new → done
+  - AJ-0096: new → pending
 - 2026-09-30 `4b5a995` Merge branch 'worktree-agent-a4b3db9090249aeb4' into worktree-agent-a658cbd8dac8f5d6c (-)
 - 2026-09-30 `1894907` Installers offer ajiya mcp install for the detected agents (AJ-0045, AJ-0073)
 - 2026-09-30 `e7aa392` Merge branch 'worktree-agent-a808e23b5b5a187e3' into worktree-agent-a658cbd8dac8f5d6c (-)
@@ -82,8 +89,7 @@ Generated 2026-09-30.
 - 2026-09-30 `cf289d1` Mark AJ-0092 and AJ-0093 done (AJ-0092, AJ-0093)
   - AJ-0092: pending → done
   - AJ-0093: pending → done
-- 2026-09-30 `4e223ae` Detect a real terminal, not just a character device (AJ-0094)
-- and 191 more in data.js
+- and 192 more in data.js
 
 ## Checks
 
