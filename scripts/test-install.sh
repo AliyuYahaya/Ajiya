@@ -125,7 +125,7 @@ for sh_bin in $TEST_SHELLS; do
   if "$d/bin/ajiya" version 2>&1 | grep -q -F "$version"; then pass "$sh_bin: ajiya version reports $version"; else fail "$sh_bin: ajiya version reports $version"; fi
   contains "Checksum verified" "$d/out" && pass "$sh_bin: checksum was verified" || fail "$sh_bin: checksum was verified"
   contains "export PATH=\"$d/bin:" "$d/out" && pass "$sh_bin: PATH advice printed" || fail "$sh_bin: PATH advice printed"
-  contains "ajiya mcp install --all" "$d/out" && pass "$sh_bin: mcp hint printed without a prompt" || fail "$sh_bin: mcp hint printed without a prompt"
+  contains "ajiya mcp install" "$d/out" && pass "$sh_bin: mcp hint printed without a prompt" || fail "$sh_bin: mcp hint printed without a prompt"
 
   # No PATH advice when the folder is already on PATH; version without the v; no home files touched.
   if run "$d/bin" env PATH="$d/bin:$PATH" AJIYA_VERSION="$version" "$sh_bin" "$INSTALL_SH"; then pass "$sh_bin: reinstall with a bare version"; else fail "$sh_bin: reinstall with a bare version"; fi

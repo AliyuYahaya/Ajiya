@@ -199,16 +199,16 @@ function Invoke-Install {
 
     if (Test-CanPrompt) {
         Write-Host ''
-        $answer = Read-Host 'Register Ajiya with the coding agents found on this machine (ajiya mcp install --all)? [y/N]'
+        $answer = Read-Host 'Register Ajiya with the coding agents found on this machine (ajiya mcp install)? [y/N]'
         if ($answer -match '^(y|yes)$') {
-            & $exe mcp install --all
+            & $exe mcp install
             if ($LASTEXITCODE -ne 0) { Write-Warning 'ajiya mcp install failed; run it yourself later' }
         } else {
-            Write-Host "Skipped. Run 'ajiya mcp install --all' whenever you want to register."
+            Write-Host "Skipped. Run 'ajiya mcp install' whenever you want to register."
         }
     } else {
         Write-Host ''
-        Write-Host 'To register Ajiya with your coding agents, run: ajiya mcp install --all'
+        Write-Host 'To register Ajiya with your coding agents, run: ajiya mcp install'
     }
 }
 

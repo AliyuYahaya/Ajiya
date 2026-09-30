@@ -193,16 +193,16 @@ do_install() {
 
   if have_terminal; then
     say ""
-    printf 'Register Ajiya with the coding agents found on this machine (ajiya mcp install --all)? [y/N] '
+    printf 'Register Ajiya with the coding agents found on this machine (ajiya mcp install)? [y/N] '
     ans=""
     read -r ans </dev/tty || ans=""
     case "$ans" in
-      y | Y | yes | YES | Yes) "$dir/ajiya" mcp install --all || err "ajiya mcp install failed; run it yourself later" ;;
-      *) say "Skipped. Run 'ajiya mcp install --all' whenever you want to register." ;;
+      y | Y | yes | YES | Yes) "$dir/ajiya" mcp install || err "ajiya mcp install failed; run it yourself later" ;;
+      *) say "Skipped. Run 'ajiya mcp install' whenever you want to register." ;;
     esac
   else
     say ""
-    say "To register Ajiya with your coding agents, run: ajiya mcp install --all"
+    say "To register Ajiya with your coding agents, run: ajiya mcp install"
   fi
 }
 
