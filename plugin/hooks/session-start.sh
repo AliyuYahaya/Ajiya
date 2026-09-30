@@ -3,7 +3,12 @@
 # session's context.
 #   no ajiya.toml in the project    -> print nothing
 #   ajiya.toml but no ajiya binary  -> print the install line, nothing else
-#   otherwise                       -> print 'ajiya status --brief'
+#   otherwise                       -> print 'ajiya status --brief', then one line
+#                                      saying to run 'ajiya mcp install' when Ajiya
+#                                      is not registered with Claude Code (asked of
+#                                      the binary: 'ajiya mcp status --claude --quiet'
+#                                      exits 1 for "not registered"; any other
+#                                      answer, including an older ajiya, adds nothing)
 # Every other failure is silent: a broken hook must never disturb a session.
 
 # On Windows (Git Bash) session-start.ps1 does this job; exit so it does not run twice.
@@ -18,4 +23,8 @@ if ! command -v ajiya >/dev/null 2>&1; then
 fi
 
 ajiya status --brief 2>/dev/null
+ajiya mcp status --claude --quiet >/dev/null 2>&1
+if [ "$?" = 1 ]; then
+  echo "Ajiya is not registered with Claude Code, so a session cannot use its tools. Register it with: ajiya mcp install --claude"
+fi
 exit 0

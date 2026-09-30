@@ -9,7 +9,7 @@
     {
       "name": "ajiya",
       "source": "./plugin",
-      "description": "The Ajiya skill, the ajiya MCP server and a session-start status line"
+      "description": "The Ajiya skill and a session-start status line"
     }
   ]
 }

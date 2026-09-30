@@ -178,14 +178,36 @@ func undoCommand(registered []agents.Agent, scope agents.Scope) string {
 
 func runMCPStatus(e *env, args []string) error {
 	fs := newFlags("mcp status")
+	claude := fs.Bool("claude", false, "only Claude Code")
+	codex := fs.Bool("codex", false, "only Codex")
+	cursor := fs.Bool("cursor", false, "only Cursor")
+	quiet := fs.Bool("quiet", false, "print nothing; exit 0 if Ajiya is registered (either scope) with every agent named, 1 if not, 2 if a config cannot be read (needs an agent flag)")
 	if _, err := parse(fs, args, 0); err != nil {
 		return err
+	}
+	var named []agents.Agent
+	for _, x := range []struct {
+		on bool
+		a  agents.Agent
+	}{{*claude, agents.Claude}, {*codex, agents.Codex}, {*cursor, agents.Cursor}} {
+		if x.on {
+			named = append(named, x.a)
+		}
+	}
+	if *quiet && len(named) == 0 {
+		return usageErr("--quiet needs an agent: --claude, --codex or --cursor")
 	}
 	ae, err := e.agentEnv()
 	if err != nil {
 		return err
 	}
+	if *quiet {
+		return quietStatus(ae, named)
+	}
 	found := ae.Detect()
+	if len(named) > 0 {
+		found = named // asked for by name: report it even if it is not detected
+	}
 	if len(found) == 0 {
 		fmt.Fprintln(e.stdout, "No supported agent found on this machine (Claude Code, Codex, Cursor).")
 		return nil
@@ -214,6 +236,27 @@ func runMCPStatus(e *env, args []string) error {
 	w.Flush()
 	if missing > 0 {
 		fmt.Fprintf(e.stdout, "\nRegister with: %s\n", installHint(ae, found))
+	}
+	return nil
+}
+
+// quietStatus is 'mcp status --quiet': no output, the answer is the exit code.
+// 0 means every named agent has Ajiya registered at user or project scope, 1
+// means one does not, 2 means a config could not be read (so a caller such as
+// the plugin's session-start hook does not guess).
+func quietStatus(ae *agents.Env, named []agents.Agent) error {
+	for _, a := range named {
+		ok := false
+		for _, s := range []agents.Scope{agents.User, agents.Project} {
+			st, err := ae.Status(a, s)
+			if err != nil {
+				return silent(ExitUsage)
+			}
+			ok = ok || st == agents.Registered
+		}
+		if !ok {
+			return silent(ExitRefused)
+		}
 	}
 	return nil
 }

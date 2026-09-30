@@ -42,9 +42,10 @@ go install github.com/AliyuYahaya/Ajiya/cmd/ajiya@latest
 This puts `ajiya` in `$(go env GOPATH)/bin`; make sure that folder is on your
 `PATH`. Release binaries and a Homebrew cask come with the first release.
 
-Claude Code users can also add the plugin (skill, MCP server and a session-start
+Claude Code users can also add the plugin (skill and a session-start
 status line): `/plugin marketplace add AliyuYahaya/Ajiya`, then
-`/plugin install ajiya@ajiya`. See [plugin/README.md](plugin/README.md).
+`/plugin install ajiya@ajiya`. The plugin does not register the MCP server; run
+`ajiya mcp install` for that. See [plugin/README.md](plugin/README.md).
 
 Cursor users: [![Add to Cursor](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/install-mcp?name=ajiya&config=eyJjb21tYW5kIjoiYWppeWEiLCJhcmdzIjpbIm1jcCJdfQ%3D%3D) adds the `ajiya mcp` server (`ajiya` must be on your `PATH`).
 
