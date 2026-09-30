@@ -29,13 +29,30 @@ window.AJIYA = {
       ],
       "required": {
         "total": 74,
-        "done": 73,
+        "done": 74,
         "in_progress": 0,
-        "pending": 1,
+        "pending": 0,
         "dropped": 0
       },
-      "percent": 98,
-      "ready": 1
+      "percent": 100,
+      "ready": 0
+    },
+    {
+      "name": "v0-2-1",
+      "targets": [
+        "AJ-0098",
+        "AJ-0099",
+        "AJ-0100"
+      ],
+      "required": {
+        "total": 77,
+        "done": 74,
+        "in_progress": 0,
+        "pending": 3,
+        "dropped": 0
+      },
+      "percent": 96,
+      "ready": 3
     },
     {
       "name": "v0-3",
@@ -44,12 +61,12 @@ window.AJIYA = {
       ],
       "required": {
         "total": 84,
-        "done": 73,
+        "done": 74,
         "in_progress": 0,
-        "pending": 11,
+        "pending": 10,
         "dropped": 0
       },
-      "percent": 86,
+      "percent": 88,
       "ready": 1
     },
     {
@@ -59,12 +76,12 @@ window.AJIYA = {
       ],
       "required": {
         "total": 83,
-        "done": 73,
+        "done": 74,
         "in_progress": 0,
-        "pending": 10,
+        "pending": 9,
         "dropped": 0
       },
-      "percent": 87,
+      "percent": 89,
       "ready": 1
     }
   ],
@@ -88,13 +105,13 @@ window.AJIYA = {
       "title": "Apps-launch",
       "goal": "Apps are detected and managed, launch readiness is defined, and every check in the spec runs",
       "counts": {
-        "total": 14,
+        "total": 15,
         "done": 14,
         "in_progress": 0,
-        "pending": 0,
+        "pending": 1,
         "dropped": 0
       },
-      "percent": 100,
+      "percent": 93,
       "milestone": "v0-1"
     },
     {
@@ -116,13 +133,13 @@ window.AJIYA = {
       "title": "Onboarding",
       "goal": "A new or existing project can be set up by an agent using only the installed kit and importers",
       "counts": {
-        "total": 17,
+        "total": 18,
         "done": 17,
         "in_progress": 0,
-        "pending": 0,
+        "pending": 1,
         "dropped": 0
       },
-      "percent": 100,
+      "percent": 94,
       "milestone": "v0-1"
     },
     {
@@ -144,13 +161,13 @@ window.AJIYA = {
       "title": "Agent-access",
       "goal": "Agents read and change the plan through ajiya status and an MCP server they register with in one step",
       "counts": {
-        "total": 6,
+        "total": 7,
         "done": 6,
         "in_progress": 0,
-        "pending": 0,
+        "pending": 1,
         "dropped": 0
       },
-      "percent": 100,
+      "percent": 85,
       "milestone": "v0-2"
     },
     {
@@ -159,12 +176,12 @@ window.AJIYA = {
       "goal": "Ajiya installs in one step, with a Claude Code plugin",
       "counts": {
         "total": 24,
-        "done": 23,
+        "done": 24,
         "in_progress": 0,
-        "pending": 1,
+        "pending": 0,
         "dropped": 0
       },
-      "percent": 95,
+      "percent": 100,
       "milestone": "v0-2"
     },
     {
@@ -187,10 +204,10 @@ window.AJIYA = {
       "name": "ajiya",
       "path": ".",
       "counts": {
-        "total": 97,
-        "done": 85,
+        "total": 100,
+        "done": 86,
         "in_progress": 0,
-        "pending": 12,
+        "pending": 14,
         "dropped": 0
       }
     }
@@ -1385,17 +1402,22 @@ window.AJIYA = {
         "AJ-0097"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending · Needs a human: final sign-off before publishing v0.2",
-        "human": "final sign-off before publishing v0.2"
+        "state": "done",
+        "text": "🟩 Done · by Aliyu Yahaya · 2026-09-30 · Note: v0.2 signed off by the maintainer: rc.4 rehearsal (signed, notarised, npm next, installs in test-app); MCP walkthrough in a fresh repo planned and finished a ticket through MCP tools in 34s; clean-account run not done",
+        "note": "v0.2 signed off by the maintainer: rc.4 rehearsal (signed, notarised, npm next, installs in test-app); MCP walkthrough in a fresh repo planned and finished a ticket through MCP tools in 34s; clean-account run not done",
+        "by": "Aliyu Yahaya",
+        "date": "2026-09-30"
       },
       "milestone": "v0-2",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
-        "AJ-0048"
+        "AJ-0048",
+        "AJ-0098",
+        "AJ-0099",
+        "AJ-0100"
       ],
-      "unblocks": 11
+      "unblocks": 0
     },
     {
       "id": "AJ-0048",
@@ -1411,10 +1433,8 @@ window.AJIYA = {
         "text": "🟥 Pending"
       },
       "milestone": "v0-3",
-      "ready": false,
-      "waiting_on": [
-        "AJ-0047"
-      ],
+      "ready": true,
+      "waiting_on": [],
       "dependants": [
         "AJ-0049",
         "AJ-0050",
@@ -2653,10 +2673,70 @@ window.AJIYA = {
         "AJ-0047"
       ],
       "unblocks": 0
+    },
+    {
+      "id": "AJ-0098",
+      "phase": "agent-access",
+      "app": "ajiya",
+      "title": "ticket done reminds to commit the plan change",
+      "done_when": "After ticket done (CLI and the ajiya_ticket_done MCP tool) changes files in ajiya/, the output ends with one line saying to commit them with the trailer 'Ajiya: \u003cID\u003e'; tests cover the CLI and MCP output",
+      "depends": [
+        "AJ-0047"
+      ],
+      "status": {
+        "state": "pending",
+        "text": "🟥 Pending"
+      },
+      "milestone": "v0-2-1",
+      "ready": true,
+      "waiting_on": [],
+      "dependants": [],
+      "unblocks": 0
+    },
+    {
+      "id": "AJ-0099",
+      "phase": "apps-launch",
+      "app": "ajiya",
+      "title": "app add quotes the path it registered",
+      "done_when": "ajiya app add prints the registered path unambiguously (e.g. Registered app cli at `.`), so a path of . no longer reads as '..'; tests cover . and a nested path",
+      "depends": [
+        "AJ-0047"
+      ],
+      "status": {
+        "state": "pending",
+        "text": "🟥 Pending"
+      },
+      "milestone": "v0-2-1",
+      "ready": true,
+      "waiting_on": [],
+      "dependants": [],
+      "unblocks": 0
+    },
+    {
+      "id": "AJ-0100",
+      "phase": "onboarding",
+      "app": "ajiya",
+      "title": "Guide: other trailers can share the Ajiya paragraph",
+      "done_when": "The daily guide and the agent block say that Co-Authored-By and other trailers may sit in the same last paragraph as the Ajiya trailer (git reads them all), with a short example; the repository's kit is refreshed with ajiya init",
+      "depends": [
+        "AJ-0047"
+      ],
+      "status": {
+        "state": "pending",
+        "text": "🟥 Pending"
+      },
+      "milestone": "v0-2-1",
+      "ready": true,
+      "waiting_on": [],
+      "dependants": [],
+      "unblocks": 0
     }
   ],
   "next": [
-    "AJ-0047"
+    "AJ-0098",
+    "AJ-0099",
+    "AJ-0100",
+    "AJ-0048"
   ],
   "checks": [],
   "activity": [
