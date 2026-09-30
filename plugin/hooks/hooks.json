@@ -1,0 +1,17 @@
+{
+  "description": "Show the Ajiya project state at the start of every session",
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh",
+            "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/session-start.sh"],
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}

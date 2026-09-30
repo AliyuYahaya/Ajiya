@@ -42,6 +42,10 @@ go install github.com/AliyuYahaya/Ajiya/cmd/ajiya@latest
 This puts `ajiya` in `$(go env GOPATH)/bin`; make sure that folder is on your
 `PATH`. Release binaries and a Homebrew cask come with the first release.
 
+Claude Code users can also add the plugin (skill, MCP server and a session-start
+status line): `/plugin marketplace add AliyuYahaya/Ajiya`, then
+`/plugin install ajiya@ajiya`. See [plugin/README.md](plugin/README.md).
+
 ## Walkthrough: a new project
 
 Start in an empty folder, or a fresh repository:

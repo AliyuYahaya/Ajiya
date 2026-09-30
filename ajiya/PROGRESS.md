@@ -8,9 +8,9 @@ Generated 2026-09-30.
 | Milestone | Closed | Required | % | Can start now |
 |---|---|---|---|---|
 | v0-1 | 37 | 37 | 100% | 0 |
-| v0-2 | 56 | 68 | 82% | 2 |
-| v0-3 | 56 | 78 | 71% | 2 |
-| after-v0-3 | 56 | 77 | 72% | 2 |
+| v0-2 | 57 | 68 | 83% | 1 |
+| v0-3 | 57 | 78 | 73% | 1 |
+| after-v0-3 | 57 | 77 | 74% | 1 |
 
 ## Phases
 
@@ -22,18 +22,17 @@ Generated 2026-09-30.
 | Onboarding | 17 | 0 | 0 | 17 | 100% | v0-1 |
 | Release | 5 | 0 | 0 | 5 | 100% | v0-1 |
 | Agent-access | 2 | 0 | 1 | 3 | 66% | v0-2 |
-| Install | 10 | 0 | 11 | 21 | 47% | v0-2 |
+| Install | 11 | 0 | 10 | 21 | 52% | v0-2 |
 | Decisions-and-changes | 0 | 0 | 11 | 11 | 0% | v0-3 |
 
 ## Can start now
 
 - **AJ-0044** ajiya mcp install, uninstall and status (ajiya) · v0-2
-- **AJ-0046** Claude Code plugin (ajiya) · v0-2
 
 ## Waiting
 
 - **AJ-0045** install.sh for macOS and Linux (ajiya) waits on AJ-0044
-- **AJ-0047** v0.2 definition of done (ajiya) waits on AJ-0044, AJ-0045, AJ-0046, AJ-0082
+- **AJ-0047** v0.2 definition of done (ajiya) waits on AJ-0044, AJ-0045, AJ-0082
 - **AJ-0048** Tags column (ajiya) waits on AJ-0047
 - **AJ-0049** ajiya ticket files (ajiya) waits on AJ-0048
 - **AJ-0050** Decision records and commands (ajiya) waits on AJ-0048

@@ -1,0 +1,15 @@
+{
+  "name": "ajiya",
+  "description": "Ajiya: plans, tickets and proof for AI-assisted work",
+  "owner": {
+    "name": "Aliyu Yahaya",
+    "url": "https://github.com/AliyuYahaya"
+  },
+  "plugins": [
+    {
+      "name": "ajiya",
+      "source": "./plugin",
+      "description": "The Ajiya skill, the ajiya MCP server and a session-start status line"
+    }
+  ]
+}
