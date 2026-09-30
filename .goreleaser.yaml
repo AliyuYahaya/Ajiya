@@ -68,6 +68,9 @@ changelog:
 
 release:
   draft: true
+  # Tags such as v0.2.0-rc.1 are published as pre-releases, so they never
+  # become the "latest" release the install scripts download.
+  prerelease: auto
 
 # Homebrew cask for the tap AliyuYahaya/homebrew-tap.
 # skip_upload: true makes GoReleaser only WRITE the cask (dist/homebrew/Casks/
