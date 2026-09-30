@@ -29,13 +29,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 72,
-        "done": 58,
+        "done": 60,
         "in_progress": 0,
-        "pending": 14,
+        "pending": 12,
         "dropped": 0
       },
-      "percent": 80,
-      "ready": 7
+      "percent": 83,
+      "ready": 5
     },
     {
       "name": "v0-3",
@@ -44,13 +44,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 82,
-        "done": 58,
+        "done": 60,
         "in_progress": 0,
-        "pending": 24,
+        "pending": 22,
         "dropped": 0
       },
-      "percent": 70,
-      "ready": 7
+      "percent": 73,
+      "ready": 5
     },
     {
       "name": "after-v0-3",
@@ -59,13 +59,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 81,
-        "done": 58,
+        "done": 60,
         "in_progress": 0,
-        "pending": 23,
+        "pending": 21,
         "dropped": 0
       },
-      "percent": 71,
-      "ready": 7
+      "percent": 74,
+      "ready": 5
     }
   ],
   "phases": [
@@ -145,12 +145,12 @@ window.AJIYA = {
       "goal": "Agents read and change the plan through ajiya status and an MCP server they register with in one step",
       "counts": {
         "total": 5,
-        "done": 3,
+        "done": 5,
         "in_progress": 0,
-        "pending": 2,
+        "pending": 0,
         "dropped": 0
       },
-      "percent": 60,
+      "percent": 100,
       "milestone": "v0-2"
     },
     {
@@ -188,9 +188,9 @@ window.AJIYA = {
       "path": ".",
       "counts": {
         "total": 95,
-        "done": 70,
+        "done": 72,
         "in_progress": 0,
-        "pending": 25,
+        "pending": 23,
         "dropped": 0
       }
     }
@@ -1388,9 +1388,7 @@ window.AJIYA = {
         "AJ-0045",
         "AJ-0082",
         "AJ-0092",
-        "AJ-0093",
-        "AJ-0094",
-        "AJ-0095"
+        "AJ-0093"
       ],
       "dependants": [
         "AJ-0048"
@@ -2549,16 +2547,19 @@ window.AJIYA = {
         "AJ-0044"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · 4e223ae · 2026-09-30 · tests passed",
+        "commit": "4e223ae",
+        "date": "2026-09-30",
+        "tests_passed": true
       },
       "milestone": "v0-2",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0047"
       ],
-      "unblocks": 12
+      "unblocks": 0
     },
     {
       "id": "AJ-0095",
@@ -2570,16 +2571,19 @@ window.AJIYA = {
         "AJ-0044"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · 6e41253 · 2026-09-30 · tests passed",
+        "commit": "6e41253",
+        "date": "2026-09-30",
+        "tests_passed": true
       },
       "milestone": "v0-2",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0047"
       ],
-      "unblocks": 12
+      "unblocks": 0
     }
   ],
   "next": [
@@ -2587,12 +2591,74 @@ window.AJIYA = {
     "AJ-0073",
     "AJ-0077",
     "AJ-0092",
-    "AJ-0093",
-    "AJ-0094",
-    "AJ-0095"
+    "AJ-0093"
   ],
   "checks": [],
   "activity": [
+    {
+      "hash": "d72350f08b125ebab7e0d970c9dd95c6cc0a47f6",
+      "short": "d72350f",
+      "date": "2026-09-30",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Mark AJ-0094 and AJ-0095 done",
+      "refs": [
+        "AJ-0094",
+        "AJ-0095"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0094",
+          "phase": "agent-access",
+          "from": "pending",
+          "to": "done",
+          "text": "🟩 Done · 4e223ae · 2026-09-30 · tests passed"
+        },
+        {
+          "id": "AJ-0095",
+          "phase": "agent-access",
+          "from": "pending",
+          "to": "done",
+          "text": "🟩 Done · 6e41253 · 2026-09-30 · tests passed"
+        }
+      ],
+      "time": 1790784700
+    },
+    {
+      "hash": "6e41253fa0a9b29a132e613b29b188ff7c29222f",
+      "short": "6e41253",
+      "date": "2026-09-30",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "mcp install honours CLAUDE_CONFIG_DIR",
+      "refs": [
+        "AJ-0095"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790784660
+    },
+    {
+      "hash": "4e223aead012d3929db3aec8b7aa4b39ee6aa860",
+      "short": "4e223ae",
+      "date": "2026-09-30",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Detect a real terminal, not just a character device",
+      "refs": [
+        "AJ-0094"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790784522
+    },
     {
       "hash": "0a18e51c797896eee1dbefb0abdcf7256ccf438b",
       "short": "0a18e51",
