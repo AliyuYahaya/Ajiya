@@ -17,6 +17,6 @@ require (
 
 require (
 	github.com/rogpeppe/go-internal v1.16.0
-	golang.org/x/sys v0.41.0 // indirect
+	golang.org/x/sys v0.41.0
 	golang.org/x/tools v0.42.0 // indirect
 )
