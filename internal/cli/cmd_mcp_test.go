@@ -27,7 +27,7 @@ func mcpConnect(t *testing.T, cwd, fixed string, roots ...string) *mcp.ClientSes
 	t.Cleanup(func() { ss.Close() })
 	client := mcp.NewClient(&mcp.Implementation{Name: "test", Version: "1"}, nil)
 	for _, r := range roots {
-		client.AddRoots(&mcp.Root{URI: "file://" + filepath.ToSlash(r)})
+		client.AddRoots(&mcp.Root{URI: fileURI(r)})
 	}
 	// Protocol 2026-07-28 deprecates roots (a server may not ask for them), so a
 	// client that sends roots is tested on the version that still has them.
@@ -340,4 +340,28 @@ func mkSub(t *testing.T, dir string) string {
 		t.Fatal(err)
 	}
 	return sub
+}
+
+func TestFileURIPath(t *testing.T) {
+	for _, tt := range []struct{ uri, want string }{
+		{"file:///home/me/proj", "/home/me/proj"},
+		{"file://localhost/home/me", "/home/me"},
+		{"file:///C:/Users/me/proj", "C:/Users/me/proj"},
+		{"file://C:/Users/me/proj", "C:/Users/me/proj"},
+		{"file:///home/me/my%20proj", "/home/me/my proj"},
+	} {
+		got, ok := fileURIPath(tt.uri)
+		if !ok || got != filepath.FromSlash(tt.want) {
+			t.Errorf("fileURIPath(%q) = %q, %v; want %q", tt.uri, got, ok, filepath.FromSlash(tt.want))
+		}
+	}
+	for _, bad := range []string{"https://x/y", "file://server/share/x", "::"} {
+		if _, ok := fileURIPath(bad); ok {
+			t.Errorf("fileURIPath(%q) accepted", bad)
+		}
+	}
+	dir := t.TempDir()
+	if got, ok := fileURIPath(fileURI(dir)); !ok || got != dir {
+		t.Errorf("round trip of %q gave %q", dir, got)
+	}
 }

@@ -415,14 +415,42 @@ func clientRoots(ctx context.Context, sess *mcp.ServerSession) []string {
 	}
 	var dirs []string
 	for _, r := range res.Roots {
-		u, err := url.Parse(r.URI)
-		if err != nil || u.Scheme != "file" {
+		p, ok := fileURIPath(r.URI)
+		if !ok {
 			continue
 		}
-		p := filepath.FromSlash(u.Path)
 		if st, err := os.Stat(p); err == nil && st.IsDir() {
 			dirs = append(dirs, p)
 		}
 	}
 	return dirs
+}
+
+// fileURIPath turns a file:// URI into a local path. On Windows a URI such as
+// file:///C:/Users/x has the path /C:/Users/x, so the slash before the drive
+// letter is dropped; file://C:/Users/x (drive in the host part) is accepted too.
+func fileURIPath(uri string) (string, bool) {
+	u, err := url.Parse(uri)
+	if err != nil || u.Scheme != "file" {
+		return "", false
+	}
+	p := u.Path
+	if len(u.Host) == 2 && u.Host[1] == ':' { // file://C:/x
+		p = u.Host + p
+	} else if u.Host != "" && u.Host != "localhost" {
+		return "", false // a network share is not a local folder
+	}
+	if len(p) >= 3 && p[0] == '/' && p[2] == ':' { // /C:/x
+		p = p[1:]
+	}
+	return filepath.FromSlash(p), p != ""
+}
+
+// fileURI is the file:// URI for a local absolute path (file:///C:/x on Windows).
+func fileURI(path string) string {
+	p := filepath.ToSlash(path)
+	if !strings.HasPrefix(p, "/") {
+		p = "/" + p
+	}
+	return (&url.URL{Scheme: "file", Path: p}).String()
 }
