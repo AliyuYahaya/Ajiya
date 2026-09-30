@@ -53,3 +53,63 @@ jobs:
           go-version-file: go.mod
       - run: go build -o "$RUNNER_TEMP/ajiya" ./cmd/ajiya
       - run: '"$RUNNER_TEMP/ajiya" check --commits "$RULE_START^..HEAD"'
+
+  # The install scripts (AJ-0074), proved against a GoReleaser snapshot served
+  # from a local HTTP server: no network, nothing published, no secrets.
+  # install.sh runs under sh, bash and dash; install.ps1 under PowerShell 7 and
+  # Windows PowerShell 5.1. Each test includes a tampered archive that must be
+  # refused. The Windows tests edit the runner's user PATH and put it back.
+  installers:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0 # the snapshot version comes from the tags
+      - uses: actions/setup-go@v7
+        with:
+          go-version-file: go.mod
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.x"
+
+      # Lint first: cheap, and it does not need the snapshot.
+      - name: shellcheck
+        if: runner.os == 'Linux'
+        run: shellcheck scripts/install.sh scripts/test-install.sh
+      - name: PSScriptAnalyzer
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          Install-Module PSScriptAnalyzer -Scope CurrentUser -Force
+          $results = Invoke-ScriptAnalyzer -Path scripts/install.ps1, scripts/test-install.ps1
+          $results | Format-Table RuleName, Severity, ScriptName, Line, Message -AutoSize -Wrap | Out-String -Width 200 | Write-Host
+          $errors = @($results | Where-Object Severity -eq 'Error')
+          Write-Host "$($errors.Count) error(s), $(@($results | Where-Object Severity -eq 'Warning').Count) warning(s)"
+          if ($errors.Count -gt 0) { exit 1 }
+
+      - uses: goreleaser/goreleaser-action@v7
+        with:
+          version: "~> v2"
+          args: release --snapshot --clean
+        env:
+          HOMEBREW_TAP_TOKEN: unused # only lets the token template resolve
+
+      - name: install.sh under sh, bash and dash
+        if: runner.os != 'Windows'
+        run: |
+          if [ "$RUNNER_OS" = Linux ]; then sudo apt-get install -y dash; fi
+          shells="sh bash"
+          if command -v dash >/dev/null 2>&1; then shells="$shells dash"; fi
+          TEST_SHELLS="$shells" sh scripts/test-install.sh
+      - name: install.ps1 under PowerShell 7
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: pwsh -NoProfile -File scripts/test-install.ps1
+      - name: install.ps1 under Windows PowerShell 5.1
+        if: runner.os == 'Windows'
+        shell: powershell
+        run: powershell -NoProfile -File scripts/test-install.ps1
