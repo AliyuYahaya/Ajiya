@@ -2494,6 +2494,60 @@ window.AJIYA = {
   "checks": [],
   "activity": [
     {
+      "hash": "10744eb2d8da14cf1d0c060a968aaa6ad2e05d36",
+      "short": "10744eb",
+      "date": "2026-09-30",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Merge branch 'worktree-agent-afb56f2355d7544c5' into worktree-agent-a658cbd8dac8f5d6c",
+      "refs": [],
+      "chore": false,
+      "merge": true,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790783950
+    },
+    {
+      "hash": "7f2e26bdcc6362eca8e2239265489f433558c3a0",
+      "short": "7f2e26b",
+      "date": "2026-09-30",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Mark AJ-0044 done",
+      "refs": [
+        "AJ-0044"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0044",
+          "phase": "agent-access",
+          "from": "pending",
+          "to": "done",
+          "text": "🟩 Done · 592adc8 · 2026-09-30 · tests passed"
+        }
+      ],
+      "time": 1790783700
+    },
+    {
+      "hash": "592adc8cf90cbbd593c0359785184a1179dd92b5",
+      "short": "592adc8",
+      "date": "2026-09-30",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Add ajiya mcp install, uninstall and status",
+      "refs": [
+        "AJ-0044"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790783691
+    },
+    {
       "hash": "97cc7336dc6a7deb9d7d8b126373c10819fce3fd",
       "short": "97cc733",
       "date": "2026-09-30",

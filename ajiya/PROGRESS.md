@@ -60,6 +60,10 @@ Generated 2026-09-30.
 
 ## Recent activity
 
+- 2026-09-30 `10744eb` Merge branch 'worktree-agent-afb56f2355d7544c5' into worktree-agent-a658cbd8dac8f5d6c (-)
+- 2026-09-30 `7f2e26b` Mark AJ-0044 done (AJ-0044)
+  - AJ-0044: pending → done
+- 2026-09-30 `592adc8` Add ajiya mcp install, uninstall and status (AJ-0044)
 - 2026-09-30 `97cc733` Merge branch 'worktree-agent-af05af07a9f264de4' into worktree-agent-a658cbd8dac8f5d6c (-)
 - 2026-09-30 `c46c998` Mark AJ-0046 done, rebuild plan outputs (AJ-0046)
   - AJ-0046: pending → done
@@ -79,10 +83,7 @@ Generated 2026-09-30.
   - AJ-0043: pending → in_progress
 - 2026-09-30 `86e4905` Start npm trusted publishing (AJ-0080)
   - AJ-0080: pending → in_progress
-- 2026-09-30 `df94ea7` Add the official MCP Go SDK (maintainer approved) and ajiya mcp server (AJ-0043)
-- 2026-09-30 `07d20ef` Ignore a local Secrets/ folder (chore)
-- 2026-09-30 `512ed80` Merge branch 'worktree-agent-af2ca0983410d8aed' into worktree-agent-a658cbd8dac8f5d6c (-)
-- and 169 more in data.js
+- and 172 more in data.js
 
 ## Checks
 
