@@ -1,17 +1,40 @@
 name: release
 
-# Two jobs, never both on the same event:
+# Jobs:
 #   release:  a pushed v* tag builds everything and creates a DRAFT release.
 #   snapshot: pull requests (and manual runs) build the same archives without
 #             publishing anything, to catch a broken release config early.
-# Making a draft public, and the Homebrew tap upload, are gated elsewhere (later
-# tickets). Nothing in this file publishes a release or touches the tap.
+#   npm, tap: gated publish jobs, described below.
+#
+# npm and tap run in GitHub environments (npm-release, homebrew-release) that
+# require the maintainer's approval and deploy only from v* tags, so nothing is
+# published until the maintainer clicks Approve. Making the draft release public
+# stays a manual step too.
+#
+# Ordering (one design, no release:published trigger): the maintainer
+#   1. reviews the DRAFT release and publishes it (installs download from it),
+#   2. then approves the npm and tap jobs, which wait in the queue meanwhile.
+# Approval is the only trigger. A release:published workflow would be a
+# separate run with no dist artifact, and it would run on the release event,
+# not on the tag, so the environments' v* tag rule would refuse it.
+#
+# Rehearsal: run this workflow by hand (Run workflow) with a v* TAG selected as
+# the ref, not a branch, or the environments refuse the deploy. dry_run (default
+# true) builds a snapshot, reaches both gates and, once approved, does
+# everything except the real publish: `npm publish --dry-run`, and the cask diff
+# printed instead of pushed. A manual run can never publish for real: with
+# dry_run false the publish jobs are skipped.
 
 on:
   push:
     tags: ["v*"]
   pull_request:
   workflow_dispatch:
+    inputs:
+      dry_run:
+        description: Rehearse the npm and tap jobs without publishing (real publishes come only from a pushed tag)
+        type: boolean
+        default: true
 
 # Read-only unless a job asks for more.
 permissions:
@@ -22,6 +45,9 @@ jobs:
   release:
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
+    # Holds the Apple signing and notarisation secrets; the environment requires
+    # approval and deploys only from v* tags.
+    environment: release
     permissions:
       contents: write # create the draft release and upload its assets
     steps:
@@ -45,13 +71,20 @@ jobs:
       - uses: goreleaser/goreleaser-action@v7
         with:
           version: "~> v2"
-          args: release --clean --skip=homebrew --release-notes notes.md
+          args: release --clean --release-notes notes.md
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # Homebrew upload stays off: --skip=homebrew above (skip_upload is auto
-          # in .goreleaser.yaml). The placeholder only lets its token resolve.
-          # The gated tap job (AJ-0079) will drop the flag.
+          # GoReleaser writes the cask but never pushes it (skip_upload: true in
+          # .goreleaser.yaml); the gated tap job does. The placeholder only lets
+          # the token template resolve.
           HOMEBREW_TAP_TOKEN: unused
+          # Signing and notarisation of the darwin binaries: notarize.macos in
+          # .goreleaser.yaml turns on when MACOS_SIGN_P12 is set.
+          MACOS_SIGN_P12: ${{ secrets.MACOS_SIGN_P12 }}
+          MACOS_SIGN_PASSWORD: ${{ secrets.MACOS_SIGN_PASSWORD }}
+          MACOS_NOTARY_KEY: ${{ secrets.MACOS_NOTARY_KEY }}
+          MACOS_NOTARY_KEY_ID: ${{ secrets.MACOS_NOTARY_KEY_ID }}
+          MACOS_NOTARY_ISSUER_ID: ${{ secrets.MACOS_NOTARY_ISSUER_ID }}
       - uses: actions/upload-artifact@v7
         with:
           name: dist
@@ -74,8 +107,132 @@ jobs:
         with:
           version: "~> v2"
           args: release --snapshot --clean
+        env:
+          HOMEBREW_TAP_TOKEN: unused
       - uses: actions/upload-artifact@v7
         with:
           name: dist-snapshot
           path: dist/
           if-no-files-found: error
+
+  # Gated npm publish. Runs after a real release (tag push) or, for a rehearsal,
+  # after a manual run's snapshot. Waits for approval in npm-release.
+  # Trusted publishing: no npm token; npm exchanges the job's OIDC identity
+  # (workflow release.yml + environment npm-release) for a publish credential.
+  npm:
+    needs: [release, snapshot]
+    if: >-
+      !cancelled() && (
+        (github.event_name == 'push' && needs.release.result == 'success') ||
+        (github.event_name == 'workflow_dispatch' && inputs.dry_run && needs.snapshot.result == 'success')
+      )
+    runs-on: ubuntu-latest
+    environment: npm-release
+    permissions:
+      contents: read
+      id-token: write # trusted publishing and provenance
+    env:
+      DRY_RUN: ${{ github.event_name == 'push' && 'false' || 'true' }}
+      DIST: ${{ github.event_name == 'push' && 'dist' || 'dist-snapshot' }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/download-artifact@v7
+        with:
+          name: ${{ env.DIST }}
+          path: dist
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "24" # trusted publishing needs Node >= 22.14
+          registry-url: https://registry.npmjs.org
+          package-manager-cache: false
+      - name: Use npm 11.5.1 or later
+        run: |
+          npm install -g 'npm@^11.5.1'
+          npm --version
+      - name: Build the packages
+        run: |
+          # The version is whatever GoReleaser built (the tag without its v).
+          version=$(node -p "require('./dist/metadata.json').version")
+          echo "VERSION=$version" >> "$GITHUB_ENV"
+          node npm/build.mjs dist "$version" --check
+      - name: Publish
+        run: |
+          # Prereleases (0.2.0-rc.1) go to the next tag, never to latest.
+          case "$VERSION" in
+            *-*) tag=next ;;
+            *) tag=latest ;;
+          esac
+          flags=(--access public --provenance --tag "$tag")
+          if [ "$DRY_RUN" = true ]; then flags+=(--dry-run); fi
+          echo "publishing $VERSION with dist-tag $tag (dry run: $DRY_RUN)"
+          # The six platform packages first, so @ajiya/cli never points at a
+          # package that is not there yet; the wrapper last.
+          for dir in darwin-arm64 darwin-x64 linux-arm64 linux-x64 win32-arm64 win32-x64 cli; do
+            name=$(node -p "require('./npm/dist/$dir/package.json').name")
+            # A re-run after a partial publish skips what is already there.
+            if [ "$DRY_RUN" != true ] && npm view "$name@$VERSION" version >/dev/null 2>&1; then
+              echo "$name@$VERSION is already published, skipping"
+              continue
+            fi
+            (cd "npm/dist/$dir" && npm publish "${flags[@]}")
+          done
+
+  # Gated Homebrew tap update. Waits for approval in homebrew-release. Commits
+  # the cask GoReleaser wrote to AliyuYahaya/homebrew-tap. Stable tags only: a
+  # prerelease (0.2.0-rc.1) never reaches the tap. Approve this only after the
+  # draft release is published, or `brew install` would 404 on the download.
+  tap:
+    needs: [release, snapshot]
+    if: >-
+      !cancelled() && (
+        (github.event_name == 'push' && needs.release.result == 'success') ||
+        (github.event_name == 'workflow_dispatch' && inputs.dry_run && needs.snapshot.result == 'success')
+      )
+    runs-on: ubuntu-latest
+    environment: homebrew-release
+    permissions:
+      contents: read
+    env:
+      DRY_RUN: ${{ github.event_name == 'push' && 'false' || 'true' }}
+      DIST: ${{ github.event_name == 'push' && 'dist' || 'dist-snapshot' }}
+    steps:
+      - uses: actions/download-artifact@v7
+        with:
+          name: ${{ env.DIST }}
+          path: dist
+      - name: Check out the tap
+        uses: actions/checkout@v7
+        with:
+          repository: AliyuYahaya/homebrew-tap
+          token: ${{ secrets.HOMEBREW_TAP_TOKEN }}
+          path: tap
+      - name: Update the cask
+        run: |
+          version=$(jq -r .version dist/metadata.json)
+          # A rehearsal builds a snapshot version (always "-snapshot"), so it
+          # shows the diff anyway; a real prerelease leaves the tap alone.
+          case "$version" in
+            *-*)
+              if [ "$DRY_RUN" != true ]; then
+                echo "$version is a prerelease: the tap is left alone"
+                exit 0
+              fi ;;
+          esac
+          mkdir -p tap/Casks
+          cp dist/homebrew/Casks/ajiya.rb tap/Casks/ajiya.rb
+          cd tap
+          git add -N Casks/ajiya.rb
+          git --no-pager diff -- Casks/ajiya.rb
+          if git diff --quiet -- Casks/ajiya.rb; then
+            echo "the cask is already up to date"
+            exit 0
+          fi
+          if [ "$DRY_RUN" = true ]; then
+            echo "dry run: not pushing"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add Casks/ajiya.rb
+          git commit -m "Brew cask update for ajiya version $version"
+          git push

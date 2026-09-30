@@ -30,8 +30,8 @@ window.AJIYA = {
       "required": {
         "total": 74,
         "done": 64,
-        "in_progress": 2,
-        "pending": 8,
+        "in_progress": 4,
+        "pending": 6,
         "dropped": 0
       },
       "percent": 86,
@@ -45,8 +45,8 @@ window.AJIYA = {
       "required": {
         "total": 84,
         "done": 64,
-        "in_progress": 2,
-        "pending": 18,
+        "in_progress": 4,
+        "pending": 16,
         "dropped": 0
       },
       "percent": 76,
@@ -60,8 +60,8 @@ window.AJIYA = {
       "required": {
         "total": 83,
         "done": 64,
-        "in_progress": 2,
-        "pending": 17,
+        "in_progress": 4,
+        "pending": 15,
         "dropped": 0
       },
       "percent": 77,
@@ -160,8 +160,8 @@ window.AJIYA = {
       "counts": {
         "total": 24,
         "done": 15,
-        "in_progress": 2,
-        "pending": 7,
+        "in_progress": 4,
+        "pending": 5,
         "dropped": 0
       },
       "percent": 62,
@@ -189,8 +189,8 @@ window.AJIYA = {
       "counts": {
         "total": 97,
         "done": 76,
-        "in_progress": 2,
-        "pending": 19,
+        "in_progress": 4,
+        "pending": 17,
         "dropped": 0
       }
     }
@@ -2188,8 +2188,8 @@ window.AJIYA = {
         "AJ-0077"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "in_progress",
+        "text": "🟨 In progress"
       },
       "milestone": "v0-2",
       "ready": true,
@@ -2314,8 +2314,8 @@ window.AJIYA = {
         "AJ-0083"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "in_progress",
+        "text": "🟨 In progress"
       },
       "milestone": "v0-2",
       "ready": true,

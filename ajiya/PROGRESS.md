@@ -22,14 +22,14 @@ Generated 2026-09-30.
 | Onboarding | 17 | 0 | 0 | 17 | 100% | v0-1 |
 | Release | 5 | 0 | 0 | 5 | 100% | v0-1 |
 | Agent-access | 5 | 0 | 1 | 6 | 83% | v0-2 |
-| Install | 15 | 2 | 7 | 24 | 62% | v0-2 |
+| Install | 15 | 4 | 5 | 24 | 62% | v0-2 |
 | Decisions-and-changes | 0 | 0 | 11 | 11 | 0% | v0-3 |
 
 ## Can start now
 
 - **AJ-0073** install.ps1 for Windows (ajiya) · v0-2 · in progress
-- **AJ-0079** Gated publish jobs (ajiya) · v0-2
-- **AJ-0084** Sign and notarise the macOS binaries (ajiya) · v0-2
+- **AJ-0079** Gated publish jobs (ajiya) · v0-2 · in progress
+- **AJ-0084** Sign and notarise the macOS binaries (ajiya) · v0-2 · in progress
 - **AJ-0096** Registering says how to undo it (ajiya) · v0-2
 - **AJ-0097** Plugin leaves MCP registration to ajiya mcp install (ajiya) · v0-2
 
