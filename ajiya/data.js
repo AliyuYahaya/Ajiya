@@ -29,13 +29,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 74,
-        "done": 68,
-        "in_progress": 2,
-        "pending": 4,
+        "done": 72,
+        "in_progress": 1,
+        "pending": 1,
         "dropped": 0
       },
-      "percent": 91,
-      "ready": 3
+      "percent": 97,
+      "ready": 1
     },
     {
       "name": "v0-3",
@@ -44,13 +44,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 84,
-        "done": 68,
-        "in_progress": 2,
-        "pending": 14,
+        "done": 72,
+        "in_progress": 1,
+        "pending": 11,
         "dropped": 0
       },
-      "percent": 80,
-      "ready": 3
+      "percent": 85,
+      "ready": 1
     },
     {
       "name": "after-v0-3",
@@ -59,13 +59,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 83,
-        "done": 68,
-        "in_progress": 2,
-        "pending": 13,
+        "done": 72,
+        "in_progress": 1,
+        "pending": 10,
         "dropped": 0
       },
-      "percent": 81,
-      "ready": 3
+      "percent": 86,
+      "ready": 1
     }
   ],
   "phases": [
@@ -159,12 +159,12 @@ window.AJIYA = {
       "goal": "Ajiya installs in one step, with a Claude Code plugin",
       "counts": {
         "total": 24,
-        "done": 18,
-        "in_progress": 2,
-        "pending": 4,
+        "done": 22,
+        "in_progress": 1,
+        "pending": 1,
         "dropped": 0
       },
-      "percent": 75,
+      "percent": 91,
       "milestone": "v0-2"
     },
     {
@@ -188,9 +188,9 @@ window.AJIYA = {
       "path": ".",
       "counts": {
         "total": 97,
-        "done": 80,
-        "in_progress": 2,
-        "pending": 15,
+        "done": 84,
+        "in_progress": 1,
+        "pending": 12,
         "dropped": 0
       }
     }
@@ -2166,16 +2166,20 @@ window.AJIYA = {
         "AJ-0073"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · 76c7805 · 2026-09-30 · tests passed · Note: v0.2.0-rc.4 release carries install.sh and install.ps1; install.sh from the release installed rc.4 in test-app",
+        "note": "v0.2.0-rc.4 release carries install.sh and install.ps1; install.sh from the release installed rc.4 in test-app",
+        "commit": "76c7805",
+        "date": "2026-09-30",
+        "tests_passed": true
       },
       "milestone": "v0-2",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0081"
       ],
-      "unblocks": 14
+      "unblocks": 0
     },
     {
       "id": "AJ-0079",
@@ -2190,16 +2194,20 @@ window.AJIYA = {
         "AJ-0077"
       ],
       "status": {
-        "state": "in_progress",
-        "text": "🟨 In progress"
+        "state": "done",
+        "text": "🟩 Done · eeccc95 · 2026-09-30 · tests passed · Note: rc.4 run 36775559939: approval gates, wait for publish, npm published 7 packages under next with provenance, tap left alone for a prerelease",
+        "note": "rc.4 run 36775559939: approval gates, wait for publish, npm published 7 packages under next with provenance, tap left alone for a prerelease",
+        "commit": "eeccc95",
+        "date": "2026-09-30",
+        "tests_passed": true
       },
       "milestone": "v0-2",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0081"
       ],
-      "unblocks": 14
+      "unblocks": 0
     },
     {
       "id": "AJ-0080",
@@ -2230,7 +2238,7 @@ window.AJIYA = {
       "phase": "install",
       "app": "ajiya",
       "title": "Release rehearsal on a release candidate",
-      "done_when": "A v0.2.0-rc tag produces a draft release, npm packages under the next dist-tag with provenance, and a tap pull request; nothing is public until the maintainer publishes",
+      "done_when": "A v0.2.0-rc tag creates a draft with release assets. The maintainer publishes it and approves the gated jobs; npm publishes the packages with provenance under next, and the Homebrew tap stays unchanged for prereleases. For tagged releases, publish jobs wait until the GitHub release is public.",
       "depends": [
         "AJ-0074",
         "AJ-0076",
@@ -2240,21 +2248,19 @@ window.AJIYA = {
         "AJ-0084"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending · Needs a human: publishing anything needs the maintainer's approval",
-        "human": "publishing anything needs the maintainer's approval"
+        "state": "done",
+        "text": "🟩 Done · by Aliyu Yahaya · 2026-09-30 · Note: v0.2.0-rc.4 rehearsal: maintainer approved release, published the pre-release, approved npm and tap; npm next=0.2.0-rc.4 installs and runs in test-app; binaries notarised",
+        "note": "v0.2.0-rc.4 rehearsal: maintainer approved release, published the pre-release, approved npm and tap; npm next=0.2.0-rc.4 installs and runs in test-app; binaries notarised",
+        "by": "Aliyu Yahaya",
+        "date": "2026-09-30"
       },
       "milestone": "v0-2",
       "ready": false,
-      "waiting_on": [
-        "AJ-0078",
-        "AJ-0079",
-        "AJ-0084"
-      ],
+      "waiting_on": [],
       "dependants": [
         "AJ-0082"
       ],
-      "unblocks": 13
+      "unblocks": 0
     },
     {
       "id": "AJ-0082",
@@ -2266,14 +2272,12 @@ window.AJIYA = {
         "AJ-0081"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "in_progress",
+        "text": "🟨 In progress"
       },
       "milestone": "v0-2",
-      "ready": false,
-      "waiting_on": [
-        "AJ-0081"
-      ],
+      "ready": true,
+      "waiting_on": [],
       "dependants": [
         "AJ-0047"
       ],
@@ -2315,16 +2319,20 @@ window.AJIYA = {
         "AJ-0083"
       ],
       "status": {
-        "state": "in_progress",
-        "text": "🟨 In progress"
+        "state": "done",
+        "text": "🟩 Done · eeccc95 · 2026-09-30 · tests passed · Note: rc.4 darwin amd64 and arm64: spctl install assessment accepted, source=Notarized Developer ID; macos-verify green; cask quarantine hook removed",
+        "note": "rc.4 darwin amd64 and arm64: spctl install assessment accepted, source=Notarized Developer ID; macos-verify green; cask quarantine hook removed",
+        "commit": "eeccc95",
+        "date": "2026-09-30",
+        "tests_passed": true
       },
       "milestone": "v0-2",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0081"
       ],
-      "unblocks": 14
+      "unblocks": 0
     },
     {
       "id": "AJ-0085",
@@ -2647,12 +2655,109 @@ window.AJIYA = {
     }
   ],
   "next": [
-    "AJ-0078",
-    "AJ-0079",
-    "AJ-0084"
+    "AJ-0082"
   ],
   "checks": [],
   "activity": [
+    {
+      "hash": "eeccc95783e5cecc6c0b24d645a0b34bd0409704",
+      "short": "eeccc95",
+      "date": "2026-09-30",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Release: fix the macOS verification and the wait for publishing",
+      "refs": [
+        "AJ-0079",
+        "AJ-0084"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790801364
+    },
+    {
+      "hash": "390f331744dda04d922d309020ba6f0629024b31",
+      "short": "390f331",
+      "date": "2026-09-30",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Docs: add v0.2 release install channels",
+      "refs": [
+        "AJ-0081",
+        "AJ-0082"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0078",
+          "phase": "install",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        },
+        {
+          "id": "AJ-0082",
+          "phase": "install",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        }
+      ],
+      "time": 1790797509
+    },
+    {
+      "hash": "76c7805aeabd5f714f602eb12d16ca79c63860a4",
+      "short": "76c7805",
+      "date": "2026-09-30",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Release: verify Mac signing and ship installer scripts",
+      "refs": [
+        "AJ-0078",
+        "AJ-0079",
+        "AJ-0084"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790797421
+    },
+    {
+      "hash": "5c3dcffe4722e41bd186e6f752e0c56750bcbc89",
+      "short": "5c3dcff",
+      "date": "2026-09-30",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Release: mark -rc and other prerelease tags as pre-releases",
+      "refs": [
+        "AJ-0081"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790793264
+    },
+    {
+      "hash": "78f1223a432ed90df9f2340844a4db4651291294",
+      "short": "78f1223",
+      "date": "2026-09-30",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Release: write the notes outside the checkout",
+      "refs": [
+        "AJ-0079"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790792888
+    },
     {
       "hash": "f311c8309f5c9ff728e03a6941844b2f87fe91d7",
       "short": "f311c83",
