@@ -8,9 +8,9 @@ Generated 2026-09-30.
 | Milestone | Closed | Required | % | Can start now |
 |---|---|---|---|---|
 | v0-1 | 37 | 37 | 100% | 0 |
-| v0-2 | 61 | 74 | 82% | 8 |
-| v0-3 | 61 | 84 | 72% | 8 |
-| after-v0-3 | 61 | 83 | 73% | 8 |
+| v0-2 | 62 | 74 | 83% | 7 |
+| v0-3 | 62 | 84 | 73% | 7 |
+| after-v0-3 | 62 | 83 | 74% | 7 |
 
 ## Phases
 
@@ -22,13 +22,12 @@ Generated 2026-09-30.
 | Onboarding | 17 | 0 | 0 | 17 | 100% | v0-1 |
 | Release | 5 | 0 | 0 | 5 | 100% | v0-1 |
 | Agent-access | 3 | 0 | 3 | 6 | 50% | v0-2 |
-| Install | 14 | 0 | 10 | 24 | 58% | v0-2 |
+| Install | 15 | 1 | 8 | 24 | 62% | v0-2 |
 | Decisions-and-changes | 0 | 0 | 11 | 11 | 0% | v0-3 |
 
 ## Can start now
 
-- **AJ-0045** install.sh for macOS and Linux (ajiya) · v0-2
-- **AJ-0073** install.ps1 for Windows (ajiya) · v0-2
+- **AJ-0073** install.ps1 for Windows (ajiya) · v0-2 · in progress
 - **AJ-0079** Gated publish jobs (ajiya) · v0-2
 - **AJ-0084** Sign and notarise the macOS binaries (ajiya) · v0-2
 - **AJ-0094** Terminal detection ignores /dev/null (ajiya) · v0-2
@@ -38,7 +37,7 @@ Generated 2026-09-30.
 
 ## Waiting
 
-- **AJ-0047** v0.2 definition of done (ajiya) waits on AJ-0045, AJ-0082, AJ-0094, AJ-0095, AJ-0096, AJ-0097
+- **AJ-0047** v0.2 definition of done (ajiya) waits on AJ-0082, AJ-0094, AJ-0095, AJ-0096, AJ-0097
 - **AJ-0048** Tags column (ajiya) waits on AJ-0047
 - **AJ-0049** ajiya ticket files (ajiya) waits on AJ-0048
 - **AJ-0050** Decision records and commands (ajiya) waits on AJ-0048
@@ -50,8 +49,8 @@ Generated 2026-09-30.
 - **AJ-0056** Guides and skill for decisions and changes (ajiya) waits on AJ-0055
 - **AJ-0057** Dashboard: open changes and decisions (ajiya) waits on AJ-0055
 - **AJ-0058** v0.3 definition of done (ajiya) waits on AJ-0048, AJ-0049, AJ-0050, AJ-0051, AJ-0052, AJ-0053, AJ-0054, AJ-0055, AJ-0056
-- **AJ-0074** Installer CI (ajiya) waits on AJ-0045, AJ-0073
-- **AJ-0078** Install scripts attached to every release (ajiya) waits on AJ-0045, AJ-0073
+- **AJ-0074** Installer CI (ajiya) waits on AJ-0073
+- **AJ-0078** Install scripts attached to every release (ajiya) waits on AJ-0073
 - **AJ-0081** Release rehearsal on a release candidate (ajiya) waits on AJ-0074, AJ-0078, AJ-0079, AJ-0084
 - **AJ-0082** Install docs for every channel (ajiya) waits on AJ-0081
 

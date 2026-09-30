@@ -29,13 +29,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 74,
-        "done": 61,
-        "in_progress": 0,
-        "pending": 13,
+        "done": 62,
+        "in_progress": 1,
+        "pending": 11,
         "dropped": 0
       },
-      "percent": 82,
-      "ready": 8
+      "percent": 83,
+      "ready": 7
     },
     {
       "name": "v0-3",
@@ -44,13 +44,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 84,
-        "done": 61,
-        "in_progress": 0,
-        "pending": 23,
+        "done": 62,
+        "in_progress": 1,
+        "pending": 21,
         "dropped": 0
       },
-      "percent": 72,
-      "ready": 8
+      "percent": 73,
+      "ready": 7
     },
     {
       "name": "after-v0-3",
@@ -59,13 +59,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 83,
-        "done": 61,
-        "in_progress": 0,
-        "pending": 22,
+        "done": 62,
+        "in_progress": 1,
+        "pending": 20,
         "dropped": 0
       },
-      "percent": 73,
-      "ready": 8
+      "percent": 74,
+      "ready": 7
     }
   ],
   "phases": [
@@ -159,12 +159,12 @@ window.AJIYA = {
       "goal": "Ajiya installs in one step, with a Claude Code plugin",
       "counts": {
         "total": 24,
-        "done": 14,
-        "in_progress": 0,
-        "pending": 10,
+        "done": 15,
+        "in_progress": 1,
+        "pending": 8,
         "dropped": 0
       },
-      "percent": 58,
+      "percent": 62,
       "milestone": "v0-2"
     },
     {
@@ -188,9 +188,9 @@ window.AJIYA = {
       "path": ".",
       "counts": {
         "total": 97,
-        "done": 73,
-        "in_progress": 0,
-        "pending": 24,
+        "done": 74,
+        "in_progress": 1,
+        "pending": 22,
         "dropped": 0
       }
     }
@@ -1315,18 +1315,21 @@ window.AJIYA = {
         "AJ-0044"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · 0ae147d · 2026-09-30 · tests passed",
+        "commit": "0ae147d",
+        "date": "2026-09-30",
+        "tests_passed": true
       },
       "milestone": "v0-2",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0047",
         "AJ-0074",
         "AJ-0078"
       ],
-      "unblocks": 16
+      "unblocks": 0
     },
     {
       "id": "AJ-0046",
@@ -1389,7 +1392,6 @@ window.AJIYA = {
       "milestone": "v0-2",
       "ready": false,
       "waiting_on": [
-        "AJ-0045",
         "AJ-0082",
         "AJ-0094",
         "AJ-0095",
@@ -2035,8 +2037,8 @@ window.AJIYA = {
         "AJ-0044"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "in_progress",
+        "text": "🟨 In progress"
       },
       "milestone": "v0-2",
       "ready": true,
@@ -2064,7 +2066,6 @@ window.AJIYA = {
       "milestone": "v0-2",
       "ready": false,
       "waiting_on": [
-        "AJ-0045",
         "AJ-0073"
       ],
       "dependants": [
@@ -2169,7 +2170,6 @@ window.AJIYA = {
       "milestone": "v0-2",
       "ready": false,
       "waiting_on": [
-        "AJ-0045",
         "AJ-0073"
       ],
       "dependants": [
@@ -2636,7 +2636,6 @@ window.AJIYA = {
     }
   ],
   "next": [
-    "AJ-0045",
     "AJ-0073",
     "AJ-0079",
     "AJ-0084",
