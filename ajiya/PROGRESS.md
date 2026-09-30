@@ -62,7 +62,11 @@ Generated 2026-09-30.
 
 ## Recent activity
 
+- 2026-09-30 `3c274b9` Merge branch 'worktree-agent-af876fcf91ec1c89b' into worktree-agent-a658cbd8dac8f5d6c (-)
+- 2026-09-30 `262b8ce` Mark AJ-0077 done (AJ-0077)
+  - AJ-0077: pending → done
 - 2026-09-30 `7e61f39` Merge branch 'worktree-agent-a3a05b52f4045e08c' into worktree-agent-a658cbd8dac8f5d6c (-)
+- 2026-09-30 `f805edf` Wire the Homebrew cask to the tap without publishing (AJ-0077)
 - 2026-09-30 `cf289d1` Mark AJ-0092 and AJ-0093 done (AJ-0092, AJ-0093)
   - AJ-0092: pending → done
   - AJ-0093: pending → done
@@ -83,12 +87,7 @@ Generated 2026-09-30.
 - 2026-09-30 `c46c998` Mark AJ-0046 done, rebuild plan outputs (AJ-0046)
   - AJ-0046: pending → done
 - 2026-09-30 `83cfc3f` Add Claude Code plugin (AJ-0046)
-- 2026-09-30 `24aa6f8` Merge branch 'worktree-agent-ae404b1f3ea1af513' into worktree-agent-a658cbd8dac8f5d6c (-)
-- 2026-09-30 `36850f1` Mark AJ-0076 done and rebuild plan outputs (AJ-0076)
-  - AJ-0076: in_progress → done
-- 2026-09-30 `6956c08` Test the npm launcher with a real stand-in binary on every OS (AJ-0076)
-  - AJ-0076: pending → in_progress
-- and 178 more in data.js
+- and 181 more in data.js
 
 ## Checks
 
