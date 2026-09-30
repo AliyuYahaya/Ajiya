@@ -2496,6 +2496,31 @@ window.AJIYA = {
   "checks": [],
   "activity": [
     {
+      "hash": "0e26867b27ae21852d6749b4ad6081c862be2959",
+      "short": "0e26867",
+      "date": "2026-09-30",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Apple signing credentials stored",
+      "refs": [
+        "AJ-0083",
+        "AJ-0084"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0083",
+          "phase": "install",
+          "from": "pending",
+          "to": "done",
+          "text": "🟩 Done · by Aliyu Yahaya · 2026-09-30 · Note: Developer ID Application .p12 and App Store Connect API key stored in the release environment: MACOS_SIGN_P12, MACOS_SIGN_PASSWORD, MACOS_NOTARY_KEY, MACOS_NOTARY_KEY_ID, MACOS_NOTARY_ISSUER_ID (base64 for the files)"
+        }
+      ],
+      "time": 1790780441
+    },
+    {
       "hash": "4136ead7c9d8eb4a5c8af97192ae1d5aa498632c",
       "short": "4136ead",
       "date": "2026-09-29",
