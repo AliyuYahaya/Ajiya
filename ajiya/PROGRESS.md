@@ -8,9 +8,9 @@ Generated 2026-09-30.
 | Milestone | Closed | Required | % | Can start now |
 |---|---|---|---|---|
 | v0-1 | 37 | 37 | 100% | 0 |
-| v0-2 | 58 | 68 | 85% | 3 |
-| v0-3 | 58 | 78 | 74% | 3 |
-| after-v0-3 | 58 | 77 | 75% | 3 |
+| v0-2 | 58 | 72 | 80% | 7 |
+| v0-3 | 58 | 82 | 70% | 7 |
+| after-v0-3 | 58 | 81 | 71% | 7 |
 
 ## Phases
 
@@ -21,8 +21,8 @@ Generated 2026-09-30.
 | Outputs | 12 | 0 | 0 | 12 | 100% | v0-1 |
 | Onboarding | 17 | 0 | 0 | 17 | 100% | v0-1 |
 | Release | 5 | 0 | 0 | 5 | 100% | v0-1 |
-| Agent-access | 3 | 0 | 0 | 3 | 100% | v0-2 |
-| Install | 11 | 0 | 10 | 21 | 52% | v0-2 |
+| Agent-access | 3 | 0 | 2 | 5 | 60% | v0-2 |
+| Install | 11 | 0 | 12 | 23 | 47% | v0-2 |
 | Decisions-and-changes | 0 | 0 | 11 | 11 | 0% | v0-3 |
 
 ## Can start now
@@ -30,10 +30,14 @@ Generated 2026-09-30.
 - **AJ-0045** install.sh for macOS and Linux (ajiya) · v0-2
 - **AJ-0073** install.ps1 for Windows (ajiya) · v0-2
 - **AJ-0077** Homebrew tap wiring (ajiya) · v0-2
+- **AJ-0092** Plugin session-start hook on Windows (ajiya) · v0-2
+- **AJ-0093** Add to Cursor link (ajiya) · v0-2
+- **AJ-0094** Terminal detection ignores /dev/null (ajiya) · v0-2
+- **AJ-0095** mcp install honours CLAUDE_CONFIG_DIR (ajiya) · v0-2
 
 ## Waiting
 
-- **AJ-0047** v0.2 definition of done (ajiya) waits on AJ-0045, AJ-0082
+- **AJ-0047** v0.2 definition of done (ajiya) waits on AJ-0045, AJ-0082, AJ-0092, AJ-0093, AJ-0094, AJ-0095
 - **AJ-0048** Tags column (ajiya) waits on AJ-0047
 - **AJ-0049** ajiya ticket files (ajiya) waits on AJ-0048
 - **AJ-0050** Decision records and commands (ajiya) waits on AJ-0048

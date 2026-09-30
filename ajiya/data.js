@@ -28,14 +28,14 @@ window.AJIYA = {
         "AJ-0047"
       ],
       "required": {
-        "total": 68,
+        "total": 72,
         "done": 58,
         "in_progress": 0,
-        "pending": 10,
+        "pending": 14,
         "dropped": 0
       },
-      "percent": 85,
-      "ready": 3
+      "percent": 80,
+      "ready": 7
     },
     {
       "name": "v0-3",
@@ -43,14 +43,14 @@ window.AJIYA = {
         "AJ-0058"
       ],
       "required": {
-        "total": 78,
+        "total": 82,
         "done": 58,
         "in_progress": 0,
-        "pending": 20,
+        "pending": 24,
         "dropped": 0
       },
-      "percent": 74,
-      "ready": 3
+      "percent": 70,
+      "ready": 7
     },
     {
       "name": "after-v0-3",
@@ -58,14 +58,14 @@ window.AJIYA = {
         "AJ-0057"
       ],
       "required": {
-        "total": 77,
+        "total": 81,
         "done": 58,
         "in_progress": 0,
-        "pending": 19,
+        "pending": 23,
         "dropped": 0
       },
-      "percent": 75,
-      "ready": 3
+      "percent": 71,
+      "ready": 7
     }
   ],
   "phases": [
@@ -144,13 +144,13 @@ window.AJIYA = {
       "title": "Agent-access",
       "goal": "Agents read and change the plan through ajiya status and an MCP server they register with in one step",
       "counts": {
-        "total": 3,
+        "total": 5,
         "done": 3,
         "in_progress": 0,
-        "pending": 0,
+        "pending": 2,
         "dropped": 0
       },
-      "percent": 100,
+      "percent": 60,
       "milestone": "v0-2"
     },
     {
@@ -158,13 +158,13 @@ window.AJIYA = {
       "title": "Install",
       "goal": "Ajiya installs in one step, with a Claude Code plugin",
       "counts": {
-        "total": 21,
+        "total": 23,
         "done": 11,
         "in_progress": 0,
-        "pending": 10,
+        "pending": 12,
         "dropped": 0
       },
-      "percent": 52,
+      "percent": 47,
       "milestone": "v0-2"
     },
     {
@@ -187,10 +187,10 @@ window.AJIYA = {
       "name": "ajiya",
       "path": ".",
       "counts": {
-        "total": 91,
+        "total": 95,
         "done": 70,
         "in_progress": 0,
-        "pending": 21,
+        "pending": 25,
         "dropped": 0
       }
     }
@@ -1294,7 +1294,10 @@ window.AJIYA = {
         "AJ-0045",
         "AJ-0047",
         "AJ-0073",
-        "AJ-0077"
+        "AJ-0077",
+        "AJ-0093",
+        "AJ-0094",
+        "AJ-0095"
       ],
       "unblocks": 0
     },
@@ -1344,7 +1347,8 @@ window.AJIYA = {
       "ready": false,
       "waiting_on": [],
       "dependants": [
-        "AJ-0047"
+        "AJ-0047",
+        "AJ-0092"
       ],
       "unblocks": 0
     },
@@ -1367,7 +1371,11 @@ window.AJIYA = {
         "AJ-0088",
         "AJ-0089",
         "AJ-0090",
-        "AJ-0091"
+        "AJ-0091",
+        "AJ-0092",
+        "AJ-0093",
+        "AJ-0094",
+        "AJ-0095"
       ],
       "status": {
         "state": "pending",
@@ -1378,7 +1386,11 @@ window.AJIYA = {
       "ready": false,
       "waiting_on": [
         "AJ-0045",
-        "AJ-0082"
+        "AJ-0082",
+        "AJ-0092",
+        "AJ-0093",
+        "AJ-0094",
+        "AJ-0095"
       ],
       "dependants": [
         "AJ-0048"
@@ -2484,12 +2496,100 @@ window.AJIYA = {
         "AJ-0047"
       ],
       "unblocks": 0
+    },
+    {
+      "id": "AJ-0092",
+      "phase": "install",
+      "app": "ajiya",
+      "title": "Plugin session-start hook on Windows",
+      "done_when": "The Claude Code plugin's session-start hook works on Windows without Git Bash (a PowerShell script chosen per the current hook docs), with the same three behaviours as the sh script; a test runs it on the Windows CI runner",
+      "depends": [
+        "AJ-0046"
+      ],
+      "status": {
+        "state": "pending",
+        "text": "🟥 Pending"
+      },
+      "milestone": "v0-2",
+      "ready": true,
+      "waiting_on": [],
+      "dependants": [
+        "AJ-0047"
+      ],
+      "unblocks": 12
+    },
+    {
+      "id": "AJ-0093",
+      "phase": "install",
+      "app": "ajiya",
+      "title": "Add to Cursor link",
+      "done_when": "The README has an Add to Cursor install link for the ajiya MCP server in the format Cursor's current docs describe, and it opens Cursor's MCP install prompt with command ajiya and args mcp",
+      "depends": [
+        "AJ-0044"
+      ],
+      "status": {
+        "state": "pending",
+        "text": "🟥 Pending"
+      },
+      "milestone": "v0-2",
+      "ready": true,
+      "waiting_on": [],
+      "dependants": [
+        "AJ-0047"
+      ],
+      "unblocks": 12
+    },
+    {
+      "id": "AJ-0094",
+      "phase": "agent-access",
+      "app": "ajiya",
+      "title": "Terminal detection ignores /dev/null",
+      "done_when": "Prompts appear only on a real terminal: stdin from /dev/null or a pipe counts as non-interactive on macOS, Linux and Windows; init and mcp install then print the command instead of asking; tests cover each",
+      "depends": [
+        "AJ-0044"
+      ],
+      "status": {
+        "state": "pending",
+        "text": "🟥 Pending"
+      },
+      "milestone": "v0-2",
+      "ready": true,
+      "waiting_on": [],
+      "dependants": [
+        "AJ-0047"
+      ],
+      "unblocks": 12
+    },
+    {
+      "id": "AJ-0095",
+      "phase": "agent-access",
+      "app": "ajiya",
+      "title": "mcp install honours CLAUDE_CONFIG_DIR",
+      "done_when": "When CLAUDE_CONFIG_DIR is set, mcp install, uninstall and status use Claude Code's config there (per its current docs) instead of ~/.claude.json; tests cover set and unset",
+      "depends": [
+        "AJ-0044"
+      ],
+      "status": {
+        "state": "pending",
+        "text": "🟥 Pending"
+      },
+      "milestone": "v0-2",
+      "ready": true,
+      "waiting_on": [],
+      "dependants": [
+        "AJ-0047"
+      ],
+      "unblocks": 12
     }
   ],
   "next": [
     "AJ-0045",
     "AJ-0073",
-    "AJ-0077"
+    "AJ-0077",
+    "AJ-0092",
+    "AJ-0093",
+    "AJ-0094",
+    "AJ-0095"
   ],
   "checks": [],
   "activity": [
