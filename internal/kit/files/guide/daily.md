@@ -160,3 +160,14 @@ include the ones already there.
 | `ajiya changelog [<range>]` | List the work in a range of commits, by ticket |
 
 Every read command takes `--json`.
+
+## MCP tools instead of shell commands
+
+If your client has Ajiya's MCP tools (`ajiya mcp` runs the server), use them
+instead of shell commands: `ajiya_status`, `ajiya_next`, `ajiya_ticket_start`
+and so on. Each tool runs the same command with the same rules, and returns the
+same JSON as `--json`. The tools cover reading the plan, adding and changing
+tickets, phases, apps and milestones, and `ajiya_ticket_done`; it still refuses
+without a commit that names the ticket, and the server never commits for you.
+Dropping a ticket, removing an app or milestone, moving a milestone and
+installing hooks are left out on purpose: a person decides those.
