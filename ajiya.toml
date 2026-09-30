@@ -24,7 +24,7 @@ targets = ["AJ-0047"]
 
 [[milestones]]
 name = "v0-2-1"
-targets = ["AJ-0098", "AJ-0099", "AJ-0100"]
+targets = ["AJ-0098", "AJ-0099", "AJ-0100", "AJ-0101", "AJ-0102", "AJ-0103", "AJ-0104", "AJ-0105", "AJ-0106"]
 
 [[milestones]]
 name = "v0-3"

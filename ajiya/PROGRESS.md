@@ -1,7 +1,7 @@
 <!-- Written by ajiya build. Do not edit: run 'ajiya build'. -->
 # Ajiya: progress
 
-Generated 2026-09-30.
+Generated 2026-10-01.
 
 ## Milestones
 
@@ -9,7 +9,7 @@ Generated 2026-09-30.
 |---|---|---|---|---|
 | v0-1 | 37 | 37 | 100% | 0 |
 | v0-2 | 74 | 74 | 100% | 0 |
-| v0-2-1 | 74 | 77 | 96% | 3 |
+| v0-2-1 | 74 | 83 | 89% | 9 |
 | v0-3 | 74 | 84 | 88% | 1 |
 | after-v0-3 | 74 | 83 | 89% | 1 |
 
@@ -17,12 +17,12 @@ Generated 2026-09-30.
 
 | Phase | Done | In progress | Pending | Total | % | Milestone |
 |---|---|---|---|---|---|---|
-| Commit-rule | 8 | 0 | 0 | 8 | 100% | v0-1 |
+| Commit-rule | 8 | 0 | 1 | 9 | 88% | v0-1 |
 | Apps-launch | 14 | 0 | 1 | 15 | 93% | v0-1 |
 | Outputs | 12 | 0 | 0 | 12 | 100% | v0-1 |
-| Onboarding | 17 | 0 | 1 | 18 | 94% | v0-1 |
+| Onboarding | 17 | 0 | 4 | 21 | 80% | v0-1 |
 | Release | 5 | 0 | 0 | 5 | 100% | v0-1 |
-| Agent-access | 6 | 0 | 1 | 7 | 85% | v0-2 |
+| Agent-access | 6 | 0 | 3 | 9 | 66% | v0-2 |
 | Install | 24 | 0 | 0 | 24 | 100% | v0-2 |
 | Decisions-and-changes | 0 | 0 | 11 | 11 | 0% | v0-3 |
 
@@ -31,6 +31,12 @@ Generated 2026-09-30.
 - **AJ-0098** ticket done reminds to commit the plan change (ajiya) · v0-2-1
 - **AJ-0099** app add quotes the path it registered (ajiya) · v0-2-1
 - **AJ-0100** Guide: other trailers can share the Ajiya paragraph (ajiya) · v0-2-1
+- **AJ-0101** Nested projects: init warns, hooks check the owning plan (ajiya) · v0-2-1
+- **AJ-0102** status counts only tickets that can start (ajiya) · v0-2-1
+- **AJ-0103** Guide: what ticket done and ajiya build change (ajiya) · v0-2-1
+- **AJ-0104** README: non-interactive init and the auto-added trailer (ajiya) · v0-2-1
+- **AJ-0105** init finds per-app test commands in a monorepo (ajiya) · v0-2-1
+- **AJ-0106** MCP asks for roots only from clients that support them (ajiya) · v0-2-1
 - **AJ-0048** Tags column (ajiya) · v0-3
 
 ## Waiting

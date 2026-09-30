@@ -1,7 +1,7 @@
 // Written by ajiya build. Do not edit: run 'ajiya build'.
 window.AJIYA = {
   "schema": 1,
-  "generated": "2026-09-30",
+  "generated": "2026-10-01",
   "project": {
     "name": "Ajiya",
     "prefix": "AJ"
@@ -42,17 +42,23 @@ window.AJIYA = {
       "targets": [
         "AJ-0098",
         "AJ-0099",
-        "AJ-0100"
+        "AJ-0100",
+        "AJ-0101",
+        "AJ-0102",
+        "AJ-0103",
+        "AJ-0104",
+        "AJ-0105",
+        "AJ-0106"
       ],
       "required": {
-        "total": 77,
+        "total": 83,
         "done": 74,
         "in_progress": 0,
-        "pending": 3,
+        "pending": 9,
         "dropped": 0
       },
-      "percent": 96,
-      "ready": 3
+      "percent": 89,
+      "ready": 9
     },
     {
       "name": "v0-3",
@@ -91,13 +97,13 @@ window.AJIYA = {
       "title": "Commit-rule",
       "goal": "Every commit names 1 to 3 tickets, enforced by hooks with a CI check as backup",
       "counts": {
-        "total": 8,
+        "total": 9,
         "done": 8,
         "in_progress": 0,
-        "pending": 0,
+        "pending": 1,
         "dropped": 0
       },
-      "percent": 100,
+      "percent": 88,
       "milestone": "v0-1"
     },
     {
@@ -133,13 +139,13 @@ window.AJIYA = {
       "title": "Onboarding",
       "goal": "A new or existing project can be set up by an agent using only the installed kit and importers",
       "counts": {
-        "total": 18,
+        "total": 21,
         "done": 17,
         "in_progress": 0,
-        "pending": 1,
+        "pending": 4,
         "dropped": 0
       },
-      "percent": 94,
+      "percent": 80,
       "milestone": "v0-1"
     },
     {
@@ -161,13 +167,13 @@ window.AJIYA = {
       "title": "Agent-access",
       "goal": "Agents read and change the plan through ajiya status and an MCP server they register with in one step",
       "counts": {
-        "total": 7,
+        "total": 9,
         "done": 6,
         "in_progress": 0,
-        "pending": 1,
+        "pending": 3,
         "dropped": 0
       },
-      "percent": 85,
+      "percent": 66,
       "milestone": "v0-2"
     },
     {
@@ -204,10 +210,10 @@ window.AJIYA = {
       "name": "ajiya",
       "path": ".",
       "counts": {
-        "total": 100,
+        "total": 106,
         "done": 86,
         "in_progress": 0,
-        "pending": 14,
+        "pending": 20,
         "dropped": 0
       }
     }
@@ -1415,7 +1421,13 @@ window.AJIYA = {
         "AJ-0048",
         "AJ-0098",
         "AJ-0099",
-        "AJ-0100"
+        "AJ-0100",
+        "AJ-0101",
+        "AJ-0102",
+        "AJ-0103",
+        "AJ-0104",
+        "AJ-0105",
+        "AJ-0106"
       ],
       "unblocks": 0
     },
@@ -2730,12 +2742,132 @@ window.AJIYA = {
       "waiting_on": [],
       "dependants": [],
       "unblocks": 0
+    },
+    {
+      "id": "AJ-0101",
+      "phase": "commit-rule",
+      "app": "ajiya",
+      "title": "Nested projects: init warns, hooks check the owning plan",
+      "done_when": "ajiya init warns when a parent folder already holds an ajiya.toml (and says which); the commit hooks check trailers against the plan that owns the repository being committed to, not whichever ajiya.toml is nearest the working folder; tests cover a nested project committing from both levels",
+      "depends": [
+        "AJ-0047"
+      ],
+      "status": {
+        "state": "pending",
+        "text": "🟥 Pending"
+      },
+      "milestone": "v0-2-1",
+      "ready": true,
+      "waiting_on": [],
+      "dependants": [],
+      "unblocks": 0
+    },
+    {
+      "id": "AJ-0102",
+      "phase": "agent-access",
+      "app": "ajiya",
+      "title": "status counts only tickets that can start",
+      "done_when": "ajiya status (plain, --brief, --json) counts under 'can start now' only open tickets that are not yet started, matching ajiya next; tests cover a started ticket not being counted",
+      "depends": [
+        "AJ-0047"
+      ],
+      "status": {
+        "state": "pending",
+        "text": "🟥 Pending"
+      },
+      "milestone": "v0-2-1",
+      "ready": true,
+      "waiting_on": [],
+      "dependants": [],
+      "unblocks": 0
+    },
+    {
+      "id": "AJ-0103",
+      "phase": "onboarding",
+      "app": "ajiya",
+      "title": "Guide: what ticket done and ajiya build change",
+      "done_when": "The daily guide says ticket done changes the ticket's phase file, and ajiya build writes PROGRESS.md, data.js and index.html; the kit is refreshed with ajiya init",
+      "depends": [
+        "AJ-0047"
+      ],
+      "status": {
+        "state": "pending",
+        "text": "🟥 Pending"
+      },
+      "milestone": "v0-2-1",
+      "ready": true,
+      "waiting_on": [],
+      "dependants": [],
+      "unblocks": 0
+    },
+    {
+      "id": "AJ-0104",
+      "phase": "onboarding",
+      "app": "ajiya",
+      "title": "README: non-interactive init and the auto-added trailer",
+      "done_when": "The README's existing-project walkthrough says that without a terminal or --yes init registers no apps and prints the app add commands, and the loop section says the hook adds the Ajiya trailer itself when a ticket is in progress",
+      "depends": [
+        "AJ-0047"
+      ],
+      "status": {
+        "state": "pending",
+        "text": "🟥 Pending"
+      },
+      "milestone": "v0-2-1",
+      "ready": true,
+      "waiting_on": [],
+      "dependants": [],
+      "unblocks": 0
+    },
+    {
+      "id": "AJ-0105",
+      "phase": "onboarding",
+      "app": "ajiya",
+      "title": "init finds per-app test commands in a monorepo",
+      "done_when": "When the root has no test command, init looks at the registered apps' manifests and suggests a test command (or one per app in the hint); tests cover a pnpm workspace with test scripts in apps only",
+      "depends": [
+        "AJ-0047"
+      ],
+      "status": {
+        "state": "pending",
+        "text": "🟥 Pending"
+      },
+      "milestone": "v0-2-1",
+      "ready": true,
+      "waiting_on": [],
+      "dependants": [],
+      "unblocks": 0
+    },
+    {
+      "id": "AJ-0106",
+      "phase": "agent-access",
+      "app": "ajiya",
+      "title": "MCP asks for roots only from clients that support them",
+      "done_when": "ajiya mcp requests roots/list only when the client declared the roots capability in initialize; tests cover a client with and without it",
+      "depends": [
+        "AJ-0047"
+      ],
+      "status": {
+        "state": "pending",
+        "text": "🟥 Pending"
+      },
+      "milestone": "v0-2-1",
+      "ready": true,
+      "waiting_on": [],
+      "dependants": [],
+      "unblocks": 0
     }
   ],
   "next": [
     "AJ-0098",
     "AJ-0099",
     "AJ-0100",
+    "AJ-0101",
+    "AJ-0102",
+    "AJ-0103",
+    "AJ-0104",
+    "AJ-0105",
+    "AJ-0106",
     "AJ-0048"
   ],
   "checks": [],
