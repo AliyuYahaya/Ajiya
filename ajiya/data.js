@@ -29,13 +29,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 74,
-        "done": 64,
+        "done": 66,
         "in_progress": 4,
-        "pending": 6,
+        "pending": 4,
         "dropped": 0
       },
-      "percent": 86,
-      "ready": 5
+      "percent": 89,
+      "ready": 3
     },
     {
       "name": "v0-3",
@@ -44,13 +44,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 84,
-        "done": 64,
+        "done": 66,
         "in_progress": 4,
-        "pending": 16,
+        "pending": 14,
         "dropped": 0
       },
-      "percent": 76,
-      "ready": 5
+      "percent": 78,
+      "ready": 3
     },
     {
       "name": "after-v0-3",
@@ -59,13 +59,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 83,
-        "done": 64,
+        "done": 66,
         "in_progress": 4,
-        "pending": 15,
+        "pending": 13,
         "dropped": 0
       },
-      "percent": 77,
-      "ready": 5
+      "percent": 79,
+      "ready": 3
     }
   ],
   "phases": [
@@ -145,12 +145,12 @@ window.AJIYA = {
       "goal": "Agents read and change the plan through ajiya status and an MCP server they register with in one step",
       "counts": {
         "total": 6,
-        "done": 5,
+        "done": 6,
         "in_progress": 0,
-        "pending": 1,
+        "pending": 0,
         "dropped": 0
       },
-      "percent": 83,
+      "percent": 100,
       "milestone": "v0-2"
     },
     {
@@ -159,12 +159,12 @@ window.AJIYA = {
       "goal": "Ajiya installs in one step, with a Claude Code plugin",
       "counts": {
         "total": 24,
-        "done": 15,
+        "done": 16,
         "in_progress": 4,
-        "pending": 5,
+        "pending": 4,
         "dropped": 0
       },
-      "percent": 62,
+      "percent": 66,
       "milestone": "v0-2"
     },
     {
@@ -188,9 +188,9 @@ window.AJIYA = {
       "path": ".",
       "counts": {
         "total": 97,
-        "done": 76,
+        "done": 78,
         "in_progress": 4,
-        "pending": 17,
+        "pending": 15,
         "dropped": 0
       }
     }
@@ -1392,9 +1392,7 @@ window.AJIYA = {
       "milestone": "v0-2",
       "ready": false,
       "waiting_on": [
-        "AJ-0082",
-        "AJ-0096",
-        "AJ-0097"
+        "AJ-0082"
       ],
       "dependants": [
         "AJ-0048"
@@ -2605,16 +2603,19 @@ window.AJIYA = {
         "AJ-0044"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · 926cdc8 · 2026-09-30 · tests passed",
+        "commit": "926cdc8",
+        "date": "2026-09-30",
+        "tests_passed": true
       },
       "milestone": "v0-2",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0047"
       ],
-      "unblocks": 12
+      "unblocks": 0
     },
     {
       "id": "AJ-0097",
@@ -2627,24 +2628,25 @@ window.AJIYA = {
         "AJ-0092"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · c5c8987 · 2026-09-30 · tests passed",
+        "commit": "c5c8987",
+        "date": "2026-09-30",
+        "tests_passed": true
       },
       "milestone": "v0-2",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0047"
       ],
-      "unblocks": 12
+      "unblocks": 0
     }
   ],
   "next": [
     "AJ-0073",
     "AJ-0079",
-    "AJ-0084",
-    "AJ-0096",
-    "AJ-0097"
+    "AJ-0084"
   ],
   "checks": [],
   "activity": [

@@ -3,7 +3,12 @@
 # context.
 #   no ajiya.toml in the project    -> print nothing
 #   ajiya.toml but no ajiya binary  -> print the install line, nothing else
-#   otherwise                       -> print 'ajiya status --brief'
+#   otherwise                       -> print 'ajiya status --brief', then one line
+#                                      saying to run 'ajiya mcp install' when Ajiya
+#                                      is not registered with Claude Code (asked of
+#                                      the binary: 'ajiya mcp status --claude --quiet'
+#                                      exits 1 for "not registered"; any other
+#                                      answer, including an older ajiya, adds nothing)
 # Every other failure is silent and the exit code is always 0.
 $ErrorActionPreference = 'SilentlyContinue'
 try {
@@ -18,6 +23,10 @@ try {
         exit 0
     }
     & ajiya status --brief 2>$null
+    & ajiya mcp status --claude --quiet 2>&1 | Out-Null
+    if ($LASTEXITCODE -eq 1) {
+        Write-Output 'Ajiya is not registered with Claude Code, so a session cannot use its tools. Register it with: ajiya mcp install --claude'
+    }
 } catch {
 }
 exit 0

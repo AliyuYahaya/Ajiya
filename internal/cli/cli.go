@@ -117,7 +117,7 @@ func init() {
 		{"hook run", "<hook> <git hook arguments>", "Run a git hook (called by the installed hook scripts)", runHookRun},
 		{"mcp install", "[--claude] [--codex] [--cursor] [--all] [--scope user|project] [--yes]", "Register Ajiya's MCP server with Claude Code, Codex or Cursor (default: every agent found)", runMCPInstall},
 		{"mcp uninstall", "[--claude] [--codex] [--cursor] [--all] [--scope user|project] [--yes]", "Remove Ajiya's MCP server from those agents", runMCPUninstall},
-		{"mcp status", "", "Show which agents on this machine have Ajiya registered", runMCPStatus},
+		{"mcp status", "[--claude] [--codex] [--cursor] [--quiet]", "Show which agents on this machine have Ajiya registered (--quiet: only the exit code, 0 registered, 1 not)", runMCPStatus},
 		{"mcp", "[--dir <path>]", "Serve Ajiya's tools to an AI agent over MCP (stdio)", runMCP},
 		{"version", "", "Print the version", runVersion},
 	}

@@ -2,6 +2,7 @@ package kit
 
 import (
 	"encoding/json"
+	"fmt"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -51,15 +52,17 @@ func TestPluginManifests(t *testing.T) {
 		t.Errorf("plugin.json: %+v", pj)
 	}
 
-	var mcp struct {
-		McpServers map[string]struct {
-			Command string
-			Args    []string
-		}
+	// The plugin leaves MCP registration to 'ajiya mcp install': declaring the
+	// server here as well would list Ajiya's tools twice in a session.
+	if _, err := os.Stat(filepath.Join(pluginDir, ".mcp.json")); err == nil {
+		t.Error("plugin/.mcp.json must not exist (AJ-0097)")
 	}
-	readJSON(t, filepath.Join(pluginDir, ".mcp.json"), &mcp)
-	if s := mcp.McpServers["ajiya"]; s.Command != "ajiya" || len(s.Args) != 1 || s.Args[0] != "mcp" {
-		t.Errorf(".mcp.json server = %+v, want ajiya mcp", s)
+	raw, err := os.ReadFile(filepath.Join(pluginDir, ".claude-plugin", "plugin.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if strings.Contains(string(raw), "mcpServers") || strings.Contains(string(raw), ".mcp.json") {
+		t.Error("plugin.json must not declare an MCP server")
 	}
 
 	var hooks struct {
@@ -107,20 +110,36 @@ func TestPluginManifests(t *testing.T) {
 	}
 }
 
+// What the fake ajiya answers to 'mcp status --claude --quiet'.
+const (
+	regYes   = 0 // registered with Claude Code
+	regNo    = 1 // not registered
+	regOlder = 2 // an older ajiya that does not know the flag
+)
+
 // hookCase is one behaviour of the session-start hook, for both platforms.
 type hookCase struct {
 	name    string
 	project bool // run in a folder with ajiya.toml
 	withBin bool // the fake ajiya is on PATH
+	reg     int  // the fake's answer to 'mcp status --claude --quiet'
 	want    string
-	install bool // want the install line instead of want
+	install bool // want the install-the-binary line instead of want
 }
 
+const (
+	fakeStatus  = "FAKE STATUS\n"
+	registerMsg = "Ajiya is not registered with Claude Code, so a session cannot use its tools. Register it with: ajiya mcp install --claude\n"
+)
+
 var hookCases = []hookCase{
-	{"ajiya on PATH, project", true, true, "FAKE STATUS\n", false},
-	{"ajiya on PATH, no ajiya.toml", false, true, "", false},
-	{"no ajiya, project", true, false, "", true},
-	{"no ajiya, no ajiya.toml", false, false, "", false},
+	{"registered: status only", true, true, regYes, fakeStatus, false},
+	{"not registered: status plus the install line", true, true, regNo, fakeStatus + registerMsg, false},
+	{"older ajiya: status only", true, true, regOlder, fakeStatus, false},
+	{"no ajiya.toml, not registered", false, true, regNo, "", false},
+	{"no ajiya.toml, registered", false, true, regYes, "", false},
+	{"no ajiya: install the binary", true, false, regNo, "", true},
+	{"no ajiya, no ajiya.toml", false, false, regNo, "", false},
 }
 
 func checkHookOutput(t *testing.T, tc hookCase, got string) {
@@ -128,8 +147,8 @@ func checkHookOutput(t *testing.T, tc hookCase, got string) {
 	got = strings.ReplaceAll(got, "\r\n", "\n")
 	if tc.install {
 		lines := strings.Split(strings.TrimRight(got, "\n"), "\n")
-		if len(lines) > 2 || !strings.Contains(got, "go install github.com/AliyuYahaya/Ajiya/cmd/ajiya@latest") {
-			t.Errorf("want the install line (at most two lines), got %q", got)
+		if len(lines) != 1 || !strings.Contains(got, "go install github.com/AliyuYahaya/Ajiya/cmd/ajiya@latest") || strings.Contains(got, "mcp install") {
+			t.Errorf("want only the install-the-binary line, got %q", got)
 		}
 		return
 	}
@@ -170,11 +189,16 @@ func TestSessionStartHook(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	bin := t.TempDir()
-	fake := "#!/bin/sh\n[ \"$1 $2\" = \"status --brief\" ] && echo 'FAKE STATUS'\nexit 0\n"
-	if err := os.WriteFile(filepath.Join(bin, "ajiya"), []byte(fake), 0o755); err != nil {
-		t.Fatal(err)
+	bins := map[int]string{}
+	for _, reg := range []int{regYes, regNo, regOlder} {
+		bin := t.TempDir()
+		fake := fmt.Sprintf("#!/bin/sh\n[ \"$1 $2\" = \"status --brief\" ] && echo 'FAKE STATUS'\n[ \"$1 $2 $3 $4\" = \"mcp status --claude --quiet\" ] && exit %d\nexit 0\n", reg)
+		if err := os.WriteFile(filepath.Join(bin, "ajiya"), []byte(fake), 0o755); err != nil {
+			t.Fatal(err)
+		}
+		bins[reg] = bin
 	}
+	bin := bins[regYes]
 	project, plain := newHookProject(t)
 
 	for _, tc := range hookCases {
@@ -184,7 +208,7 @@ func TestSessionStartHook(t *testing.T) {
 				dir = project
 			}
 			if tc.withBin {
-				path = bin + ":" + path
+				path = bins[tc.reg] + ":" + path
 			}
 			cmd := exec.Command(sh, script)
 			cmd.Dir = dir
@@ -198,7 +222,7 @@ func TestSessionStartHook(t *testing.T) {
 		cmd := exec.Command(sh, script)
 		cmd.Dir = plain
 		cmd.Env = []string{"PATH=" + bin + ":/usr/bin:/bin", "CLAUDE_PROJECT_DIR=" + project}
-		if got := runHook(t, cmd); got != "FAKE STATUS\n" {
+		if got := runHook(t, cmd); got != fakeStatus {
 			t.Errorf("out %q", got)
 		}
 	})
@@ -220,11 +244,16 @@ func TestSessionStartHookPowerShell(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	bin := t.TempDir()
-	fake := "@echo off\r\nif \"%1 %2\"==\"status --brief\" echo FAKE STATUS\r\nexit /b 0\r\n"
-	if err := os.WriteFile(filepath.Join(bin, "ajiya.cmd"), []byte(fake), 0o644); err != nil {
-		t.Fatal(err)
+	bins := map[int]string{}
+	for _, reg := range []int{regYes, regNo, regOlder} {
+		bin := t.TempDir()
+		fake := fmt.Sprintf("@echo off\r\nif \"%%1 %%2\"==\"status --brief\" echo FAKE STATUS\r\nif \"%%1 %%2 %%3 %%4\"==\"mcp status --claude --quiet\" exit /b %d\r\nexit /b 0\r\n", reg)
+		if err := os.WriteFile(filepath.Join(bin, "ajiya.cmd"), []byte(fake), 0o644); err != nil {
+			t.Fatal(err)
+		}
+		bins[reg] = bin
 	}
+	bin := bins[regYes]
 	project, plain := newHookProject(t)
 
 	root := os.Getenv("SystemRoot")
@@ -244,7 +273,7 @@ func TestSessionStartHookPowerShell(t *testing.T) {
 				dir = project
 			}
 			if tc.withBin {
-				path = bin + ";" + path
+				path = bins[tc.reg] + ";" + path
 			}
 			checkHookOutput(t, tc, run(t, dir, path))
 		})

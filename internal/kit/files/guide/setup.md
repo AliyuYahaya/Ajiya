@@ -45,7 +45,9 @@ never touches text outside the markers. Then:
   Cursor), so they get Ajiya's tools instead of shell commands: `ajiya mcp status`
   shows which agents on this machine have it, and `ajiya mcp install` adds it (it
   shows the change and asks first; `--yes` skips the question, `--scope project`
-  registers for this project only). `ajiya mcp uninstall` removes it. This
+  registers for this project only; it ends by printing the command that undoes it).
+  `ajiya mcp uninstall` removes it, and `ajiya mcp status --claude --quiet` exits 0
+  when Claude Code has it, 1 when not. This
   is a person's choice, so do it when the user asks or agrees; there is no MCP tool
   for it.
 - Run `ajiya hook install`. The hooks check every commit message for the

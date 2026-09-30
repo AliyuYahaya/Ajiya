@@ -8,9 +8,9 @@ Generated 2026-09-30.
 | Milestone | Closed | Required | % | Can start now |
 |---|---|---|---|---|
 | v0-1 | 37 | 37 | 100% | 0 |
-| v0-2 | 64 | 74 | 86% | 5 |
-| v0-3 | 64 | 84 | 76% | 5 |
-| after-v0-3 | 64 | 83 | 77% | 5 |
+| v0-2 | 66 | 74 | 89% | 3 |
+| v0-3 | 66 | 84 | 78% | 3 |
+| after-v0-3 | 66 | 83 | 79% | 3 |
 
 ## Phases
 
@@ -21,8 +21,8 @@ Generated 2026-09-30.
 | Outputs | 12 | 0 | 0 | 12 | 100% | v0-1 |
 | Onboarding | 17 | 0 | 0 | 17 | 100% | v0-1 |
 | Release | 5 | 0 | 0 | 5 | 100% | v0-1 |
-| Agent-access | 5 | 0 | 1 | 6 | 83% | v0-2 |
-| Install | 15 | 4 | 5 | 24 | 62% | v0-2 |
+| Agent-access | 6 | 0 | 0 | 6 | 100% | v0-2 |
+| Install | 16 | 4 | 4 | 24 | 66% | v0-2 |
 | Decisions-and-changes | 0 | 0 | 11 | 11 | 0% | v0-3 |
 
 ## Can start now
@@ -30,12 +30,10 @@ Generated 2026-09-30.
 - **AJ-0073** install.ps1 for Windows (ajiya) · v0-2 · in progress
 - **AJ-0079** Gated publish jobs (ajiya) · v0-2 · in progress
 - **AJ-0084** Sign and notarise the macOS binaries (ajiya) · v0-2 · in progress
-- **AJ-0096** Registering says how to undo it (ajiya) · v0-2
-- **AJ-0097** Plugin leaves MCP registration to ajiya mcp install (ajiya) · v0-2
 
 ## Waiting
 
-- **AJ-0047** v0.2 definition of done (ajiya) waits on AJ-0082, AJ-0096, AJ-0097
+- **AJ-0047** v0.2 definition of done (ajiya) waits on AJ-0082
 - **AJ-0048** Tags column (ajiya) waits on AJ-0047
 - **AJ-0049** ajiya ticket files (ajiya) waits on AJ-0048
 - **AJ-0050** Decision records and commands (ajiya) waits on AJ-0048

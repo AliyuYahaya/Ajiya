@@ -2,7 +2,7 @@
   "name": "ajiya",
   "displayName": "Ajiya",
   "version": "0.2.0",
-  "description": "Plan, track and prove work with Ajiya: the Ajiya skill, the ajiya MCP server, and a session-start status line.",
+  "description": "Plan, track and prove work with Ajiya: the Ajiya skill and a session-start status line.",
   "author": {
     "name": "Aliyu Yahaya",
     "url": "https://github.com/AliyuYahaya"
@@ -10,5 +10,5 @@
   "homepage": "https://github.com/AliyuYahaya/Ajiya",
   "repository": "https://github.com/AliyuYahaya/Ajiya",
   "license": "MIT",
-  "keywords": ["planning", "tickets", "project-tracking", "mcp"]
+  "keywords": ["planning", "tickets", "project-tracking"]
 }
