@@ -51,6 +51,11 @@ Generated 2026-09-30.
 
 ## Recent activity
 
+- 2026-09-30 `f64ee78` Release rehearsal passed: AJ-0078, AJ-0079, AJ-0084 and AJ-0081 done (AJ-0079, AJ-0084, AJ-0081)
+  - AJ-0078: in_progress → done
+  - AJ-0079: in_progress → done
+  - AJ-0081: pending → done
+  - AJ-0084: in_progress → done
 - 2026-09-30 `eeccc95` Release: fix the macOS verification and the wait for publishing (AJ-0079, AJ-0084)
 - 2026-09-30 `390f331` Docs: add v0.2 release install channels (AJ-0081, AJ-0082)
   - AJ-0078: pending → in_progress
@@ -74,8 +79,7 @@ Generated 2026-09-30.
   - AJ-0084: pending → in_progress
 - 2026-09-30 `f582d50` Gated npm and tap publish jobs in the release workflow (AJ-0079)
   - AJ-0079: pending → in_progress
-- 2026-09-30 `7ab4260` Installer CI: setup-python v7, the current major (AJ-0074)
-- and 212 more in data.js
+- and 213 more in data.js
 
 ## Checks
 

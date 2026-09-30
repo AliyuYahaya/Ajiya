@@ -2660,6 +2660,53 @@ window.AJIYA = {
   "checks": [],
   "activity": [
     {
+      "hash": "f64ee78b9c58ed1463cdbfc06b0a47312c37ee82",
+      "short": "f64ee78",
+      "date": "2026-09-30",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Release rehearsal passed: AJ-0078, AJ-0079, AJ-0084 and AJ-0081 done",
+      "refs": [
+        "AJ-0079",
+        "AJ-0084",
+        "AJ-0081"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0078",
+          "phase": "install",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · 76c7805 · 2026-09-30 · tests passed · Note: v0.2.0-rc.4 release carries install.sh and install.ps1; install.sh from the release installed rc.4 in test-app"
+        },
+        {
+          "id": "AJ-0079",
+          "phase": "install",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · eeccc95 · 2026-09-30 · tests passed · Note: rc.4 run 36775559939: approval gates, wait for publish, npm published 7 packages under next with provenance, tap left alone for a prerelease"
+        },
+        {
+          "id": "AJ-0081",
+          "phase": "install",
+          "from": "pending",
+          "to": "done",
+          "text": "🟩 Done · by Aliyu Yahaya · 2026-09-30 · Note: v0.2.0-rc.4 rehearsal: maintainer approved release, published the pre-release, approved npm and tap; npm next=0.2.0-rc.4 installs and runs in test-app; binaries notarised"
+        },
+        {
+          "id": "AJ-0084",
+          "phase": "install",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · eeccc95 · 2026-09-30 · tests passed · Note: rc.4 darwin amd64 and arm64: spctl install assessment accepted, source=Notarized Developer ID; macos-verify green; cask quarantine hook removed"
+        }
+      ],
+      "time": 1790802859
+    },
+    {
       "hash": "eeccc95783e5cecc6c0b24d645a0b34bd0409704",
       "short": "eeccc95",
       "date": "2026-09-30",
