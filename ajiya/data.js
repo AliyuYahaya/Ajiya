@@ -1,7 +1,7 @@
 // Written by ajiya build. Do not edit: run 'ajiya build'.
 window.AJIYA = {
   "schema": 1,
-  "generated": "2026-09-29",
+  "generated": "2026-09-30",
   "project": {
     "name": "Ajiya",
     "prefix": "AJ"
@@ -29,13 +29,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 68,
-        "done": 51,
+        "done": 52,
         "in_progress": 0,
-        "pending": 17,
+        "pending": 16,
         "dropped": 0
       },
-      "percent": 75,
-      "ready": 3
+      "percent": 76,
+      "ready": 2
     },
     {
       "name": "v0-3",
@@ -44,13 +44,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 78,
-        "done": 51,
+        "done": 52,
         "in_progress": 0,
-        "pending": 27,
+        "pending": 26,
         "dropped": 0
       },
-      "percent": 65,
-      "ready": 3
+      "percent": 66,
+      "ready": 2
     },
     {
       "name": "after-v0-3",
@@ -59,13 +59,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 77,
-        "done": 51,
+        "done": 52,
         "in_progress": 0,
-        "pending": 26,
+        "pending": 25,
         "dropped": 0
       },
-      "percent": 66,
-      "ready": 3
+      "percent": 67,
+      "ready": 2
     }
   ],
   "phases": [
@@ -159,12 +159,12 @@ window.AJIYA = {
       "goal": "Ajiya installs in one step, with a Claude Code plugin",
       "counts": {
         "total": 21,
-        "done": 6,
+        "done": 7,
         "in_progress": 0,
-        "pending": 15,
+        "pending": 14,
         "dropped": 0
       },
-      "percent": 28,
+      "percent": 33,
       "milestone": "v0-2"
     },
     {
@@ -188,9 +188,9 @@ window.AJIYA = {
       "path": ".",
       "counts": {
         "total": 91,
-        "done": 63,
+        "done": 64,
         "in_progress": 0,
-        "pending": 28,
+        "pending": 27,
         "dropped": 0
       }
     }
@@ -2276,24 +2276,26 @@ window.AJIYA = {
         "AJ-0071"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending · Needs a human: needs the maintainer's Apple Developer account",
-        "human": "needs the maintainer's Apple Developer account"
+        "state": "done",
+        "text": "🟩 Done · by Aliyu Yahaya · 2026-09-30 · Note: Developer ID Application .p12 and App Store Connect API key stored in the release environment: MACOS_SIGN_P12, MACOS_SIGN_PASSWORD, MACOS_NOTARY_KEY, MACOS_NOTARY_KEY_ID, MACOS_NOTARY_ISSUER_ID (base64 for the files)",
+        "note": "Developer ID Application .p12 and App Store Connect API key stored in the release environment: MACOS_SIGN_P12, MACOS_SIGN_PASSWORD, MACOS_NOTARY_KEY, MACOS_NOTARY_KEY_ID, MACOS_NOTARY_ISSUER_ID (base64 for the files)",
+        "by": "Aliyu Yahaya",
+        "date": "2026-09-30"
       },
       "milestone": "v0-2",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0084"
       ],
-      "unblocks": 15
+      "unblocks": 0
     },
     {
       "id": "AJ-0084",
       "phase": "install",
       "app": "ajiya",
       "title": "Sign and notarise the macOS binaries",
-      "done_when": "GoReleaser signs and notarises the darwin binaries (notarize.macos) in the release workflow; spctl -a -vv accepts a binary downloaded from a test release; the cask's quarantine-removal hook is removed",
+      "done_when": "The release job runs in the release environment and GoReleaser signs and notarises the darwin binaries (notarize.macos, from secrets MACOS_SIGN_P12, MACOS_SIGN_PASSWORD, MACOS_NOTARY_KEY, MACOS_NOTARY_KEY_ID, MACOS_NOTARY_ISSUER_ID); spctl -a -vv accepts a binary downloaded from a test release; the cask's quarantine-removal hook is removed",
       "depends": [
         "AJ-0072",
         "AJ-0077",
@@ -2306,8 +2308,7 @@ window.AJIYA = {
       "milestone": "v0-2",
       "ready": false,
       "waiting_on": [
-        "AJ-0077",
-        "AJ-0083"
+        "AJ-0077"
       ],
       "dependants": [
         "AJ-0081"
@@ -2490,8 +2491,7 @@ window.AJIYA = {
   ],
   "next": [
     "AJ-0043",
-    "AJ-0075",
-    "AJ-0083"
+    "AJ-0075"
   ],
   "checks": [],
   "activity": [
