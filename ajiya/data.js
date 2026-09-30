@@ -2651,6 +2651,76 @@ window.AJIYA = {
   "checks": [],
   "activity": [
     {
+      "hash": "d83da99a257aa0d8e9aa317725eb13e6da72cffa",
+      "short": "d83da99",
+      "date": "2026-09-30",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Merge branch 'worktree-agent-a920ee3d0cb59f8ae' into worktree-agent-a658cbd8dac8f5d6c",
+      "refs": [],
+      "chore": false,
+      "merge": true,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790789773
+    },
+    {
+      "hash": "5f3e8377977491648b9b07fc1ac994f37ccc1f91",
+      "short": "5f3e837",
+      "date": "2026-09-30",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Mark AJ-0096 and AJ-0097 done",
+      "refs": [
+        "AJ-0096",
+        "AJ-0097"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0096",
+          "phase": "agent-access",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · 926cdc8 · 2026-09-30 · tests passed"
+        },
+        {
+          "id": "AJ-0097",
+          "phase": "install",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · c5c8987 · 2026-09-30 · tests passed"
+        }
+      ],
+      "time": 1790789742
+    },
+    {
+      "hash": "c5c898753bcca1068eca049b07f50410f86f18a5",
+      "short": "c5c8987",
+      "date": "2026-09-30",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Plugin leaves MCP registration to ajiya mcp install",
+      "refs": [
+        "AJ-0097"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0097",
+          "phase": "install",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        }
+      ],
+      "time": 1790789728
+    },
+    {
       "hash": "9e15dbf2f3f3cc10842eb98be33814687af80682",
       "short": "9e15dbf",
       "date": "2026-09-30",
@@ -2741,6 +2811,30 @@ window.AJIYA = {
       "agent": "",
       "changes": [],
       "time": 1790789503
+    },
+    {
+      "hash": "926cdc805b1c16b1da05f750cd5018164136ba0b",
+      "short": "926cdc8",
+      "date": "2026-09-30",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Registering with an agent ends with the command that undoes it",
+      "refs": [
+        "AJ-0096"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0096",
+          "phase": "agent-access",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        }
+      ],
+      "time": 1790789474
     },
     {
       "hash": "72ed8c7821f66ff3ceb2f851ebe21554ae5a4910",

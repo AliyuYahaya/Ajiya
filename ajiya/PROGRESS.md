@@ -58,6 +58,12 @@ Generated 2026-09-30.
 
 ## Recent activity
 
+- 2026-09-30 `d83da99` Merge branch 'worktree-agent-a920ee3d0cb59f8ae' into worktree-agent-a658cbd8dac8f5d6c (-)
+- 2026-09-30 `5f3e837` Mark AJ-0096 and AJ-0097 done (AJ-0096, AJ-0097)
+  - AJ-0096: in_progress → done
+  - AJ-0097: in_progress → done
+- 2026-09-30 `c5c8987` Plugin leaves MCP registration to ajiya mcp install (AJ-0097)
+  - AJ-0097: pending → in_progress
 - 2026-09-30 `9e15dbf` Merge branch 'worktree-agent-ac065ef1f3558d188' into worktree-agent-a658cbd8dac8f5d6c (-)
 - 2026-09-30 `e6cbb0d` Sign and notarise the darwin binaries; drop the cask quarantine hook (AJ-0084)
   - AJ-0084: pending → in_progress
@@ -65,6 +71,8 @@ Generated 2026-09-30.
   - AJ-0079: pending → in_progress
 - 2026-09-30 `7ab4260` Installer CI: setup-python v7, the current major (AJ-0074)
 - 2026-09-30 `74a4e46` Merge branch 'worktree-agent-a8cf3a95133ce824d' into worktree-agent-a658cbd8dac8f5d6c (-)
+- 2026-09-30 `926cdc8` Registering with an agent ends with the command that undoes it (AJ-0096)
+  - AJ-0096: pending → in_progress
 - 2026-09-30 `72ed8c7` Start AJ-0074 and rebuild plan outputs (AJ-0074)
   - AJ-0074: pending → in_progress
 - 2026-09-30 `8bbf335` install.ps1: restore the caller's preferences and use an approved verb (AJ-0073)
@@ -78,16 +86,7 @@ Generated 2026-09-30.
   - AJ-0096: new → pending
 - 2026-09-30 `4b5a995` Merge branch 'worktree-agent-a4b3db9090249aeb4' into worktree-agent-a658cbd8dac8f5d6c (-)
 - 2026-09-30 `1894907` Installers offer ajiya mcp install for the detected agents (AJ-0045, AJ-0073)
-- 2026-09-30 `e7aa392` Merge branch 'worktree-agent-a808e23b5b5a187e3' into worktree-agent-a658cbd8dac8f5d6c (-)
-- 2026-09-30 `d72350f` Mark AJ-0094 and AJ-0095 done (AJ-0094, AJ-0095)
-  - AJ-0094: pending → done
-  - AJ-0095: pending → done
-- 2026-09-30 `c765d5a` Mark AJ-0045 done, AJ-0073 in progress (AJ-0045)
-  - AJ-0045: pending → done
-  - AJ-0073: pending → in_progress
-- 2026-09-30 `a961c6f` Plan: the plugin leaves MCP registration to ajiya mcp install (chore)
-  - AJ-0097: new → pending
-- and 200 more in data.js
+- and 204 more in data.js
 
 ## Checks
 
