@@ -29,13 +29,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 68,
-        "done": 55,
+        "done": 56,
         "in_progress": 0,
-        "pending": 13,
+        "pending": 12,
         "dropped": 0
       },
-      "percent": 80,
-      "ready": 3
+      "percent": 82,
+      "ready": 2
     },
     {
       "name": "v0-3",
@@ -44,13 +44,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 78,
-        "done": 55,
+        "done": 56,
         "in_progress": 0,
-        "pending": 23,
+        "pending": 22,
         "dropped": 0
       },
-      "percent": 70,
-      "ready": 3
+      "percent": 71,
+      "ready": 2
     },
     {
       "name": "after-v0-3",
@@ -59,13 +59,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 77,
-        "done": 55,
+        "done": 56,
         "in_progress": 0,
-        "pending": 22,
+        "pending": 21,
         "dropped": 0
       },
-      "percent": 71,
-      "ready": 3
+      "percent": 72,
+      "ready": 2
     }
   ],
   "phases": [
@@ -159,12 +159,12 @@ window.AJIYA = {
       "goal": "Ajiya installs in one step, with a Claude Code plugin",
       "counts": {
         "total": 21,
-        "done": 9,
+        "done": 10,
         "in_progress": 0,
-        "pending": 12,
+        "pending": 11,
         "dropped": 0
       },
-      "percent": 42,
+      "percent": 47,
       "milestone": "v0-2"
     },
     {
@@ -188,9 +188,9 @@ window.AJIYA = {
       "path": ".",
       "counts": {
         "total": 91,
-        "done": 67,
+        "done": 68,
         "in_progress": 0,
-        "pending": 24,
+        "pending": 23,
         "dropped": 0
       }
     }
@@ -2094,16 +2094,19 @@ window.AJIYA = {
         "AJ-0075"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · 6956c08 · 2026-09-30 · tests passed",
+        "commit": "6956c08",
+        "date": "2026-09-30",
+        "tests_passed": true
       },
       "milestone": "v0-2",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0081"
       ],
-      "unblocks": 14
+      "unblocks": 0
     },
     {
       "id": "AJ-0077",
@@ -2230,7 +2233,6 @@ window.AJIYA = {
       "ready": false,
       "waiting_on": [
         "AJ-0074",
-        "AJ-0076",
         "AJ-0078",
         "AJ-0079",
         "AJ-0084"
@@ -2488,11 +2490,34 @@ window.AJIYA = {
   ],
   "next": [
     "AJ-0044",
-    "AJ-0076",
     "AJ-0046"
   ],
   "checks": [],
   "activity": [
+    {
+      "hash": "6956c08f0cfd90806648a0684fc6ad7a4ec247d3",
+      "short": "6956c08",
+      "date": "2026-09-30",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Test the npm launcher with a real stand-in binary on every OS",
+      "refs": [
+        "AJ-0076"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0076",
+          "phase": "install",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        }
+      ],
+      "time": 1790783120
+    },
     {
       "hash": "1dc25bada3feecfa23bccf931c1ff2d67c82c1b8",
       "short": "1dc25ba",
