@@ -121,7 +121,11 @@ jobs:
             mkdir -p "$dir"
             tar -xzf "$archive" -C "$dir" ajiya
             codesign --verify --deep --strict --verbose=2 "$dir/ajiya"
-            spctl --assess --type execute --verbose=4 "$dir/ajiya"
+            # A bare command-line binary is not an app, so the default "execute"
+            # assessment always rejects it; "install" is Gatekeeper's verdict for
+            # a downloaded file and must say "source=Notarized Developer ID".
+            spctl --assess --type install --verbose=4 "$dir/ajiya" 2>&1 | tee "$dir/spctl.txt"
+            grep -q 'source=Notarized Developer ID' "$dir/spctl.txt"
           done
 
   # Pull requests and manual runs: build only. No secrets, read-only token,
@@ -175,7 +179,9 @@ jobs:
         run: |
           set -euo pipefail
           for attempt in $(seq 1 360); do
-            draft=$(gh api "repos/$GITHUB_REPOSITORY/releases/tags/$GITHUB_REF_NAME" --jq '.draft')
+            # The release-by-tag API does not return drafts (404), so look the
+            # release up in the list, which includes drafts for this token.
+            draft=$(gh api "repos/$GITHUB_REPOSITORY/releases?per_page=30" --jq ".[] | select(.tag_name == \"$GITHUB_REF_NAME\") | .draft" || true)
             if [ "$draft" = false ]; then
               echo "release $GITHUB_REF_NAME is published"
               exit 0
@@ -253,7 +259,9 @@ jobs:
         run: |
           set -euo pipefail
           for attempt in $(seq 1 360); do
-            draft=$(gh api "repos/$GITHUB_REPOSITORY/releases/tags/$GITHUB_REF_NAME" --jq '.draft')
+            # The release-by-tag API does not return drafts (404), so look the
+            # release up in the list, which includes drafts for this token.
+            draft=$(gh api "repos/$GITHUB_REPOSITORY/releases?per_page=30" --jq ".[] | select(.tag_name == \"$GITHUB_REF_NAME\") | .draft" || true)
             if [ "$draft" = false ]; then
               echo "release $GITHUB_REF_NAME is published"
               exit 0
