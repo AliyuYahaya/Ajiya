@@ -28,19 +28,34 @@ window.AJIYA = {
         "AJ-0047"
       ],
       "required": {
-        "total": 72,
+        "total": 73,
         "done": 58,
         "in_progress": 0,
-        "pending": 14,
+        "pending": 15,
         "dropped": 0
       },
-      "percent": 80,
-      "ready": 7
+      "percent": 79,
+      "ready": 8
     },
     {
       "name": "v0-3",
       "targets": [
         "AJ-0058"
+      ],
+      "required": {
+        "total": 83,
+        "done": 58,
+        "in_progress": 0,
+        "pending": 25,
+        "dropped": 0
+      },
+      "percent": 69,
+      "ready": 8
+    },
+    {
+      "name": "after-v0-3",
+      "targets": [
+        "AJ-0057"
       ],
       "required": {
         "total": 82,
@@ -50,22 +65,7 @@ window.AJIYA = {
         "dropped": 0
       },
       "percent": 70,
-      "ready": 7
-    },
-    {
-      "name": "after-v0-3",
-      "targets": [
-        "AJ-0057"
-      ],
-      "required": {
-        "total": 81,
-        "done": 58,
-        "in_progress": 0,
-        "pending": 23,
-        "dropped": 0
-      },
-      "percent": 71,
-      "ready": 7
+      "ready": 8
     }
   ],
   "phases": [
@@ -144,13 +144,13 @@ window.AJIYA = {
       "title": "Agent-access",
       "goal": "Agents read and change the plan through ajiya status and an MCP server they register with in one step",
       "counts": {
-        "total": 5,
+        "total": 6,
         "done": 3,
         "in_progress": 0,
-        "pending": 2,
+        "pending": 3,
         "dropped": 0
       },
-      "percent": 60,
+      "percent": 50,
       "milestone": "v0-2"
     },
     {
@@ -187,10 +187,10 @@ window.AJIYA = {
       "name": "ajiya",
       "path": ".",
       "counts": {
-        "total": 95,
+        "total": 96,
         "done": 70,
         "in_progress": 0,
-        "pending": 25,
+        "pending": 26,
         "dropped": 0
       }
     }
@@ -1297,7 +1297,8 @@ window.AJIYA = {
         "AJ-0077",
         "AJ-0093",
         "AJ-0094",
-        "AJ-0095"
+        "AJ-0095",
+        "AJ-0096"
       ],
       "unblocks": 0
     },
@@ -1375,7 +1376,8 @@ window.AJIYA = {
         "AJ-0092",
         "AJ-0093",
         "AJ-0094",
-        "AJ-0095"
+        "AJ-0095",
+        "AJ-0096"
       ],
       "status": {
         "state": "pending",
@@ -1390,7 +1392,8 @@ window.AJIYA = {
         "AJ-0092",
         "AJ-0093",
         "AJ-0094",
-        "AJ-0095"
+        "AJ-0095",
+        "AJ-0096"
       ],
       "dependants": [
         "AJ-0048"
@@ -2580,6 +2583,27 @@ window.AJIYA = {
         "AJ-0047"
       ],
       "unblocks": 12
+    },
+    {
+      "id": "AJ-0096",
+      "phase": "agent-access",
+      "app": "ajiya",
+      "title": "Registering says how to undo it",
+      "done_when": "Whenever init or mcp install registers Ajiya with an agent, the output ends with the command that undoes it (ajiya mcp uninstall --\u003cagent\u003e, with --scope project when used); tests check the line",
+      "depends": [
+        "AJ-0044"
+      ],
+      "status": {
+        "state": "pending",
+        "text": "🟥 Pending"
+      },
+      "milestone": "v0-2",
+      "ready": true,
+      "waiting_on": [],
+      "dependants": [
+        "AJ-0047"
+      ],
+      "unblocks": 12
     }
   ],
   "next": [
@@ -2589,7 +2613,8 @@ window.AJIYA = {
     "AJ-0092",
     "AJ-0093",
     "AJ-0094",
-    "AJ-0095"
+    "AJ-0095",
+    "AJ-0096"
   ],
   "checks": [],
   "activity": [
