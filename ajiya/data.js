@@ -29,13 +29,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 68,
-        "done": 55,
+        "done": 56,
         "in_progress": 0,
-        "pending": 13,
+        "pending": 12,
         "dropped": 0
       },
-      "percent": 80,
-      "ready": 3
+      "percent": 82,
+      "ready": 2
     },
     {
       "name": "v0-3",
@@ -44,13 +44,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 78,
-        "done": 55,
+        "done": 56,
         "in_progress": 0,
-        "pending": 23,
+        "pending": 22,
         "dropped": 0
       },
-      "percent": 70,
-      "ready": 3
+      "percent": 71,
+      "ready": 2
     },
     {
       "name": "after-v0-3",
@@ -59,13 +59,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 77,
-        "done": 55,
+        "done": 56,
         "in_progress": 0,
-        "pending": 22,
+        "pending": 21,
         "dropped": 0
       },
-      "percent": 71,
-      "ready": 3
+      "percent": 72,
+      "ready": 2
     }
   ],
   "phases": [
@@ -159,12 +159,12 @@ window.AJIYA = {
       "goal": "Ajiya installs in one step, with a Claude Code plugin",
       "counts": {
         "total": 21,
-        "done": 9,
+        "done": 10,
         "in_progress": 0,
-        "pending": 12,
+        "pending": 11,
         "dropped": 0
       },
-      "percent": 42,
+      "percent": 47,
       "milestone": "v0-2"
     },
     {
@@ -188,9 +188,9 @@ window.AJIYA = {
       "path": ".",
       "counts": {
         "total": 91,
-        "done": 67,
+        "done": 68,
         "in_progress": 0,
-        "pending": 24,
+        "pending": 23,
         "dropped": 0
       }
     }
@@ -1333,16 +1333,19 @@ window.AJIYA = {
         "AJ-0043"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · 83cfc3f · 2026-09-30 · tests passed",
+        "commit": "83cfc3f",
+        "date": "2026-09-30",
+        "tests_passed": true
       },
       "milestone": "v0-2",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0047"
       ],
-      "unblocks": 12
+      "unblocks": 0
     },
     {
       "id": "AJ-0047",
@@ -1375,7 +1378,6 @@ window.AJIYA = {
       "waiting_on": [
         "AJ-0044",
         "AJ-0045",
-        "AJ-0046",
         "AJ-0082"
       ],
       "dependants": [
@@ -2488,11 +2490,26 @@ window.AJIYA = {
   ],
   "next": [
     "AJ-0044",
-    "AJ-0076",
-    "AJ-0046"
+    "AJ-0076"
   ],
   "checks": [],
   "activity": [
+    {
+      "hash": "83cfc3fe9f260c9ce271346a453ac083b55dbf0b",
+      "short": "83cfc3f",
+      "date": "2026-09-30",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Add Claude Code plugin",
+      "refs": [
+        "AJ-0046"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790783281
+    },
     {
       "hash": "1dc25bada3feecfa23bccf931c1ff2d67c82c1b8",
       "short": "1dc25ba",
