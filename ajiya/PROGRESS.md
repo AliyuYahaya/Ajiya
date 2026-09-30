@@ -8,9 +8,9 @@ Generated 2026-09-30.
 | Milestone | Closed | Required | % | Can start now |
 |---|---|---|---|---|
 | v0-1 | 37 | 37 | 100% | 0 |
-| v0-2 | 72 | 74 | 97% | 1 |
-| v0-3 | 72 | 84 | 85% | 1 |
-| after-v0-3 | 72 | 83 | 86% | 1 |
+| v0-2 | 73 | 74 | 98% | 1 |
+| v0-3 | 73 | 84 | 86% | 1 |
+| after-v0-3 | 73 | 83 | 87% | 1 |
 
 ## Phases
 
@@ -22,16 +22,15 @@ Generated 2026-09-30.
 | Onboarding | 17 | 0 | 0 | 17 | 100% | v0-1 |
 | Release | 5 | 0 | 0 | 5 | 100% | v0-1 |
 | Agent-access | 6 | 0 | 0 | 6 | 100% | v0-2 |
-| Install | 22 | 1 | 1 | 24 | 91% | v0-2 |
+| Install | 23 | 0 | 1 | 24 | 95% | v0-2 |
 | Decisions-and-changes | 0 | 0 | 11 | 11 | 0% | v0-3 |
 
 ## Can start now
 
-- **AJ-0082** Install docs for every channel (ajiya) · v0-2 · in progress
+- **AJ-0047** v0.2 definition of done (ajiya) · v0-2
 
 ## Waiting
 
-- **AJ-0047** v0.2 definition of done (ajiya) waits on AJ-0082
 - **AJ-0048** Tags column (ajiya) waits on AJ-0047
 - **AJ-0049** ajiya ticket files (ajiya) waits on AJ-0048
 - **AJ-0050** Decision records and commands (ajiya) waits on AJ-0048
@@ -51,6 +50,7 @@ Generated 2026-09-30.
 
 ## Recent activity
 
+- 2026-09-30 `e3e65f6` Docs: install lines for every channel, cloud agents and agent prompts (AJ-0082)
 - 2026-09-30 `f64ee78` Release rehearsal passed: AJ-0078, AJ-0079, AJ-0084 and AJ-0081 done (AJ-0079, AJ-0084, AJ-0081)
   - AJ-0078: in_progress → done
   - AJ-0079: in_progress → done
@@ -77,9 +77,7 @@ Generated 2026-09-30.
 - 2026-09-30 `9e15dbf` Merge branch 'worktree-agent-ac065ef1f3558d188' into worktree-agent-a658cbd8dac8f5d6c (-)
 - 2026-09-30 `e6cbb0d` Sign and notarise the darwin binaries; drop the cask quarantine hook (AJ-0084)
   - AJ-0084: pending → in_progress
-- 2026-09-30 `f582d50` Gated npm and tap publish jobs in the release workflow (AJ-0079)
-  - AJ-0079: pending → in_progress
-- and 213 more in data.js
+- and 214 more in data.js
 
 ## Checks
 
