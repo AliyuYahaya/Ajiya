@@ -1,7 +1,6 @@
 package cli
 
 import (
-	"bufio"
 	"errors"
 	"fmt"
 	"os"
@@ -31,7 +30,10 @@ func runInit(e *env, args []string) error {
 	if _, err := os.Stat(path); err == nil {
 		// Already set up: bring the agent kit up to date, nothing else.
 		fmt.Fprintf(e.stdout, "%s already exists: kept as it is.\n", config.FileName)
-		return installKit(e)
+		if err := installKit(e); err != nil {
+			return err
+		}
+		return offerAgents(e, *yes)
 	} else if !errors.Is(err, os.ErrNotExist) {
 		return err
 	}
@@ -73,6 +75,9 @@ func runInit(e *env, args []string) error {
 		fmt.Fprintf(e.stdout, "No test command found: set one in [test] of %s so 'ajiya ticket done --test' can run it.\n", config.FileName)
 	}
 	if err := installKit(e); err != nil {
+		return err
+	}
+	if err := offerAgents(e, *yes); err != nil {
 		return err
 	}
 	fmt.Fprintln(e.stdout, "Next: 'ajiya hook install', then plan with .ajiya/guide/setup.md.")
@@ -125,8 +130,7 @@ func chooseApps(e *env, cands []detect.Candidate, yes bool) ([]detect.Candidate,
 		return nil, nil
 	}
 	fmt.Fprint(e.stdout, "Register which? all, none, or numbers such as 1,3 [all]: ")
-	line, _ := bufio.NewReader(e.stdin).ReadString('\n')
-	return pickApps(cands, line)
+	return pickApps(cands, e.readLine())
 }
 
 // pickApps reads an answer: "", "all", "none", or numbers separated by commas or spaces.

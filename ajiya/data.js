@@ -29,13 +29,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 68,
-        "done": 57,
+        "done": 58,
         "in_progress": 0,
-        "pending": 11,
+        "pending": 10,
         "dropped": 0
       },
-      "percent": 83,
-      "ready": 1
+      "percent": 85,
+      "ready": 3
     },
     {
       "name": "v0-3",
@@ -44,13 +44,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 78,
-        "done": 57,
+        "done": 58,
         "in_progress": 0,
-        "pending": 21,
+        "pending": 20,
         "dropped": 0
       },
-      "percent": 73,
-      "ready": 1
+      "percent": 74,
+      "ready": 3
     },
     {
       "name": "after-v0-3",
@@ -59,13 +59,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 77,
-        "done": 57,
+        "done": 58,
         "in_progress": 0,
-        "pending": 20,
+        "pending": 19,
         "dropped": 0
       },
-      "percent": 74,
-      "ready": 1
+      "percent": 75,
+      "ready": 3
     }
   ],
   "phases": [
@@ -145,12 +145,12 @@ window.AJIYA = {
       "goal": "Agents read and change the plan through ajiya status and an MCP server they register with in one step",
       "counts": {
         "total": 3,
-        "done": 2,
+        "done": 3,
         "in_progress": 0,
-        "pending": 1,
+        "pending": 0,
         "dropped": 0
       },
-      "percent": 66,
+      "percent": 100,
       "milestone": "v0-2"
     },
     {
@@ -188,9 +188,9 @@ window.AJIYA = {
       "path": ".",
       "counts": {
         "total": 91,
-        "done": 69,
+        "done": 70,
         "in_progress": 0,
-        "pending": 22,
+        "pending": 21,
         "dropped": 0
       }
     }
@@ -1281,11 +1281,14 @@ window.AJIYA = {
         "AJ-0043"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · 592adc8 · 2026-09-30 · tests passed",
+        "commit": "592adc8",
+        "date": "2026-09-30",
+        "tests_passed": true
       },
       "milestone": "v0-2",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0045",
@@ -1293,7 +1296,7 @@ window.AJIYA = {
         "AJ-0073",
         "AJ-0077"
       ],
-      "unblocks": 21
+      "unblocks": 0
     },
     {
       "id": "AJ-0045",
@@ -1311,10 +1314,8 @@ window.AJIYA = {
         "text": "🟥 Pending"
       },
       "milestone": "v0-2",
-      "ready": false,
-      "waiting_on": [
-        "AJ-0044"
-      ],
+      "ready": true,
+      "waiting_on": [],
       "dependants": [
         "AJ-0047",
         "AJ-0074",
@@ -1376,7 +1377,6 @@ window.AJIYA = {
       "milestone": "v0-2",
       "ready": false,
       "waiting_on": [
-        "AJ-0044",
         "AJ-0045",
         "AJ-0082"
       ],
@@ -2023,10 +2023,8 @@ window.AJIYA = {
         "text": "🟥 Pending"
       },
       "milestone": "v0-2",
-      "ready": false,
-      "waiting_on": [
-        "AJ-0044"
-      ],
+      "ready": true,
+      "waiting_on": [],
       "dependants": [
         "AJ-0074",
         "AJ-0078"
@@ -2126,10 +2124,8 @@ window.AJIYA = {
         "text": "🟥 Pending"
       },
       "milestone": "v0-2",
-      "ready": false,
-      "waiting_on": [
-        "AJ-0044"
-      ],
+      "ready": true,
+      "waiting_on": [],
       "dependants": [
         "AJ-0079",
         "AJ-0084"
@@ -2491,7 +2487,9 @@ window.AJIYA = {
     }
   ],
   "next": [
-    "AJ-0044"
+    "AJ-0045",
+    "AJ-0073",
+    "AJ-0077"
   ],
   "checks": [],
   "activity": [

@@ -8,9 +8,9 @@ Generated 2026-09-30.
 | Milestone | Closed | Required | % | Can start now |
 |---|---|---|---|---|
 | v0-1 | 37 | 37 | 100% | 0 |
-| v0-2 | 57 | 68 | 83% | 1 |
-| v0-3 | 57 | 78 | 73% | 1 |
-| after-v0-3 | 57 | 77 | 74% | 1 |
+| v0-2 | 58 | 68 | 85% | 3 |
+| v0-3 | 58 | 78 | 74% | 3 |
+| after-v0-3 | 58 | 77 | 75% | 3 |
 
 ## Phases
 
@@ -21,18 +21,19 @@ Generated 2026-09-30.
 | Outputs | 12 | 0 | 0 | 12 | 100% | v0-1 |
 | Onboarding | 17 | 0 | 0 | 17 | 100% | v0-1 |
 | Release | 5 | 0 | 0 | 5 | 100% | v0-1 |
-| Agent-access | 2 | 0 | 1 | 3 | 66% | v0-2 |
+| Agent-access | 3 | 0 | 0 | 3 | 100% | v0-2 |
 | Install | 11 | 0 | 10 | 21 | 52% | v0-2 |
 | Decisions-and-changes | 0 | 0 | 11 | 11 | 0% | v0-3 |
 
 ## Can start now
 
-- **AJ-0044** ajiya mcp install, uninstall and status (ajiya) · v0-2
+- **AJ-0045** install.sh for macOS and Linux (ajiya) · v0-2
+- **AJ-0073** install.ps1 for Windows (ajiya) · v0-2
+- **AJ-0077** Homebrew tap wiring (ajiya) · v0-2
 
 ## Waiting
 
-- **AJ-0045** install.sh for macOS and Linux (ajiya) waits on AJ-0044
-- **AJ-0047** v0.2 definition of done (ajiya) waits on AJ-0044, AJ-0045, AJ-0082
+- **AJ-0047** v0.2 definition of done (ajiya) waits on AJ-0045, AJ-0082
 - **AJ-0048** Tags column (ajiya) waits on AJ-0047
 - **AJ-0049** ajiya ticket files (ajiya) waits on AJ-0048
 - **AJ-0050** Decision records and commands (ajiya) waits on AJ-0048
@@ -44,9 +45,7 @@ Generated 2026-09-30.
 - **AJ-0056** Guides and skill for decisions and changes (ajiya) waits on AJ-0055
 - **AJ-0057** Dashboard: open changes and decisions (ajiya) waits on AJ-0055
 - **AJ-0058** v0.3 definition of done (ajiya) waits on AJ-0048, AJ-0049, AJ-0050, AJ-0051, AJ-0052, AJ-0053, AJ-0054, AJ-0055, AJ-0056
-- **AJ-0073** install.ps1 for Windows (ajiya) waits on AJ-0044
 - **AJ-0074** Installer CI (ajiya) waits on AJ-0045, AJ-0073
-- **AJ-0077** Homebrew tap wiring (ajiya) waits on AJ-0044
 - **AJ-0078** Install scripts attached to every release (ajiya) waits on AJ-0045, AJ-0073
 - **AJ-0079** Gated publish jobs (ajiya) waits on AJ-0077
 - **AJ-0081** Release rehearsal on a release candidate (ajiya) waits on AJ-0074, AJ-0078, AJ-0079, AJ-0084
