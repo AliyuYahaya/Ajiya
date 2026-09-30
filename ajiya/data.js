@@ -30,8 +30,8 @@ window.AJIYA = {
       "required": {
         "total": 74,
         "done": 64,
-        "in_progress": 1,
-        "pending": 9,
+        "in_progress": 3,
+        "pending": 7,
         "dropped": 0
       },
       "percent": 86,
@@ -45,8 +45,8 @@ window.AJIYA = {
       "required": {
         "total": 84,
         "done": 64,
-        "in_progress": 1,
-        "pending": 19,
+        "in_progress": 3,
+        "pending": 17,
         "dropped": 0
       },
       "percent": 76,
@@ -60,8 +60,8 @@ window.AJIYA = {
       "required": {
         "total": 83,
         "done": 64,
-        "in_progress": 1,
-        "pending": 18,
+        "in_progress": 3,
+        "pending": 16,
         "dropped": 0
       },
       "percent": 77,
@@ -160,8 +160,8 @@ window.AJIYA = {
       "counts": {
         "total": 24,
         "done": 15,
-        "in_progress": 1,
-        "pending": 8,
+        "in_progress": 3,
+        "pending": 6,
         "dropped": 0
       },
       "percent": 62,
@@ -189,8 +189,8 @@ window.AJIYA = {
       "counts": {
         "total": 97,
         "done": 76,
-        "in_progress": 1,
-        "pending": 20,
+        "in_progress": 3,
+        "pending": 18,
         "dropped": 0
       }
     }
@@ -2188,8 +2188,8 @@ window.AJIYA = {
         "AJ-0077"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "in_progress",
+        "text": "🟨 In progress"
       },
       "milestone": "v0-2",
       "ready": true,
@@ -2314,8 +2314,8 @@ window.AJIYA = {
         "AJ-0083"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "in_progress",
+        "text": "🟨 In progress"
       },
       "milestone": "v0-2",
       "ready": true,
@@ -2648,6 +2648,54 @@ window.AJIYA = {
   ],
   "checks": [],
   "activity": [
+    {
+      "hash": "e6cbb0d5965ab6a14400c97e0941250ad8794e2e",
+      "short": "e6cbb0d",
+      "date": "2026-09-30",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Sign and notarise the darwin binaries; drop the cask quarantine hook",
+      "refs": [
+        "AJ-0084"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0084",
+          "phase": "install",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        }
+      ],
+      "time": 1790789647
+    },
+    {
+      "hash": "f582d509d072ff4b4db22eb2909b0c004deabd21",
+      "short": "f582d50",
+      "date": "2026-09-30",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Gated npm and tap publish jobs in the release workflow",
+      "refs": [
+        "AJ-0079"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0079",
+          "phase": "install",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        }
+      ],
+      "time": 1790789602
+    },
     {
       "hash": "634ca2704b531ef39fb8f2a312a6c26d5903620b",
       "short": "634ca27",
