@@ -99,6 +99,7 @@ func init() {
 		{"check", "[--strict] [--commits <range>] [--json]", "Check the plan for problems", runCheck},
 		{"hook install", "", "Install the commit-msg and prepare-commit-msg git hooks", runHookInstall},
 		{"hook run", "<hook> <git hook arguments>", "Run a git hook (called by the installed hook scripts)", runHookRun},
+		{"mcp", "[--dir <path>]", "Serve Ajiya's tools to an AI agent over MCP (stdio)", runMCP},
 		{"version", "", "Print the version", runVersion},
 	}
 }
