@@ -2494,6 +2494,68 @@ window.AJIYA = {
   "checks": [],
   "activity": [
     {
+      "hash": "5958462fb4375d0475e5df2759d0d979b539cbf2",
+      "short": "5958462",
+      "date": "2026-09-30",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Merge branch 'worktree-agent-a052d49d096e57329' into worktree-agent-a658cbd8dac8f5d6c",
+      "refs": [],
+      "chore": false,
+      "merge": true,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790781814
+    },
+    {
+      "hash": "2f1791a148ede0d6bcf972e38f67714c5508d1bd",
+      "short": "2f1791a",
+      "date": "2026-09-30",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Mark AJ-0043 done",
+      "refs": [
+        "AJ-0043"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0043",
+          "phase": "agent-access",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · 0852975 · 2026-09-30 · tests passed"
+        }
+      ],
+      "time": 1790781736
+    },
+    {
+      "hash": "085297565a9eb388759ab6ffe4db0d5edb230f04",
+      "short": "0852975",
+      "date": "2026-09-30",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Test the MCP server and mention it in the guide",
+      "refs": [
+        "AJ-0043"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0043",
+          "phase": "agent-access",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        }
+      ],
+      "time": 1790781658
+    },
+    {
       "hash": "86e49053030982848fc62c05ee0707969cf25976",
       "short": "86e4905",
       "date": "2026-09-30",
@@ -2516,6 +2578,22 @@ window.AJIYA = {
         }
       ],
       "time": 1790781548
+    },
+    {
+      "hash": "df94ea72b2ecde1d4120869344abaafa375ff692",
+      "short": "df94ea7",
+      "date": "2026-09-30",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Add the official MCP Go SDK (maintainer approved) and ajiya mcp server",
+      "refs": [
+        "AJ-0043"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790781037
     },
     {
       "hash": "07d20efcb1bda6a6c1241e0b67ad2d8b2a392bb6",
