@@ -50,7 +50,7 @@ release:
   draft: true
 
 # Homebrew cask for the tap AliyuYahaya/homebrew-tap.
-# skip_upload: auto pushes the cask for a stable tag and holds it back for a
+# skip_upload: true pushes the cask for a stable tag and holds it back for a
 # prerelease tag such as v1.0.0-rc1
 # (https://goreleaser.com/customization/homebrew_casks/). The release job in
 # .github/workflows/release.yml passes --skip=homebrew, so nothing reaches the
@@ -66,7 +66,7 @@ homebrew_casks:
       owner: AliyuYahaya
       name: homebrew-tap
       token: "{{ .Env.HOMEBREW_TAP_TOKEN }}"
-    skip_upload: auto
+    skip_upload: true
     hooks:
       post:
         # The binaries are not notarised, so macOS would block them on first
