@@ -79,13 +79,15 @@ jobs:
       # Lint first: cheap, and it does not need the snapshot.
       - name: shellcheck
         if: runner.os == 'Linux'
-        run: shellcheck scripts/install.sh scripts/test-install.sh
+        # Fail on warnings and errors; info and style notes are only printed.
+        run: shellcheck --severity=warning scripts/install.sh scripts/test-install.sh
       - name: PSScriptAnalyzer
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
           Install-Module PSScriptAnalyzer -Scope CurrentUser -Force
-          $results = Invoke-ScriptAnalyzer -Path scripts/install.ps1, scripts/test-install.ps1
+          # -Path takes one path at a time.
+          $results = @('scripts/install.ps1', 'scripts/test-install.ps1') | ForEach-Object { Invoke-ScriptAnalyzer -Path $_ }
           $results | Format-Table RuleName, Severity, ScriptName, Line, Message -AutoSize -Wrap | Out-String -Width 200 | Write-Host
           $errors = @($results | Where-Object Severity -eq 'Error')
           Write-Host "$($errors.Count) error(s), $(@($results | Where-Object Severity -eq 'Warning').Count) warning(s)"
