@@ -45,11 +45,12 @@ jobs:
       - uses: goreleaser/goreleaser-action@v7
         with:
           version: "~> v2"
-          args: release --clean --release-notes notes.md
+          args: release --clean --skip=homebrew --release-notes notes.md
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # Homebrew upload stays off: skip_upload is true in .goreleaser.yaml.
-          # The placeholder only lets its token template resolve.
+          # Homebrew upload stays off: --skip=homebrew above (skip_upload is auto
+          # in .goreleaser.yaml). The placeholder only lets its token resolve.
+          # The gated tap job (AJ-0079) will drop the flag.
           HOMEBREW_TAP_TOKEN: unused
       - uses: actions/upload-artifact@v7
         with:
