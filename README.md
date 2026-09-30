@@ -46,6 +46,8 @@ Claude Code users can also add the plugin (skill, MCP server and a session-start
 status line): `/plugin marketplace add AliyuYahaya/Ajiya`, then
 `/plugin install ajiya@ajiya`. See [plugin/README.md](plugin/README.md).
 
+Cursor users: [![Add to Cursor](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/install-mcp?name=ajiya&config=eyJjb21tYW5kIjoiYWppeWEiLCJhcmdzIjpbIm1jcCJdfQ%3D%3D) adds the `ajiya mcp` server (`ajiya` must be on your `PATH`).
+
 ## Walkthrough: a new project
 
 Start in an empty folder, or a fresh repository:
