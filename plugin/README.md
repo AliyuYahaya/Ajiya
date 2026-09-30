@@ -19,9 +19,9 @@ adds no line.
 
 The plugin does not ship the `ajiya` binary. Install it first:
 
-    go install github.com/AliyuYahaya/Ajiya/cmd/ajiya@latest
+    npm install -g @ajiya/cli
 
-(npm and Homebrew installs come with v0.2.) If `ajiya` is missing in a project
+(or the install script or Homebrew; see the main README.) If `ajiya` is missing in a project
 that has `ajiya.toml`, the hook prints this install line and nothing else.
 
 ## Install
