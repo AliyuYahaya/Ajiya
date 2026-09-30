@@ -8,9 +8,9 @@ Generated 2026-09-30.
 | Milestone | Closed | Required | % | Can start now |
 |---|---|---|---|---|
 | v0-1 | 37 | 37 | 100% | 0 |
-| v0-2 | 62 | 74 | 83% | 7 |
-| v0-3 | 62 | 84 | 73% | 7 |
-| after-v0-3 | 62 | 83 | 74% | 7 |
+| v0-2 | 59 | 68 | 86% | 4 |
+| v0-3 | 59 | 78 | 75% | 4 |
+| after-v0-3 | 59 | 77 | 76% | 4 |
 
 ## Phases
 
@@ -21,7 +21,6 @@ Generated 2026-09-30.
 | Outputs | 12 | 0 | 0 | 12 | 100% | v0-1 |
 | Onboarding | 17 | 0 | 0 | 17 | 100% | v0-1 |
 | Release | 5 | 0 | 0 | 5 | 100% | v0-1 |
-| Agent-access | 3 | 0 | 3 | 6 | 50% | v0-2 |
 | Install | 15 | 1 | 8 | 24 | 62% | v0-2 |
 | Decisions-and-changes | 0 | 0 | 11 | 11 | 0% | v0-3 |
 
@@ -30,14 +29,11 @@ Generated 2026-09-30.
 - **AJ-0073** install.ps1 for Windows (ajiya) · v0-2 · in progress
 - **AJ-0079** Gated publish jobs (ajiya) · v0-2
 - **AJ-0084** Sign and notarise the macOS binaries (ajiya) · v0-2
-- **AJ-0094** Terminal detection ignores /dev/null (ajiya) · v0-2
-- **AJ-0095** mcp install honours CLAUDE_CONFIG_DIR (ajiya) · v0-2
-- **AJ-0096** Registering says how to undo it (ajiya) · v0-2
 - **AJ-0097** Plugin leaves MCP registration to ajiya mcp install (ajiya) · v0-2
 
 ## Waiting
 
-- **AJ-0047** v0.2 definition of done (ajiya) waits on AJ-0082, AJ-0094, AJ-0095, AJ-0096, AJ-0097
+- **AJ-0047** v0.2 definition of done (ajiya) waits on AJ-0082, AJ-0097
 - **AJ-0048** Tags column (ajiya) waits on AJ-0047
 - **AJ-0049** ajiya ticket files (ajiya) waits on AJ-0048
 - **AJ-0050** Decision records and commands (ajiya) waits on AJ-0048
@@ -62,11 +58,18 @@ Generated 2026-09-30.
 
 ## Recent activity
 
+- 2026-09-30 `1894907` Installers offer ajiya mcp install for the detected agents (AJ-0045, AJ-0073)
+- 2026-09-30 `e7aa392` Merge branch 'worktree-agent-a808e23b5b5a187e3' into worktree-agent-a658cbd8dac8f5d6c (-)
+- 2026-09-30 `c765d5a` Mark AJ-0045 done, AJ-0073 in progress (AJ-0045)
+  - AJ-0045: pending → done
+  - AJ-0073: pending → in_progress
 - 2026-09-30 `a961c6f` Plan: the plugin leaves MCP registration to ajiya mcp install (chore)
   - AJ-0097: new → pending
+- 2026-09-30 `7f92963` Add install.ps1 for Windows (AJ-0073)
 - 2026-09-30 `3c274b9` Merge branch 'worktree-agent-af876fcf91ec1c89b' into worktree-agent-a658cbd8dac8f5d6c (-)
 - 2026-09-30 `262b8ce` Mark AJ-0077 done (AJ-0077)
   - AJ-0077: pending → done
+- 2026-09-30 `0ae147d` Add install.sh for macOS and Linux (AJ-0045)
 - 2026-09-30 `7e61f39` Merge branch 'worktree-agent-a3a05b52f4045e08c' into worktree-agent-a658cbd8dac8f5d6c (-)
 - 2026-09-30 `f805edf` Wire the Homebrew cask to the tap without publishing (AJ-0077)
 - 2026-09-30 `cf289d1` Mark AJ-0092 and AJ-0093 done (AJ-0092, AJ-0093)
@@ -81,15 +84,23 @@ Generated 2026-09-30.
   - AJ-0093: new → pending
   - AJ-0094: new → pending
   - AJ-0095: new → pending
-- 2026-09-30 `10744eb` Merge branch 'worktree-agent-afb56f2355d7544c5' into worktree-agent-a658cbd8dac8f5d6c (-)
-- 2026-09-30 `7f2e26b` Mark AJ-0044 done (AJ-0044)
-  - AJ-0044: pending → done
-- 2026-09-30 `592adc8` Add ajiya mcp install, uninstall and status (AJ-0044)
-- 2026-09-30 `97cc733` Merge branch 'worktree-agent-af05af07a9f264de4' into worktree-agent-a658cbd8dac8f5d6c (-)
-- 2026-09-30 `c46c998` Mark AJ-0046 done, rebuild plan outputs (AJ-0046)
-  - AJ-0046: pending → done
-- and 182 more in data.js
+- and 187 more in data.js
 
 ## Checks
 
-No problems found.
+14 error(s), 0 warning(s).
+
+- E001 ajiya/agent-access.md:11: unexpected text after the ticket table. Fix: restore it with 'git checkout -- ajiya/agent-access.md' and make the change with ajiya commands
+- E005 ajiya/install.md:8: AJ-0045 depends on AJ-0044, which does not exist. Fix: ajiya ticket edit AJ-0045 --depends <existing IDs>
+- E005 ajiya/install.md:9: AJ-0046 depends on AJ-0042, which does not exist. Fix: ajiya ticket edit AJ-0046 --depends <existing IDs>
+- E005 ajiya/install.md:9: AJ-0046 depends on AJ-0043, which does not exist. Fix: ajiya ticket edit AJ-0046 --depends <existing IDs>
+- E005 ajiya/install.md:10: AJ-0047 depends on AJ-0042, which does not exist. Fix: ajiya ticket edit AJ-0047 --depends <existing IDs>
+- E005 ajiya/install.md:10: AJ-0047 depends on AJ-0043, which does not exist. Fix: ajiya ticket edit AJ-0047 --depends <existing IDs>
+- E005 ajiya/install.md:10: AJ-0047 depends on AJ-0044, which does not exist. Fix: ajiya ticket edit AJ-0047 --depends <existing IDs>
+- E005 ajiya/install.md:10: AJ-0047 depends on AJ-0094, which does not exist. Fix: ajiya ticket edit AJ-0047 --depends <existing IDs>
+- E005 ajiya/install.md:10: AJ-0047 depends on AJ-0095, which does not exist. Fix: ajiya ticket edit AJ-0047 --depends <existing IDs>
+- E005 ajiya/install.md:10: AJ-0047 depends on AJ-0096, which does not exist. Fix: ajiya ticket edit AJ-0047 --depends <existing IDs>
+- E005 ajiya/install.md:17: AJ-0073 depends on AJ-0044, which does not exist. Fix: ajiya ticket edit AJ-0073 --depends <existing IDs>
+- E005 ajiya/install.md:21: AJ-0077 depends on AJ-0044, which does not exist. Fix: ajiya ticket edit AJ-0077 --depends <existing IDs>
+- E005 ajiya/install.md:30: AJ-0093 depends on AJ-0044, which does not exist. Fix: ajiya ticket edit AJ-0093 --depends <existing IDs>
+- E005 ajiya/install.md:31: AJ-0097 depends on AJ-0044, which does not exist. Fix: ajiya ticket edit AJ-0097 --depends <existing IDs>

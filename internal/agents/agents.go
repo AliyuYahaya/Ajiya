@@ -7,7 +7,14 @@
 //   - Claude Code, https://code.claude.com/docs/en/mcp
 //     `claude mcp add --scope user|project <name> -- <command> [args...]` and
 //     `claude mcp remove <name> --scope user|project`. User scope is stored in
-//     ~/.claude.json (top-level "mcpServers"), project scope in .mcp.json at the
+//     ~/.claude.json (top-level "mcpServers"). When CLAUDE_CONFIG_DIR is set it
+//     moves with the rest of the configuration: $CLAUDE_CONFIG_DIR/.claude.json
+//     (https://code.claude.com/docs/en/env-vars: "Override the directory where
+//     Claude Code stores configuration"; https://code.claude.com/docs/en/claude-directory:
+//     "If you set CLAUDE_CONFIG_DIR, every ~/.claude path on this page lives under
+//     that directory instead". The docs never spell out the .claude.json case,
+//     so the location is Claude Code's known behaviour, not a quoted sentence).
+//     `claude` reads the variable itself, so it is passed to it. Project scope is in .mcp.json at the
 //     project root ({"mcpServers": {"<name>": {"type": "stdio", "command": ...,
 //     "args": [...]}}}). The agent's own command is preferred; when `claude` is
 //     not on PATH the same two files are edited directly.
@@ -77,10 +84,13 @@ type Runner func(dir, name string, args ...string) (string, error)
 type Env struct {
 	Home      string // the person's home folder
 	CodexHome string // Codex's folder ($CODEX_HOME, else Home/.codex)
-	Dir       string // the project folder, for project scope
-	Binary    string // what the entry runs: an absolute path, or "ajiya"
-	LookPath  func(string) (string, error)
-	Run       Runner
+	// ClaudeConfigDir is $CLAUDE_CONFIG_DIR; empty means Claude Code's
+	// defaults (~/.claude and ~/.claude.json).
+	ClaudeConfigDir string
+	Dir             string // the project folder, for project scope
+	Binary          string // what the entry runs: an absolute path, or "ajiya"
+	LookPath        func(string) (string, error)
+	Run             Runner
 }
 
 // NewEnv describes this machine and the running program.
@@ -93,7 +103,23 @@ func NewEnv(projectDir string) (*Env, error) {
 	if codexHome == "" {
 		codexHome = filepath.Join(home, ".codex")
 	}
-	return &Env{Home: home, CodexHome: codexHome, Dir: projectDir, Binary: ResolveBinary(exec.LookPath, os.Executable), LookPath: exec.LookPath, Run: execRun}, nil
+	claudeDir := os.Getenv("CLAUDE_CONFIG_DIR")
+	return &Env{Home: home, CodexHome: codexHome, ClaudeConfigDir: claudeDir, Dir: projectDir, Binary: ResolveBinary(exec.LookPath, os.Executable), LookPath: exec.LookPath, Run: runner(claudeDir)}, nil
+}
+
+// runner runs commands with the process environment, and with CLAUDE_CONFIG_DIR
+// set to claudeDir when there is one, so `claude` edits the same file
+// ConfigPath reports.
+func runner(claudeDir string) Runner {
+	return func(dir, name string, args ...string) (string, error) {
+		cmd := exec.Command(name, args...)
+		cmd.Dir = dir
+		if claudeDir != "" {
+			cmd.Env = append(os.Environ(), "CLAUDE_CONFIG_DIR="+claudeDir)
+		}
+		out, err := cmd.CombinedOutput()
+		return string(out), err
+	}
 }
 
 func execRun(dir, name string, args ...string) (string, error) {
@@ -168,6 +194,9 @@ func (e *Env) Detect() []Agent {
 func (e *Env) found(a Agent) bool {
 	switch a {
 	case Claude:
+		if e.ClaudeConfigDir != "" {
+			return e.has("claude") || exists(e.ClaudeConfigDir)
+		}
 		return e.has("claude") || exists(filepath.Join(e.Home, ".claude")) || exists(filepath.Join(e.Home, ".claude.json"))
 	case Codex:
 		return e.has("codex") || exists(e.CodexHome)
@@ -181,6 +210,9 @@ func (e *Env) ConfigPath(a Agent, s Scope) string {
 	case Claude:
 		if s == Project {
 			return filepath.Join(e.Dir, ".mcp.json")
+		}
+		if e.ClaudeConfigDir != "" {
+			return filepath.Join(e.ClaudeConfigDir, ".claude.json")
 		}
 		return filepath.Join(e.Home, ".claude.json")
 	case Codex:

@@ -166,11 +166,7 @@ func Run(args []string, stdout, stderr io.Writer) int {
 	return run(&env{stdin: os.Stdin, stdout: stdout, stderr: stderr, dir: dir, interactive: isTerminal(os.Stdin)}, args)
 }
 
-// isTerminal reports whether f is a terminal rather than a pipe or file.
-func isTerminal(f *os.File) bool {
-	st, err := f.Stat()
-	return err == nil && st.Mode()&os.ModeCharDevice != 0
-}
+// isTerminal (term_*.go) reports whether a file is a real terminal.
 
 func run(e *env, args []string) int {
 	if len(args) == 0 {
