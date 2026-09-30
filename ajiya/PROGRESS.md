@@ -60,6 +60,11 @@ Generated 2026-09-30.
 
 ## Recent activity
 
+- 2026-09-30 `9e15dbf` Merge branch 'worktree-agent-ac065ef1f3558d188' into worktree-agent-a658cbd8dac8f5d6c (-)
+- 2026-09-30 `e6cbb0d` Sign and notarise the darwin binaries; drop the cask quarantine hook (AJ-0084)
+  - AJ-0084: pending → in_progress
+- 2026-09-30 `f582d50` Gated npm and tap publish jobs in the release workflow (AJ-0079)
+  - AJ-0079: pending → in_progress
 - 2026-09-30 `7ab4260` Installer CI: setup-python v7, the current major (AJ-0074)
 - 2026-09-30 `74a4e46` Merge branch 'worktree-agent-a8cf3a95133ce824d' into worktree-agent-a658cbd8dac8f5d6c (-)
 - 2026-09-30 `72ed8c7` Start AJ-0074 and rebuild plan outputs (AJ-0074)
@@ -84,10 +89,7 @@ Generated 2026-09-30.
   - AJ-0073: pending → in_progress
 - 2026-09-30 `a961c6f` Plan: the plugin leaves MCP registration to ajiya mcp install (chore)
   - AJ-0097: new → pending
-- 2026-09-30 `7f92963` Add install.ps1 for Windows (AJ-0073)
-- 2026-09-30 `6e41253` mcp install honours CLAUDE_CONFIG_DIR (AJ-0095)
-- 2026-09-30 `3c274b9` Merge branch 'worktree-agent-af876fcf91ec1c89b' into worktree-agent-a658cbd8dac8f5d6c (-)
-- and 197 more in data.js
+- and 200 more in data.js
 
 ## Checks
 

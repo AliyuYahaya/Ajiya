@@ -2649,6 +2649,68 @@ window.AJIYA = {
   "checks": [],
   "activity": [
     {
+      "hash": "9e15dbf2f3f3cc10842eb98be33814687af80682",
+      "short": "9e15dbf",
+      "date": "2026-09-30",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Merge branch 'worktree-agent-ac065ef1f3558d188' into worktree-agent-a658cbd8dac8f5d6c",
+      "refs": [],
+      "chore": false,
+      "merge": true,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790789706
+    },
+    {
+      "hash": "e6cbb0d5965ab6a14400c97e0941250ad8794e2e",
+      "short": "e6cbb0d",
+      "date": "2026-09-30",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Sign and notarise the darwin binaries; drop the cask quarantine hook",
+      "refs": [
+        "AJ-0084"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0084",
+          "phase": "install",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        }
+      ],
+      "time": 1790789647
+    },
+    {
+      "hash": "f582d509d072ff4b4db22eb2909b0c004deabd21",
+      "short": "f582d50",
+      "date": "2026-09-30",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Gated npm and tap publish jobs in the release workflow",
+      "refs": [
+        "AJ-0079"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0079",
+          "phase": "install",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        }
+      ],
+      "time": 1790789602
+    },
+    {
       "hash": "7ab42606de451681691f4db3475099156f2ee336",
       "short": "7ab4260",
       "date": "2026-09-30",
