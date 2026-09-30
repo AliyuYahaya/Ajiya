@@ -28,14 +28,14 @@ window.AJIYA = {
         "AJ-0047"
       ],
       "required": {
-        "total": 68,
-        "done": 59,
+        "total": 74,
+        "done": 64,
         "in_progress": 1,
-        "pending": 8,
+        "pending": 9,
         "dropped": 0
       },
       "percent": 86,
-      "ready": 4
+      "ready": 5
     },
     {
       "name": "v0-3",
@@ -43,14 +43,14 @@ window.AJIYA = {
         "AJ-0058"
       ],
       "required": {
-        "total": 78,
-        "done": 59,
+        "total": 84,
+        "done": 64,
         "in_progress": 1,
-        "pending": 18,
+        "pending": 19,
         "dropped": 0
       },
-      "percent": 75,
-      "ready": 4
+      "percent": 76,
+      "ready": 5
     },
     {
       "name": "after-v0-3",
@@ -58,14 +58,14 @@ window.AJIYA = {
         "AJ-0057"
       ],
       "required": {
-        "total": 77,
-        "done": 59,
+        "total": 83,
+        "done": 64,
         "in_progress": 1,
-        "pending": 17,
+        "pending": 18,
         "dropped": 0
       },
-      "percent": 76,
-      "ready": 4
+      "percent": 77,
+      "ready": 5
     }
   ],
   "phases": [
@@ -140,6 +140,20 @@ window.AJIYA = {
       "milestone": "v0-1"
     },
     {
+      "slug": "agent-access",
+      "title": "Agent-access",
+      "goal": "Agents read and change the plan through ajiya status and an MCP server they register with in one step",
+      "counts": {
+        "total": 6,
+        "done": 5,
+        "in_progress": 0,
+        "pending": 1,
+        "dropped": 0
+      },
+      "percent": 83,
+      "milestone": "v0-2"
+    },
+    {
       "slug": "install",
       "title": "Install",
       "goal": "Ajiya installs in one step, with a Claude Code plugin",
@@ -173,10 +187,10 @@ window.AJIYA = {
       "name": "ajiya",
       "path": ".",
       "counts": {
-        "total": 91,
-        "done": 71,
+        "total": 97,
+        "done": 76,
         "in_progress": 1,
-        "pending": 19,
+        "pending": 20,
         "dropped": 0
       }
     }
@@ -1007,6 +1021,7 @@ window.AJIYA = {
       "ready": false,
       "waiting_on": [],
       "dependants": [
+        "AJ-0042",
         "AJ-0067",
         "AJ-0068",
         "AJ-0069",
@@ -1122,6 +1137,7 @@ window.AJIYA = {
         "AJ-0021",
         "AJ-0034",
         "AJ-0041",
+        "AJ-0042",
         "AJ-0059"
       ],
       "unblocks": 0
@@ -1199,6 +1215,91 @@ window.AJIYA = {
       "waiting_on": [],
       "dependants": [
         "AJ-0034"
+      ],
+      "unblocks": 0
+    },
+    {
+      "id": "AJ-0042",
+      "phase": "agent-access",
+      "app": "ajiya",
+      "title": "ajiya status",
+      "done_when": "Milestones in order, tickets in progress, what can start, Needs a human, check counts and the last five activity entries; --brief and --json; golden output for a fixture plan",
+      "depends": [
+        "AJ-0034",
+        "AJ-0038"
+      ],
+      "status": {
+        "state": "done",
+        "text": "🟩 Done · cbdcde9 · 2026-09-29 · tests passed",
+        "commit": "cbdcde9",
+        "date": "2026-09-29",
+        "tests_passed": true
+      },
+      "milestone": "v0-2",
+      "ready": false,
+      "waiting_on": [],
+      "dependants": [
+        "AJ-0043",
+        "AJ-0046",
+        "AJ-0047"
+      ],
+      "unblocks": 0
+    },
+    {
+      "id": "AJ-0043",
+      "phase": "agent-access",
+      "app": "ajiya",
+      "title": "ajiya mcp server",
+      "done_when": "stdio MCP server in the same binary calling the CLI code, tools as listed in spec 02 with a test of the tools not offered; protocol tests for initialize, tools/list and tools/call; tools/list golden; parity with --json",
+      "depends": [
+        "AJ-0042"
+      ],
+      "status": {
+        "state": "done",
+        "text": "🟩 Done · 0852975 · 2026-09-30 · tests passed",
+        "commit": "0852975",
+        "date": "2026-09-30",
+        "tests_passed": true
+      },
+      "milestone": "v0-2",
+      "ready": false,
+      "waiting_on": [],
+      "dependants": [
+        "AJ-0044",
+        "AJ-0046",
+        "AJ-0047"
+      ],
+      "unblocks": 0
+    },
+    {
+      "id": "AJ-0044",
+      "phase": "agent-access",
+      "app": "ajiya",
+      "title": "ajiya mcp install, uninstall and status",
+      "done_when": "Registers ajiya mcp with Claude Code, Codex and Cursor from their current documentation, idempotent, backups, other entries kept, malformed files refused; init offers it; tests with a temporary home",
+      "depends": [
+        "AJ-0043"
+      ],
+      "status": {
+        "state": "done",
+        "text": "🟩 Done · 592adc8 · 2026-09-30 · tests passed",
+        "commit": "592adc8",
+        "date": "2026-09-30",
+        "tests_passed": true
+      },
+      "milestone": "v0-2",
+      "ready": false,
+      "waiting_on": [],
+      "dependants": [
+        "AJ-0045",
+        "AJ-0047",
+        "AJ-0073",
+        "AJ-0077",
+        "AJ-0093",
+        "AJ-0094",
+        "AJ-0095",
+        "AJ-0096",
+        "AJ-0097"
       ],
       "unblocks": 0
     },
@@ -1292,6 +1393,7 @@ window.AJIYA = {
       "ready": false,
       "waiting_on": [
         "AJ-0082",
+        "AJ-0096",
         "AJ-0097"
       ],
       "dependants": [
@@ -2446,6 +2548,75 @@ window.AJIYA = {
       "unblocks": 0
     },
     {
+      "id": "AJ-0094",
+      "phase": "agent-access",
+      "app": "ajiya",
+      "title": "Terminal detection ignores /dev/null",
+      "done_when": "Prompts appear only on a real terminal: stdin from /dev/null or a pipe counts as non-interactive on macOS, Linux and Windows; init and mcp install then print the command instead of asking; tests cover each",
+      "depends": [
+        "AJ-0044"
+      ],
+      "status": {
+        "state": "done",
+        "text": "🟩 Done · 4e223ae · 2026-09-30 · tests passed",
+        "commit": "4e223ae",
+        "date": "2026-09-30",
+        "tests_passed": true
+      },
+      "milestone": "v0-2",
+      "ready": false,
+      "waiting_on": [],
+      "dependants": [
+        "AJ-0047"
+      ],
+      "unblocks": 0
+    },
+    {
+      "id": "AJ-0095",
+      "phase": "agent-access",
+      "app": "ajiya",
+      "title": "mcp install honours CLAUDE_CONFIG_DIR",
+      "done_when": "When CLAUDE_CONFIG_DIR is set, mcp install, uninstall and status use Claude Code's config there (per its current docs) instead of ~/.claude.json; tests cover set and unset",
+      "depends": [
+        "AJ-0044"
+      ],
+      "status": {
+        "state": "done",
+        "text": "🟩 Done · 6e41253 · 2026-09-30 · tests passed",
+        "commit": "6e41253",
+        "date": "2026-09-30",
+        "tests_passed": true
+      },
+      "milestone": "v0-2",
+      "ready": false,
+      "waiting_on": [],
+      "dependants": [
+        "AJ-0047"
+      ],
+      "unblocks": 0
+    },
+    {
+      "id": "AJ-0096",
+      "phase": "agent-access",
+      "app": "ajiya",
+      "title": "Registering says how to undo it",
+      "done_when": "Whenever init or mcp install registers Ajiya with an agent, the output ends with the command that undoes it (ajiya mcp uninstall --\u003cagent\u003e, with --scope project when used); tests check the line",
+      "depends": [
+        "AJ-0044"
+      ],
+      "status": {
+        "state": "pending",
+        "text": "🟥 Pending"
+      },
+      "milestone": "v0-2",
+      "ready": true,
+      "waiting_on": [],
+      "dependants": [
+        "AJ-0047"
+      ],
+      "unblocks": 12
+    },
+    {
       "id": "AJ-0097",
       "phase": "install",
       "app": "ajiya",
@@ -2472,109 +2643,25 @@ window.AJIYA = {
     "AJ-0073",
     "AJ-0079",
     "AJ-0084",
+    "AJ-0096",
     "AJ-0097"
   ],
-  "checks": [
-    {
-      "code": "E001",
-      "level": "error",
-      "location": "ajiya/agent-access.md:11",
-      "message": "unexpected text after the ticket table",
-      "fix": "restore it with 'git checkout -- ajiya/agent-access.md' and make the change with ajiya commands"
-    },
-    {
-      "code": "E005",
-      "level": "error",
-      "location": "ajiya/install.md:8",
-      "message": "AJ-0045 depends on AJ-0044, which does not exist",
-      "fix": "ajiya ticket edit AJ-0045 --depends \u003cexisting IDs\u003e"
-    },
-    {
-      "code": "E005",
-      "level": "error",
-      "location": "ajiya/install.md:9",
-      "message": "AJ-0046 depends on AJ-0042, which does not exist",
-      "fix": "ajiya ticket edit AJ-0046 --depends \u003cexisting IDs\u003e"
-    },
-    {
-      "code": "E005",
-      "level": "error",
-      "location": "ajiya/install.md:9",
-      "message": "AJ-0046 depends on AJ-0043, which does not exist",
-      "fix": "ajiya ticket edit AJ-0046 --depends \u003cexisting IDs\u003e"
-    },
-    {
-      "code": "E005",
-      "level": "error",
-      "location": "ajiya/install.md:10",
-      "message": "AJ-0047 depends on AJ-0042, which does not exist",
-      "fix": "ajiya ticket edit AJ-0047 --depends \u003cexisting IDs\u003e"
-    },
-    {
-      "code": "E005",
-      "level": "error",
-      "location": "ajiya/install.md:10",
-      "message": "AJ-0047 depends on AJ-0043, which does not exist",
-      "fix": "ajiya ticket edit AJ-0047 --depends \u003cexisting IDs\u003e"
-    },
-    {
-      "code": "E005",
-      "level": "error",
-      "location": "ajiya/install.md:10",
-      "message": "AJ-0047 depends on AJ-0044, which does not exist",
-      "fix": "ajiya ticket edit AJ-0047 --depends \u003cexisting IDs\u003e"
-    },
-    {
-      "code": "E005",
-      "level": "error",
-      "location": "ajiya/install.md:10",
-      "message": "AJ-0047 depends on AJ-0094, which does not exist",
-      "fix": "ajiya ticket edit AJ-0047 --depends \u003cexisting IDs\u003e"
-    },
-    {
-      "code": "E005",
-      "level": "error",
-      "location": "ajiya/install.md:10",
-      "message": "AJ-0047 depends on AJ-0095, which does not exist",
-      "fix": "ajiya ticket edit AJ-0047 --depends \u003cexisting IDs\u003e"
-    },
-    {
-      "code": "E005",
-      "level": "error",
-      "location": "ajiya/install.md:10",
-      "message": "AJ-0047 depends on AJ-0096, which does not exist",
-      "fix": "ajiya ticket edit AJ-0047 --depends \u003cexisting IDs\u003e"
-    },
-    {
-      "code": "E005",
-      "level": "error",
-      "location": "ajiya/install.md:17",
-      "message": "AJ-0073 depends on AJ-0044, which does not exist",
-      "fix": "ajiya ticket edit AJ-0073 --depends \u003cexisting IDs\u003e"
-    },
-    {
-      "code": "E005",
-      "level": "error",
-      "location": "ajiya/install.md:21",
-      "message": "AJ-0077 depends on AJ-0044, which does not exist",
-      "fix": "ajiya ticket edit AJ-0077 --depends \u003cexisting IDs\u003e"
-    },
-    {
-      "code": "E005",
-      "level": "error",
-      "location": "ajiya/install.md:30",
-      "message": "AJ-0093 depends on AJ-0044, which does not exist",
-      "fix": "ajiya ticket edit AJ-0093 --depends \u003cexisting IDs\u003e"
-    },
-    {
-      "code": "E005",
-      "level": "error",
-      "location": "ajiya/install.md:31",
-      "message": "AJ-0097 depends on AJ-0044, which does not exist",
-      "fix": "ajiya ticket edit AJ-0097 --depends \u003cexisting IDs\u003e"
-    }
-  ],
+  "checks": [],
   "activity": [
+    {
+      "hash": "4b5a99555a8c10d1d880619d2addae02f23256eb",
+      "short": "4b5a995",
+      "date": "2026-09-30",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Merge branch 'worktree-agent-a4b3db9090249aeb4' into worktree-agent-a658cbd8dac8f5d6c",
+      "refs": [],
+      "chore": false,
+      "merge": true,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790784834
+    },
     {
       "hash": "18949076184d9f2a05da461728841bd457223c7f",
       "short": "1894907",
@@ -2605,6 +2692,38 @@ window.AJIYA = {
       "agent": "",
       "changes": [],
       "time": 1790784753
+    },
+    {
+      "hash": "d72350f08b125ebab7e0d970c9dd95c6cc0a47f6",
+      "short": "d72350f",
+      "date": "2026-09-30",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Mark AJ-0094 and AJ-0095 done",
+      "refs": [
+        "AJ-0094",
+        "AJ-0095"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0094",
+          "phase": "agent-access",
+          "from": "pending",
+          "to": "done",
+          "text": "🟩 Done · 4e223ae · 2026-09-30 · tests passed"
+        },
+        {
+          "id": "AJ-0095",
+          "phase": "agent-access",
+          "from": "pending",
+          "to": "done",
+          "text": "🟩 Done · 6e41253 · 2026-09-30 · tests passed"
+        }
+      ],
+      "time": 1790784700
     },
     {
       "hash": "c765d5ae34a38c083b7ad93403a69c2e2c0b2359",
@@ -2674,6 +2793,22 @@ window.AJIYA = {
       "agent": "",
       "changes": [],
       "time": 1790784674
+    },
+    {
+      "hash": "6e41253fa0a9b29a132e613b29b188ff7c29222f",
+      "short": "6e41253",
+      "date": "2026-09-30",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "mcp install honours CLAUDE_CONFIG_DIR",
+      "refs": [
+        "AJ-0095"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790784660
     },
     {
       "hash": "3c274b948e988da99a8856b35d236b2c0d856594",
@@ -2790,6 +2925,22 @@ window.AJIYA = {
         }
       ],
       "time": 1790784525
+    },
+    {
+      "hash": "4e223aead012d3929db3aec8b7aa4b39ee6aa860",
+      "short": "4e223ae",
+      "date": "2026-09-30",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Detect a real terminal, not just a character device",
+      "refs": [
+        "AJ-0094"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790784522
     },
     {
       "hash": "5cff5a149373162f162aac327e37b0c2f0f30382",
