@@ -2495,6 +2495,84 @@ window.AJIYA = {
   "checks": [],
   "activity": [
     {
+      "hash": "512ed801c0a4396420aba90362d464e00a55278b",
+      "short": "512ed80",
+      "date": "2026-09-30",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Merge branch 'worktree-agent-af2ca0983410d8aed' into worktree-agent-a658cbd8dac8f5d6c",
+      "refs": [],
+      "chore": false,
+      "merge": true,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790780925
+    },
+    {
+      "hash": "c01e2d79fb810acf235f3ce6d0f4044b8d35c550",
+      "short": "c01e2d7",
+      "date": "2026-09-30",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Mark AJ-0075 done",
+      "refs": [
+        "AJ-0075"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0075",
+          "phase": "install",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · b8e9dbb · 2026-09-30 · tests passed"
+        }
+      ],
+      "time": 1790780874
+    },
+    {
+      "hash": "b8e9dbb326c641e1b5b88066c87f2c991b9d314c",
+      "short": "b8e9dbb",
+      "date": "2026-09-30",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Test the npm build script and launcher; run them in CI on three OSes",
+      "refs": [
+        "AJ-0075"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790780841
+    },
+    {
+      "hash": "30ee010a75d9cbd4d5209f5f08f13b4352f304b8",
+      "short": "30ee010",
+      "date": "2026-09-30",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Add npm package templates and build script",
+      "refs": [
+        "AJ-0075"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0075",
+          "phase": "install",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        }
+      ],
+      "time": 1790780519
+    },
+    {
       "hash": "0e26867b27ae21852d6749b4ad6081c862be2959",
       "short": "0e26867",
       "date": "2026-09-30",

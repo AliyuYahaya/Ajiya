@@ -66,6 +66,12 @@ Generated 2026-09-30.
 
 ## Recent activity
 
+- 2026-09-30 `512ed80` Merge branch 'worktree-agent-af2ca0983410d8aed' into worktree-agent-a658cbd8dac8f5d6c (-)
+- 2026-09-30 `c01e2d7` Mark AJ-0075 done (AJ-0075)
+  - AJ-0075: in_progress → done
+- 2026-09-30 `b8e9dbb` Test the npm build script and launcher; run them in CI on three OSes (AJ-0075)
+- 2026-09-30 `30ee010` Add npm package templates and build script (AJ-0075)
+  - AJ-0075: pending → in_progress
 - 2026-09-30 `0e26867` Apple signing credentials stored (AJ-0083, AJ-0084)
   - AJ-0083: pending → done
 - 2026-09-29 `4136ead` Merge branch 'worktree-agent-afd29651f0fa7ef3e' into worktree-agent-a658cbd8dac8f5d6c (-)
@@ -82,13 +88,7 @@ Generated 2026-09-30.
 - 2026-09-29 `885b499` Close AJ-0091 (AJ-0091)
   - AJ-0091: pending → done
 - 2026-09-29 `d1df3f0` Release workflow: tag builds a draft release, pull requests a snapshot (AJ-0072)
-- 2026-09-29 `9f1c49a` Guide fixes from the walkthrough test (AJ-0091)
-- 2026-09-29 `7363ad4` Install scripts are served as GitHub release assets (AJ-0070, AJ-0078)
-  - AJ-0070: pending → done
-- 2026-09-29 `ab57528` npm account, org and @ajiya/cli placeholder in place (AJ-0068)
-  - AJ-0068: pending → done
-- 2026-09-29 `2680bc1` phase remove updates [phases] order before deleting the file (AJ-0086)
-- and 151 more in data.js
+- and 155 more in data.js
 
 ## Checks
 
