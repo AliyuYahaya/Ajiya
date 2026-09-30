@@ -61,6 +61,10 @@ Generated 2026-09-30.
 
 ## Recent activity
 
+- 2026-09-30 `97cc733` Merge branch 'worktree-agent-af05af07a9f264de4' into worktree-agent-a658cbd8dac8f5d6c (-)
+- 2026-09-30 `c46c998` Mark AJ-0046 done, rebuild plan outputs (AJ-0046)
+  - AJ-0046: pending → done
+- 2026-09-30 `83cfc3f` Add Claude Code plugin (AJ-0046)
 - 2026-09-30 `24aa6f8` Merge branch 'worktree-agent-ae404b1f3ea1af513' into worktree-agent-a658cbd8dac8f5d6c (-)
 - 2026-09-30 `36850f1` Mark AJ-0076 done and rebuild plan outputs (AJ-0076)
   - AJ-0076: in_progress → done
@@ -79,12 +83,7 @@ Generated 2026-09-30.
 - 2026-09-30 `df94ea7` Add the official MCP Go SDK (maintainer approved) and ajiya mcp server (AJ-0043)
 - 2026-09-30 `07d20ef` Ignore a local Secrets/ folder (chore)
 - 2026-09-30 `512ed80` Merge branch 'worktree-agent-af2ca0983410d8aed' into worktree-agent-a658cbd8dac8f5d6c (-)
-- 2026-09-30 `c01e2d7` Mark AJ-0075 done (AJ-0075)
-  - AJ-0075: in_progress → done
-- 2026-09-30 `b8e9dbb` Test the npm build script and launcher; run them in CI on three OSes (AJ-0075)
-- 2026-09-30 `30ee010` Add npm package templates and build script (AJ-0075)
-  - AJ-0075: pending → in_progress
-- and 166 more in data.js
+- and 169 more in data.js
 
 ## Checks
 
