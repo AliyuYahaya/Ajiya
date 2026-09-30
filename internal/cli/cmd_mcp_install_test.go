@@ -251,6 +251,9 @@ func TestInitOffersToRegister(t *testing.T) {
 	if !strings.Contains(m.get(m.env.ConfigPath(agents.Cursor, agents.User)), "ajiya") {
 		t.Error("not registered")
 	}
+	if !strings.HasSuffix(out, "Undo with: ajiya mcp uninstall --cursor\n") {
+		t.Errorf("init --yes does not end with the undo line:\n%s", out)
+	}
 	// registered already: init says nothing about it
 	if out, _, _ = m.run(false, "", "init"); strings.Contains(out, "not registered") {
 		t.Errorf("offered again:\n%s", out)
@@ -278,5 +281,24 @@ func TestInitOverMCPNeverRegisters(t *testing.T) {
 	}
 	if _, err := os.Stat(m.env.ConfigPath(agents.Cursor, agents.User)); err == nil {
 		t.Error("registered over MCP")
+	}
+}
+
+func TestMCPInstallEndsWithUndoLine(t *testing.T) {
+	m := newAgentMachine(t)
+	out, _, code := m.run(false, "", "mcp", "install", "--cursor", "--codex", "--yes")
+	if code != 0 || !strings.HasSuffix(out, "Undo with: ajiya mcp uninstall --codex --cursor\n") {
+		t.Errorf("code %d:\n%s", code, out)
+	}
+	out, _, _ = m.run(false, "", "mcp", "install", "--cursor", "--scope", "project", "--yes")
+	if !strings.HasSuffix(out, "Undo with: ajiya mcp uninstall --cursor --scope project\n") {
+		t.Errorf("project scope:\n%s", out)
+	}
+	// nothing registered: no undo line; uninstall never prints one
+	if out, _, _ = m.run(false, "", "mcp", "install", "--cursor", "--yes"); strings.Contains(out, "Undo with") {
+		t.Errorf("undo line for a no-op:\n%s", out)
+	}
+	if out, _, _ = m.run(false, "", "mcp", "uninstall", "--cursor", "--yes"); strings.Contains(out, "Undo with") {
+		t.Errorf("undo line after uninstall:\n%s", out)
 	}
 }

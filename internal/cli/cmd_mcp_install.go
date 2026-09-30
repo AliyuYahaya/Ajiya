@@ -137,6 +137,7 @@ func registerWith(e *env, ae *agents.Env, targets []agents.Agent, scope agents.S
 			return silent(ExitRefused)
 		}
 	}
+	var registered []agents.Agent
 	for _, c := range changes {
 		if c.Noop() {
 			continue
@@ -146,6 +147,9 @@ func registerWith(e *env, ae *agents.Env, targets []agents.Agent, scope agents.S
 		}
 		verb := map[string]string{"add": "Registered Ajiya with", "update": "Updated Ajiya's entry in", "remove": "Removed Ajiya from"}[c.Action]
 		fmt.Fprintf(e.stdout, "%s %s.\n", verb, c.Agent.Title())
+		if install {
+			registered = append(registered, c.Agent)
+		}
 		if _, err := os.Stat(c.BackupPath()); err == nil {
 			fmt.Fprintf(e.stdout, "  Backup: %s\n", c.BackupPath())
 		}
@@ -153,7 +157,23 @@ func registerWith(e *env, ae *agents.Env, targets []agents.Agent, scope agents.S
 	if install {
 		fmt.Fprintln(e.stdout, "Restart the agent (or start a new session) so it loads the new server.")
 	}
+	if len(registered) > 0 {
+		fmt.Fprintf(e.stdout, "Undo with: %s\n", undoCommand(registered, scope))
+	}
 	return nil
+}
+
+// undoCommand is the one command that removes Ajiya again from the agents
+// just registered.
+func undoCommand(registered []agents.Agent, scope agents.Scope) string {
+	cmd := "ajiya mcp uninstall"
+	for _, a := range registered {
+		cmd += " --" + string(a)
+	}
+	if scope == agents.Project {
+		cmd += " --scope project"
+	}
+	return cmd
 }
 
 func runMCPStatus(e *env, args []string) error {

@@ -77,11 +77,9 @@ func runInit(e *env, args []string) error {
 	if err := installKit(e); err != nil {
 		return err
 	}
-	if err := offerAgents(e, *yes); err != nil {
-		return err
-	}
 	fmt.Fprintln(e.stdout, "Next: 'ajiya hook install', then plan with .ajiya/guide/setup.md.")
-	return nil
+	// Last, so that when init registers Ajiya the output ends with the undo line.
+	return offerAgents(e, *yes)
 }
 
 // installKit writes or updates the agent kit and says what changed.
