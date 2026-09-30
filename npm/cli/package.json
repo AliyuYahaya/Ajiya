@@ -1,0 +1,27 @@
+{
+  "name": "@ajiya/cli",
+  "version": "0.0.0",
+  "description": "Keeps a project's phases and tickets as markdown in the repository, for coding agents and people",
+  "license": "MIT",
+  "author": "Yavid PTY Ltd",
+  "homepage": "https://github.com/AliyuYahaya/Ajiya",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AliyuYahaya/Ajiya.git"
+  },
+  "bin": {
+    "ajiya": "bin/ajiya.js"
+  },
+  "files": [
+    "bin",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "optionalDependencies": {},
+  "publishConfig": {
+    "access": "public"
+  }
+}

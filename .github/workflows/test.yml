@@ -19,6 +19,21 @@ jobs:
       - run: go vet ./...
       - run: go test ./...
 
+  # The npm build script and the launcher, on the three operating systems.
+  # Explicit files: newer Node treats a directory argument as a module path.
+  npm:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      - run: node --test npm/test/build.test.mjs npm/test/launcher.test.js
+
   # The commit rule, as a backup for hooks that can be skipped with --no-verify.
   # Every commit from the first one made under the rule must name 1 to 3 tickets.
   ajiya:
