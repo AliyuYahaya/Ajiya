@@ -62,6 +62,9 @@ Generated 2026-09-30.
 
 ## Recent activity
 
+- 2026-09-30 `24aa6f8` Merge branch 'worktree-agent-ae404b1f3ea1af513' into worktree-agent-a658cbd8dac8f5d6c (-)
+- 2026-09-30 `36850f1` Mark AJ-0076 done and rebuild plan outputs (AJ-0076)
+  - AJ-0076: in_progress → done
 - 2026-09-30 `6956c08` Test the npm launcher with a real stand-in binary on every OS (AJ-0076)
   - AJ-0076: pending → in_progress
 - 2026-09-30 `1dc25ba` npm trusted publishing set up for all seven packages (AJ-0080)
@@ -82,10 +85,7 @@ Generated 2026-09-30.
 - 2026-09-30 `b8e9dbb` Test the npm build script and launcher; run them in CI on three OSes (AJ-0075)
 - 2026-09-30 `30ee010` Add npm package templates and build script (AJ-0075)
   - AJ-0075: pending → in_progress
-- 2026-09-30 `0e26867` Apple signing credentials stored (AJ-0083, AJ-0084)
-  - AJ-0083: pending → done
-- 2026-09-29 `4136ead` Merge branch 'worktree-agent-afd29651f0fa7ef3e' into worktree-agent-a658cbd8dac8f5d6c (-)
-- and 164 more in data.js
+- and 166 more in data.js
 
 ## Checks
 
