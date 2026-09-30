@@ -29,12 +29,12 @@ window.AJIYA = {
       ],
       "required": {
         "total": 74,
-        "done": 72,
-        "in_progress": 1,
+        "done": 73,
+        "in_progress": 0,
         "pending": 1,
         "dropped": 0
       },
-      "percent": 97,
+      "percent": 98,
       "ready": 1
     },
     {
@@ -44,12 +44,12 @@ window.AJIYA = {
       ],
       "required": {
         "total": 84,
-        "done": 72,
-        "in_progress": 1,
+        "done": 73,
+        "in_progress": 0,
         "pending": 11,
         "dropped": 0
       },
-      "percent": 85,
+      "percent": 86,
       "ready": 1
     },
     {
@@ -59,12 +59,12 @@ window.AJIYA = {
       ],
       "required": {
         "total": 83,
-        "done": 72,
-        "in_progress": 1,
+        "done": 73,
+        "in_progress": 0,
         "pending": 10,
         "dropped": 0
       },
-      "percent": 86,
+      "percent": 87,
       "ready": 1
     }
   ],
@@ -159,12 +159,12 @@ window.AJIYA = {
       "goal": "Ajiya installs in one step, with a Claude Code plugin",
       "counts": {
         "total": 24,
-        "done": 22,
-        "in_progress": 1,
+        "done": 23,
+        "in_progress": 0,
         "pending": 1,
         "dropped": 0
       },
-      "percent": 91,
+      "percent": 95,
       "milestone": "v0-2"
     },
     {
@@ -188,8 +188,8 @@ window.AJIYA = {
       "path": ".",
       "counts": {
         "total": 97,
-        "done": 84,
-        "in_progress": 1,
+        "done": 85,
+        "in_progress": 0,
         "pending": 12,
         "dropped": 0
       }
@@ -1390,10 +1390,8 @@ window.AJIYA = {
         "human": "final sign-off before publishing v0.2"
       },
       "milestone": "v0-2",
-      "ready": false,
-      "waiting_on": [
-        "AJ-0082"
-      ],
+      "ready": true,
+      "waiting_on": [],
       "dependants": [
         "AJ-0048"
       ],
@@ -2272,16 +2270,19 @@ window.AJIYA = {
         "AJ-0081"
       ],
       "status": {
-        "state": "in_progress",
-        "text": "🟨 In progress"
+        "state": "done",
+        "text": "🟩 Done · e3e65f6 · 2026-09-30 · tests passed",
+        "commit": "e3e65f6",
+        "date": "2026-09-30",
+        "tests_passed": true
       },
       "milestone": "v0-2",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0047"
       ],
-      "unblocks": 12
+      "unblocks": 0
     },
     {
       "id": "AJ-0083",
@@ -2655,10 +2656,26 @@ window.AJIYA = {
     }
   ],
   "next": [
-    "AJ-0082"
+    "AJ-0047"
   ],
   "checks": [],
   "activity": [
+    {
+      "hash": "e3e65f6be3b038476619b87a6a5c12886b8eae2b",
+      "short": "e3e65f6",
+      "date": "2026-09-30",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Docs: install lines for every channel, cloud agents and agent prompts",
+      "refs": [
+        "AJ-0082"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790803133
+    },
     {
       "hash": "f64ee78b9c58ed1463cdbfc06b0a47312c37ee82",
       "short": "f64ee78",

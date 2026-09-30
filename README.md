@@ -7,8 +7,8 @@ tickets) in plain markdown inside the repository. Coding agents plan, update and
 prove their work through `ajiya` commands, and people can see launch readiness at
 a glance. Everything is local: no server, no account, no network calls.
 
-The v0.2.0 release includes prebuilt binaries, install scripts, an npm package,
-and a Homebrew cask.
+Status: v0.2. Prebuilt binaries, an install script, an npm package and a
+Homebrew cask are available.
 
 ## How it works
 
@@ -34,60 +34,81 @@ project   the repository; it may hold several apps
 
 ## Install
 
-On macOS or Linux:
+Pick one. Each line installs the same `ajiya` binary.
 
-```
+macOS or Linux (install script):
+
+```sh
 curl -fsSL https://github.com/AliyuYahaya/Ajiya/releases/latest/download/install.sh | sh
 ```
 
-On Windows PowerShell:
+Windows (PowerShell):
 
 ```powershell
 irm https://github.com/AliyuYahaya/Ajiya/releases/latest/download/install.ps1 | iex
 ```
 
-The scripts verify the downloaded archive against `checksums.txt` and install
-without administrator rights. To install the prerelease instead:
+npm (any platform):
 
 ```sh
-curl -fsSL https://github.com/AliyuYahaya/Ajiya/releases/latest/download/install.sh | AJIYA_VERSION=v0.2.0-rc.2 sh
-```
-
-```powershell
-$env:AJIYA_VERSION = 'v0.2.0-rc.2'
-irm https://github.com/AliyuYahaya/Ajiya/releases/latest/download/install.ps1 | iex
-```
-
-With Homebrew:
-
-```
-brew tap AliyuYahaya/tap
-brew install --cask ajiya
-```
-
-With npm:
-
-```
 npm install -g @ajiya/cli
 ```
 
-Or install from source, with Go 1.26 or later:
+Homebrew (macOS):
 
-```
-go install github.com/AliyuYahaya/Ajiya/cmd/ajiya@latest
+```sh
+brew install --cask AliyuYahaya/tap/ajiya
 ```
 
-This puts `ajiya` in `$(go env GOPATH)/bin`; make sure that folder is on your
-`PATH`.
+- **Install script and PowerShell script:** they check the download against
+  `checksums.txt` and need no administrator rights or `sudo`. The shell script
+  installs to `~/.local/bin` (or `AJIYA_INSTALL_DIR`); the PowerShell script to
+  `%LOCALAPPDATA%\Programs\ajiya\bin` and adds that folder to your user `PATH`.
+  `AJIYA_VERSION` pins a version. On a terminal, `install.sh` offers to run
+  `ajiya mcp install` at the end.
+- **npm:** installs only the package for your machine's platform, and runs no
+  install scripts. To try it without installing: `npx @ajiya/cli init`.
+- **Homebrew:** the binaries are signed and notarised, so macOS shows no
+  Gatekeeper prompt. The cask tells you to run `ajiya mcp install` and
+  `ajiya init`.
+- **From source**, with Go 1.26 or later:
+  `go install github.com/AliyuYahaya/Ajiya/cmd/ajiya@latest` (puts `ajiya` in
+  `$(go env GOPATH)/bin`; make sure that folder is on your `PATH`).
+- **Pre-releases:** `releases/latest` never points at a pre-release. To try one,
+  use that release's own URL, for example
+  `curl -fsSL https://github.com/AliyuYahaya/Ajiya/releases/download/v0.2.0-rc.4/install.sh | AJIYA_VERSION=v0.2.0-rc.4 sh`,
+  or `npm install -g @ajiya/cli@next`.
 
 ### What just happened?
 
-- **Once per computer:** install Ajiya; it offers to register with the coding
-  agents it finds.
-- **Once per project:** run `ajiya init`, or ask your agent to set up the
-  project.
+- **Once per computer:** install Ajiya (above).
+- **Once per project:** run `ajiya init`. It sets up the project and registers
+  Ajiya's MCP server with the coding agents it finds (Claude Code, Codex,
+  Cursor). It shows the change, keeps backups and ends with an
+  `Undo with: ajiya mcp uninstall ...` line. Register without a project with
+  `ajiya mcp install`.
 - **Every day:** open your agent. It starts `ajiya mcp` for that session and
   closes it afterwards; nothing runs while the agent is closed.
+
+### Cloud agents
+
+Claude Code on the web and Codex cloud read the committed `CLAUDE.md` and
+`AGENTS.md`, but `ajiya` must exist in their sandbox. Add
+`npm install -g @ajiya/cli` to the environment's setup script.
+
+### Tell your agent
+
+Paste one of these into your agent. New project:
+
+```
+Set up Ajiya in this repository and plan: <what you want to build>. If the ajiya command is missing, install it with npm install -g @ajiya/cli (or the install script from https://github.com/AliyuYahaya/Ajiya). Then run ajiya init --yes and ajiya hook install, and follow .ajiya/guide/setup.md: ask me at most three questions, then hand over a summary. Don't start building until I say so.
+```
+
+Existing project:
+
+```
+Set up Ajiya in this repository and bring in the work we already track. If the ajiya command is missing, install it with npm install -g @ajiya/cli (or the install script from https://github.com/AliyuYahaya/Ajiya). Run ajiya init --yes and ajiya hook install, import our GitHub issues with ajiya import github (or our TODO.md with ajiya import todo TODO.md), then organise them as .ajiya/guide/setup.md describes and hand over a summary. List duplicates for me instead of dropping anything.
+```
 
 Claude Code users can also add the plugin (skill and a session-start
 status line): `/plugin marketplace add AliyuYahaya/Ajiya`, then
