@@ -30,8 +30,8 @@ window.AJIYA = {
       "required": {
         "total": 68,
         "done": 53,
-        "in_progress": 0,
-        "pending": 15,
+        "in_progress": 1,
+        "pending": 14,
         "dropped": 0
       },
       "percent": 77,
@@ -45,8 +45,8 @@ window.AJIYA = {
       "required": {
         "total": 78,
         "done": 53,
-        "in_progress": 0,
-        "pending": 25,
+        "in_progress": 1,
+        "pending": 24,
         "dropped": 0
       },
       "percent": 67,
@@ -60,8 +60,8 @@ window.AJIYA = {
       "required": {
         "total": 77,
         "done": 53,
-        "in_progress": 0,
-        "pending": 24,
+        "in_progress": 1,
+        "pending": 23,
         "dropped": 0
       },
       "percent": 68,
@@ -160,8 +160,8 @@ window.AJIYA = {
       "counts": {
         "total": 21,
         "done": 8,
-        "in_progress": 0,
-        "pending": 13,
+        "in_progress": 1,
+        "pending": 12,
         "dropped": 0
       },
       "percent": 38,
@@ -189,8 +189,8 @@ window.AJIYA = {
       "counts": {
         "total": 91,
         "done": 65,
-        "in_progress": 0,
-        "pending": 26,
+        "in_progress": 1,
+        "pending": 25,
         "dropped": 0
       }
     }
@@ -2195,8 +2195,8 @@ window.AJIYA = {
         "AJ-0075"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending · Needs a human: needs the maintainer's npm account",
+        "state": "in_progress",
+        "text": "🟨 In progress · Needs a human: needs the maintainer's npm account",
         "human": "needs the maintainer's npm account"
       },
       "milestone": "v0-2",
@@ -2494,6 +2494,20 @@ window.AJIYA = {
   ],
   "checks": [],
   "activity": [
+    {
+      "hash": "07d20efcb1bda6a6c1241e0b67ad2d8b2a392bb6",
+      "short": "07d20ef",
+      "date": "2026-09-30",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Ignore a local Secrets/ folder",
+      "refs": [],
+      "chore": true,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790780969
+    },
     {
       "hash": "512ed801c0a4396420aba90362d464e00a55278b",
       "short": "512ed80",

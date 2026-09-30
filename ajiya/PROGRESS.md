@@ -22,14 +22,14 @@ Generated 2026-09-30.
 | Onboarding | 17 | 0 | 0 | 17 | 100% | v0-1 |
 | Release | 5 | 0 | 0 | 5 | 100% | v0-1 |
 | Agent-access | 1 | 0 | 2 | 3 | 33% | v0-2 |
-| Install | 8 | 0 | 13 | 21 | 38% | v0-2 |
+| Install | 8 | 1 | 12 | 21 | 38% | v0-2 |
 | Decisions-and-changes | 0 | 0 | 11 | 11 | 0% | v0-3 |
 
 ## Can start now
 
 - **AJ-0043** ajiya mcp server (ajiya) · v0-2
 - **AJ-0076** npm launcher tests (ajiya) · v0-2
-- **AJ-0080** npm trusted publishing (ajiya) · v0-2
+- **AJ-0080** npm trusted publishing (ajiya) · v0-2 · in progress
 
 ## Waiting
 
@@ -66,6 +66,7 @@ Generated 2026-09-30.
 
 ## Recent activity
 
+- 2026-09-30 `07d20ef` Ignore a local Secrets/ folder (chore)
 - 2026-09-30 `512ed80` Merge branch 'worktree-agent-af2ca0983410d8aed' into worktree-agent-a658cbd8dac8f5d6c (-)
 - 2026-09-30 `c01e2d7` Mark AJ-0075 done (AJ-0075)
   - AJ-0075: in_progress → done
@@ -87,8 +88,7 @@ Generated 2026-09-30.
   - AJ-0072: pending → done
 - 2026-09-29 `885b499` Close AJ-0091 (AJ-0091)
   - AJ-0091: pending → done
-- 2026-09-29 `d1df3f0` Release workflow: tag builds a draft release, pull requests a snapshot (AJ-0072)
-- and 155 more in data.js
+- and 156 more in data.js
 
 ## Checks
 
