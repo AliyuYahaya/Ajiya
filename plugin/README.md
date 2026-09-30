@@ -4,7 +4,8 @@ Bundles three things for Claude Code:
 
 - the **Ajiya skill** (`skills/ajiya/SKILL.md`, a copy of the kit's skill);
 - the **MCP server** (`ajiya mcp`, declared in `.mcp.json`);
-- a **session-start hook** (`hooks/session-start.sh`) that runs
+- a **session-start hook** (`hooks/session-start.sh` on macOS and Linux, `hooks/session-start.ps1` on
+  Windows) that runs
   `ajiya status --brief` in projects that have `ajiya.toml`, so each session
   starts with the current state. In other projects it prints nothing.
 
@@ -34,8 +35,12 @@ To try the plugin from a checkout without installing it:
 
 ## Notes
 
-- On Windows the hook runs through Git Bash (Claude Code's default shell there).
-  Without it the hook does nothing useful; use the MCP server and skill only.
+- On Windows the hook runs through `powershell.exe` and does not need Git Bash.
+  `hooks/hooks.json` declares two shell-form hooks, one for `sh` and one for
+  PowerShell. Each ends in `; exit 0`, and each script exits silently on the
+  wrong platform, so only one of them prints. Claude Code has no OS-specific hook
+  field; see https://code.claude.com/docs/en/hooks (command hook fields) and
+  https://code.claude.com/docs/en/plugins-reference (hooks).
 - After the kit's `SKILL.md` changes, refresh the copy with
   `cp internal/kit/files/SKILL.md plugin/skills/ajiya/SKILL.md`; a test fails
   until you do.

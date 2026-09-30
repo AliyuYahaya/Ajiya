@@ -6,8 +6,12 @@
         "hooks": [
           {
             "type": "command",
-            "command": "sh",
-            "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/session-start.sh"],
+            "command": "sh \"${CLAUDE_PLUGIN_ROOT}/hooks/session-start.sh\"; exit 0",
+            "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"${CLAUDE_PLUGIN_ROOT}/hooks/session-start.ps1\"; exit 0",
             "timeout": 10
           }
         ]

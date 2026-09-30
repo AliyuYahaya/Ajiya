@@ -8,9 +8,9 @@ Generated 2026-09-30.
 | Milestone | Closed | Required | % | Can start now |
 |---|---|---|---|---|
 | v0-1 | 37 | 37 | 100% | 0 |
-| v0-2 | 58 | 73 | 79% | 8 |
-| v0-3 | 58 | 83 | 69% | 8 |
-| after-v0-3 | 58 | 82 | 70% | 8 |
+| v0-2 | 60 | 73 | 82% | 6 |
+| v0-3 | 60 | 83 | 72% | 6 |
+| after-v0-3 | 60 | 82 | 73% | 6 |
 
 ## Phases
 
@@ -22,7 +22,7 @@ Generated 2026-09-30.
 | Onboarding | 17 | 0 | 0 | 17 | 100% | v0-1 |
 | Release | 5 | 0 | 0 | 5 | 100% | v0-1 |
 | Agent-access | 3 | 0 | 3 | 6 | 50% | v0-2 |
-| Install | 11 | 0 | 12 | 23 | 47% | v0-2 |
+| Install | 13 | 0 | 10 | 23 | 56% | v0-2 |
 | Decisions-and-changes | 0 | 0 | 11 | 11 | 0% | v0-3 |
 
 ## Can start now
@@ -30,15 +30,13 @@ Generated 2026-09-30.
 - **AJ-0045** install.sh for macOS and Linux (ajiya) · v0-2
 - **AJ-0073** install.ps1 for Windows (ajiya) · v0-2
 - **AJ-0077** Homebrew tap wiring (ajiya) · v0-2
-- **AJ-0092** Plugin session-start hook on Windows (ajiya) · v0-2
-- **AJ-0093** Add to Cursor link (ajiya) · v0-2
 - **AJ-0094** Terminal detection ignores /dev/null (ajiya) · v0-2
 - **AJ-0095** mcp install honours CLAUDE_CONFIG_DIR (ajiya) · v0-2
 - **AJ-0096** Registering says how to undo it (ajiya) · v0-2
 
 ## Waiting
 
-- **AJ-0047** v0.2 definition of done (ajiya) waits on AJ-0045, AJ-0082, AJ-0092, AJ-0093, AJ-0094, AJ-0095, AJ-0096
+- **AJ-0047** v0.2 definition of done (ajiya) waits on AJ-0045, AJ-0082, AJ-0094, AJ-0095, AJ-0096
 - **AJ-0048** Tags column (ajiya) waits on AJ-0047
 - **AJ-0049** ajiya ticket files (ajiya) waits on AJ-0048
 - **AJ-0050** Decision records and commands (ajiya) waits on AJ-0048
@@ -65,6 +63,8 @@ Generated 2026-09-30.
 
 ## Recent activity
 
+- 2026-09-30 `fd5a919` Plan: registering says how to undo it (chore)
+  - AJ-0096: new → pending
 - 2026-09-30 `0a18e51` Plan the gaps left by the plugin and mcp install (chore)
   - AJ-0092: new → pending
   - AJ-0093: new → pending
@@ -89,9 +89,7 @@ Generated 2026-09-30.
 - 2026-09-30 `5958462` Merge branch 'worktree-agent-a052d49d096e57329' into worktree-agent-a658cbd8dac8f5d6c (-)
 - 2026-09-30 `2f1791a` Mark AJ-0043 done (AJ-0043)
   - AJ-0043: in_progress → done
-- 2026-09-30 `0852975` Test the MCP server and mention it in the guide (AJ-0043)
-  - AJ-0043: pending → in_progress
-- and 173 more in data.js
+- and 174 more in data.js
 
 ## Checks
 

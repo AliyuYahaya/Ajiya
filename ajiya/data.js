@@ -29,13 +29,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 73,
-        "done": 58,
+        "done": 60,
         "in_progress": 0,
-        "pending": 15,
+        "pending": 13,
         "dropped": 0
       },
-      "percent": 79,
-      "ready": 8
+      "percent": 82,
+      "ready": 6
     },
     {
       "name": "v0-3",
@@ -44,13 +44,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 83,
-        "done": 58,
+        "done": 60,
         "in_progress": 0,
-        "pending": 25,
+        "pending": 23,
         "dropped": 0
       },
-      "percent": 69,
-      "ready": 8
+      "percent": 72,
+      "ready": 6
     },
     {
       "name": "after-v0-3",
@@ -59,13 +59,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 82,
-        "done": 58,
+        "done": 60,
         "in_progress": 0,
-        "pending": 24,
+        "pending": 22,
         "dropped": 0
       },
-      "percent": 70,
-      "ready": 8
+      "percent": 73,
+      "ready": 6
     }
   ],
   "phases": [
@@ -159,12 +159,12 @@ window.AJIYA = {
       "goal": "Ajiya installs in one step, with a Claude Code plugin",
       "counts": {
         "total": 23,
-        "done": 11,
+        "done": 13,
         "in_progress": 0,
-        "pending": 12,
+        "pending": 10,
         "dropped": 0
       },
-      "percent": 47,
+      "percent": 56,
       "milestone": "v0-2"
     },
     {
@@ -188,9 +188,9 @@ window.AJIYA = {
       "path": ".",
       "counts": {
         "total": 96,
-        "done": 70,
+        "done": 72,
         "in_progress": 0,
-        "pending": 26,
+        "pending": 24,
         "dropped": 0
       }
     }
@@ -1389,8 +1389,6 @@ window.AJIYA = {
       "waiting_on": [
         "AJ-0045",
         "AJ-0082",
-        "AJ-0092",
-        "AJ-0093",
         "AJ-0094",
         "AJ-0095",
         "AJ-0096"
@@ -2510,16 +2508,19 @@ window.AJIYA = {
         "AJ-0046"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · 39f18c9 · 2026-09-30 · tests passed",
+        "commit": "39f18c9",
+        "date": "2026-09-30",
+        "tests_passed": true
       },
       "milestone": "v0-2",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0047"
       ],
-      "unblocks": 12
+      "unblocks": 0
     },
     {
       "id": "AJ-0093",
@@ -2531,16 +2532,19 @@ window.AJIYA = {
         "AJ-0044"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · 5cff5a1 · 2026-09-30 · tests passed",
+        "commit": "5cff5a1",
+        "date": "2026-09-30",
+        "tests_passed": true
       },
       "milestone": "v0-2",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0047"
       ],
-      "unblocks": 12
+      "unblocks": 0
     },
     {
       "id": "AJ-0094",
@@ -2610,14 +2614,34 @@ window.AJIYA = {
     "AJ-0045",
     "AJ-0073",
     "AJ-0077",
-    "AJ-0092",
-    "AJ-0093",
     "AJ-0094",
     "AJ-0095",
     "AJ-0096"
   ],
   "checks": [],
   "activity": [
+    {
+      "hash": "fd5a919a783044023986d2fc95d325aa3de37606",
+      "short": "fd5a919",
+      "date": "2026-09-30",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Plan: registering says how to undo it",
+      "refs": [],
+      "chore": true,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0096",
+          "phase": "agent-access",
+          "from": "",
+          "to": "pending",
+          "text": "🟥 Pending"
+        }
+      ],
+      "time": 1790784354
+    },
     {
       "hash": "0a18e51c797896eee1dbefb0abdcf7256ccf438b",
       "short": "0a18e51",

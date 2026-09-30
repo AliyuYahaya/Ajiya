@@ -6,6 +6,9 @@
 #   otherwise                       -> print 'ajiya status --brief'
 # Every other failure is silent: a broken hook must never disturb a session.
 
+# On Windows (Git Bash) session-start.ps1 does this job; exit so it does not run twice.
+case "$(uname -s 2>/dev/null)" in MINGW* | MSYS* | CYGWIN*) exit 0 ;; esac
+
 cd "${CLAUDE_PROJECT_DIR:-.}" 2>/dev/null || exit 0
 [ -f ajiya.toml ] || exit 0
 
