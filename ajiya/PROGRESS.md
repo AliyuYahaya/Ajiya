@@ -58,6 +58,13 @@ Generated 2026-10-01.
 
 ## Recent activity
 
+- 2026-10-01 `33020e1` Plan v0.2.1: findings from the v0.2 tests (chore)
+  - AJ-0101: new → pending
+  - AJ-0102: new → pending
+  - AJ-0103: new → pending
+  - AJ-0104: new → pending
+  - AJ-0105: new → pending
+  - AJ-0106: new → pending
 - 2026-09-30 `56f5157` v0.2 signed off; plan v0.2.1 polish from the MCP walkthrough (AJ-0047)
   - AJ-0047: pending → done
   - AJ-0098: new → pending
@@ -85,10 +92,7 @@ Generated 2026-10-01.
 - 2026-09-30 `321e6bc` install.ps1: a failed install always exits 1 (AJ-0073)
 - 2026-09-30 `36e4c5f` Installer CI: analyze each PowerShell script; shellcheck fails on warnings (AJ-0074)
 - 2026-09-30 `d83da99` Merge branch 'worktree-agent-a920ee3d0cb59f8ae' into worktree-agent-a658cbd8dac8f5d6c (-)
-- 2026-09-30 `5f3e837` Mark AJ-0096 and AJ-0097 done (AJ-0096, AJ-0097)
-  - AJ-0096: in_progress → done
-  - AJ-0097: in_progress → done
-- and 217 more in data.js
+- and 218 more in data.js
 
 ## Checks
 
