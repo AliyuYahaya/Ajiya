@@ -64,6 +64,11 @@ Generated 2026-09-30.
 
 ## Recent activity
 
+- 2026-09-30 `0a18e51` Plan the gaps left by the plugin and mcp install (chore)
+  - AJ-0092: new → pending
+  - AJ-0093: new → pending
+  - AJ-0094: new → pending
+  - AJ-0095: new → pending
 - 2026-09-30 `10744eb` Merge branch 'worktree-agent-afb56f2355d7544c5' into worktree-agent-a658cbd8dac8f5d6c (-)
 - 2026-09-30 `7f2e26b` Mark AJ-0044 done (AJ-0044)
   - AJ-0044: pending → done
@@ -85,9 +90,7 @@ Generated 2026-09-30.
   - AJ-0043: in_progress → done
 - 2026-09-30 `0852975` Test the MCP server and mention it in the guide (AJ-0043)
   - AJ-0043: pending → in_progress
-- 2026-09-30 `86e4905` Start npm trusted publishing (AJ-0080)
-  - AJ-0080: pending → in_progress
-- and 172 more in data.js
+- and 173 more in data.js
 
 ## Checks
 
