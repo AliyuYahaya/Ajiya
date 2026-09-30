@@ -87,11 +87,42 @@ jobs:
           MACOS_NOTARY_KEY: ${{ secrets.MACOS_NOTARY_KEY }}
           MACOS_NOTARY_KEY_ID: ${{ secrets.MACOS_NOTARY_KEY_ID }}
           MACOS_NOTARY_ISSUER_ID: ${{ secrets.MACOS_NOTARY_ISSUER_ID }}
+      - name: Check installer scripts were attached
+        run: |
+          assets=$(gh release view "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" --json assets --jq '.assets[].name')
+          printf '%s\n' "$assets" | grep -Fx install.sh
+          printf '%s\n' "$assets" | grep -Fx install.ps1
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/upload-artifact@v7
         with:
           name: dist
           path: dist/
           if-no-files-found: error
+
+  # Verify the signed and notarised macOS binaries on a clean GitHub macOS
+  # runner, whose Gatekeeper trust store is available. This host check must pass
+  # before either public package channel can publish a stable release.
+  macos-verify:
+    needs: [release]
+    if: github.event_name == 'push' && needs.release.result == 'success'
+    runs-on: macos-latest
+    steps:
+      - uses: actions/download-artifact@v7
+        with:
+          name: dist
+          path: dist
+      - name: Verify signed and notarised macOS binaries
+        run: |
+          set -euo pipefail
+          for arch in amd64 arm64; do
+            archive="dist/ajiya_${GITHUB_REF_NAME#v}_darwin_${arch}.tar.gz"
+            dir="$RUNNER_TEMP/ajiya-$arch"
+            mkdir -p "$dir"
+            tar -xzf "$archive" -C "$dir" ajiya
+            codesign --verify --deep --strict --verbose=2 "$dir/ajiya"
+            spctl --assess --type execute --verbose=4 "$dir/ajiya"
+          done
 
   # Pull requests and manual runs: build only. No secrets, read-only token,
   # nothing published.
@@ -122,10 +153,10 @@ jobs:
   # Trusted publishing: no npm token; npm exchanges the job's OIDC identity
   # (workflow release.yml + environment npm-release) for a publish credential.
   npm:
-    needs: [release, snapshot]
+    needs: [release, snapshot, macos-verify]
     if: >-
       !cancelled() && (
-        (github.event_name == 'push' && needs.release.result == 'success') ||
+        (github.event_name == 'push' && needs.release.result == 'success' && needs.macos-verify.result == 'success') ||
         (github.event_name == 'workflow_dispatch' && inputs.dry_run && needs.snapshot.result == 'success')
       )
     runs-on: ubuntu-latest
@@ -137,6 +168,23 @@ jobs:
       DRY_RUN: ${{ github.event_name == 'push' && 'false' || 'true' }}
       DIST: ${{ github.event_name == 'push' && 'dist' || 'dist-snapshot' }}
     steps:
+      - name: Wait for the GitHub release to be published
+        if: github.event_name == 'push'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          for attempt in $(seq 1 360); do
+            draft=$(gh api "repos/$GITHUB_REPOSITORY/releases/tags/$GITHUB_REF_NAME" --jq '.draft')
+            if [ "$draft" = false ]; then
+              echo "release $GITHUB_REF_NAME is published"
+              exit 0
+            fi
+            echo "release $GITHUB_REF_NAME is still a draft; waiting for the maintainer to publish it ($attempt/360)"
+            sleep 10
+          done
+          echo "release $GITHUB_REF_NAME was not published within one hour" >&2
+          exit 1
       - uses: actions/checkout@v7
       - uses: actions/download-artifact@v7
         with:
@@ -184,10 +232,10 @@ jobs:
   # prerelease (0.2.0-rc.1) never reaches the tap. Approve this only after the
   # draft release is published, or `brew install` would 404 on the download.
   tap:
-    needs: [release, snapshot]
+    needs: [release, snapshot, macos-verify]
     if: >-
       !cancelled() && (
-        (github.event_name == 'push' && needs.release.result == 'success') ||
+        (github.event_name == 'push' && needs.release.result == 'success' && needs.macos-verify.result == 'success') ||
         (github.event_name == 'workflow_dispatch' && inputs.dry_run && needs.snapshot.result == 'success')
       )
     runs-on: ubuntu-latest
@@ -198,6 +246,23 @@ jobs:
       DRY_RUN: ${{ github.event_name == 'push' && 'false' || 'true' }}
       DIST: ${{ github.event_name == 'push' && 'dist' || 'dist-snapshot' }}
     steps:
+      - name: Wait for the GitHub release to be published
+        if: github.event_name == 'push'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          for attempt in $(seq 1 360); do
+            draft=$(gh api "repos/$GITHUB_REPOSITORY/releases/tags/$GITHUB_REF_NAME" --jq '.draft')
+            if [ "$draft" = false ]; then
+              echo "release $GITHUB_REF_NAME is published"
+              exit 0
+            fi
+            echo "release $GITHUB_REF_NAME is still a draft; waiting for the maintainer to publish it ($attempt/360)"
+            sleep 10
+          done
+          echo "release $GITHUB_REF_NAME was not published within one hour" >&2
+          exit 1
       - uses: actions/download-artifact@v7
         with:
           name: ${{ env.DIST }}

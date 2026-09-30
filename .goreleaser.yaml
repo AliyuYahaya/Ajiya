@@ -68,6 +68,10 @@ changelog:
 
 release:
   draft: true
+  # Keep the one-line installers at stable URLs alongside every release.
+  extra_files:
+    - glob: ./scripts/install.sh
+    - glob: ./scripts/install.ps1
   # Tags such as v0.2.0-rc.1 are published as pre-releases, so they never
   # become the "latest" release the install scripts download.
   prerelease: auto
