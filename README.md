@@ -7,7 +7,8 @@ tickets) in plain markdown inside the repository. Coding agents plan, update and
 prove their work through `ajiya` commands, and people can see launch readiness at
 a glance. Everything is local: no server, no account, no network calls.
 
-Status: v0.1 in progress. Nothing is released yet; build it from source.
+The v0.2.0 release includes prebuilt binaries, install scripts, an npm package,
+and a Homebrew cask.
 
 ## How it works
 
@@ -33,14 +34,60 @@ project   the repository; it may hold several apps
 
 ## Install
 
-From source, with Go 1.26 or later:
+On macOS or Linux:
+
+```
+curl -fsSL https://github.com/AliyuYahaya/Ajiya/releases/latest/download/install.sh | sh
+```
+
+On Windows PowerShell:
+
+```powershell
+irm https://github.com/AliyuYahaya/Ajiya/releases/latest/download/install.ps1 | iex
+```
+
+The scripts verify the downloaded archive against `checksums.txt` and install
+without administrator rights. To install the prerelease instead:
+
+```sh
+curl -fsSL https://github.com/AliyuYahaya/Ajiya/releases/latest/download/install.sh | AJIYA_VERSION=v0.2.0-rc.2 sh
+```
+
+```powershell
+$env:AJIYA_VERSION = 'v0.2.0-rc.2'
+irm https://github.com/AliyuYahaya/Ajiya/releases/latest/download/install.ps1 | iex
+```
+
+With Homebrew:
+
+```
+brew tap AliyuYahaya/tap
+brew install --cask ajiya
+```
+
+With npm:
+
+```
+npm install -g @ajiya/cli
+```
+
+Or install from source, with Go 1.26 or later:
 
 ```
 go install github.com/AliyuYahaya/Ajiya/cmd/ajiya@latest
 ```
 
 This puts `ajiya` in `$(go env GOPATH)/bin`; make sure that folder is on your
-`PATH`. Release binaries and a Homebrew cask come with the first release.
+`PATH`.
+
+### What just happened?
+
+- **Once per computer:** install Ajiya; it offers to register with the coding
+  agents it finds.
+- **Once per project:** run `ajiya init`, or ask your agent to set up the
+  project.
+- **Every day:** open your agent. It starts `ajiya mcp` for that session and
+  closes it afterwards; nothing runs while the agent is closed.
 
 Claude Code users can also add the plugin (skill and a session-start
 status line): `/plugin marketplace add AliyuYahaya/Ajiya`, then
