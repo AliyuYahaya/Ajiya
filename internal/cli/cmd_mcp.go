@@ -375,7 +375,7 @@ func restLines(s string) string {
 // exec runs one CLI command in dir with captured output.
 func (m *mcpServer) exec(dir string, argv []string) (stdout, stderr string, code int) {
 	var o, e bytes.Buffer
-	code = run(&env{stdin: strings.NewReader(""), stdout: &o, stderr: &e, dir: dir, now: m.now}, argv)
+	code = run(&env{stdin: strings.NewReader(""), stdout: &o, stderr: &e, dir: dir, now: m.now, noAgents: true}, argv)
 	return o.String(), e.String(), code
 }
 

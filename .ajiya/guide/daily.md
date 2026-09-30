@@ -170,4 +170,5 @@ same JSON as `--json`. The tools cover reading the plan, adding and changing
 tickets, phases, apps and milestones, and `ajiya_ticket_done`; it still refuses
 without a commit that names the ticket, and the server never commits for you.
 Dropping a ticket, removing an app or milestone, moving a milestone and
-installing hooks are left out on purpose: a person decides those.
+installing hooks are left out on purpose: a person decides those. So is
+registering the server with an agent (`ajiya mcp install`, `ajiya mcp status`).

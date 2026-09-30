@@ -2,6 +2,7 @@
 package cli
 
 import (
+	"bufio"
 	"errors"
 	"flag"
 	"fmt"
@@ -9,6 +10,8 @@ import (
 	"os"
 	"strings"
 	"time"
+
+	"github.com/AliyuYahaya/Ajiya/internal/agents"
 )
 
 // Exit codes shared by every command.
@@ -50,6 +53,19 @@ type env struct {
 	dir            string           // working directory
 	interactive    bool             // a person is typing at stdin
 	now            func() time.Time // the clock; nil means time.Now
+	agents         *agents.Env      // the machine for agent registration; nil means the real one (tests set it)
+	in             *bufio.Reader    // stdin, read a line at a time by readLine
+	noAgents       bool             // never offer to register with agents (set for commands run over MCP)
+}
+
+// readLine reads one line of the person's answer. All prompts share one reader,
+// so a piped answer for a second question is not lost in the first one's buffer.
+func (e *env) readLine() string {
+	if e.in == nil {
+		e.in = bufio.NewReader(e.stdin)
+	}
+	line, _ := e.in.ReadString('\n')
+	return line
 }
 
 type command struct {
@@ -99,6 +115,9 @@ func init() {
 		{"check", "[--strict] [--commits <range>] [--json]", "Check the plan for problems", runCheck},
 		{"hook install", "", "Install the commit-msg and prepare-commit-msg git hooks", runHookInstall},
 		{"hook run", "<hook> <git hook arguments>", "Run a git hook (called by the installed hook scripts)", runHookRun},
+		{"mcp install", "[--claude] [--codex] [--cursor] [--all] [--scope user|project] [--yes]", "Register Ajiya's MCP server with Claude Code, Codex or Cursor (default: every agent found)", runMCPInstall},
+		{"mcp uninstall", "[--claude] [--codex] [--cursor] [--all] [--scope user|project] [--yes]", "Remove Ajiya's MCP server from those agents", runMCPUninstall},
+		{"mcp status", "", "Show which agents on this machine have Ajiya registered", runMCPStatus},
 		{"mcp", "[--dir <path>]", "Serve Ajiya's tools to an AI agent over MCP (stdio)", runMCP},
 		{"version", "", "Print the version", runVersion},
 	}
