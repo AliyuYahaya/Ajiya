@@ -8,9 +8,9 @@ Generated 2026-09-30.
 | Milestone | Closed | Required | % | Can start now |
 |---|---|---|---|---|
 | v0-1 | 37 | 37 | 100% | 0 |
-| v0-2 | 60 | 73 | 82% | 6 |
-| v0-3 | 60 | 83 | 72% | 6 |
-| after-v0-3 | 60 | 82 | 73% | 6 |
+| v0-2 | 61 | 73 | 83% | 7 |
+| v0-3 | 61 | 83 | 73% | 7 |
+| after-v0-3 | 61 | 82 | 74% | 7 |
 
 ## Phases
 
@@ -22,14 +22,15 @@ Generated 2026-09-30.
 | Onboarding | 17 | 0 | 0 | 17 | 100% | v0-1 |
 | Release | 5 | 0 | 0 | 5 | 100% | v0-1 |
 | Agent-access | 3 | 0 | 3 | 6 | 50% | v0-2 |
-| Install | 13 | 0 | 10 | 23 | 56% | v0-2 |
+| Install | 14 | 0 | 9 | 23 | 60% | v0-2 |
 | Decisions-and-changes | 0 | 0 | 11 | 11 | 0% | v0-3 |
 
 ## Can start now
 
 - **AJ-0045** install.sh for macOS and Linux (ajiya) · v0-2
 - **AJ-0073** install.ps1 for Windows (ajiya) · v0-2
-- **AJ-0077** Homebrew tap wiring (ajiya) · v0-2
+- **AJ-0079** Gated publish jobs (ajiya) · v0-2
+- **AJ-0084** Sign and notarise the macOS binaries (ajiya) · v0-2
 - **AJ-0094** Terminal detection ignores /dev/null (ajiya) · v0-2
 - **AJ-0095** mcp install honours CLAUDE_CONFIG_DIR (ajiya) · v0-2
 - **AJ-0096** Registering says how to undo it (ajiya) · v0-2
@@ -50,10 +51,8 @@ Generated 2026-09-30.
 - **AJ-0058** v0.3 definition of done (ajiya) waits on AJ-0048, AJ-0049, AJ-0050, AJ-0051, AJ-0052, AJ-0053, AJ-0054, AJ-0055, AJ-0056
 - **AJ-0074** Installer CI (ajiya) waits on AJ-0045, AJ-0073
 - **AJ-0078** Install scripts attached to every release (ajiya) waits on AJ-0045, AJ-0073
-- **AJ-0079** Gated publish jobs (ajiya) waits on AJ-0077
 - **AJ-0081** Release rehearsal on a release candidate (ajiya) waits on AJ-0074, AJ-0078, AJ-0079, AJ-0084
 - **AJ-0082** Install docs for every channel (ajiya) waits on AJ-0081
-- **AJ-0084** Sign and notarise the macOS binaries (ajiya) waits on AJ-0077
 
 ## Needs a human
 

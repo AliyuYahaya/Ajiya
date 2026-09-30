@@ -49,8 +49,12 @@ changelog:
 release:
   draft: true
 
-# Homebrew cask for the tap. Not published: skip_upload stays true until the
-# maintainer says to publish. The tap repository name is an assumption.
+# Homebrew cask for the tap AliyuYahaya/homebrew-tap.
+# skip_upload: auto pushes the cask for a stable tag and holds it back for a
+# prerelease tag such as v1.0.0-rc1
+# (https://goreleaser.com/customization/homebrew_casks/). The release job in
+# .github/workflows/release.yml passes --skip=homebrew, so nothing reaches the
+# tap until the gated publish job (AJ-0079) drops that flag.
 homebrew_casks:
   - name: ajiya
     ids: [ajiya]
@@ -62,7 +66,7 @@ homebrew_casks:
       owner: AliyuYahaya
       name: homebrew-tap
       token: "{{ .Env.HOMEBREW_TAP_TOKEN }}"
-    skip_upload: true
+    skip_upload: auto
     hooks:
       post:
         # The binaries are not notarised, so macOS would block them on first
@@ -72,4 +76,5 @@ homebrew_casks:
             system_command "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "#{staged_path}/ajiya"]
           end
     caveats: |
-      Set up a project with: ajiya init
+      Register Ajiya with your coding agents: ajiya mcp install
+      Set up a project: ajiya init
