@@ -8,9 +8,9 @@ Generated 2026-09-30.
 | Milestone | Closed | Required | % | Can start now |
 |---|---|---|---|---|
 | v0-1 | 37 | 37 | 100% | 0 |
-| v0-2 | 53 | 68 | 77% | 3 |
-| v0-3 | 53 | 78 | 67% | 3 |
-| after-v0-3 | 53 | 77 | 68% | 3 |
+| v0-2 | 54 | 68 | 79% | 4 |
+| v0-3 | 54 | 78 | 69% | 4 |
+| after-v0-3 | 54 | 77 | 70% | 4 |
 
 ## Phases
 
@@ -21,22 +21,21 @@ Generated 2026-09-30.
 | Outputs | 12 | 0 | 0 | 12 | 100% | v0-1 |
 | Onboarding | 17 | 0 | 0 | 17 | 100% | v0-1 |
 | Release | 5 | 0 | 0 | 5 | 100% | v0-1 |
-| Agent-access | 1 | 0 | 2 | 3 | 33% | v0-2 |
+| Agent-access | 2 | 0 | 1 | 3 | 66% | v0-2 |
 | Install | 8 | 1 | 12 | 21 | 38% | v0-2 |
 | Decisions-and-changes | 0 | 0 | 11 | 11 | 0% | v0-3 |
 
 ## Can start now
 
-- **AJ-0043** ajiya mcp server (ajiya) · v0-2
+- **AJ-0044** ajiya mcp install, uninstall and status (ajiya) · v0-2
 - **AJ-0076** npm launcher tests (ajiya) · v0-2
 - **AJ-0080** npm trusted publishing (ajiya) · v0-2 · in progress
+- **AJ-0046** Claude Code plugin (ajiya) · v0-2
 
 ## Waiting
 
-- **AJ-0044** ajiya mcp install, uninstall and status (ajiya) waits on AJ-0043
 - **AJ-0045** install.sh for macOS and Linux (ajiya) waits on AJ-0044
-- **AJ-0046** Claude Code plugin (ajiya) waits on AJ-0043
-- **AJ-0047** v0.2 definition of done (ajiya) waits on AJ-0043, AJ-0044, AJ-0045, AJ-0046, AJ-0082
+- **AJ-0047** v0.2 definition of done (ajiya) waits on AJ-0044, AJ-0045, AJ-0046, AJ-0082
 - **AJ-0048** Tags column (ajiya) waits on AJ-0047
 - **AJ-0049** ajiya ticket files (ajiya) waits on AJ-0048
 - **AJ-0050** Decision records and commands (ajiya) waits on AJ-0048
@@ -66,6 +65,8 @@ Generated 2026-09-30.
 
 ## Recent activity
 
+- 2026-09-30 `86e4905` Start npm trusted publishing (AJ-0080)
+  - AJ-0080: pending → in_progress
 - 2026-09-30 `07d20ef` Ignore a local Secrets/ folder (chore)
 - 2026-09-30 `512ed80` Merge branch 'worktree-agent-af2ca0983410d8aed' into worktree-agent-a658cbd8dac8f5d6c (-)
 - 2026-09-30 `c01e2d7` Mark AJ-0075 done (AJ-0075)
@@ -86,9 +87,7 @@ Generated 2026-09-30.
 - 2026-09-29 `4a25d7c` Merge branch 'worktree-agent-afca5fbf28b0fec73' into worktree-agent-a658cbd8dac8f5d6c (-)
 - 2026-09-29 `f38b713` AJ-0072 done (AJ-0072)
   - AJ-0072: pending → done
-- 2026-09-29 `885b499` Close AJ-0091 (AJ-0091)
-  - AJ-0091: pending → done
-- and 156 more in data.js
+- and 157 more in data.js
 
 ## Checks
 

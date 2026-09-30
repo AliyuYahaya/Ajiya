@@ -1,0 +1,485 @@
+[
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "idempotentHint": false,
+      "readOnlyHint": false
+    },
+    "description": "Use in the same task that creates a new app folder, so tickets can name it. Create the folder first.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "library": {
+          "description": "The app is a shared package.",
+          "type": "boolean"
+        },
+        "name": {
+          "description": "App name.",
+          "type": "string"
+        },
+        "path": {
+          "description": "Folder of the app, relative to the project.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "path"
+      ],
+      "type": "object"
+    },
+    "name": "ajiya_app_add"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "idempotentHint": false,
+      "readOnlyHint": true
+    },
+    "description": "Use before you finish a task to find problems in the plan; fix every error. An empty list means no problems.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "commits": {
+          "description": "Also check the commit rule on a revision range, such as origin/main..HEAD.",
+          "type": "string"
+        },
+        "strict": {
+          "description": "Treat warnings as failures too.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "name": "ajiya_check"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "idempotentHint": false,
+      "readOnlyHint": false
+    },
+    "description": "Use in a folder that has no ajiya.toml to set up Ajiya there, registering the apps it detects. Equivalent to 'ajiya init --yes'.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "description": "Project name (default: the folder name).",
+          "type": "string"
+        },
+        "prefix": {
+          "description": "Ticket ID prefix, such as AJ.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "name": "ajiya_init"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "idempotentHint": false,
+      "readOnlyHint": false
+    },
+    "description": "Use when planning to set the launch target: the phase or ticket that means the project has launched.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "target": {
+          "description": "A phase slug or a ticket ID.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "target"
+      ],
+      "type": "object"
+    },
+    "name": "ajiya_launch_set"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "idempotentHint": false,
+      "readOnlyHint": false
+    },
+    "description": "Use when planning to add a milestone: a gate that is reached when the phases or tickets it targets are done.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "after": {
+          "description": "Place after this milestone.",
+          "type": "string"
+        },
+        "before": {
+          "description": "Place before this milestone.",
+          "type": "string"
+        },
+        "name": {
+          "description": "Milestone name.",
+          "type": "string"
+        },
+        "targets": {
+          "description": "Comma-separated phase slugs or ticket IDs it needs.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "targets"
+      ],
+      "type": "object"
+    },
+    "name": "ajiya_milestone_add"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "idempotentHint": false,
+      "readOnlyHint": true
+    },
+    "description": "Use to see progress to each milestone gate, in order.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {},
+      "type": "object"
+    },
+    "name": "ajiya_milestone_list"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "idempotentHint": false,
+      "readOnlyHint": true
+    },
+    "description": "Use to see what one milestone still needs and what blocks it.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "description": "Milestone name.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object"
+    },
+    "name": "ajiya_milestone_show"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "idempotentHint": false,
+      "readOnlyHint": true
+    },
+    "description": "Use to pick what to work on: lists the tickets that can start now (open, not blocked, every dependency done), best first.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "app": {
+          "description": "Only tickets of this app.",
+          "type": "string"
+        },
+        "launch": {
+          "description": "Only tickets the launch target needs.",
+          "type": "boolean"
+        },
+        "milestone": {
+          "description": "Only tickets this milestone needs.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "name": "ajiya_next"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "idempotentHint": false,
+      "readOnlyHint": false
+    },
+    "description": "Use when planning a project to add a phase, a stage of work with one goal.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "goal": {
+          "description": "What the phase achieves.",
+          "type": "string"
+        },
+        "slug": {
+          "description": "Short lowercase name used in file names.",
+          "type": "string"
+        },
+        "title": {
+          "description": "Display title.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "slug",
+        "goal"
+      ],
+      "type": "object"
+    },
+    "name": "ajiya_phase_add"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "idempotentHint": false,
+      "readOnlyHint": true
+    },
+    "description": "Use to see each phase with its progress and earliest milestone.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {},
+      "type": "object"
+    },
+    "name": "ajiya_phase_list"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "idempotentHint": false,
+      "readOnlyHint": true
+    },
+    "description": "Use at the start of a session to see where the project stands: progress to each milestone, work in progress, what can start, checks and recent activity.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {},
+      "type": "object"
+    },
+    "name": "ajiya_status"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "idempotentHint": false,
+      "readOnlyHint": false
+    },
+    "description": "Use when you find work that is not in the plan: add a ticket instead of widening the current one.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "app": {
+          "description": "App name.",
+          "type": "string"
+        },
+        "depends": {
+          "description": "Comma-separated IDs this ticket depends on.",
+          "type": "string"
+        },
+        "done_when": {
+          "description": "The check that proves the ticket is done.",
+          "type": "string"
+        },
+        "human": {
+          "description": "Reason, when only a person can do this ticket.",
+          "type": "string"
+        },
+        "phase": {
+          "description": "Phase slug.",
+          "type": "string"
+        },
+        "title": {
+          "description": "Ticket title.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "title",
+        "phase",
+        "app",
+        "done_when"
+      ],
+      "type": "object"
+    },
+    "name": "ajiya_ticket_add"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "idempotentHint": false,
+      "readOnlyHint": false
+    },
+    "description": "Use when a ticket is stuck on something outside your control, and say what it waits on. ajiya_ticket_start clears the block later.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "description": "Ticket ID, such as AJ-0043.",
+          "type": "string"
+        },
+        "reason": {
+          "description": "What the ticket waits on.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "reason"
+      ],
+      "type": "object"
+    },
+    "name": "ajiya_ticket_block"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "idempotentHint": false,
+      "readOnlyHint": false
+    },
+    "description": "Use when the ticket's done-when is met and a commit with its Ajiya trailer exists. It refuses without such a commit; this server never makes commits.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "by": {
+          "description": "Name of the person who did it (for tickets that need a human).",
+          "type": "string"
+        },
+        "id": {
+          "description": "Ticket ID, such as AJ-0043.",
+          "type": "string"
+        },
+        "note": {
+          "description": "What was done.",
+          "type": "string"
+        },
+        "test": {
+          "description": "Run the project's test command first and refuse if it fails.",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "name": "ajiya_ticket_done"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "idempotentHint": false,
+      "readOnlyHint": false
+    },
+    "description": "Use to correct a ticket's title, done-when, dependencies, app or phase. Give at least one field; depends replaces the whole list.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "app": {
+          "description": "New app.",
+          "type": "string"
+        },
+        "depends": {
+          "description": "New dependency list, comma separated, or \"-\" for none.",
+          "type": "string"
+        },
+        "done_when": {
+          "description": "New done-when.",
+          "type": "string"
+        },
+        "id": {
+          "description": "Ticket ID, such as AJ-0043.",
+          "type": "string"
+        },
+        "phase": {
+          "description": "New phase slug.",
+          "type": "string"
+        },
+        "title": {
+          "description": "New title.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "name": "ajiya_ticket_edit"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "idempotentHint": false,
+      "readOnlyHint": true
+    },
+    "description": "Use to find tickets by phase, app, state or milestone, in plan order.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "app": {
+          "description": "App name.",
+          "type": "string"
+        },
+        "milestone": {
+          "description": "Milestone name.",
+          "type": "string"
+        },
+        "phase": {
+          "description": "Phase slug.",
+          "type": "string"
+        },
+        "state": {
+          "description": "pending, in_progress, done, dropped, ready or human.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "name": "ajiya_ticket_list"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "idempotentHint": false,
+      "readOnlyHint": true
+    },
+    "description": "Use before starting a ticket, or when you need its done-when, what it waits on, what waits on it, or its commits.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "description": "Ticket ID, such as AJ-0043.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "name": "ajiya_ticket_show"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "idempotentHint": false,
+      "readOnlyHint": false
+    },
+    "description": "Use before you begin work on a ticket. It marks the ticket in progress and clears a block.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "description": "Ticket ID, such as AJ-0043.",
+          "type": "string"
+        },
+        "note": {
+          "description": "What is left, when resuming.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "name": "ajiya_ticket_start"
+  }
+]

@@ -29,13 +29,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 68,
-        "done": 53,
+        "done": 54,
         "in_progress": 1,
-        "pending": 14,
+        "pending": 13,
         "dropped": 0
       },
-      "percent": 77,
-      "ready": 3
+      "percent": 79,
+      "ready": 4
     },
     {
       "name": "v0-3",
@@ -44,13 +44,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 78,
-        "done": 53,
+        "done": 54,
         "in_progress": 1,
-        "pending": 24,
+        "pending": 23,
         "dropped": 0
       },
-      "percent": 67,
-      "ready": 3
+      "percent": 69,
+      "ready": 4
     },
     {
       "name": "after-v0-3",
@@ -59,13 +59,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 77,
-        "done": 53,
+        "done": 54,
         "in_progress": 1,
-        "pending": 23,
+        "pending": 22,
         "dropped": 0
       },
-      "percent": 68,
-      "ready": 3
+      "percent": 70,
+      "ready": 4
     }
   ],
   "phases": [
@@ -145,12 +145,12 @@ window.AJIYA = {
       "goal": "Agents read and change the plan through ajiya status and an MCP server they register with in one step",
       "counts": {
         "total": 3,
-        "done": 1,
+        "done": 2,
         "in_progress": 0,
-        "pending": 2,
+        "pending": 1,
         "dropped": 0
       },
-      "percent": 33,
+      "percent": 66,
       "milestone": "v0-2"
     },
     {
@@ -188,9 +188,9 @@ window.AJIYA = {
       "path": ".",
       "counts": {
         "total": 91,
-        "done": 65,
+        "done": 66,
         "in_progress": 1,
-        "pending": 25,
+        "pending": 24,
         "dropped": 0
       }
     }
@@ -1255,18 +1255,21 @@ window.AJIYA = {
         "AJ-0042"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · 0852975 · 2026-09-30 · tests passed",
+        "commit": "0852975",
+        "date": "2026-09-30",
+        "tests_passed": true
       },
       "milestone": "v0-2",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0044",
         "AJ-0046",
         "AJ-0047"
       ],
-      "unblocks": 23
+      "unblocks": 0
     },
     {
       "id": "AJ-0044",
@@ -1282,10 +1285,8 @@ window.AJIYA = {
         "text": "🟥 Pending"
       },
       "milestone": "v0-2",
-      "ready": false,
-      "waiting_on": [
-        "AJ-0043"
-      ],
+      "ready": true,
+      "waiting_on": [],
       "dependants": [
         "AJ-0045",
         "AJ-0047",
@@ -1336,10 +1337,8 @@ window.AJIYA = {
         "text": "🟥 Pending"
       },
       "milestone": "v0-2",
-      "ready": false,
-      "waiting_on": [
-        "AJ-0043"
-      ],
+      "ready": true,
+      "waiting_on": [],
       "dependants": [
         "AJ-0047"
       ],
@@ -1374,7 +1373,6 @@ window.AJIYA = {
       "milestone": "v0-2",
       "ready": false,
       "waiting_on": [
-        "AJ-0043",
         "AJ-0044",
         "AJ-0045",
         "AJ-0046",
@@ -2488,12 +2486,37 @@ window.AJIYA = {
     }
   ],
   "next": [
-    "AJ-0043",
+    "AJ-0044",
     "AJ-0076",
-    "AJ-0080"
+    "AJ-0080",
+    "AJ-0046"
   ],
   "checks": [],
   "activity": [
+    {
+      "hash": "86e49053030982848fc62c05ee0707969cf25976",
+      "short": "86e4905",
+      "date": "2026-09-30",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Start npm trusted publishing",
+      "refs": [
+        "AJ-0080"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0080",
+          "phase": "install",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress · Needs a human: needs the maintainer's npm account"
+        }
+      ],
+      "time": 1790781548
+    },
     {
       "hash": "07d20efcb1bda6a6c1241e0b67ad2d8b2a392bb6",
       "short": "07d20ef",
