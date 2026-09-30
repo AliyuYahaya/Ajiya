@@ -29,13 +29,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 68,
-        "done": 54,
-        "in_progress": 1,
+        "done": 55,
+        "in_progress": 0,
         "pending": 13,
         "dropped": 0
       },
-      "percent": 79,
-      "ready": 4
+      "percent": 80,
+      "ready": 3
     },
     {
       "name": "v0-3",
@@ -44,13 +44,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 78,
-        "done": 54,
-        "in_progress": 1,
+        "done": 55,
+        "in_progress": 0,
         "pending": 23,
         "dropped": 0
       },
-      "percent": 69,
-      "ready": 4
+      "percent": 70,
+      "ready": 3
     },
     {
       "name": "after-v0-3",
@@ -59,13 +59,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 77,
-        "done": 54,
-        "in_progress": 1,
+        "done": 55,
+        "in_progress": 0,
         "pending": 22,
         "dropped": 0
       },
-      "percent": 70,
-      "ready": 4
+      "percent": 71,
+      "ready": 3
     }
   ],
   "phases": [
@@ -159,12 +159,12 @@ window.AJIYA = {
       "goal": "Ajiya installs in one step, with a Claude Code plugin",
       "counts": {
         "total": 21,
-        "done": 8,
-        "in_progress": 1,
+        "done": 9,
+        "in_progress": 0,
         "pending": 12,
         "dropped": 0
       },
-      "percent": 38,
+      "percent": 42,
       "milestone": "v0-2"
     },
     {
@@ -188,8 +188,8 @@ window.AJIYA = {
       "path": ".",
       "counts": {
         "total": 91,
-        "done": 66,
-        "in_progress": 1,
+        "done": 67,
+        "in_progress": 0,
         "pending": 24,
         "dropped": 0
       }
@@ -2193,17 +2193,19 @@ window.AJIYA = {
         "AJ-0075"
       ],
       "status": {
-        "state": "in_progress",
-        "text": "🟨 In progress · Needs a human: needs the maintainer's npm account",
-        "human": "needs the maintainer's npm account"
+        "state": "done",
+        "text": "🟩 Done · by Aliyu Yahaya · 2026-09-30 · Note: all 7 @ajiya packages published once and linked with npm trust github to AliyuYahaya/Ajiya release.yml, environment npm-release, publish allowed",
+        "note": "all 7 @ajiya packages published once and linked with npm trust github to AliyuYahaya/Ajiya release.yml, environment npm-release, publish allowed",
+        "by": "Aliyu Yahaya",
+        "date": "2026-09-30"
       },
       "milestone": "v0-2",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0081"
       ],
-      "unblocks": 14
+      "unblocks": 0
     },
     {
       "id": "AJ-0081",
@@ -2231,7 +2233,6 @@ window.AJIYA = {
         "AJ-0076",
         "AJ-0078",
         "AJ-0079",
-        "AJ-0080",
         "AJ-0084"
       ],
       "dependants": [
@@ -2488,11 +2489,26 @@ window.AJIYA = {
   "next": [
     "AJ-0044",
     "AJ-0076",
-    "AJ-0080",
     "AJ-0046"
   ],
   "checks": [],
   "activity": [
+    {
+      "hash": "1b8142efb7507f55c3c4929d0db5ded1115fda28",
+      "short": "1b8142e",
+      "date": "2026-09-30",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "MCP roots: read Windows file URIs",
+      "refs": [
+        "AJ-0043"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790782149
+    },
     {
       "hash": "5958462fb4375d0475e5df2759d0d979b539cbf2",
       "short": "5958462",
