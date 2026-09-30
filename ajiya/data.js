@@ -28,19 +28,34 @@ window.AJIYA = {
         "AJ-0047"
       ],
       "required": {
-        "total": 73,
+        "total": 74,
         "done": 61,
         "in_progress": 0,
-        "pending": 12,
+        "pending": 13,
         "dropped": 0
       },
-      "percent": 83,
-      "ready": 7
+      "percent": 82,
+      "ready": 8
     },
     {
       "name": "v0-3",
       "targets": [
         "AJ-0058"
+      ],
+      "required": {
+        "total": 84,
+        "done": 61,
+        "in_progress": 0,
+        "pending": 23,
+        "dropped": 0
+      },
+      "percent": 72,
+      "ready": 8
+    },
+    {
+      "name": "after-v0-3",
+      "targets": [
+        "AJ-0057"
       ],
       "required": {
         "total": 83,
@@ -50,22 +65,7 @@ window.AJIYA = {
         "dropped": 0
       },
       "percent": 73,
-      "ready": 7
-    },
-    {
-      "name": "after-v0-3",
-      "targets": [
-        "AJ-0057"
-      ],
-      "required": {
-        "total": 82,
-        "done": 61,
-        "in_progress": 0,
-        "pending": 21,
-        "dropped": 0
-      },
-      "percent": 74,
-      "ready": 7
+      "ready": 8
     }
   ],
   "phases": [
@@ -158,13 +158,13 @@ window.AJIYA = {
       "title": "Install",
       "goal": "Ajiya installs in one step, with a Claude Code plugin",
       "counts": {
-        "total": 23,
+        "total": 24,
         "done": 14,
         "in_progress": 0,
-        "pending": 9,
+        "pending": 10,
         "dropped": 0
       },
-      "percent": 60,
+      "percent": 58,
       "milestone": "v0-2"
     },
     {
@@ -187,10 +187,10 @@ window.AJIYA = {
       "name": "ajiya",
       "path": ".",
       "counts": {
-        "total": 96,
+        "total": 97,
         "done": 73,
         "in_progress": 0,
-        "pending": 23,
+        "pending": 24,
         "dropped": 0
       }
     }
@@ -1298,7 +1298,8 @@ window.AJIYA = {
         "AJ-0093",
         "AJ-0094",
         "AJ-0095",
-        "AJ-0096"
+        "AJ-0096",
+        "AJ-0097"
       ],
       "unblocks": 0
     },
@@ -1377,7 +1378,8 @@ window.AJIYA = {
         "AJ-0093",
         "AJ-0094",
         "AJ-0095",
-        "AJ-0096"
+        "AJ-0096",
+        "AJ-0097"
       ],
       "status": {
         "state": "pending",
@@ -1391,7 +1393,8 @@ window.AJIYA = {
         "AJ-0082",
         "AJ-0094",
         "AJ-0095",
-        "AJ-0096"
+        "AJ-0096",
+        "AJ-0097"
       ],
       "dependants": [
         "AJ-0048"
@@ -2517,7 +2520,8 @@ window.AJIYA = {
       "ready": false,
       "waiting_on": [],
       "dependants": [
-        "AJ-0047"
+        "AJ-0047",
+        "AJ-0097"
       ],
       "unblocks": 0
     },
@@ -2607,6 +2611,28 @@ window.AJIYA = {
         "AJ-0047"
       ],
       "unblocks": 12
+    },
+    {
+      "id": "AJ-0097",
+      "phase": "install",
+      "app": "ajiya",
+      "title": "Plugin leaves MCP registration to ajiya mcp install",
+      "done_when": "The Claude Code plugin no longer declares the ajiya MCP server, so a session never lists the Ajiya tools twice; when ajiya.toml exists but Ajiya is not registered with Claude Code, the session-start hook adds one line saying to run ajiya mcp install (sh and PowerShell); plugin README and manifest tests updated; claude plugin validate passes",
+      "depends": [
+        "AJ-0044",
+        "AJ-0092"
+      ],
+      "status": {
+        "state": "pending",
+        "text": "🟥 Pending"
+      },
+      "milestone": "v0-2",
+      "ready": true,
+      "waiting_on": [],
+      "dependants": [
+        "AJ-0047"
+      ],
+      "unblocks": 12
     }
   ],
   "next": [
@@ -2616,7 +2642,8 @@ window.AJIYA = {
     "AJ-0084",
     "AJ-0094",
     "AJ-0095",
-    "AJ-0096"
+    "AJ-0096",
+    "AJ-0097"
   ],
   "checks": [],
   "activity": [
