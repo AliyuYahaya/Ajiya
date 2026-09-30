@@ -1,7 +1,7 @@
 // Written by ajiya build. Do not edit: run 'ajiya build'.
 window.AJIYA = {
   "schema": 1,
-  "generated": "2026-09-29",
+  "generated": "2026-09-30",
   "project": {
     "name": "Ajiya",
     "prefix": "AJ"
@@ -29,13 +29,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 68,
-        "done": 51,
+        "done": 52,
         "in_progress": 0,
-        "pending": 17,
+        "pending": 16,
         "dropped": 0
       },
-      "percent": 75,
-      "ready": 3
+      "percent": 76,
+      "ready": 4
     },
     {
       "name": "v0-3",
@@ -44,13 +44,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 78,
-        "done": 51,
+        "done": 52,
         "in_progress": 0,
-        "pending": 27,
+        "pending": 26,
         "dropped": 0
       },
-      "percent": 65,
-      "ready": 3
+      "percent": 66,
+      "ready": 4
     },
     {
       "name": "after-v0-3",
@@ -59,13 +59,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 77,
-        "done": 51,
+        "done": 52,
         "in_progress": 0,
-        "pending": 26,
+        "pending": 25,
         "dropped": 0
       },
-      "percent": 66,
-      "ready": 3
+      "percent": 67,
+      "ready": 4
     }
   ],
   "phases": [
@@ -159,12 +159,12 @@ window.AJIYA = {
       "goal": "Ajiya installs in one step, with a Claude Code plugin",
       "counts": {
         "total": 21,
-        "done": 6,
+        "done": 7,
         "in_progress": 0,
-        "pending": 15,
+        "pending": 14,
         "dropped": 0
       },
-      "percent": 28,
+      "percent": 33,
       "milestone": "v0-2"
     },
     {
@@ -188,9 +188,9 @@ window.AJIYA = {
       "path": ".",
       "counts": {
         "total": 91,
-        "done": 63,
+        "done": 64,
         "in_progress": 0,
-        "pending": 28,
+        "pending": 27,
         "dropped": 0
       }
     }
@@ -2070,18 +2070,21 @@ window.AJIYA = {
         "AJ-0068"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · b8e9dbb · 2026-09-30 · tests passed",
+        "commit": "b8e9dbb",
+        "date": "2026-09-30",
+        "tests_passed": true
       },
       "milestone": "v0-2",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0076",
         "AJ-0079",
         "AJ-0080"
       ],
-      "unblocks": 17
+      "unblocks": 0
     },
     {
       "id": "AJ-0076",
@@ -2097,10 +2100,8 @@ window.AJIYA = {
         "text": "🟥 Pending"
       },
       "milestone": "v0-2",
-      "ready": false,
-      "waiting_on": [
-        "AJ-0075"
-      ],
+      "ready": true,
+      "waiting_on": [],
       "dependants": [
         "AJ-0081"
       ],
@@ -2177,7 +2178,6 @@ window.AJIYA = {
       "milestone": "v0-2",
       "ready": false,
       "waiting_on": [
-        "AJ-0075",
         "AJ-0077"
       ],
       "dependants": [
@@ -2200,10 +2200,8 @@ window.AJIYA = {
         "human": "needs the maintainer's npm account"
       },
       "milestone": "v0-2",
-      "ready": false,
-      "waiting_on": [
-        "AJ-0075"
-      ],
+      "ready": true,
+      "waiting_on": [],
       "dependants": [
         "AJ-0081"
       ],
@@ -2490,11 +2488,52 @@ window.AJIYA = {
   ],
   "next": [
     "AJ-0043",
-    "AJ-0075",
-    "AJ-0083"
+    "AJ-0083",
+    "AJ-0076",
+    "AJ-0080"
   ],
   "checks": [],
   "activity": [
+    {
+      "hash": "b8e9dbb326c641e1b5b88066c87f2c991b9d314c",
+      "short": "b8e9dbb",
+      "date": "2026-09-30",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Test the npm build script and launcher; run them in CI on three OSes",
+      "refs": [
+        "AJ-0075"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1790780841
+    },
+    {
+      "hash": "30ee010a75d9cbd4d5209f5f08f13b4352f304b8",
+      "short": "30ee010",
+      "date": "2026-09-30",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Add npm package templates and build script",
+      "refs": [
+        "AJ-0075"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0075",
+          "phase": "install",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        }
+      ],
+      "time": 1790780519
+    },
     {
       "hash": "4136ead7c9d8eb4a5c8af97192ae1d5aa498632c",
       "short": "4136ead",

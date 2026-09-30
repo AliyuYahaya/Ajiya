@@ -1,16 +1,16 @@
 <!-- Written by ajiya build. Do not edit: run 'ajiya build'. -->
 # Ajiya: progress
 
-Generated 2026-09-29.
+Generated 2026-09-30.
 
 ## Milestones
 
 | Milestone | Closed | Required | % | Can start now |
 |---|---|---|---|---|
 | v0-1 | 37 | 37 | 100% | 0 |
-| v0-2 | 51 | 68 | 75% | 3 |
-| v0-3 | 51 | 78 | 65% | 3 |
-| after-v0-3 | 51 | 77 | 66% | 3 |
+| v0-2 | 52 | 68 | 76% | 4 |
+| v0-3 | 52 | 78 | 66% | 4 |
+| after-v0-3 | 52 | 77 | 67% | 4 |
 
 ## Phases
 
@@ -22,14 +22,15 @@ Generated 2026-09-29.
 | Onboarding | 17 | 0 | 0 | 17 | 100% | v0-1 |
 | Release | 5 | 0 | 0 | 5 | 100% | v0-1 |
 | Agent-access | 1 | 0 | 2 | 3 | 33% | v0-2 |
-| Install | 6 | 0 | 15 | 21 | 28% | v0-2 |
+| Install | 7 | 0 | 14 | 21 | 33% | v0-2 |
 | Decisions-and-changes | 0 | 0 | 11 | 11 | 0% | v0-3 |
 
 ## Can start now
 
 - **AJ-0043** ajiya mcp server (ajiya) · v0-2
-- **AJ-0075** npm packages: @ajiya/cli and one package per platform (ajiya) · v0-2
 - **AJ-0083** Apple signing credentials as release secrets (ajiya) · v0-2
+- **AJ-0076** npm launcher tests (ajiya) · v0-2
+- **AJ-0080** npm trusted publishing (ajiya) · v0-2
 
 ## Waiting
 
@@ -50,11 +51,9 @@ Generated 2026-09-29.
 - **AJ-0058** v0.3 definition of done (ajiya) waits on AJ-0048, AJ-0049, AJ-0050, AJ-0051, AJ-0052, AJ-0053, AJ-0054, AJ-0055, AJ-0056
 - **AJ-0073** install.ps1 for Windows (ajiya) waits on AJ-0044
 - **AJ-0074** Installer CI (ajiya) waits on AJ-0045, AJ-0073
-- **AJ-0076** npm launcher tests (ajiya) waits on AJ-0075
 - **AJ-0077** Homebrew tap wiring (ajiya) waits on AJ-0044
 - **AJ-0078** Install scripts attached to every release (ajiya) waits on AJ-0045, AJ-0073
-- **AJ-0079** Gated publish jobs (ajiya) waits on AJ-0075, AJ-0077
-- **AJ-0080** npm trusted publishing (ajiya) waits on AJ-0075
+- **AJ-0079** Gated publish jobs (ajiya) waits on AJ-0077
 - **AJ-0081** Release rehearsal on a release candidate (ajiya) waits on AJ-0074, AJ-0076, AJ-0078, AJ-0079, AJ-0080, AJ-0084
 - **AJ-0082** Install docs for every channel (ajiya) waits on AJ-0081
 - **AJ-0084** Sign and notarise the macOS binaries (ajiya) waits on AJ-0077, AJ-0083
@@ -69,6 +68,9 @@ Generated 2026-09-29.
 
 ## Recent activity
 
+- 2026-09-30 `b8e9dbb` Test the npm build script and launcher; run them in CI on three OSes (AJ-0075)
+- 2026-09-30 `30ee010` Add npm package templates and build script (AJ-0075)
+  - AJ-0075: pending → in_progress
 - 2026-09-29 `4136ead` Merge branch 'worktree-agent-afd29651f0fa7ef3e' into worktree-agent-a658cbd8dac8f5d6c (-)
 - 2026-09-29 `7cb789f` Windows CI: accept Windows' missing-file wording in import-legacy (chore)
 - 2026-09-29 `555ce43` Mark AJ-0042 done (AJ-0042)
@@ -88,9 +90,7 @@ Generated 2026-09-29.
   - AJ-0070: pending → done
 - 2026-09-29 `ab57528` npm account, org and @ajiya/cli placeholder in place (AJ-0068)
   - AJ-0068: pending → done
-- 2026-09-29 `2680bc1` phase remove updates [phases] order before deleting the file (AJ-0086)
-- 2026-09-29 `184720e` Merge branch 'worktree-agent-ac75a90c83d346edb' into worktree-agent-a658cbd8dac8f5d6c (-)
-- and 150 more in data.js
+- and 152 more in data.js
 
 ## Checks
 
