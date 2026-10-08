@@ -52,6 +52,8 @@ never touches text outside the markers. Then:
   for it.
 - Run `ajiya hook install`. The hooks check every commit message for the
   `Ajiya:` trailer and pre-fill it from the tickets in progress.
+  When `ajiya.toml` is in a folder above several app repositories, run
+  `ajiya hook install --apps`; evidence is then searched in every app repository.
 - Set the command that runs the project's tests, so `ajiya ticket done --test`
   can run it. `init` sets it when it can tell (`go.mod`, a `package.json` test
   script, `pytest` in `pyproject.toml`) and says so; check that it is right. When

@@ -152,6 +152,7 @@ func runTicketDone(e *env, args []string) error {
 		return refused("%s is already closed: %s", t.ID, t.Status)
 	}
 
+	evidenceRepo := "" // set when the evidence commit is not in the root repository
 	s := t.Status.Carry(plan.Done)
 	s.Note = *note
 	if *by != "" {
@@ -163,7 +164,7 @@ func runTicketDone(e *env, args []string) error {
 		}
 		s.By, s.Date = *by, today()
 	} else {
-		commits, err := gitx.Referencing(pr.cfg.Root, t.ID)
+		commits, err := gitx.ReferencingIn(pr.repos(), t.ID)
 		if err != nil {
 			return refused("%v", err)
 		}
@@ -175,7 +176,7 @@ func runTicketDone(e *env, args []string) error {
 			return refused("no commit references %s; commit the work with the trailer 'Ajiya: %s' first%s", t.ID, t.ID, hint)
 		}
 		if started, ok := gitx.StartedAt(pr.cfg.Root, t.ID); ok {
-			i := slices.IndexFunc(commits, func(c gitx.Commit) bool { return c.Time < started })
+			i := slices.IndexFunc(commits, func(c gitx.Evidence) bool { return c.Time < started })
 			if i == 0 {
 				return refused("no commit since %s was started names it (%s is from before the start); commit the work with the trailer 'Ajiya: %s' first", t.ID, commits[0].Short(), t.ID)
 			}
@@ -184,6 +185,7 @@ func runTicketDone(e *env, args []string) error {
 			}
 		}
 		s.Commit, s.Date = commits[0].Short(), commits[0].Date
+		evidenceRepo = pr.repoLabel(commits[0].Repo)
 	}
 	if *test {
 		if err := runTests(e, pr, t.ID); err != nil {
@@ -200,6 +202,9 @@ func runTicketDone(e *env, args []string) error {
 	}
 	_ = gitx.ClearStart(pr.cfg.Root, t.ID)
 	fmt.Fprintf(e.stdout, "%s %s\n", t.ID, t.Status)
+	if evidenceRepo != "" {
+		fmt.Fprintf(e.stdout, "evidence: %s in %s\n", t.Status.Commit, evidenceRepo)
+	}
 	return nil
 }
 
@@ -220,7 +225,7 @@ func runTicketShow(e *env, args []string) error {
 	}
 	ph := pr.plan.Phase(t.Phase)
 	dependants := plan.NewGraph(pr.plan.Tickets()).Dependants(t.ID)
-	commits, err := gitx.Referencing(pr.cfg.Root, t.ID)
+	commits, err := gitx.ReferencingIn(pr.repos(), t.ID)
 	if err != nil && err != gitx.ErrNotRepo {
 		return err
 	}
@@ -234,6 +239,7 @@ func runTicketShow(e *env, args []string) error {
 			Hash    string `json:"hash"`
 			Date    string `json:"date"`
 			Subject string `json:"subject"`
+			Repo    string `json:"repo,omitempty"` // set when not the project root repository
 		}
 		links := func(ids []string) []link {
 			out := []link{}
@@ -248,7 +254,7 @@ func runTicketShow(e *env, args []string) error {
 		}
 		cs := []commit{}
 		for _, c := range commits {
-			cs = append(cs, commit{c.Hash, c.Date, c.Subject})
+			cs = append(cs, commit{c.Hash, c.Date, c.Subject, pr.repoLabel(c.Repo)})
 		}
 		return writeJSON(e, struct {
 			jsonTicket
@@ -290,7 +296,11 @@ func runTicketShow(e *env, args []string) error {
 		if i > 0 {
 			label = ""
 		}
-		fmt.Fprintf(w, "%-11s %s %s %s\n", label, c.Short(), c.Date, c.Subject)
+		where := ""
+		if r := pr.repoLabel(c.Repo); r != "" {
+			where = " [" + r + "]"
+		}
+		fmt.Fprintf(w, "%-11s %s %s %s%s\n", label, c.Short(), c.Date, c.Subject, where)
 	}
 	return nil
 }

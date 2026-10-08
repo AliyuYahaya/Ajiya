@@ -19,6 +19,7 @@ import (
 	"errors"
 	"fmt"
 	"path"
+	"path/filepath"
 	"regexp"
 	"sort"
 	"strings"
@@ -204,6 +205,39 @@ func exemptFromApps(f string) bool {
 	return !strings.Contains(f, "/") || strings.HasPrefix(f, ".") || strings.HasPrefix(f, plan.Dir+"/")
 }
 
+// commitFiles returns the paths a commit changed, relative to the project
+// root. It looks in the root's repository first, then in the repository of
+// each app, so evidence from a plan over several repositories is found. It
+// returns nil when no repository has the commit.
+func commitFiles(cfg *config.Config, rev string) []string {
+	if files, err := gitx.CommitFiles(cfg.Root, rev); err == nil {
+		return files
+	}
+	var dirs []string
+	for _, a := range cfg.Apps {
+		dirs = append(dirs, filepath.Join(cfg.Root, filepath.FromSlash(a.Path)))
+	}
+	root := cfg.Root
+	if r, err := filepath.EvalSymlinks(root); err == nil {
+		root = r
+	}
+	for _, repo := range gitx.Repos(cfg.Root, dirs) {
+		files, err := gitx.CommitFiles(repo, rev)
+		if err != nil {
+			continue
+		}
+		rel, err := filepath.Rel(root, repo)
+		if err != nil || rel == "." || rel == ".." || strings.HasPrefix(rel, ".."+string(filepath.Separator)) {
+			return files // the root's own repository: paths are already right
+		}
+		for i, f := range files {
+			files[i] = path.Join(filepath.ToSlash(rel), f)
+		}
+		return files
+	}
+	return nil
+}
+
 // History returns the warnings that need git history: W003, W006 and W008.
 // now is passed in so tests can fix it.
 func History(cfg *config.Config, p *plan.Plan, now time.Time) ([]Finding, error) {
@@ -221,10 +255,7 @@ func History(cfg *config.Config, p *plan.Plan, now time.Time) ([]Finding, error)
 		}
 		changed, ok := files[t.Status.Commit]
 		if !ok {
-			var err error
-			if changed, err = gitx.CommitFiles(root, t.Status.Commit); err != nil {
-				changed = nil // a commit that is gone is not this check's business
-			}
+			changed = commitFiles(cfg, t.Status.Commit) // nil: a commit that is gone is not this check's business
 			files[t.Status.Commit] = changed
 		}
 		touched := false

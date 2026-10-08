@@ -10,8 +10,11 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"os"
 	"os/exec"
+	"path/filepath"
 	"slices"
+	"sort"
 	"strconv"
 	"strings"
 )
@@ -390,4 +393,71 @@ func Dirty(dir string, paths ...string) (bool, error) {
 		return false, err
 	}
 	return strings.TrimSpace(string(out)) != "", nil
+}
+
+// Toplevel returns the top folder of the git work tree holding dir. It fails
+// with ErrNotRepo when dir is not in one (or does not exist).
+func Toplevel(dir string) (string, error) {
+	out, err := git(dir, nil, "rev-parse", "--show-toplevel")
+	if err != nil {
+		return "", err
+	}
+	top := strings.TrimSpace(string(out))
+	if r, err := filepath.EvalSymlinks(top); err == nil {
+		top = r
+	}
+	return filepath.FromSlash(top), nil
+}
+
+// Repos returns the distinct git work trees an Ajiya project's commits can live
+// in: the one holding root (if any), then the one holding each app folder, in
+// the order given. Folders that do not exist or are not in a repository are
+// skipped, so a plan in a non-git folder over several app repositories finds
+// all of them, and a single-repository project finds just its own.
+func Repos(root string, appDirs []string) []string {
+	var repos []string
+	seen := map[string]bool{}
+	add := func(dir string) {
+		if st, err := os.Stat(dir); err != nil || !st.IsDir() {
+			return
+		}
+		top, err := Toplevel(dir)
+		if err != nil || seen[top] {
+			return
+		}
+		seen[top] = true
+		repos = append(repos, top)
+	}
+	add(root)
+	for _, d := range appDirs {
+		add(d)
+	}
+	return repos
+}
+
+// Evidence is a commit that names a ticket, and the repository it is in.
+type Evidence struct {
+	Commit
+	Repo string // the work tree the commit is in
+}
+
+// ReferencingIn returns the commits on HEAD of every repo whose trailer names
+// id, newest first. Repositories without commits add nothing. With no repos it
+// fails with ErrNotRepo, as Referencing does outside a repository.
+func ReferencingIn(repos []string, id string) ([]Evidence, error) {
+	if len(repos) == 0 {
+		return nil, ErrNotRepo
+	}
+	var out []Evidence
+	for _, r := range repos {
+		cs, err := Referencing(r, id)
+		if err != nil {
+			return nil, err
+		}
+		for _, c := range cs {
+			out = append(out, Evidence{Commit: c, Repo: r})
+		}
+	}
+	sort.SliceStable(out, func(i, j int) bool { return out[i].Time > out[j].Time })
+	return out, nil
 }

@@ -4,10 +4,12 @@ import (
 	"errors"
 	"flag"
 	"io"
+	"path/filepath"
 	"strings"
 	"time"
 
 	"github.com/AliyuYahaya/Ajiya/internal/config"
+	"github.com/AliyuYahaya/Ajiya/internal/gitx"
 	"github.com/AliyuYahaya/Ajiya/internal/plan"
 )
 
@@ -186,4 +188,31 @@ func (pr *project) newTicket(ph *plan.Phase, app, title, doneWhen string, deps [
 	}
 	ph.Tickets = append(ph.Tickets, t)
 	return t
+}
+
+// repos returns the git work trees whose commits count as evidence: the one
+// holding ajiya.toml (if it is in one) and the one holding each app folder,
+// without duplicates. A project in a single repository has just that one.
+func (pr *project) repos() []string {
+	var dirs []string
+	for _, a := range pr.cfg.Apps {
+		dirs = append(dirs, filepath.Join(pr.cfg.Root, filepath.FromSlash(a.Path)))
+	}
+	return gitx.Repos(pr.cfg.Root, dirs)
+}
+
+// repoLabel names a repository for people: its path from the project root with
+// / separators, or "" for the repository that holds the project root itself.
+func (pr *project) repoLabel(repo string) string {
+	root := pr.cfg.Root
+	if r, err := filepath.EvalSymlinks(root); err == nil {
+		root = r
+	}
+	if top, err := gitx.Toplevel(root); err == nil && top == repo {
+		return ""
+	}
+	if rel, err := filepath.Rel(root, repo); err == nil {
+		return filepath.ToSlash(rel)
+	}
+	return filepath.ToSlash(repo)
 }

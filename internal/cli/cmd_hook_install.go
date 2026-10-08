@@ -32,19 +32,37 @@ fi
 }
 
 func runHookInstall(e *env, args []string) error {
-	if _, err := parse(newFlags("hook install"), args, 0); err != nil {
+	fs := newFlags("hook install")
+	apps := fs.Bool("apps", false, "install into every git repository that holds an app, not just the project root")
+	if _, err := parse(fs, args, 0); err != nil {
 		return err
 	}
 	pr, err := load(e)
 	if err != nil {
 		return err
 	}
-	dir, err := gitx.GitPath(pr.cfg.Root, "hooks") // honours core.hooksPath
+	repos := []string{pr.cfg.Root}
+	if *apps {
+		if repos = pr.repos(); len(repos) == 0 {
+			return refused("no app folder is inside a git repository; register apps with 'ajiya app add' and run 'git init' in them")
+		}
+	}
+	for _, repo := range repos {
+		if err := installHooksIn(e, pr, repo); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+// installHooksIn installs both hooks in one repository and says what it did.
+func installHooksIn(e *env, pr *project, repo string) error {
+	dir, err := gitx.GitPath(repo, "hooks") // honours core.hooksPath
 	if err != nil {
 		return refused("%v", err)
 	}
 	if !filepath.IsAbs(dir) {
-		dir = filepath.Join(pr.cfg.Root, dir)
+		dir = filepath.Join(repo, dir)
 	}
 	if err := os.MkdirAll(dir, 0o755); err != nil {
 		return err
@@ -56,6 +74,9 @@ func runHookInstall(e *env, args []string) error {
 			return err
 		}
 		rel, _ := filepath.Rel(pr.cfg.Root, path)
+		if strings.HasPrefix(rel, "..") {
+			rel = path // a hooks folder outside the project, such as a shared core.hooksPath
+		}
 		fmt.Fprintf(e.stdout, "%s %s\n", result, filepath.ToSlash(rel))
 	}
 	return nil

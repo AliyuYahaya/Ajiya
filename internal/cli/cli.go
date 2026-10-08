@@ -113,7 +113,7 @@ func init() {
 		{"build", "", "Write ajiya/PROGRESS.md and ajiya/data.js", runBuild},
 		{"serve", "[--port <n>]", "Serve the dashboard on 127.0.0.1, rebuilding when files change", runServe},
 		{"check", "[--strict] [--commits <range>] [--json]", "Check the plan for problems", runCheck},
-		{"hook install", "", "Install the commit-msg and prepare-commit-msg git hooks", runHookInstall},
+		{"hook install", "[--apps]", "Install the commit-msg and prepare-commit-msg git hooks (--apps: in every app repository)", runHookInstall},
 		{"hook run", "<hook> <git hook arguments>", "Run a git hook (called by the installed hook scripts)", runHookRun},
 		{"mcp install", "[--claude] [--codex] [--cursor] [--all] [--scope user|project] [--yes]", "Register Ajiya's MCP server with Claude Code, Codex or Cursor (default: every agent found)", runMCPInstall},
 		{"mcp uninstall", "[--claude] [--codex] [--cursor] [--all] [--scope user|project] [--yes]", "Remove Ajiya's MCP server from those agents", runMCPUninstall},

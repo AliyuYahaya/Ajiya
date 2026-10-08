@@ -50,7 +50,7 @@ func hookCommitMsg(e *env, file string) error {
 	if err != nil {
 		return err
 	}
-	root := pr.cfg.Root
+	root := hookRepo(e, pr)
 	if merging, err := inMerge(root); err != nil || merging {
 		return err
 	}
@@ -80,6 +80,16 @@ func hookCommitMsg(e *env, file string) error {
 		return refused("commit refused: the message names %d tickets, more than %d; split the work into smaller commits", n, check.MaxRefs)
 	}
 	return nil
+}
+
+// hookRepo is the repository a hook runs in. Git runs hooks in the top folder
+// of the work tree being committed to, which may be an app repository below
+// the folder holding ajiya.toml, or the root itself.
+func hookRepo(e *env, pr *project) string {
+	if top, err := gitx.Toplevel(e.dir); err == nil {
+		return top
+	}
+	return pr.cfg.Root
 }
 
 // inMerge reports whether a merge is being committed.
@@ -127,7 +137,7 @@ func hookPrepare(e *env, file, source string) error {
 	if err != nil {
 		return err
 	}
-	root := pr.cfg.Root
+	root := hookRepo(e, pr)
 	msg, err := os.ReadFile(file)
 	if err != nil {
 		return err
@@ -139,7 +149,7 @@ func hookPrepare(e *env, file, source string) error {
 	if len(refs.IDs) > 0 || refs.Chore {
 		return nil
 	}
-	ids, err := trailerCandidates(pr)
+	ids, err := trailerCandidates(pr, root)
 	if err != nil || len(ids) == 0 {
 		return err
 	}
@@ -175,8 +185,7 @@ func stripComments(msg string) string {
 }
 
 // trailerCandidates returns the tickets a commit is probably about.
-func trailerCandidates(pr *project) ([]string, error) {
-	root := pr.cfg.Root
+func trailerCandidates(pr *project, root string) ([]string, error) {
 	staged, err := gitx.StagedFiles(root)
 	if err != nil {
 		return nil, err

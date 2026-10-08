@@ -245,7 +245,48 @@ Every read command takes `--json`.
 | `ajiya check` | Problems in the plan and, with `--commits`, in commit messages |
 | `ajiya build` / `ajiya serve` | The progress summary and the dashboard |
 | `ajiya changelog` | The work in a range of commits, by ticket |
-| `ajiya hook install` | The commit-message hooks |
+| `ajiya hook install [--apps]` | The commit-message hooks (`--apps`: in every app repository) |
+
+## Plans over several repositories
+
+The plan does not have to live in a git repository. Put `ajiya.toml` in a
+folder above several app repositories (the folder itself can be plain, not git)
+and register each app with the folder it lives in:
+
+```
+medinformer/            ajiya.toml and ajiya/ are here; no .git
+  api/                  its own git repository
+  web/                  its own git repository
+  mockups/              not in git
+```
+
+```toml
+[[apps]]
+name = "api"
+path = "api"
+[[apps]]
+name = "web"
+path = "web"
+```
+
+- **Evidence.** `ajiya ticket done`, `ajiya ticket show` and `ajiya check` look
+  for the `Ajiya: <ID>` trailer on `HEAD` of every distinct git repository that
+  holds a registered app folder, plus the repository holding `ajiya.toml` if
+  there is one. An app folder that is missing or not in git is skipped, and
+  two apps in one repository count once. The newest matching commit wins, and
+  when it is not in the root repository the output says where, for example
+  `evidence: 186a9cb in api`. Only `HEAD` is searched, as in a single
+  repository: merge or cherry-pick the work first. The stored evidence is still
+  the short hash.
+- **Hooks.** `ajiya hook install` still installs into the folder holding
+  `ajiya.toml`, which must be a git repository. `ajiya hook install --apps`
+  installs into every app repository instead. When git runs the hook in an app
+  repository, Ajiya walks up from it to find `ajiya.toml`, so the commit rule
+  (including merges, reverts and `Ajiya: chore`) applies to commits there.
+- **Limits.** `ajiya check --commits` and `ajiya changelog` read the history of
+  one repository, the one you run them in. The `started` record that
+  `ajiya ticket done` uses to ignore older commits lives in the root
+  repository, so it is not used when the root is not a repository.
 
 ## Developing Ajiya
 
