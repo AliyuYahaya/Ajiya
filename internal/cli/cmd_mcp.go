@@ -351,7 +351,8 @@ func (m *mcpServer) call(t mcpTool, a mcpArgs, dir string) *mcp.CallToolResult {
 		return textResult(true, msg)
 	}
 	if !t.json {
-		return textResult(false, firstLine(out), restLines(out), strings.TrimSpace(errOut))
+		// Warnings go before the rest so that the command's own last line stays last.
+		return textResult(false, firstLine(out), strings.TrimSpace(errOut), restLines(out))
 	}
 	// The one-line summary is the first line of the command's own text output.
 	// Read commands do not change anything, so running twice is safe.

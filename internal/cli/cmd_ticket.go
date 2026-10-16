@@ -200,6 +200,7 @@ func runTicketDone(e *env, args []string) error {
 	}
 	_ = gitx.ClearStart(pr.cfg.Root, t.ID)
 	fmt.Fprintf(e.stdout, "%s %s\n", t.ID, t.Status)
+	fmt.Fprintf(e.stdout, "Commit the plan change in ajiya/ with the trailer 'Ajiya: %s'.\n", t.ID)
 	return nil
 }
 

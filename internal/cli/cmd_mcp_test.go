@@ -414,3 +414,18 @@ func TestMCPRootsOnlyFromClientsThatDeclareThem(t *testing.T) {
 		})
 	}
 }
+
+// ticket done ends with a reminder to commit the plan change, over MCP as in
+// the CLI.
+func TestMCPTicketDoneRemindsToCommit(t *testing.T) {
+	dir := statusFixture(t)
+	cs := mcpConnect(t, dir, "")
+	r := mcpCall(t, cs, "ajiya_ticket_done", map[string]any{"id": "DE-0003"})
+	if r.IsError {
+		t.Fatalf("error: %s", resultText(r, 0))
+	}
+	want := "Commit the plan change in ajiya/ with the trailer 'Ajiya: DE-0003'."
+	if got := resultText(r, len(r.Content)-1); got != want && !strings.HasSuffix(got, "\n"+want) {
+		t.Errorf("last content = %q, want it to end with %q", got, want)
+	}
+}
