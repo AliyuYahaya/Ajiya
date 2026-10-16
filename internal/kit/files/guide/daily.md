@@ -62,6 +62,12 @@ Ajiya: CB-0142
 - `Ajiya: chore` is for upkeep with no ticket: dependency updates, formatting,
   config, plan-only changes.
 - Merge commits and reverts need no trailer.
+- Other trailers may sit in the same last paragraph. Git reads them all:
+
+  ```
+  Ajiya: CB-0142
+  Co-Authored-By: Name <name@example.com>
+  ```
 
 The git hooks from `ajiya hook install` check the trailer and pre-fill it from the
 tickets in progress. If a hook refuses a commit, fix the message; never skip the
@@ -79,9 +85,10 @@ work itself with the trailer before you close the ticket. `--test` runs the
 project's test command and refuses if it fails. Never mark a ticket done any
 other way, and never before its "done when" is met.
 
-`done` changes files in `ajiya/` (the phase files, `PROGRESS.md`, `data.js` and
-`index.html`). Commit them with the same ticket's trailer (`Ajiya: <ID>`) so the
-tree is clean.
+`done` changes one file: the ticket's phase file in `ajiya/`. It does not run
+`ajiya build`. `ajiya build` writes `ajiya/PROGRESS.md`, `ajiya/data.js` and
+`ajiya/index.html`. Commit the files that changed with the same ticket's trailer
+(`Ajiya: <ID>`) so the tree is clean.
 
 If `done --test` says there is no `[test]` command, the project has not set one
 yet. Set it in `ajiya.toml` as `setup.md` section 2 describes (ask the user if you

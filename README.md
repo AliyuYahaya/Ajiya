@@ -164,7 +164,13 @@ ajiya ticket done CB-0001 --test
 ajiya check
 ```
 
-A commit without the trailer is refused:
+With the hooks installed, you can leave the trailer out. When you commit, the
+hook adds `Ajiya: <ID>` for you if the message has no trailer yet and one to
+three tickets are in progress. If only files in `ajiya/` are staged, it names
+the tickets whose rows changed instead. It leaves merges, squashes and amends
+alone. With more than three tickets in progress it adds nothing.
+
+A commit without a trailer, and with nothing for the hook to add, is refused:
 
 ```
 ajiya hook run: commit refused: the message names no ticket. End it with a
@@ -192,7 +198,10 @@ Apps found:
 Register which? all, none, or numbers such as 1,3 [all]:
 ```
 
-Add `--yes` to register them all without asking. Missed one?
+Add `--yes` to register them all without asking. Without a terminal (in a
+script, or when an agent runs it) and without `--yes`, `init` registers no apps.
+It prints an `ajiya app add` command for each app it found, and you run the
+ones you want. Missed one?
 `ajiya app add <name> --path <dir>`.
 
 Bring in the work you already track. Imports never reword anything:
