@@ -100,7 +100,7 @@ func TestViewsInNav(t *testing.T) {
 	for _, m := range regexp.MustCompile(`(?m)^\s*(\w+): \{ label:`).FindAllStringSubmatch(reg, -1) {
 		views = append(views, m[1])
 	}
-	want := []string{"overview", "next", "board", "deps", "phases", "tickets", "apps", "checks", "activity", "changes", "decisions"}
+	want := []string{"overview", "board", "deps", "tickets", "apps", "checks", "activity", "changes", "decisions"}
 	if strings.Join(views, " ") != strings.Join(want, " ") {
 		t.Errorf("views = %v, want %v", views, want)
 	}
@@ -198,7 +198,7 @@ func TestLogoEmbedded(t *testing.T) {
 func TestViewFilters(t *testing.T) {
 	s := pageText(t)
 	want := map[string]string{
-		"overview": "true", "next": "true", "board": "true", "deps": "true", "phases": "true",
+		"overview": "true", "board": "true", "deps": "true",
 		"tickets": "true", "apps": "false", "checks": "'search'", "activity": "'search'", "changes": "'search'", "decisions": "'search'",
 	}
 	for view, flag := range want {
@@ -266,6 +266,29 @@ func TestChangesAndDecisionsViews(t *testing.T) {
 	for _, v := range []string{"unaffected", "modify", "replace", "invalidate", "investigate"} {
 		if !strings.Contains(s, ".badge.v-"+v) {
 			t.Errorf("no badge style for verdict %q", v)
+		}
+	}
+}
+
+// Next and Phases are gone as tabs: old links land on Board and on Tickets
+// grouped by phase, and Tickets remembers the grouping toggle.
+func TestMergedViews(t *testing.T) {
+	s := pageText(t)
+	for _, gone := range []string{`data-tab="next"`, `data-tab="phases"`, "function renderNext", "function renderPhases"} {
+		if strings.Contains(s, gone) {
+			t.Errorf("page still has %q", gone)
+		}
+	}
+	for _, want := range []string{
+		"const ALIAS = { next: 'board', phases: 'tickets' };",
+		"if (k === 'phases') setGrouped(true);",
+		"store.set(key('grouped')",
+		`id="groupBtn"`,
+		"sort(k === 'ready' ? byNext : byPlan)",
+		"function openPhase(slug, toggle)",
+	} {
+		if !strings.Contains(s, want) {
+			t.Errorf("page lacks %q", want)
 		}
 	}
 }
