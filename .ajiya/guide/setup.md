@@ -96,6 +96,9 @@ ajiya ticket add --phase bookings --app api "Booking model and migration" \
   "Tests for overlapping bookings pass" is a check; "Bookings work" is not.
 - **Depends**: the tickets that must be done first. Dependencies are the only
   source of order. If B needs A, say so, or `ajiya next` may offer B too early.
+- **Tags** are optional. Add `--tech <slug>` only when a ticket depends on a
+  specific technology or service, and run `ajiya tags` first to reuse a value.
+  `daily.md` has the rules.
 - Too big for one session? Split it. Too small to prove? Merge it into another.
 
 ### Work that is easy to forget
