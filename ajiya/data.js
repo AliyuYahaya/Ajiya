@@ -52,13 +52,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 83,
-        "done": 80,
-        "in_progress": 3,
+        "done": 81,
+        "in_progress": 2,
         "pending": 0,
         "dropped": 0
       },
-      "percent": 96,
-      "ready": 3
+      "percent": 97,
+      "ready": 0
     },
     {
       "name": "v0-3",
@@ -168,12 +168,12 @@ window.AJIYA = {
       "goal": "Agents read and change the plan through ajiya status and an MCP server they register with in one step",
       "counts": {
         "total": 9,
-        "done": 6,
-        "in_progress": 3,
+        "done": 7,
+        "in_progress": 2,
         "pending": 0,
         "dropped": 0
       },
-      "percent": 66,
+      "percent": 77,
       "milestone": "v0-2"
     },
     {
@@ -211,8 +211,8 @@ window.AJIYA = {
       "path": ".",
       "counts": {
         "total": 106,
-        "done": 92,
-        "in_progress": 3,
+        "done": 93,
+        "in_progress": 2,
         "pending": 11,
         "dropped": 0
       }
@@ -2781,11 +2781,14 @@ window.AJIYA = {
         "AJ-0047"
       ],
       "status": {
-        "state": "in_progress",
-        "text": "🟨 In progress"
+        "state": "done",
+        "text": "🟩 Done · 38087da · 2026-10-16 · tests passed",
+        "commit": "38087da",
+        "date": "2026-10-16",
+        "tests_passed": true
       },
       "milestone": "v0-2-1",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [],
       "unblocks": 0
@@ -2877,9 +2880,6 @@ window.AJIYA = {
     }
   ],
   "next": [
-    "AJ-0098",
-    "AJ-0102",
-    "AJ-0106",
     "AJ-0048"
   ],
   "checks": [
@@ -2892,6 +2892,95 @@ window.AJIYA = {
     }
   ],
   "activity": [
+    {
+      "hash": "38087da63a049688dfe239d947eb8ba4b7d43f47",
+      "short": "38087da",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Guide says next lists tickets not yet started",
+      "refs": [
+        "AJ-0102"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792159161
+    },
+    {
+      "hash": "01f9d729193c4234119356832cbc52cf374657e0",
+      "short": "01f9d72",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Merge AJ-0102: status counts only tickets that can start",
+      "refs": [
+        "AJ-0102"
+      ],
+      "chore": false,
+      "merge": true,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792159143
+    },
+    {
+      "hash": "dfb4394f58c057df78fefe8a9b0146457a270fff",
+      "short": "dfb4394",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Mark AJ-0099, AJ-0100, AJ-0101, AJ-0103, AJ-0104, AJ-0105 done",
+      "refs": [],
+      "chore": true,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0099",
+          "phase": "apps-launch",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · d96483a · 2026-10-16 · tests passed"
+        },
+        {
+          "id": "AJ-0100",
+          "phase": "onboarding",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · 52a348c · 2026-10-16 · tests passed"
+        },
+        {
+          "id": "AJ-0101",
+          "phase": "commit-rule",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · ca13988 · 2026-10-16 · tests passed"
+        },
+        {
+          "id": "AJ-0103",
+          "phase": "onboarding",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · 52a348c · 2026-10-16 · tests passed"
+        },
+        {
+          "id": "AJ-0104",
+          "phase": "onboarding",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · 2d69dc7 · 2026-10-16 · tests passed"
+        },
+        {
+          "id": "AJ-0105",
+          "phase": "onboarding",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · cc4b027 · 2026-10-16 · tests passed"
+        }
+      ],
+      "time": 1792159128
+    },
     {
       "hash": "52a348c0d83fb0d35f4ac8d33376baa89e086d3c",
       "short": "52a348c",
@@ -2908,6 +2997,22 @@ window.AJIYA = {
       "agent": "",
       "changes": [],
       "time": 1792159112
+    },
+    {
+      "hash": "253d827c1955f579cdd8fcdda74af21573ed2053",
+      "short": "253d827",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "status counts only tickets that can start",
+      "refs": [
+        "AJ-0102"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792159100
     },
     {
       "hash": "2d69dc7c4516eee9886fb857c19ad426cb1ff9a5",
