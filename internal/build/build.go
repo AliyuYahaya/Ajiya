@@ -42,6 +42,7 @@ type Data struct {
 	Activity   []activity.Entry `json:"activity"`
 	Decisions  []view.Decision  `json:"decisions"` // by ID, each with the tickets that link it
 	Changes    []view.Change    `json:"changes"`   // by ID, each with its candidate table
+	History    []HistoryEvent   `json:"history"`   // decision and change events, oldest first
 }
 
 type Project struct {
@@ -132,7 +133,7 @@ func Collect(cfg *config.Config, p *plan.Plan, order []*plan.Phase) (*Data, erro
 		Project:    Project{Name: cfg.Project.Name, Prefix: cfg.Project.Prefix},
 		Milestones: []Milestone{}, Phases: []Phase{}, Apps: []App{}, Tickets: []Ticket{},
 		Next: []string{}, Checks: []check.Finding{}, Activity: []activity.Entry{},
-		Decisions: []view.Decision{}, Changes: []view.Change{},
+		Decisions: []view.Decision{}, Changes: []view.Change{}, History: []HistoryEvent{},
 	}
 
 	var err error
@@ -231,6 +232,8 @@ func Collect(cfg *config.Config, p *plan.Plan, order []*plan.Phase) (*Data, erro
 	for _, c := range p.Changes {
 		d.Changes = append(d.Changes, view.ChangeOf(c))
 	}
+
+	d.History = History(p)
 
 	apps := append([]config.App{{Name: config.InfraApp}}, cfg.Apps...)
 	for _, a := range apps {
