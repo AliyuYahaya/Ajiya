@@ -2,6 +2,7 @@ package cli
 
 import (
 	"encoding/json"
+	"github.com/AliyuYahaya/Ajiya/internal/config"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -50,7 +51,7 @@ func chCounts(t *testing.T, root string) chTotals {
 		Name                      string
 		Required, Closed, Percent int
 	}
-	if err := json.Unmarshal([]byte(chMust(t, root, "milestone", "list", "--json")), &ms); err != nil || len(ms) != 1 {
+	if err := json.Unmarshal([]byte(chMust(t, root, "milestone", "list", "--json")), &ms); err != nil || len(ms) < 1 || ms[0].Name != "staging" {
 		t.Fatalf("milestone list --json: %v %v", err, ms)
 	}
 	return chTotals{ph[0].Done, ph[0].Total, ms[0].Required, ms[0].Closed, ms[0].Percent}
@@ -66,7 +67,8 @@ func chCounts(t *testing.T, root string) chTotals {
 //	MI-0006 open, no tags, depends on MI-0005 and MI-0003
 //	MI-0007 done, unrelated
 //
-// A milestone "staging" targets the build phase. Everything is committed.
+// Milestones: staging targets the build phase, v1 targets MI-0001 and MI-0007,
+// qa targets MI-0003 and MI-0007. Everything is committed.
 func chSupabase(t *testing.T) string {
 	t.Helper()
 	root := chPlan(t)
@@ -78,6 +80,8 @@ func chSupabase(t *testing.T) string {
 	chMust(t, root, "ticket", "edit", "MI-0003", "--depends", "MI-0007")
 	chMust(t, root, "ticket", "edit", "MI-0006", "--depends", "MI-0003,MI-0005")
 	chMust(t, root, "milestone", "add", "staging", "--targets", "build")
+	chMust(t, root, "milestone", "add", "v1", "--targets", "MI-0001,MI-0007", "--after", "staging")
+	chMust(t, root, "milestone", "add", "qa", "--targets", "MI-0003,MI-0007", "--after", "v1")
 	chCommitAll(t, root, "Ajiya: chore")
 	return root
 }
@@ -146,6 +150,23 @@ func TestChangeApproveSupabaseScenario(t *testing.T) {
 	out = chMust(t, root, "change", "approve", "CHG-0001", "--by", "Aliyu", "--new-decision", "DEC-0002")
 	if !strings.Contains(out, "Approved CHG-0001 by Aliyu") {
 		t.Errorf("approve output:\n%s", out)
+	}
+
+	// ajiya.toml was retargeted in the same write: the replaced target follows
+	// its replacement, the invalidated one is swapped for its dependencies
+	// (MI-0007 was already a target of qa, so it is not listed twice), and the
+	// phase target is untouched.
+	cfgText, err := config.ReadText(root)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, want := range []string{`targets = ["build"]`, `targets = ["MI-0008", "MI-0007"]`, `targets = ["MI-0007"]`} {
+		if !strings.Contains(cfgText, want) {
+			t.Errorf("ajiya.toml lacks %s:\n%s", want, cfgText)
+		}
+	}
+	if strings.Contains(cfgText, "MI-0001") || strings.Contains(cfgText, "MI-0003") {
+		t.Errorf("ajiya.toml still targets a superseded ticket:\n%s", cfgText)
 	}
 
 	file := phaseFile()
@@ -217,6 +238,8 @@ func TestChangeApproveSupabaseScenario(t *testing.T) {
 		"- Moved dependencies of MI-0005: MI-0001 -> MI-0008",
 		"- Moved dependencies of MI-0006: MI-0003, MI-0005 -> MI-0005, MI-0007",
 		"- Superseded decision DEC-0001 by DEC-0002",
+		"- milestone v1: target MI-0001 → MI-0008",
+		"- milestone qa: target MI-0003 → MI-0007 (invalidated; its dependencies)",
 	} {
 		if !strings.Contains(chg, want) {
 			t.Errorf("change file lacks %q:\n%s", want, chg)

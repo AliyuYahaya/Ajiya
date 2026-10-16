@@ -11,9 +11,16 @@ type ApplyOptions struct {
 	NewDecision string // decision that replaces the superseded ones; "" for none
 	By          string // who approves
 	Date        string // YYYY-MM-DD
-	// Milestones are checked for targets that this change supersedes. Approve
-	// does not edit ajiya.toml; it reports them in the Results.
+	// Milestones are checked for targets that this change supersedes; the
+	// ones that need it come back as Retargets for the caller to write.
 	Milestones []Milestone
+}
+
+// Retarget is a milestone whose targets this change moves: Targets is the new
+// list. The caller writes it to ajiya.toml in the same write as the plan.
+type Retarget struct {
+	Name    string
+	Targets []string
 }
 
 // ApplyError lists everything that stops a change from being applied.
@@ -79,7 +86,8 @@ func newTicketTags(old Tags, c *Change, newDec string) Tags {
 // ApplyChange applies every verdict of an open change to the plan in memory:
 // new tickets, edits, superseded tickets, moved dependencies and superseded
 // decisions. It marks the change Approved and writes its Results. It changes
-// nothing if it returns an error. The caller validates the result and saves
+// nothing if the checks up front refuse it; the refusal of an emptied
+// milestone comes later, so on any error the caller discards the plan. The caller validates the result and saves
 // the phases, decisions and the change (Save, SaveDecision, SaveChange).
 //
 // Rules:
@@ -97,18 +105,18 @@ func newTicketTags(old Tags, c *Change, newDec string) Tags {
 //     Closed tickets keep their dependencies: history is not rewritten.
 //   - A new ticket (from replace, or the follow-up of modify) gets the old
 //     ticket's tags, less the replaced values, plus the change's With tags.
-func (p *Plan) ApplyChange(c *Change, o ApplyOptions) error {
+func (p *Plan) ApplyChange(c *Change, o ApplyOptions) ([]Retarget, error) {
 	if !c.Status.Open() {
-		return fmt.Errorf("%s is %s", c.ID, strings.ToLower(c.Status.State.String()))
+		return nil, fmt.Errorf("%s is %s", c.ID, strings.ToLower(c.Status.State.String()))
 	}
 	if probs := c.CandidateProblems(); len(probs) > 0 {
-		return &ApplyError{probs}
+		return nil, &ApplyError{probs}
 	}
 	if len(c.Candidates) == 0 && len(c.Decisions) == 0 {
-		return &ApplyError{[]string{"the change has no candidates and names no decision, so there is nothing to apply; run 'ajiya change impact " + c.ID + "' or reject it"}}
+		return nil, &ApplyError{[]string{"the change has no candidates and names no decision, so there is nothing to apply; run 'ajiya change impact " + c.ID + "' or reject it"}}
 	}
 	if err := CheckStatusText("--by", o.By); err != nil || o.By == "" {
-		return &ApplyError{[]string{"--by needs a name without '·'"}}
+		return nil, &ApplyError{[]string{"--by needs a name without '·'"}}
 	}
 
 	// Everything that can be refused is checked before anything changes.
@@ -151,7 +159,7 @@ func (p *Plan) ApplyChange(c *Change, o ApplyOptions) error {
 		}
 	}
 	if len(probs) > 0 {
-		return &ApplyError{probs}
+		return nil, &ApplyError{probs}
 	}
 
 	var res []string
@@ -215,7 +223,7 @@ func (p *Plan) ApplyChange(c *Change, o ApplyOptions) error {
 		by := repl[id] // "" when invalidated
 		st, err := t.Status.Supersede(by, c.ID)
 		if err != nil {
-			return fmt.Errorf("%s: %v", id, err) // unreachable: Excluded was checked above
+			return nil, fmt.Errorf("%s: %v", id, err) // unreachable: Excluded was checked above
 		}
 		was := t.Status
 		t.Status = st
@@ -226,35 +234,73 @@ func (p *Plan) ApplyChange(c *Change, o ApplyOptions) error {
 		}
 	}
 
-	for _, m := range o.Milestones {
-		for _, target := range m.Targets {
-			if r, ok := repl[target]; ok {
-				res = append(res, fmt.Sprintf("- Milestone %s targets %s, now superseded by %s: retarget it in ajiya.toml (approve does not edit the config)", m.Name, target, r))
-			} else if inval[target] {
-				res = append(res, fmt.Sprintf("- Milestone %s targets %s, now superseded with no replacement: retarget it in ajiya.toml (approve does not edit the config)", m.Name, target))
+	// resolve is what a superseded ticket stands for now: its replacement, or
+	// for an invalidated one what it was waiting on.
+	var resolve func(id string, seen map[string]bool) []string
+	resolve = func(id string, seen map[string]bool) []string {
+		if r, ok := repl[id]; ok {
+			return []string{r}
+		}
+		if !inval[id] || seen[id] {
+			return []string{id}
+		}
+		seen[id] = true
+		var out []string
+		if t := p.Ticket(id); t != nil {
+			for _, d := range t.Depends {
+				out = append(out, resolve(d, seen)...)
 			}
 		}
+		return out
+	}
+
+	// Retarget the milestones that name a superseded ticket. Phase targets
+	// and other tickets stay. The new list is de-duplicated, in order.
+	var retargets []Retarget
+	var empty []string
+	for _, m := range o.Milestones {
+		var next, lines []string
+		seen := map[string]bool{}
+		add := func(id string) {
+			if !seen[id] {
+				seen[id] = true
+				next = append(next, id)
+			}
+		}
+		for _, target := range m.Targets {
+			switch {
+			case repl[target] != "":
+				add(repl[target])
+				lines = append(lines, fmt.Sprintf("- milestone %s: target %s \u2192 %s", m.Name, target, repl[target]))
+			case inval[target]:
+				deps := resolve(target, map[string]bool{})
+				for _, d := range deps {
+					add(d)
+				}
+				if len(deps) == 0 {
+					lines = append(lines, fmt.Sprintf("- milestone %s: target %s removed (invalidated, it depended on nothing)", m.Name, target))
+				} else {
+					lines = append(lines, fmt.Sprintf("- milestone %s: target %s \u2192 %s (invalidated; its dependencies)", m.Name, target, strings.Join(deps, ", ")))
+				}
+			default:
+				add(target)
+			}
+		}
+		if len(lines) == 0 {
+			continue
+		}
+		if len(next) == 0 {
+			empty = append(empty, m.Name)
+		}
+		retargets = append(retargets, Retarget{Name: m.Name, Targets: next})
+		res = append(res, lines...)
+	}
+	if len(empty) > 0 {
+		return nil, &ApplyError{[]string{"milestone " + strings.Join(empty, ", ") + " would be left with no targets, because every target is invalidated and depended on nothing; retarget or remove the milestone first ('ajiya milestone remove', 'ajiya launch set'), or assess the ticket as replace"}}
 	}
 
 	// Move dependencies of open tickets.
 	if len(repl)+len(inval) > 0 {
-		var resolve func(id string, seen map[string]bool) []string
-		resolve = func(id string, seen map[string]bool) []string {
-			if r, ok := repl[id]; ok {
-				return []string{r}
-			}
-			if !inval[id] || seen[id] {
-				return []string{id}
-			}
-			seen[id] = true
-			var out []string
-			if t := p.Ticket(id); t != nil {
-				for _, d := range t.Depends {
-					out = append(out, resolve(d, seen)...)
-				}
-			}
-			return out
-		}
 		fresh := map[*Ticket]bool{}
 		for _, n := range created {
 			fresh[n] = true
@@ -297,7 +343,7 @@ func (p *Plan) ApplyChange(c *Change, o ApplyOptions) error {
 	for _, id := range c.Decisions {
 		d := p.Decision(id)
 		if err := d.SetSuperseded(o.NewDecision, c.ID); err != nil {
-			return err
+			return nil, err
 		}
 		if o.NewDecision != "" {
 			res = append(res, fmt.Sprintf("- Superseded decision %s by %s", id, o.NewDecision))
@@ -311,7 +357,7 @@ func (p *Plan) ApplyChange(c *Change, o ApplyOptions) error {
 	}
 	c.Results = strings.Join(res, "\n")
 	c.Status = ChangeStatus{State: ChgApproved, Date: o.Date, By: o.By}
-	return nil
+	return retargets, nil
 }
 
 // addChangeTicket adds the ticket a replace, or the modify of a done ticket,
