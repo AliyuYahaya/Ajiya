@@ -32,12 +32,15 @@ func parse(fs *flag.FlagSet, args []string, npos int) ([]string, error) {
 			}
 			return nil, usageErr("%v", err)
 		}
-		args = fs.Args()
-		if len(args) == 0 {
+		rest := fs.Args()
+		// The flag package consumes the "--" terminator itself; when it did,
+		// everything left is positional, even if it starts with "-".
+		if n := len(args) - len(rest); n > 0 && args[n-1] == "--" {
+			pos = append(pos, rest...)
 			break
 		}
-		if args[0] == "--" {
-			pos = append(pos, args[1:]...)
+		args = rest
+		if len(args) == 0 {
 			break
 		}
 		pos = append(pos, args[0])

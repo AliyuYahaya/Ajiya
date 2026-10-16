@@ -99,6 +99,17 @@ func cat(head []string, groups ...[]string) []string {
 	return out
 }
 
+// beforeTerminator returns argv with flag placed before any "--", so the flag
+// is not read as a positional value.
+func beforeTerminator(argv []string, flag string) []string {
+	for i, a := range argv {
+		if a == "--" {
+			return cat(argv[:i], []string{flag}, argv[i:])
+		}
+	}
+	return cat(argv, []string{flag})
+}
+
 // pos marks positional values, so one that starts with "-" is not a flag.
 func pos(vals ...string) []string { return append([]string{"--"}, vals...) }
 
@@ -412,7 +423,7 @@ func (m *mcpServer) call(t mcpTool, a mcpArgs, dir string) *mcp.CallToolResult {
 	}
 	// The one-line summary is the first line of the command's own text output.
 	// Read commands do not change anything, so running twice is safe.
-	jout, _, _ := m.exec(dir, append(append([]string{}, argv...), "--json"))
+	jout, _, _ := m.exec(dir, beforeTerminator(argv, "--json"))
 	plain := out
 	if t.findings { // check prints the findings, then a count line
 		lines := strings.Split(strings.TrimSpace(out), "\n")
