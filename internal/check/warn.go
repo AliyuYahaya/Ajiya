@@ -14,6 +14,10 @@ package check
 //	W009 an earlier milestone already requires everything a later one does
 //	W010 open tickets are in no milestone, when a [[milestones]] list exists
 //	W011 [phases] order lists a phase before a phase it waits on
+//	W012 a phase file is in the old six-column form, without Tags
+//	W013 two tech tags differ only by punctuation or a trailing ql, js or s
+//
+// A ticket with no tags is valid: there is no warning for missing tags.
 
 import (
 	"errors"
@@ -64,6 +68,13 @@ func planWarnings(cfg *config.Config, p *plan.Plan) []Finding {
 				"the goal of %s names %s, but every ticket is for %s", ph.Slug, strings.Join(named, " and "), only))
 		}
 	}
+
+	for _, ph := range p.Phases {
+		if ph.SixColumn {
+			fs = append(fs, oldFormWarning(ph))
+		}
+	}
+	fs = append(fs, techWarnings(p)...)
 
 	if cfg.Root != "" {
 		dirs, _ := detect.AppManifestDirs(cfg.Root)
