@@ -37,6 +37,16 @@ func runInit(e *env, args []string) error {
 	} else if !errors.Is(err, os.ErrNotExist) {
 		return err
 	}
+	abs, err := filepath.Abs(e.dir)
+	if err != nil {
+		return err
+	}
+	if outer, err := config.Find(filepath.Dir(abs)); err == nil {
+		fmt.Fprintf(e.stderr, "warning: %s already holds a %s, so this will be a project nested inside it. "+
+			"Its commit hooks check commits against the plan of the repository they are made in; "+
+			"if you meant to use that plan, run ajiya from there instead.\n",
+			outer, config.FileName)
+	}
 	text := config.Template(*name, *prefix)
 	testCmd := detect.TestCommand(e.dir)
 	if testCmd != "" {
