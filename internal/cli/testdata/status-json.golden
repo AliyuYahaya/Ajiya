@@ -11,7 +11,7 @@
       "name": "launch",
       "closed": 0,
       "required": 6,
-      "can_start": 4
+      "can_start": 2
     }
   ],
   "in_progress": [
@@ -38,7 +38,7 @@
     }
   ],
   "can_start": {
-    "count": 4,
+    "count": 2,
     "first": [
       {
         "id": "DE-0001",
@@ -46,14 +46,9 @@
         "title": "Staging host"
       },
       {
-        "id": "DE-0002",
+        "id": "DE-0006",
         "app": "infra",
-        "title": "Schema"
-      },
-      {
-        "id": "DE-0004",
-        "app": "infra",
-        "title": "Auth"
+        "title": "Docs"
       }
     ]
   },
