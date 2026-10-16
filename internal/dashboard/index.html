@@ -578,6 +578,8 @@ dialog::backdrop { background: var(--c-backdrop); }
   const human = t => !closed(t) && !!t.status.human;
   // Board column. A ticket that needs a human sits there whatever else holds;
   // in progress comes before "can start now" because started tickets are ready too.
+  /* Ready means nothing blocks it; can start also means not yet started, as in ajiya next. */
+  const canStart = t => t.ready && state(t) !== 'in_progress';
   const column = t => closed(t) ? 'done' : human(t) ? 'human' : state(t) === 'in_progress' ? 'doing' : t.ready ? 'ready' : 'waiting';
   const stateLabel = { pending: 'Pending', in_progress: 'In progress', done: 'Done', dropped: 'Dropped', superseded: 'Superseded' };
   // Phase display order, then ID: the order used everywhere except the Can start now column.
@@ -682,7 +684,7 @@ dialog::backdrop { background: var(--c-backdrop); }
     if (F.phase && t.phase !== F.phase) return false;
     if (F.ms === '-' ? t.milestone : F.ms && t.milestone !== F.ms) return false;
     if (F.state) {
-      if (F.state === 'ready') { if (!t.ready) return false; }
+      if (F.state === 'ready') { if (!canStart(t)) return false; }
       else if (F.state === 'waiting') { if (column(t) !== 'waiting') return false; }
       else if (F.state === 'human') { if (!human(t)) return false; }
       else if (state(t) !== F.state) return false;
@@ -764,7 +766,7 @@ dialog::backdrop { background: var(--c-backdrop); }
     if (state(t) === 'dropped' && s.reason) notes.push(`<div class="note">${esc(s.reason)}</div>`);
     if (state(t) === 'superseded') notes.push(`<div class="note">${s.superseded_by ? `Replaced by ${esc(s.superseded_by)}` : 'Invalidated'} in ${esc(s.change)}${s.was ? `; was ${esc(stateLabel[s.was.state] || s.was.state)}` : ''}</div>`);
     const meta = [phaseTitle(t.phase), t.app].filter(Boolean).map(esc).join(' · ') + (!closed(t) && t.unblocks ? ` · unblocks ${t.unblocks}` : '');
-    return `<button class="card${compact ? ' compact' : ''}${t.ready && !compact ? ' ready' : ''}" type="button" data-open="${esc(t.id)}">
+    return `<button class="card${compact ? ' compact' : ''}${canStart(t) && !compact ? ' ready' : ''}" type="button" data-open="${esc(t.id)}">
       <div class="head"><span class="rid mono">${esc(t.id)}</span>${msBadge(t.milestone)}
         ${compact && column(t) !== 'done' ? '' : `<span style="margin-left:auto">${stateBadge(t)}</span>`}</div>
       <div class="name">${md(t.title)}</div>
@@ -1061,9 +1063,9 @@ dialog::backdrop { background: var(--c-backdrop); }
     const tDown = id => arr((byID.get(id) || {}).dependants).filter(d => byID.has(d));
     // A ticket card. out: in another phase than the one shown (dashed).
     const ticketNode = (t, out) => ({
-      id: t.id, cls: `${state(t)}${t.ready ? ' ready' : ''}${out ? ' ext' : ''}${filtered && !match(t) ? ' miss' : ''}`, attr: `data-open="${esc(t.id)}"`,
-      title: `${t.id} ${plainTitle(t.title)}\n${stateLabel[state(t)] || state(t)}${t.ready ? ', can start now' : ''}\nIn phase ${phaseTitle(t.phase)}${t.milestone ? `\nMilestone ${t.milestone}` : ''}`,
-      html: `<span class="top"><b>${esc(t.id)}</b>${t.milestone ? `<span>${esc(t.milestone)}</span>` : ''}<span class="r">${t.ready ? 'can start now' : esc(phaseTitle(t.phase))}</span></span>
+      id: t.id, cls: `${state(t)}${canStart(t) ? ' ready' : ''}${out ? ' ext' : ''}${filtered && !match(t) ? ' miss' : ''}`, attr: `data-open="${esc(t.id)}"`,
+      title: `${t.id} ${plainTitle(t.title)}\n${stateLabel[state(t)] || state(t)}${canStart(t) ? ', can start now' : ''}\nIn phase ${phaseTitle(t.phase)}${t.milestone ? `\nMilestone ${t.milestone}` : ''}`,
+      html: `<span class="top"><b>${esc(t.id)}</b>${t.milestone ? `<span>${esc(t.milestone)}</span>` : ''}<span class="r">${canStart(t) ? 'can start now' : esc(phaseTitle(t.phase))}</span></span>
         <span class="nm two">${esc(plainTitle(t.title))}</span>`,
     });
     const T = { W: 232, H: 74 };
@@ -1172,7 +1174,7 @@ dialog::backdrop { background: var(--c-backdrop); }
       return `<tr class="click" data-open="${esc(t.id)}">
         <td class="mono" style="white-space:nowrap;font-weight:700">${esc(t.id)}</td>
         <td>${md(t.title)}${grouped ? '' : `<div class="sub">${esc(phaseTitle(t.phase))} · ${esc(t.app)}</div>`}</td>
-        <td>${stateBadge(t)}${t.ready ? ' <span class="badge ready">Ready</span>' : ''}</td>
+        <td>${stateBadge(t)}${canStart(t) ? ' <span class="badge ready">Ready</span>' : ''}</td>
         <td>${msBadge(t.milestone)}</td>
         <td>${arr(t.depends).map(id => chip(id, true)).join(' ')}</td>
         <td class="note">${note}</td></tr>`;
