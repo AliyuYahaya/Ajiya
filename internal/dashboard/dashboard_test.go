@@ -285,7 +285,7 @@ func TestMergedViews(t *testing.T) {
 		"store.set(key('grouped')",
 		`id="groupBtn"`,
 		"sort(k === 'ready' ? byNext : byPlan)",
-		"function openPhase(slug, toggle)",
+		"function openPhase(slug)",
 	} {
 		if !strings.Contains(s, want) {
 			t.Errorf("page lacks %q", want)
