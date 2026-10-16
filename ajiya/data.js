@@ -89,6 +89,22 @@ window.AJIYA = {
       },
       "percent": 89,
       "ready": 1
+    },
+    {
+      "name": "v0-3-1",
+      "targets": [
+        "AJ-0109",
+        "AJ-0110"
+      ],
+      "required": {
+        "total": 87,
+        "done": 74,
+        "in_progress": 0,
+        "pending": 13,
+        "dropped": 0
+      },
+      "percent": 85,
+      "ready": 1
     }
   ],
   "phases": [
@@ -203,6 +219,20 @@ window.AJIYA = {
       },
       "percent": 0,
       "milestone": "v0-3"
+    },
+    {
+      "slug": "dashboard-views",
+      "title": "Dashboard views",
+      "goal": "The dashboard shows each thing once, explains every phase, and shows how the plan changed over time",
+      "counts": {
+        "total": 4,
+        "done": 0,
+        "in_progress": 0,
+        "pending": 4,
+        "dropped": 0
+      },
+      "percent": 0,
+      "milestone": "v0-3-1"
     }
   ],
   "apps": [
@@ -210,10 +240,10 @@ window.AJIYA = {
       "name": "ajiya",
       "path": ".",
       "counts": {
-        "total": 106,
+        "total": 110,
         "done": 93,
         "in_progress": 2,
-        "pending": 11,
+        "pending": 15,
         "dropped": 0
       }
     }
@@ -1451,9 +1481,10 @@ window.AJIYA = {
         "AJ-0049",
         "AJ-0050",
         "AJ-0051",
-        "AJ-0058"
+        "AJ-0058",
+        "AJ-0107"
       ],
-      "unblocks": 10
+      "unblocks": 14
     },
     {
       "id": "AJ-0049",
@@ -1477,7 +1508,7 @@ window.AJIYA = {
         "AJ-0053",
         "AJ-0058"
       ],
-      "unblocks": 6
+      "unblocks": 9
     },
     {
       "id": "AJ-0050",
@@ -1501,7 +1532,7 @@ window.AJIYA = {
         "AJ-0053",
         "AJ-0058"
       ],
-      "unblocks": 6
+      "unblocks": 9
     },
     {
       "id": "AJ-0051",
@@ -1526,7 +1557,7 @@ window.AJIYA = {
         "AJ-0053",
         "AJ-0058"
       ],
-      "unblocks": 7
+      "unblocks": 10
     },
     {
       "id": "AJ-0052",
@@ -1550,7 +1581,7 @@ window.AJIYA = {
         "AJ-0053",
         "AJ-0058"
       ],
-      "unblocks": 6
+      "unblocks": 9
     },
     {
       "id": "AJ-0053",
@@ -1580,7 +1611,7 @@ window.AJIYA = {
         "AJ-0054",
         "AJ-0058"
       ],
-      "unblocks": 5
+      "unblocks": 8
     },
     {
       "id": "AJ-0054",
@@ -1604,7 +1635,7 @@ window.AJIYA = {
         "AJ-0055",
         "AJ-0058"
       ],
-      "unblocks": 4
+      "unblocks": 7
     },
     {
       "id": "AJ-0055",
@@ -1629,7 +1660,7 @@ window.AJIYA = {
         "AJ-0057",
         "AJ-0058"
       ],
-      "unblocks": 3
+      "unblocks": 6
     },
     {
       "id": "AJ-0056",
@@ -1673,8 +1704,11 @@ window.AJIYA = {
       "waiting_on": [
         "AJ-0055"
       ],
-      "dependants": [],
-      "unblocks": 0
+      "dependants": [
+        "AJ-0108",
+        "AJ-0110"
+      ],
+      "unblocks": 3
     },
     {
       "id": "AJ-0058",
@@ -2877,6 +2911,99 @@ window.AJIYA = {
       "waiting_on": [],
       "dependants": [],
       "unblocks": 0
+    },
+    {
+      "id": "AJ-0107",
+      "phase": "dashboard-views",
+      "app": "ajiya",
+      "title": "Phase descriptions",
+      "done_when": "phase add takes --description and a new phase describe \u003cslug\u003e \"\u003ctext\u003e\" sets it; the description is kept as a paragraph under Goal in the phase file, round-trips with goldens, appears in phase list --json, ajiya build data and an MCP tool",
+      "depends": [
+        "AJ-0048"
+      ],
+      "status": {
+        "state": "pending",
+        "text": "🟥 Pending"
+      },
+      "milestone": "v0-3-1",
+      "ready": false,
+      "waiting_on": [
+        "AJ-0048"
+      ],
+      "dependants": [
+        "AJ-0109"
+      ],
+      "unblocks": 1
+    },
+    {
+      "id": "AJ-0108",
+      "phase": "dashboard-views",
+      "app": "ajiya",
+      "title": "Dashboard: one view per way of seeing tickets",
+      "done_when": "Next is folded into Board's Can start now column, and Phases and Tickets become one Tickets view with a group-by-phase toggle; no two tabs list the same tickets in the same grouping; old #next and #phases links land on the new view; dashboard tests updated",
+      "depends": [
+        "AJ-0057"
+      ],
+      "status": {
+        "state": "pending",
+        "text": "🟥 Pending"
+      },
+      "milestone": "v0-3-1",
+      "ready": false,
+      "waiting_on": [
+        "AJ-0057"
+      ],
+      "dependants": [
+        "AJ-0109",
+        "AJ-0110"
+      ],
+      "unblocks": 2
+    },
+    {
+      "id": "AJ-0109",
+      "phase": "dashboard-views",
+      "app": "ajiya",
+      "title": "Dashboard: a page per phase",
+      "done_when": "Clicking a phase opens its page with goal, description, milestone, progress, tickets grouped by state, and the phases it depends on and that depend on it; the page has its own link (#phase/\u003cslug\u003e); dashboard test covers a phase with and without a description",
+      "depends": [
+        "AJ-0107",
+        "AJ-0108"
+      ],
+      "status": {
+        "state": "pending",
+        "text": "🟥 Pending"
+      },
+      "milestone": "v0-3-1",
+      "ready": false,
+      "waiting_on": [
+        "AJ-0107",
+        "AJ-0108"
+      ],
+      "dependants": [],
+      "unblocks": 0
+    },
+    {
+      "id": "AJ-0110",
+      "phase": "dashboard-views",
+      "app": "ajiya",
+      "title": "Dashboard: plan history from decisions and changes",
+      "done_when": "A History view lists decisions and approved or rejected changes in date order; each change shows what it superseded and created and links to those tickets, and each decision shows what it replaced or was replaced by; ajiya build data carries the history; dashboard test covers a plan with one approved change",
+      "depends": [
+        "AJ-0057",
+        "AJ-0108"
+      ],
+      "status": {
+        "state": "pending",
+        "text": "🟥 Pending"
+      },
+      "milestone": "v0-3-1",
+      "ready": false,
+      "waiting_on": [
+        "AJ-0057",
+        "AJ-0108"
+      ],
+      "dependants": [],
+      "unblocks": 0
     }
   ],
   "next": [
@@ -2892,6 +3019,28 @@ window.AJIYA = {
     }
   ],
   "activity": [
+    {
+      "hash": "cd24d9ad61e8a3b5ebcf869e20406103290ea841",
+      "short": "cd24d9a",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Mark AJ-0102 done",
+      "refs": [],
+      "chore": true,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0102",
+          "phase": "agent-access",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · 38087da · 2026-10-16 · tests passed"
+        }
+      ],
+      "time": 1792159169
+    },
     {
       "hash": "38087da63a049688dfe239d947eb8ba4b7d43f47",
       "short": "38087da",

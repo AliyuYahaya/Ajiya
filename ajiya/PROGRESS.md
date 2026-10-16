@@ -12,6 +12,7 @@ Generated 2026-10-16.
 | v0-2-1 | 81 | 83 | 97% | 0 |
 | v0-3 | 74 | 84 | 88% | 1 |
 | after-v0-3 | 74 | 83 | 89% | 1 |
+| v0-3-1 | 74 | 87 | 85% | 1 |
 
 ## Phases
 
@@ -25,6 +26,7 @@ Generated 2026-10-16.
 | Agent-access | 7 | 2 | 0 | 9 | 77% | v0-2 |
 | Install | 24 | 0 | 0 | 24 | 100% | v0-2 |
 | Decisions-and-changes | 0 | 0 | 11 | 11 | 0% | v0-3 |
+| Dashboard views | 0 | 0 | 4 | 4 | 0% | v0-3-1 |
 
 ## Can start now
 
@@ -42,6 +44,10 @@ Generated 2026-10-16.
 - **AJ-0056** Guides and skill for decisions and changes (ajiya) waits on AJ-0055
 - **AJ-0057** Dashboard: open changes and decisions (ajiya) waits on AJ-0055
 - **AJ-0058** v0.3 definition of done (ajiya) waits on AJ-0048, AJ-0049, AJ-0050, AJ-0051, AJ-0052, AJ-0053, AJ-0054, AJ-0055, AJ-0056
+- **AJ-0107** Phase descriptions (ajiya) waits on AJ-0048
+- **AJ-0108** Dashboard: one view per way of seeing tickets (ajiya) waits on AJ-0057
+- **AJ-0109** Dashboard: a page per phase (ajiya) waits on AJ-0107, AJ-0108
+- **AJ-0110** Dashboard: plan history from decisions and changes (ajiya) waits on AJ-0057, AJ-0108
 
 ## Needs a human
 
@@ -49,6 +55,8 @@ Generated 2026-10-16.
 
 ## Recent activity
 
+- 2026-10-16 `cd24d9a` Mark AJ-0102 done (chore)
+  - AJ-0102: in_progress → done
 - 2026-10-16 `38087da` Guide says next lists tickets not yet started (AJ-0102)
 - 2026-10-16 `01f9d72` Merge AJ-0102: status counts only tickets that can start (AJ-0102)
 - 2026-10-16 `dfb4394` Mark AJ-0099, AJ-0100, AJ-0101, AJ-0103, AJ-0104, AJ-0105 done (chore)
@@ -69,8 +77,7 @@ Generated 2026-10-16.
 - 2026-10-16 `63dc87d` Nested projects: init warns, hooks check the owning plan (AJ-0101)
 - 2026-10-16 `d96483a` Merge AJ-0099: app add quotes the path (AJ-0099)
 - 2026-10-16 `cc4b027` Merge AJ-0105: per-app test commands (AJ-0105)
-- 2026-10-16 `8a63299` app add quotes the path it registered (AJ-0099)
-- and 236 more in data.js
+- and 237 more in data.js
 
 ## Checks
 
