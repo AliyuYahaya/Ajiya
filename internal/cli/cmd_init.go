@@ -53,6 +53,22 @@ func runInit(e *env, args []string) error {
 	if err != nil {
 		return err
 	}
+	if testCmd == "" {
+		paths := make([]string, len(chosen))
+		for i, c := range chosen {
+			paths[i] = c.Path
+		}
+		var steps []string
+		if testCmd, steps = detect.AppTestCommand(e.dir, paths); testCmd != "" {
+			text = config.WithTestCommand(text, testCmd)
+			if len(steps) > 1 {
+				fmt.Fprintln(e.stdout, "Tests found per app:")
+				for _, s := range steps {
+					fmt.Fprintf(e.stdout, "  %s\n", s)
+				}
+			}
+		}
+	}
 	for _, c := range chosen {
 		text = config.AddAppText(text, config.App{Name: c.Name, Path: c.Path, Kind: c.Kind})
 	}
