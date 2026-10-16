@@ -110,8 +110,10 @@ ticket is next.
 
 ```
 ajiya ticket add --phase <slug> --app <app> "<title>" \
-  --done-when "<check>" --depends <IDs>
+  --done-when "<check>" --depends <IDs> [--tech <slugs>] [--decisions <IDs>]
 ```
+
+Add tags only as the Tags section below says.
 
 If a milestone should wait for it, make a ticket that milestone needs depend on it.
 
@@ -145,6 +147,205 @@ work outside app folders (hosting, CI, DNS), use the app `infra` instead.
 "done when", dependencies, app or phase. `--depends` replaces the whole list, so
 include the ones already there.
 
+## Tags: optional context on a ticket
+
+Tags are optional. Most tickets have none, and `ajiya check` never warns about a
+missing tag. Tags exist so that a later change to the plan can find the tickets
+it affects. There are three keys:
+
+| Tag | Use it for | Add it when |
+|---|---|---|
+| `tech:<slug>` | A technology or service, such as `tech:aws-rds` | The ticket depends on that specific technology or service |
+| `dec:<ID>` | A decision, such as `dec:DEC-0003` | The ticket exists because of that decision (set with `--decisions`) |
+| `path:<glob>` | Files, such as `path:infra/rds/**` | The ticket has no commits yet and you already know where its files will be |
+
+Examples:
+
+- "Configure RDS backups" depends on a service: add `--tech aws-rds`.
+- "Add a booking form" depends on no specific technology or service: add no tag.
+
+Rules:
+
+1. Run `ajiya tags` first. It lists every tag in use with its ticket count.
+   Reuse a value that is there. Do not make `postgresql` when `postgres` exists.
+2. Add `tech` only for a specific technology or service. The App column already
+   says which part of the project a ticket belongs to, so there is no tag for it.
+3. Use `path` only while the ticket has no commits. After that,
+   `ajiya ticket files <ID>` reads the files from git. Do not copy them into the plan.
+4. Never store what the CLI can work out: files, commits, readiness or
+   milestone membership.
+
+```
+ajiya tags
+ajiya ticket add --phase core --app api "Configure RDS backups" \
+  --done-when "Daily snapshot, 7-day retention" --tech aws-rds
+ajiya ticket edit <ID> --tech aws-rds,postgres
+ajiya ticket files <ID>
+```
+
+`--tech`, `--decisions` and `--paths` take comma-separated values. On
+`ticket edit`, a tag flag replaces all values of that key; `-` clears them.
+`ajiya ticket files <ID>` lists the files changed by the commits that name the
+ticket.
+
+## Decisions
+
+A decision records a choice the plan rests on, such as "Use PostgreSQL on AWS
+RDS". Record one when other tickets would change if the choice changed. Do not
+record small choices inside one ticket.
+
+```
+ajiya decision add "Use PostgreSQL on AWS RDS" \
+  --decision "Run PostgreSQL on AWS RDS" \
+  --context "We need a managed database" \
+  --consequences "Backups use the RDS snapshot API" \
+  --tech aws-rds
+```
+
+1. `decision add` records the decision as `Proposed`. `--context` and
+   `--consequences` are optional; `--by` names who proposed it.
+2. A person decides. When they say yes, run
+   `ajiya decision accept <ID> --by "<name>"`. Do not accept a decision on your
+   own.
+3. Link the tickets that depend on it: `ajiya ticket add ... --decisions DEC-0001`
+   or `ajiya ticket edit <ID> --decisions DEC-0001`.
+4. `ajiya ticket show <ID>` lists the decisions a ticket links, with their
+   status. Read only those. `ajiya decision show <ID>` also lists the tickets
+   that link a decision. `ajiya decision list [--tag tech:<slug>]` lists them all.
+
+A decision has one of three statuses: `Proposed`, `Accepted`, or
+`Superseded by DEC-xxxx (CHG-xxxx)`. A superseded decision stays on file. An open
+ticket that still links one gets a warning from `ajiya check`.
+
+## When the plan must change
+
+Sometimes a choice is replaced after work is done: the project moves from AWS RDS
+to Supabase. Do not edit or rewrite the tickets. Use a change request. It finds
+the tickets that might be affected, you judge each one, and a person approves.
+Nothing is deleted: replaced work stays on file, linked to what replaces it.
+
+**Agents never run `ajiya change approve` or `ajiya change reject`.** Only a
+person does, because one command changes many tickets. The MCP tools do not
+offer them.
+
+Follow these steps in order.
+
+### 1. Open the change
+
+The plan in `ajiya/` must be committed first.
+
+```
+ajiya change open "Move the database from AWS RDS to Supabase" \
+  --replaces tech:aws-rds --with tech:supabase --decision DEC-0001
+```
+
+Give at least one of `--replaces` (tags that go away), `--decision` (decisions
+the change would supersede) or `--paths` (file globs the change touches).
+`--with` names the new tags. The command makes the snapshot `before-CHG-0001` and
+writes `ajiya/changes/CHG-0001.md`. Commit that file with `Ajiya: chore`.
+
+### 2. Find the candidates
+
+```
+ajiya change impact CHG-0001
+```
+
+This lists the tickets that might be affected, and why. It never judges. The
+reasons are:
+
+| Reason | Meaning |
+|---|---|
+| `tag` | The ticket has a replaced tag |
+| `decision` | The ticket links a decision the change names |
+| `path` | A `path` tag, or a file in the ticket's commits, matches a glob from `--paths` |
+| `downstream` | The ticket depends directly on another candidate |
+
+Tickets with no tags are still found, through decisions, dependencies and the
+files in their commits.
+
+### 3. Judge every candidate
+
+For each candidate, read it with `ajiya ticket show <ID>` and record a verdict:
+
+```
+ajiya change assess CHG-0001 AJ-0107 --verdict replace \
+  --reason "Uses the RDS backup API directly" \
+  --title "Configure Supabase backups" --done-when "Daily backup, 7-day retention"
+```
+
+Every verdict needs `--reason`. The verdicts are:
+
+| Verdict | Meaning | When a person approves |
+|---|---|---|
+| `unaffected` | Nothing to do | Nothing happens |
+| `modify` | Still needed, but changes | Open ticket: edited in place. Done ticket: a follow-up ticket is added that depends on it |
+| `replace` | A new ticket takes its place | New ticket added; the old one is superseded by it |
+| `invalidate` | Not needed at all | Superseded, with no replacement |
+| `investigate` | You cannot tell yet | Blocks approval until you change it |
+
+`--title` and `--done-when` describe the new ticket:
+
+- `replace` needs both.
+- `modify` of a done ticket needs both (they describe the follow-up).
+- `modify` of an open ticket needs at least one (they edit the ticket).
+- The other verdicts take neither.
+
+Assess a ticket again to change its verdict. To change tags, use
+`ajiya ticket edit`; `assess` does not edit them.
+
+### 4. Reach deeper tickets
+
+`impact` goes one level of `downstream`. When you give `modify` or `replace`,
+run `ajiya change impact CHG-0001` again. It adds the tickets that depend on
+that ticket, and keeps the verdicts you have given. Repeat until `impact` shows
+no candidate without a verdict.
+
+### 5. Show the person, commit, then wait
+
+```
+ajiya change show CHG-0001
+```
+
+Show the person the candidate table and every verdict with its reason.
+Commit the change file with `Ajiya: chore`. `approve` refuses while `ajiya/` has
+uncommitted changes.
+
+Then stop. Tell the person to run one of these:
+
+```
+ajiya change approve CHG-0001 --by "<name>" [--new-decision DEC-0002]
+ajiya change reject CHG-0001 --by "<name>" --reason "<why>"
+```
+
+Do not run them, and do not look for another way to apply the verdicts.
+`approve` is refused while a candidate has no verdict or has `investigate`. It
+then applies everything in one write: new tickets, edits, superseded tickets,
+moved dependencies and superseded decisions. `--new-decision` names the decision
+that replaces the old one. `reject` closes the change and leaves the plan alone.
+
+`ajiya change list` shows all changes. A change that stays open for more than 14
+days gets a warning from `ajiya check`.
+
+### The Superseded status
+
+After a change is approved, replaced work shows as:
+
+```
+🟩 Superseded by AJ-0201 · CHG-0014 · was: Done · 4f2a91c
+```
+
+It keeps its old status and evidence after `was:`. A done ticket stays recorded
+as done. Superseded tickets do not count in progress totals or milestones, and
+tickets that depended on one now depend on its replacement. Only an approved
+change sets this status: there is no command for it.
+
+### Snapshots
+
+A snapshot is a git tag, `ajiya/plan/<name>`, on the committed plan.
+`change open` makes one for you. To mark a point yourself:
+`ajiya snapshot <name>` (refused with uncommitted changes in `ajiya/`), and
+`ajiya snapshot list` to see them.
+
 ## Commands
 
 | Command | Use it to |
@@ -158,6 +359,18 @@ include the ones already there.
 | `ajiya ticket list [--phase <slug>] [--app <app>] [--state <state>] [--milestone <name>]` | List tickets in plan order (`--state` takes pending, in_progress, done, dropped, ready or human) |
 | `ajiya ticket add ...` | Add work found on the way |
 | `ajiya ticket edit <ID> ...` | Correct a ticket |
+| `ajiya ticket files <ID>` | List the files changed by the commits that name a ticket |
+| `ajiya tags` | List every tag in use, before you add one |
+| `ajiya decision add "<title>" --decision "<text>"` | Record a choice the plan rests on (Proposed) |
+| `ajiya decision accept <ID> --by "<name>"` | Accept a decision, when a person has decided |
+| `ajiya decision show <ID>` / `ajiya decision list` | Read decisions |
+| `ajiya snapshot <name>` / `ajiya snapshot list` | Tag the committed plan; list the tags |
+| `ajiya change open "<title>" --replaces <tags>` | Start a change request |
+| `ajiya change impact <CHG>` | List the tickets a change might affect |
+| `ajiya change assess <CHG> <ID> --verdict <v> --reason "<why>"` | Judge one candidate |
+| `ajiya change show <CHG>` / `ajiya change list` | Read changes |
+| `ajiya change approve <CHG> --by "<name>"` | A person only: apply the verdicts |
+| `ajiya change reject <CHG> --by "<name>" --reason "<why>"` | A person only: close the change |
 | `ajiya milestone list` / `ajiya milestone show <name>` | See progress to each gate, and what blocks it |
 | `ajiya launch show` | See what launch still needs, when the project uses a single launch target |
 | `ajiya phase list` | See each phase's progress |
@@ -176,6 +389,8 @@ and so on. Each tool runs the same command with the same rules, and returns the
 same JSON as `--json`. The tools cover reading the plan, adding and changing
 tickets, phases, apps and milestones, and `ajiya_ticket_done`; it still refuses
 without a commit that names the ticket, and the server never commits for you.
+Decisions, snapshots and change requests up to `ajiya_change_assess` have tools
+too. `change approve` and `change reject` do not: they are for a person only.
 Dropping a ticket, removing an app or milestone, moving a milestone and
 installing hooks are left out on purpose: a person decides those. So is
 registering the server with an agent (`ajiya mcp install`, `ajiya mcp status`).

@@ -16,8 +16,19 @@ file per phase, and changes only through `ajiya` commands. Run any command with
 3. Commit with a last paragraph `Ajiya: <ID>` (1 to 3 IDs, or `Ajiya: chore`).
 4. Finish with `ajiya ticket done <ID> --test`, then `ajiya check`. Never mark done any other way.
 5. Found extra work? `ajiya ticket add`; do not widen the current ticket.
+6. Tags are optional. Run `ajiya tags` first and reuse values. Add `--tech` only when
+   a ticket depends on a specific technology or service (`tech:aws-rds` on
+   "Configure RDS backups", none on "Add a booking form"). Use `--paths` only
+   while a ticket has no commits: after that, `ajiya ticket files <ID>` reads git.
+   Never store what the CLI can work out (files, commits, readiness, milestones).
+7. A choice the plan rests on? `ajiya decision add`. A person accepts it
+   (`ajiya decision accept --by`). Link tickets with `--decisions`.
+8. A choice is being replaced? Use a change request, never edit the old tickets:
+   `change open`, `change impact`, `change assess` every candidate, `change show`,
+   commit, then wait. **Never run `ajiya change approve` or `ajiya change reject`:**
+   only a person does.
 
 ## Guides
 
-- The loop for every task: `.ajiya/guide/daily.md`
+- The loop for every task, tags, decisions and the change procedure: `.ajiya/guide/daily.md`
 - Planning a project or organising imported tickets: `.ajiya/guide/setup.md`
