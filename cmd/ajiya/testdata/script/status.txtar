@@ -14,23 +14,25 @@ exec ajiya ticket start DE-0002
 
 exec ajiya status
 stdout '^Project: Demo$'
-stdout '(?m)^  1\. staging: 0 of 2 done, 2 can start now$'
+stdout '(?m)^  1\. staging: 0 of 2 done, 1 can start now$'
 stdout '(?m)^  2\. launch: 0 of 2 done, 1 can start now$'
 stdout '(?m)^  DE-0002  infra  Schema \(started (just now|\d+m ago)\)$'
-stdout '(?m)^Can start now: 2$'
+stdout '(?m)^Can start now: 1$'
 stdout '(?m)^  DE-0001  infra  Staging host$'
+# DE-0002 is started: it is under In progress, not counted or listed as able to start.
+! stdout '(?m)^  DE-0002  infra  Schema$'
 stdout '(?m)^  DE-0003  Deploy: keys$'
 stdout '(?m)^Checks: '
 stdout '(?m)^Recent activity$'
 
 exec ajiya status --brief
-stdout '^Demo · staging 0 of 2 done · 2 can start now\nIn progress: DE-0002 \((\d+m|just now)\) · Needs a human: DE-0003\nNext: DE-0001, DE-0002 · Checks: '
+stdout '^Demo · staging 0 of 2 done · 1 can start now\nIn progress: DE-0002 \((\d+m|just now)\) · Needs a human: DE-0003\nNext: DE-0001 · Checks: '
 ! stdout '(?s)\n.*\n.*\n.'
 
 exec ajiya status --json
 stdout '"project": "Demo"'
 stdout '"since_source": "local"'
-stdout '"count": 2'
+stdout '"count": 1'
 stdout '"reason": "keys"'
 
 # The two output forms cannot be combined.

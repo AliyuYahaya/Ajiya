@@ -29,7 +29,7 @@ exec ajiya ticket list --state pending
 ! stdout 'DE-0001'
 stdout 'DE-0002'
 exec ajiya ticket list --state ready
-stdout 'DE-0001'
+! stdout 'DE-0001'
 stdout 'DE-0003'
 ! stdout 'DE-0002'
 exec ajiya ticket list --state human

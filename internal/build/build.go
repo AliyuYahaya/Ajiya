@@ -179,7 +179,7 @@ func Collect(cfg *config.Config, p *plan.Plan, order []*plan.Phase) (*Data, erro
 			for _, t := range tickets {
 				if sched.Required[i][t.ID] {
 					bm.Required.add(t)
-					if byID[t.ID].Ready {
+					if byID[t.ID].canStart() {
 						bm.Ready++
 					}
 				}
@@ -238,6 +238,10 @@ func Collect(cfg *config.Config, p *plan.Plan, order []*plan.Phase) (*Data, erro
 
 // nextOrder sorts ready tickets as 'ajiya next' does: earliest milestone first
 // (unscheduled last), then by how many open tickets each unblocks, then ID.
+// canStart reports whether a ticket is ready and not yet started. An
+// in-progress ticket is ready (nothing blocks it) but has already started.
+func (t Ticket) canStart() bool { return t.Ready && t.Status.State != "in_progress" }
+
 func nextOrder(ts []Ticket, sched *plan.Schedule, schedErr error) []string {
 	rank := func(t Ticket) int {
 		if schedErr != nil || t.Milestone == "" {
@@ -247,7 +251,7 @@ func nextOrder(ts []Ticket, sched *plan.Schedule, schedErr error) []string {
 	}
 	var ready []Ticket
 	for _, t := range ts {
-		if t.Ready {
+		if t.canStart() {
 			ready = append(ready, t)
 		}
 	}

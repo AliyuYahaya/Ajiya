@@ -59,7 +59,8 @@ stdout '(?s)ro-1-foundations.*ro-2-accounts.*ro-3-billing.*ro-4-go-live.*ro-5-la
 
 # Only work whose packages' dependencies are done is ready.
 exec ajiya next
-stdout 'LE-0004'
+stdout 'LE-0005'
+! stdout 'LE-0004'
 ! stdout 'LE-0009'
 ! stdout 'LE-0013'
 

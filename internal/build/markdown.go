@@ -58,9 +58,6 @@ func Markdown(d *Data) string {
 			if t.Milestone != "" {
 				extra = " · " + t.Milestone
 			}
-			if t.Status.State == "in_progress" {
-				extra += " · in progress"
-			}
 			w("- %s%s\n", line(t), extra)
 		}
 		w("\n")
