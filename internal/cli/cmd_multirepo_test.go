@@ -152,8 +152,8 @@ func TestSingleRepoEvidenceUnchanged(t *testing.T) {
 	mrRun(t, root, "ticket", "add", "--phase", "build", "--app", "app", "Work", "--done-when", "ok")
 	mrCommit(t, root, "Ajiya: ON-0001")
 	out, code := mrRun(t, root, "ticket", "done", "ON-0001")
-	if code != 0 || strings.Contains(out, "evidence:") || strings.Count(out, "\n") != 1 {
-		t.Errorf("done = %d %q, want one plain line", code, out)
+	if code != 0 || strings.Contains(out, "evidence:") || strings.Count(out, "\n") != 2 {
+		t.Errorf("done = %d %q, want the status line and the commit reminder", code, out)
 	}
 	if show, _ := mrRun(t, root, "ticket", "show", "ON-0001"); strings.Contains(show, "[") && strings.Contains(show, "Work [") {
 		t.Errorf("single-repo show names a repository:\n%s", show)
