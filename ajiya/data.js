@@ -52,12 +52,12 @@ window.AJIYA = {
       ],
       "required": {
         "total": 83,
-        "done": 81,
-        "in_progress": 2,
+        "done": 83,
+        "in_progress": 0,
         "pending": 0,
         "dropped": 0
       },
-      "percent": 97,
+      "percent": 100,
       "ready": 0
     },
     {
@@ -68,12 +68,12 @@ window.AJIYA = {
       "required": {
         "total": 84,
         "done": 74,
-        "in_progress": 0,
-        "pending": 10,
+        "in_progress": 1,
+        "pending": 9,
         "dropped": 0
       },
       "percent": 88,
-      "ready": 1
+      "ready": 0
     },
     {
       "name": "after-v0-3",
@@ -83,12 +83,12 @@ window.AJIYA = {
       "required": {
         "total": 83,
         "done": 74,
-        "in_progress": 0,
-        "pending": 9,
+        "in_progress": 1,
+        "pending": 8,
         "dropped": 0
       },
       "percent": 89,
-      "ready": 1
+      "ready": 0
     },
     {
       "name": "v0-3-1",
@@ -99,12 +99,12 @@ window.AJIYA = {
       "required": {
         "total": 87,
         "done": 74,
-        "in_progress": 0,
-        "pending": 13,
+        "in_progress": 1,
+        "pending": 12,
         "dropped": 0
       },
       "percent": 85,
-      "ready": 1
+      "ready": 0
     }
   ],
   "phases": [
@@ -184,12 +184,12 @@ window.AJIYA = {
       "goal": "Agents read and change the plan through ajiya status and an MCP server they register with in one step",
       "counts": {
         "total": 9,
-        "done": 7,
-        "in_progress": 2,
+        "done": 9,
+        "in_progress": 0,
         "pending": 0,
         "dropped": 0
       },
-      "percent": 77,
+      "percent": 100,
       "milestone": "v0-2"
     },
     {
@@ -213,8 +213,8 @@ window.AJIYA = {
       "counts": {
         "total": 11,
         "done": 0,
-        "in_progress": 0,
-        "pending": 11,
+        "in_progress": 1,
+        "pending": 10,
         "dropped": 0
       },
       "percent": 0,
@@ -241,9 +241,9 @@ window.AJIYA = {
       "path": ".",
       "counts": {
         "total": 110,
-        "done": 93,
-        "in_progress": 2,
-        "pending": 15,
+        "done": 95,
+        "in_progress": 1,
+        "pending": 14,
         "dropped": 0
       }
     }
@@ -1471,8 +1471,8 @@ window.AJIYA = {
         "AJ-0047"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "in_progress",
+        "text": "🟨 In progress"
       },
       "milestone": "v0-3",
       "ready": true,
@@ -2730,11 +2730,14 @@ window.AJIYA = {
         "AJ-0047"
       ],
       "status": {
-        "state": "in_progress",
-        "text": "🟨 In progress"
+        "state": "done",
+        "text": "🟩 Done · 477fa25 · 2026-10-16 · tests passed",
+        "commit": "477fa25",
+        "date": "2026-10-16",
+        "tests_passed": true
       },
       "milestone": "v0-2-1",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [],
       "unblocks": 0
@@ -2903,11 +2906,14 @@ window.AJIYA = {
         "AJ-0047"
       ],
       "status": {
-        "state": "in_progress",
-        "text": "🟨 In progress"
+        "state": "done",
+        "text": "🟩 Done · 103008b · 2026-10-16 · tests passed",
+        "commit": "103008b",
+        "date": "2026-10-16",
+        "tests_passed": true
       },
       "milestone": "v0-2-1",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [],
       "unblocks": 0
@@ -3006,9 +3012,7 @@ window.AJIYA = {
       "unblocks": 0
     }
   ],
-  "next": [
-    "AJ-0048"
-  ],
+  "next": [],
   "checks": [
     {
       "code": "W008",
@@ -3019,6 +3023,114 @@ window.AJIYA = {
     }
   ],
   "activity": [
+    {
+      "hash": "477fa25e1d31a0d1b491309bf55b25ca16007c6a",
+      "short": "477fa25",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Single-repo evidence test expects the commit reminder",
+      "refs": [
+        "AJ-0098"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792159390
+    },
+    {
+      "hash": "103008b8e5e1086b77cdfa46861e670d2941d6d2",
+      "short": "103008b",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Merge AJ-0098, AJ-0106: done reminder and MCP roots",
+      "refs": [
+        "AJ-0098",
+        "AJ-0106"
+      ],
+      "chore": false,
+      "merge": true,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792159350
+    },
+    {
+      "hash": "4697cabadb8494e22c65c8cdf3dba511c731185f",
+      "short": "4697cab",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "ticket done reminds to commit the plan change",
+      "refs": [
+        "AJ-0098"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792159292
+    },
+    {
+      "hash": "449faf35c038e8893aaf7f3fd63fb87ff301569f",
+      "short": "449faf3",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Ask for MCP roots only from clients that declare them",
+      "refs": [
+        "AJ-0106"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792159226
+    },
+    {
+      "hash": "2e0576b8a30de603c18acfade95f2dde44ca79a2",
+      "short": "2e0576b",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Plan v0.3.1: dashboard views, phase pages and plan history",
+      "refs": [],
+      "chore": true,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0107",
+          "phase": "dashboard-views",
+          "from": "",
+          "to": "pending",
+          "text": "🟥 Pending"
+        },
+        {
+          "id": "AJ-0108",
+          "phase": "dashboard-views",
+          "from": "",
+          "to": "pending",
+          "text": "🟥 Pending"
+        },
+        {
+          "id": "AJ-0109",
+          "phase": "dashboard-views",
+          "from": "",
+          "to": "pending",
+          "text": "🟥 Pending"
+        },
+        {
+          "id": "AJ-0110",
+          "phase": "dashboard-views",
+          "from": "",
+          "to": "pending",
+          "text": "🟥 Pending"
+        }
+      ],
+      "time": 1792159214
+    },
     {
       "hash": "cd24d9ad61e8a3b5ebcf869e20406103290ea841",
       "short": "cd24d9a",

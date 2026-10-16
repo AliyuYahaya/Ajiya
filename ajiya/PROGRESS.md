@@ -9,10 +9,10 @@ Generated 2026-10-16.
 |---|---|---|---|---|
 | v0-1 | 37 | 37 | 100% | 0 |
 | v0-2 | 74 | 74 | 100% | 0 |
-| v0-2-1 | 81 | 83 | 97% | 0 |
-| v0-3 | 74 | 84 | 88% | 1 |
-| after-v0-3 | 74 | 83 | 89% | 1 |
-| v0-3-1 | 74 | 87 | 85% | 1 |
+| v0-2-1 | 83 | 83 | 100% | 0 |
+| v0-3 | 74 | 84 | 88% | 0 |
+| after-v0-3 | 74 | 83 | 89% | 0 |
+| v0-3-1 | 74 | 87 | 85% | 0 |
 
 ## Phases
 
@@ -23,14 +23,14 @@ Generated 2026-10-16.
 | Outputs | 12 | 0 | 0 | 12 | 100% | v0-1 |
 | Onboarding | 21 | 0 | 0 | 21 | 100% | v0-1 |
 | Release | 5 | 0 | 0 | 5 | 100% | v0-1 |
-| Agent-access | 7 | 2 | 0 | 9 | 77% | v0-2 |
+| Agent-access | 9 | 0 | 0 | 9 | 100% | v0-2 |
 | Install | 24 | 0 | 0 | 24 | 100% | v0-2 |
-| Decisions-and-changes | 0 | 0 | 11 | 11 | 0% | v0-3 |
+| Decisions-and-changes | 0 | 1 | 10 | 11 | 0% | v0-3 |
 | Dashboard views | 0 | 0 | 4 | 4 | 0% | v0-3-1 |
 
 ## Can start now
 
-- **AJ-0048** Tags column (ajiya) · v0-3
+Nothing.
 
 ## Waiting
 
@@ -55,6 +55,15 @@ Generated 2026-10-16.
 
 ## Recent activity
 
+- 2026-10-16 `477fa25` Single-repo evidence test expects the commit reminder (AJ-0098)
+- 2026-10-16 `103008b` Merge AJ-0098, AJ-0106: done reminder and MCP roots (AJ-0098, AJ-0106)
+- 2026-10-16 `4697cab` ticket done reminds to commit the plan change (AJ-0098)
+- 2026-10-16 `449faf3` Ask for MCP roots only from clients that declare them (AJ-0106)
+- 2026-10-16 `2e0576b` Plan v0.3.1: dashboard views, phase pages and plan history (chore)
+  - AJ-0107: new → pending
+  - AJ-0108: new → pending
+  - AJ-0109: new → pending
+  - AJ-0110: new → pending
 - 2026-10-16 `cd24d9a` Mark AJ-0102 done (chore)
   - AJ-0102: in_progress → done
 - 2026-10-16 `38087da` Guide says next lists tickets not yet started (AJ-0102)
@@ -72,12 +81,7 @@ Generated 2026-10-16.
 - 2026-10-16 `ca13988` Hooks fall back to a plan inside the repository (AJ-0101)
 - 2026-10-16 `0919a7d` Merge AJ-0101: nested projects (AJ-0101)
 - 2026-10-16 `66ec2cf` README: non-interactive init and the auto-added trailer (AJ-0104)
-- 2026-10-16 `b71a969` Guide: what ticket done and ajiya build change (AJ-0103)
-- 2026-10-16 `5da975f` Guide: other trailers can share the Ajiya paragraph (AJ-0100)
-- 2026-10-16 `63dc87d` Nested projects: init warns, hooks check the owning plan (AJ-0101)
-- 2026-10-16 `d96483a` Merge AJ-0099: app add quotes the path (AJ-0099)
-- 2026-10-16 `cc4b027` Merge AJ-0105: per-app test commands (AJ-0105)
-- and 237 more in data.js
+- and 242 more in data.js
 
 ## Checks
 

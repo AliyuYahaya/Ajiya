@@ -5,7 +5,7 @@ Goal: Plans change without losing history: tags, decisions, superseded work and 
 
 | ID | App | Ticket | Done when | Depends | Status |
 |---|---|---|---|---|---|
-| AJ-0048 | ajiya | Tags column | Optional seventh Tags column with tech, dec and path tags only (no comp), written from flags; a ticket with no tags is valid and check never warns about missing tags; six-column files read and upgraded; ajiya tags; near-duplicate warning for tech values; round-trip goldens for both forms; MCP tools | AJ-0047 | 🟥 Pending |
+| AJ-0048 | ajiya | Tags column | Optional seventh Tags column with tech, dec and path tags only (no comp), written from flags; a ticket with no tags is valid and check never warns about missing tags; six-column files read and upgraded; ajiya tags; near-duplicate warning for tech values; round-trip goldens for both forms; MCP tools | AJ-0047 | 🟨 In progress |
 | AJ-0049 | ajiya | ajiya ticket files | Lists every file changed by commits referencing a ticket, from git; CLI test and MCP tool | AJ-0048 | 🟥 Pending |
 | AJ-0050 | ajiya | Decision records and commands | ajiya/decisions/DEC-xxxx.md written only by the CLI; decision add (with --tech, no --comp), show, list and accept with --json; ticket show lists linked decisions; checks for missing and superseded decisions; goldens and MCP tools | AJ-0048 | 🟥 Pending |
 | AJ-0051 | ajiya | Superseded status | Superseded by <ID> · CHG · was: <old status> keeps the old evidence; excluded from totals and required sets; round-trip goldens | AJ-0048 | 🟥 Pending |
