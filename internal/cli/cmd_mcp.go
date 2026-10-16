@@ -218,10 +218,14 @@ func mcpTools() []mcpTool {
 			}},
 		{name: "ajiya_phase_add",
 			desc:  "Use when planning a project to add a phase, a stage of work with one goal.",
-			props: []mcpProp{strProp("slug", "Short lowercase name used in file names.", true), strProp("goal", "What the phase achieves.", true), strProp("title", "Display title.", false)},
+			props: []mcpProp{strProp("slug", "Short lowercase name used in file names.", true), strProp("goal", "What the phase achieves.", true), strProp("title", "Display title.", false), strProp("description", "Longer description under the goal, one or more paragraphs.", false)},
 			argv: func(a mcpArgs) []string {
-				return cat([]string{"phase", "add"}, a.flag("title", "title"), pos(a.str("slug"), a.str("goal")))
+				return cat([]string{"phase", "add"}, a.flag("title", "title"), a.flag("description", "description"), pos(a.str("slug"), a.str("goal")))
 			}},
+		{name: "ajiya_phase_describe",
+			desc:  "Use to set or change a phase's description, the paragraphs under its goal. \"-\" clears it.",
+			props: []mcpProp{strProp("slug", "Phase slug.", true), strProp("text", "The description; \"-\" clears it.", true)},
+			argv:  func(a mcpArgs) []string { return cat([]string{"phase", "describe"}, pos(a.str("slug"), a.str("text"))) }},
 		{name: "ajiya_app_add",
 			desc:  "Use in the same task that creates a new app folder, so tickets can name it. Create the folder first.",
 			props: []mcpProp{strProp("name", "App name.", true), strProp("path", "Folder of the app, relative to the project.", true), boolProp("library", "The app is a shared package.")},

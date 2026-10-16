@@ -89,12 +89,13 @@ type Milestone struct {
 }
 
 type Phase struct {
-	Slug      string `json:"slug"`
-	Title     string `json:"title"`
-	Goal      string `json:"goal"`
-	Counts    Counts `json:"counts"`
-	Percent   int    `json:"percent"`
-	Milestone string `json:"milestone"` // earliest milestone of its tickets, or ""
+	Slug        string `json:"slug"`
+	Title       string `json:"title"`
+	Goal        string `json:"goal"`
+	Description string `json:"description"` // empty if none
+	Counts      Counts `json:"counts"`
+	Percent     int    `json:"percent"`
+	Milestone   string `json:"milestone"` // earliest milestone of its tickets, or ""
 }
 
 type App struct {
@@ -201,7 +202,7 @@ func Collect(cfg *config.Config, p *plan.Plan, order []*plan.Phase) (*Data, erro
 		order = p.Phases
 	}
 	for _, ph := range order {
-		bp := Phase{Slug: ph.Slug, Title: ph.Title, Goal: ph.Goal}
+		bp := Phase{Slug: ph.Slug, Title: ph.Title, Goal: ph.Goal, Description: ph.Description}
 		best := -1
 		for _, t := range ph.Tickets {
 			bp.Counts.add(t)

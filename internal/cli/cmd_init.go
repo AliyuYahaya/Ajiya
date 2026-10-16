@@ -184,6 +184,7 @@ func pickApps(cands []detect.Candidate, answer string) ([]detect.Candidate, erro
 func runPhaseAdd(e *env, args []string) error {
 	fs := newFlags("phase add")
 	title := fs.String("title", "", "phase title (default: from the slug)")
+	description := fs.String("description", "", "longer description, kept under the goal")
 	pos, err := parse(fs, args, 2)
 	if err != nil {
 		return err
@@ -204,6 +205,10 @@ func runPhaseAdd(e *env, args []string) error {
 	if err := plan.CheckText("title", *title); err != nil {
 		return usageErr("%v", err)
 	}
+	desc, err := plan.NormalizeDescription(*description)
+	if err != nil {
+		return usageErr("%v", err)
+	}
 	pr, err := loadForChange(e)
 	if err != nil {
 		return err
@@ -211,7 +216,7 @@ func runPhaseAdd(e *env, args []string) error {
 	if _, exists := pr.plan.Raw[slug]; exists {
 		return refused("phase %q already exists in %s", slug, plan.Path(slug))
 	}
-	ph := &plan.Phase{Slug: slug, Title: *title, Goal: goal}
+	ph := &plan.Phase{Slug: slug, Title: *title, Goal: goal, Description: desc}
 	if err := pr.plan.Save(ph); err != nil {
 		return err
 	}

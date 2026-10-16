@@ -133,3 +133,38 @@ func runPhaseRename(e *env, args []string) error {
 	}
 	return nil
 }
+
+// runPhaseDescribe sets, or with "" or "-" clears, a phase's description.
+func runPhaseDescribe(e *env, args []string) error {
+	fs := newFlags("phase describe")
+	pos, err := parse(fs, args, 2)
+	if err != nil {
+		return err
+	}
+	slug, text := pos[0], pos[1]
+	if text == "-" {
+		text = ""
+	}
+	desc, err := plan.NormalizeDescription(text)
+	if err != nil {
+		return usageErr("%v", err)
+	}
+	pr, err := loadForChange(e)
+	if err != nil {
+		return err
+	}
+	ph, err := pr.phase(slug)
+	if err != nil {
+		return err
+	}
+	ph.Description = desc
+	if err := pr.plan.Save(ph); err != nil {
+		return err
+	}
+	if desc == "" {
+		fmt.Fprintf(e.stdout, "Cleared the description of phase %s.\n", slug)
+	} else {
+		fmt.Fprintf(e.stdout, "Set the description of phase %s.\n", slug)
+	}
+	return nil
+}

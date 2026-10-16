@@ -21,10 +21,12 @@ var SlugRE = regexp.MustCompile(`^[a-z0-9]+(-[a-z0-9]+)*$`)
 
 // Phase is one ajiya/<slug>.md file.
 type Phase struct {
-	Slug    string
-	Title   string
-	Goal    string
-	Tickets []*Ticket
+	Slug  string
+	Title string
+	Goal  string
+	// Description is optional prose under the goal: one or more paragraphs.
+	Description string
+	Tickets     []*Ticket
 
 	// SixColumn is set when the file was read in the old form, without Tags.
 	SixColumn bool
@@ -101,10 +103,20 @@ func ParsePhase(slug string, data []byte) (*Phase, error) {
 	p.Goal = strings.TrimSpace(strings.TrimPrefix(l, "Goal:"))
 	i++
 
-	l, ok = next()
-	if !ok {
+	// Anything between the goal and the table is the description.
+	start := i
+	for i < len(lines) && !strings.HasPrefix(strings.TrimSpace(lines[i]), "|") {
+		i++
+	}
+	if i >= len(lines) {
 		return fail(i, "expected the ticket table after the goal")
 	}
+	desc, err := NormalizeDescription(strings.Join(lines[start:i], "\n"))
+	if err != nil {
+		return fail(start, "%v", err)
+	}
+	p.Description = desc
+	l = lines[i]
 	cols := columns
 	if cells, ok := splitRow(l); ok && strings.Join(cells, "|") == strings.Join(oldColumns, "|") {
 		cols, p.SixColumn = oldColumns, true
@@ -177,6 +189,9 @@ func (p *Phase) format(withTags bool) []byte {
 	b.WriteString(Header + "\n")
 	b.WriteString("# " + p.Title + "\n\n")
 	b.WriteString("Goal: " + p.Goal + "\n\n")
+	if p.Description != "" {
+		b.WriteString(p.Description + "\n\n")
+	}
 	b.WriteString("| " + strings.Join(cols, " | ") + " |\n")
 	b.WriteString(strings.Repeat("|---", len(cols)) + "|\n")
 	tickets := append([]*Ticket(nil), p.Tickets...)
@@ -227,3 +242,32 @@ func isSeparator(cells []string) bool {
 
 func escape(s string) string   { return strings.ReplaceAll(s, "|", `\|`) }
 func unescape(s string) string { return strings.ReplaceAll(s, `\|`, "|") }
+
+// NormalizeDescription checks a phase description and returns it in canonical
+// form: lines without trailing spaces, at most one blank line in a row, none at
+// either end. It may be several paragraphs. A line must not start with "|" (it
+// would read as the table) or "Goal:". An empty result means no description.
+func NormalizeDescription(s string) (string, error) {
+	if strings.Contains(s, "\r") {
+		return "", fmt.Errorf("description must not contain carriage returns")
+	}
+	var out []string
+	for _, l := range strings.Split(strings.TrimSpace(s), "\n") {
+		l = strings.TrimRight(l, " \t")
+		t := strings.TrimLeft(l, " \t")
+		if strings.HasPrefix(t, "|") {
+			return "", fmt.Errorf("description lines must not start with \"|\"")
+		}
+		if strings.HasPrefix(t, "Goal:") {
+			return "", fmt.Errorf("description lines must not start with \"Goal:\"")
+		}
+		if l == "" && (len(out) == 0 || out[len(out)-1] == "") {
+			continue
+		}
+		out = append(out, l)
+	}
+	for len(out) > 0 && out[len(out)-1] == "" {
+		out = out[:len(out)-1]
+	}
+	return strings.Join(out, "\n"), nil
+}
