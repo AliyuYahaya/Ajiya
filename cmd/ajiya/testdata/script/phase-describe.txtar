@@ -1,0 +1,68 @@
+# Phase descriptions: add --description, describe, clear, list --json, data.js.
+
+exec ajiya init --name Demo --prefix DE
+exec ajiya phase add api 'The API works' --description 'Covers the booking endpoints.'
+exec ajiya phase add plain 'Nothing more'
+cmp ajiya/api.md api.golden
+cmp ajiya/plain.md plain.golden
+
+# Set, replace and clear.
+exec ajiya phase describe plain 'First line. Second line.'
+stdout '^Set the description of phase plain.$'
+grep '^First line. Second line.$' ajiya/plain.md
+exec ajiya phase describe plain '  Only this.  '
+grep '^Only this.$' ajiya/plain.md
+! grep 'First line' ajiya/plain.md
+
+# JSON and data.js carry it.
+exec ajiya phase list --json
+stdout '"description": "Covers the booking endpoints."'
+stdout '"description": "Only this."'
+exec ajiya build
+grep '"description": "Covers the booking endpoints."' ajiya/data.js
+exec ajiya check
+stdout '^0 error\(s\)'
+
+# Clearing returns the file to the plain form.
+exec ajiya phase describe plain -
+stdout '^Cleared the description of phase plain.$'
+cmp ajiya/plain.md plain.golden
+exec ajiya phase describe api ''
+cmp ajiya/api.md api-plain.golden
+
+# Refusals.
+! exec ajiya phase describe api '| a | b |'
+stderr 'must not start with "\|"'
+! exec ajiya phase describe api 'Goal: other'
+stderr 'must not start with "Goal:"'
+! exec ajiya phase describe nope 'x'
+stderr 'no phase "nope"'
+! exec ajiya phase add bad 'G' --description '| x |'
+! exists ajiya/bad.md
+
+-- api.golden --
+<!-- Written by ajiya. Do not edit by hand: use ajiya commands. -->
+# Api
+
+Goal: The API works
+
+Covers the booking endpoints.
+
+| ID | App | Ticket | Done when | Depends | Tags | Status |
+|---|---|---|---|---|---|---|
+-- api-plain.golden --
+<!-- Written by ajiya. Do not edit by hand: use ajiya commands. -->
+# Api
+
+Goal: The API works
+
+| ID | App | Ticket | Done when | Depends | Tags | Status |
+|---|---|---|---|---|---|---|
+-- plain.golden --
+<!-- Written by ajiya. Do not edit by hand: use ajiya commands. -->
+# Plain
+
+Goal: Nothing more
+
+| ID | App | Ticket | Done when | Depends | Tags | Status |
+|---|---|---|---|---|---|---|

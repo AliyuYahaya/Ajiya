@@ -115,7 +115,7 @@ func TestMCPExcludedTools(t *testing.T) {
 		ajiya_milestone_list ajiya_milestone_show ajiya_check ajiya_ticket_add ajiya_ticket_edit
 		ajiya_ticket_start ajiya_ticket_done ajiya_ticket_block ajiya_phase_add ajiya_app_add
 		ajiya_milestone_add ajiya_launch_set ajiya_init ajiya_tags ajiya_ticket_files ajiya_snapshot ajiya_snapshot_list
-		ajiya_decision_add ajiya_decision_show ajiya_decision_list ajiya_decision_accept`)
+		ajiya_decision_add ajiya_decision_show ajiya_decision_list ajiya_decision_accept ajiya_phase_describe`)
 	var got []string
 	for n := range have {
 		got = append(got, n)
@@ -197,7 +197,8 @@ func TestMCPInitThenPlan(t *testing.T) {
 		tool string
 		args map[string]any
 	}{
-		{"ajiya_phase_add", map[string]any{"slug": "core", "goal": "Core works"}},
+		{"ajiya_phase_add", map[string]any{"slug": "core", "goal": "Core works", "description": "Line one.\n\nLine two."}},
+		{"ajiya_phase_describe", map[string]any{"slug": "core", "text": "Not a flag\n\nSecond paragraph."}},
 		{"ajiya_ticket_add", map[string]any{"phase": "core", "app": "infra", "title": "-leading dash title", "done_when": "it works"}},
 		{"ajiya_ticket_edit", map[string]any{"id": "DE-0001", "done_when": "it really works"}},
 		{"ajiya_ticket_edit", map[string]any{"id": "DE-0001", "tech": "aws-rds,postgresql", "decisions": "DEC-0003", "paths": "infra/**"}},
@@ -210,6 +211,17 @@ func TestMCPInitThenPlan(t *testing.T) {
 		if r := mcpCall(t, cs, step.tool, step.args); r.IsError {
 			t.Fatalf("%s: %s", step.tool, resultText(r, 0))
 		}
+	}
+	r = mcpCall(t, cs, "ajiya_phase_list", nil)
+	if !strings.Contains(resultText(r, 1), `"description": "Not a flag\n\nSecond paragraph."`) {
+		t.Errorf("phase list lacks the description: %v", resultText(r, 1))
+	}
+	if r := mcpCall(t, cs, "ajiya_phase_describe", map[string]any{"slug": "core", "text": "-"}); r.IsError {
+		t.Fatalf("phase describe clear: %s", resultText(r, 0))
+	}
+	r = mcpCall(t, cs, "ajiya_phase_list", nil)
+	if !strings.Contains(resultText(r, 1), `"description": ""`) {
+		t.Errorf("description not cleared: %v", resultText(r, 1))
 	}
 	r = mcpCall(t, cs, "ajiya_ticket_show", map[string]any{"id": "DE-0001"})
 	if !strings.Contains(resultText(r, 1), "-leading dash title") {

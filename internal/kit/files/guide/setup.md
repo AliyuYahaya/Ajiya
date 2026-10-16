@@ -170,6 +170,7 @@ Then stop and wait. Do not start building until the user says so.
 |---|---|---|
 | Rename a phase | `ajiya phase rename <old> <new> [--title "<title>"]` | you |
 | Remove an empty phase | `ajiya phase remove <slug>` (refused while it holds tickets or a milestone or the launch target names it) | you |
+| Describe a phase | `ajiya phase describe <slug> "<text>"` (or `phase add ... --description`; `-` clears it) | you |
 | Show a phase earlier or later | `ajiya phase move <slug> --before <slug>` (or `--after`, `--first`, `--last`) | you |
 | Move an app's folder | `ajiya app move <name> --path <dir>` | you |
 | Remove an app | `ajiya app remove <name> --to <app>` (moves its open tickets) | a person |
