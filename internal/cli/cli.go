@@ -103,6 +103,8 @@ func init() {
 		{"decision list", "[--tag tech:<slug>] [--json]", "List decisions with their status", runDecisionList},
 		{"decision accept", `<ID> --by "<name>" [--json]`, "Accept a proposed decision, recording who decided", runDecisionAccept},
 		{"ticket list", "[--phase <slug>] [--app <app>] [--state <state>] [--milestone <name>] [--json]", "List tickets in plan order with ID, app, state and title", runTicketList},
+		{"snapshot", "<name>", "Tag the committed plan as ajiya/plan/<name> (refused with uncommitted changes in ajiya/)", runSnapshot},
+		{"snapshot list", "[--json]", "List snapshots with their date and commit", runSnapshotList},
 		{"status", "[--brief | --json]", "Summarise the project: milestones, work in progress, what can start, checks and recent activity", runStatus},
 		{"next", "[--app <app>] [--launch | --milestone <name>] [--json]", "List tickets that can start now", runNext},
 		{"launch set", "<phase|ticket>", "Set the launch target", runLaunchSet},

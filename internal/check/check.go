@@ -17,6 +17,7 @@
 //	E012 a milestone target (or the [launch] target) is neither a phase nor a ticket
 //	E013 [phases] order lists a slug that is not a phase
 //	E014 to E016 decisions, listed in decisions.go
+//	E017 a superseded ticket's replacement does not exist
 //
 // A milestone name used twice has no code here: config.Parse refuses such an
 // ajiya.toml ("milestone ... is listed twice"), so every command, check
@@ -119,6 +120,12 @@ func Run(cfg *config.Config, p *plan.Plan) []Finding {
 		if s := t.Status; s.State == plan.Done && !s.HasEvidence() {
 			add("E011", loc(t), "restore the row from git and close it with 'ajiya ticket done'",
 				"%s is marked done without evidence: a commit, a person, an issue or 'Done before Ajiya'", t.ID)
+		}
+	}
+	for _, t := range tickets {
+		if by := t.Status.SupersededBy; t.Status.State == plan.Superseded && by != "" && p.Ticket(by) == nil {
+			add("E017", loc(t), fmt.Sprintf("restore the row from version control, or create %s with 'ajiya ticket add'", by),
+				"%s is superseded by %s, which does not exist", t.ID, by)
 		}
 	}
 	for _, m := range cfg.MilestoneList() {

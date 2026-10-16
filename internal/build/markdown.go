@@ -66,7 +66,7 @@ func Markdown(d *Data) string {
 	w("## Waiting\n\n")
 	waiting := 0
 	for _, t := range d.Tickets {
-		if t.Status.State == "done" || t.Status.State == "dropped" || t.Ready {
+		if t.Status.State == "done" || t.Status.State == "dropped" || t.Status.State == "superseded" || t.Ready {
 			continue
 		}
 		waiting++
@@ -84,7 +84,7 @@ func Markdown(d *Data) string {
 	w("## Needs a human\n\n")
 	humans := 0
 	for _, t := range d.Tickets {
-		if t.Status.Human != "" && t.Status.State != "done" && t.Status.State != "dropped" {
+		if t.Status.Human != "" && t.Status.State != "done" && t.Status.State != "dropped" && t.Status.State != "superseded" {
 			humans++
 			w("- %s: %s\n", line(t), esc(t.Status.Human))
 		}

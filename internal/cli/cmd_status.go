@@ -137,7 +137,7 @@ func newStatus(pr *project, d *build.Data, now time.Time) *statusData {
 			}
 			st.InProgress = append(st.InProgress, a)
 		}
-		if t.Status.Human != "" && t.Status.State != "done" && t.Status.State != "dropped" {
+		if t.Status.Human != "" && t.Status.State != "done" && t.Status.State != "dropped" && t.Status.State != "superseded" {
 			st.NeedsHuman = append(st.NeedsHuman, statusHuman{brief(t), t.Status.Human})
 		}
 	}

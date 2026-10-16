@@ -51,7 +51,7 @@ var Agents = []string{"Claude", "Codex", "Copilot", "Cursor", "Gemini", "Devin",
 
 var agentRE = regexp.MustCompile(`(?i)\b(` + strings.Join(Agents, "|") + `)\b`)
 
-var stateNames = map[plan.State]string{plan.Pending: "pending", plan.InProgress: "in_progress", plan.Done: "done", plan.Dropped: "dropped"}
+var stateNames = map[plan.State]string{plan.Pending: "pending", plan.InProgress: "in_progress", plan.Done: "done", plan.Dropped: "dropped", plan.Superseded: "superseded"}
 
 // Generated are the files ajiya build writes. A commit that changes only these
 // is not activity: otherwise committing the build output would change it.

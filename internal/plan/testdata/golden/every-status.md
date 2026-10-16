@@ -17,3 +17,6 @@ Goal: One row for each status form, pipes \| and all
 | CB-10002 | web | Imported from a todo list | x | - | - | 🟩 Done · Done before Ajiya |
 | CB-10003 | web | Legacy ticket | x | CB-10002 | - | 🟨 In progress: half · Needs a human: keys · Link: https://x.test/a · Was: MI3-185, RO-053 |
 | CB-10004 | web | Dropped with link | x | - | - | 🟩 Dropped: duplicate, decided by Amina · Link: https://x.test/b |
+| CB-10005 | web | Superseded after done | x | - | - | 🟩 Superseded by CB-10001 · CHG-0014 · was: Done · 4f2a91c · 2026-09-28 · tests passed |
+| CB-10006 | web | Superseded, imported | x | - | - | 🟩 Superseded by CB-10001 · CHG-0015 · was: In progress: half · Needs a human: keys · Link: https://x.test/c · Was: MI3-190 |
+| CB-10007 | web | Invalidated, no replacement | x | - | - | 🟩 Superseded · CHG-0014 · was: Pending |

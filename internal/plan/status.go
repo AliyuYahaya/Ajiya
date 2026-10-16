@@ -15,6 +15,7 @@ const (
 	InProgress              // 🟨
 	Done                    // 🟩 Done
 	Dropped                 // 🟩 Dropped
+	Superseded              // 🟩 Superseded
 )
 
 const (
@@ -30,8 +31,9 @@ const (
 //	🟨 In progress[: <Note>][ · Needs a human: <Human>]
 //	🟩 Done[ · <Commit>][ · issue #<Issue>][ · Done before Ajiya][ · by <By>][ · <Date>][ · tests passed][ · Note: <Note>]
 //	🟩 Dropped: <Reason>, decided by <By>
+//	🟩 Superseded[ by <ID>] · <Change> · was: <the previous status, whole>
 //
-// Any of them may end with [ · Link: <Link>][ · Was: <Aliases>], which every
+// Any of them (but Superseded, which keeps them inside its was: part) may end with [ · Link: <Link>][ · Was: <Aliases>], which every
 // status change keeps: the URL of an imported issue, and a ticket's old IDs.
 type Status struct {
 	State   State
@@ -46,12 +48,45 @@ type Status struct {
 	Tests   bool   // done: the test command passed
 	Reason  string // dropped: why
 
+	// Superseded: the ticket that replaces it ("" when invalidated with no
+	// replacement), the change that did it, and the status it had before.
+	SupersededBy string
+	Change       string
+	Prev         *Status
+
 	Link    string   // the ticket's source, such as an issue URL
 	Aliases []string // old IDs the ticket had before it was imported
 }
 
-// Closed reports whether the ticket counts as finished: done or dropped.
-func (s Status) Closed() bool { return s.State == Done || s.State == Dropped }
+// Closed reports whether the ticket counts as finished: done, dropped or
+// superseded. Dependants treat all three as closed.
+func (s Status) Closed() bool {
+	return s.State == Done || s.State == Dropped || s.State == Superseded
+}
+
+// Excluded reports whether the ticket stays out of progress totals and
+// milestone required sets: dropped and superseded work is no longer wanted.
+func (s Status) Excluded() bool { return s.State == Dropped || s.State == Superseded }
+
+// Supersede returns the status of a ticket replaced by ticket by (empty when
+// invalidated with no replacement) in change. It keeps the whole previous
+// status, evidence included. A superseded ticket cannot be superseded again.
+func (s Status) Supersede(by, change string) (Status, error) {
+	if s.State == Superseded {
+		return s, errors.New("the ticket is already superseded")
+	}
+	if change == "" {
+		return s, errors.New("a superseded status needs the change that did it")
+	}
+	if err := CheckStatusText("replacement", by); err != nil {
+		return s, err
+	}
+	if err := CheckStatusText("change", change); err != nil {
+		return s, err
+	}
+	prev := s
+	return Status{State: Superseded, SupersededBy: by, Change: change, Prev: &prev, Link: s.Link, Aliases: s.Aliases}, nil
+}
 
 // HasEvidence reports whether a done ticket says how it was done.
 func (s Status) HasEvidence() bool {
@@ -73,7 +108,7 @@ func (s Status) Mark() string {
 	switch s.State {
 	case InProgress:
 		return markPartial
-	case Done, Dropped:
+	case Done, Dropped, Superseded:
 		return markDone
 	}
 	return markPending
@@ -95,6 +130,9 @@ const (
 	beforeTag  = "Done before Ajiya"
 	linkTag    = "Link: "
 	wasTag     = "Was: "
+	supTag     = "Superseded"
+	supByTag   = " by "
+	prevTag    = "was: "
 )
 
 // String formats the status in canonical form.
@@ -143,6 +181,18 @@ func (s Status) String() string {
 		}
 	case Dropped:
 		parts = append(parts, markDone+" Dropped: "+s.Reason+decidedTag+s.By)
+	case Superseded:
+		head := markDone + " " + supTag
+		if s.SupersededBy != "" {
+			head += supByTag + s.SupersededBy
+		}
+		prev := ""
+		if s.Prev != nil {
+			// Written without its coloured square: the whole cell is green.
+			_, prev, _ = strings.Cut(s.Prev.String(), " ")
+		}
+		// The previous status carries the link and the aliases.
+		return strings.Join([]string{head, s.Change, prevTag + prev}, sep)
 	}
 	if s.Link != "" {
 		parts = append(parts, linkTag+s.Link)
@@ -160,6 +210,8 @@ func ParseStatus(cell string) (Status, error) {
 	parts := strings.Split(cell, sep)
 	head, parts := parts[0], parts[1:]
 	switch {
+	case head == markDone+" "+supTag || strings.HasPrefix(head, markDone+" "+supTag+supByTag):
+		return parseSuperseded(head, parts)
 	case strings.HasPrefix(head, markDone+" Dropped: "):
 		rest := strings.TrimPrefix(head, markDone+" Dropped: ")
 		i := strings.LastIndex(rest, decidedTag)
@@ -180,13 +232,45 @@ func ParseStatus(cell string) (Status, error) {
 	case head == markDone+" Done":
 		s.State = Done
 	default:
-		return s, fmt.Errorf("status %q must start with 🟥 Pending, 🟨 In progress, 🟩 Done or 🟩 Dropped", head)
+		return s, fmt.Errorf("status %q must start with 🟥 Pending, 🟨 In progress, 🟩 Done, 🟩 Dropped or 🟩 Superseded", head)
 	}
 	for _, p := range parts {
 		if err := s.setPart(p); err != nil {
 			return s, err
 		}
 	}
+	return s, nil
+}
+
+// parseSuperseded parses what follows "🟩 Superseded[ by <ID>]": the change,
+// then "was: " and the previous status, which takes up the rest of the cell.
+func parseSuperseded(head string, parts []string) (Status, error) {
+	s := Status{State: Superseded}
+	s.SupersededBy = strings.TrimPrefix(strings.TrimPrefix(head, markDone+" "+supTag), supByTag)
+	if strings.HasPrefix(head, markDone+" "+supTag+supByTag) && s.SupersededBy == "" {
+		return s, errors.New("superseded status needs an ID after \"by\"")
+	}
+	if len(parts) < 2 || parts[0] == "" || !strings.HasPrefix(parts[1], prevTag) {
+		return s, errors.New(`superseded status needs "· <change> · was: <previous status>"`)
+	}
+	s.Change = parts[0]
+	prev := strings.Join(append([]string{strings.TrimPrefix(parts[1], prevTag)}, parts[2:]...), sep)
+	switch {
+	case strings.HasPrefix(prev, "Pending"):
+		prev = markPending + " " + prev
+	case strings.HasPrefix(prev, "In progress"):
+		prev = markPartial + " " + prev
+	default:
+		prev = markDone + " " + prev
+	}
+	ps, err := ParseStatus(prev)
+	if err != nil {
+		return s, fmt.Errorf("superseded status: previous status: %w", err)
+	}
+	if ps.State == Superseded {
+		return s, errors.New("superseded status: previous status cannot be superseded")
+	}
+	s.Prev, s.Link, s.Aliases = &ps, ps.Link, ps.Aliases
 	return s, nil
 }
 

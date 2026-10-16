@@ -24,6 +24,11 @@ type Status struct {
 	Before  bool     `json:"done_before_ajiya,omitempty"`
 	Link    string   `json:"link,omitempty"`
 	Aliases []string `json:"aliases,omitempty"`
+
+	// Superseded: the replacement ticket, the change, and the status it had.
+	SupersededBy string  `json:"superseded_by,omitempty"`
+	Change       string  `json:"change,omitempty"`
+	Was          *Status `json:"was,omitempty"`
 }
 
 // Tags is a ticket's Tags cell. Each list is empty, never null.
@@ -46,7 +51,7 @@ type Ticket struct {
 }
 
 // StateNames are the JSON names of ticket states.
-var StateNames = map[plan.State]string{plan.Pending: "pending", plan.InProgress: "in_progress", plan.Done: "done", plan.Dropped: "dropped"}
+var StateNames = map[plan.State]string{plan.Pending: "pending", plan.InProgress: "in_progress", plan.Done: "done", plan.Dropped: "dropped", plan.Superseded: "superseded"}
 
 // TicketOf returns the JSON form of a ticket.
 func TicketOf(t *plan.Ticket) Ticket {
@@ -63,12 +68,8 @@ func TicketOf(t *plan.Ticket) Ticket {
 	}
 	return Ticket{
 		ID: t.ID, Phase: t.Phase, App: t.App, Title: t.Title, DoneWhen: t.DoneWhen, Depends: deps,
-		Tags: Tags{Tech: orEmpty(t.Tags.Tech), Dec: orEmpty(t.Tags.Dec), Path: orEmpty(t.Tags.Path)},
-		Status: Status{
-			State: StateNames[s.State], Text: s.String(), Note: s.Note, Human: s.Human, Blocked: s.Blocked,
-			Commit: s.Commit, By: s.By, Date: s.Date, Tests: s.Tests, Reason: s.Reason,
-			Issue: s.Issue, Before: s.Before, Link: s.Link, Aliases: s.Aliases,
-		},
+		Tags:   Tags{Tech: orEmpty(t.Tags.Tech), Dec: orEmpty(t.Tags.Dec), Path: orEmpty(t.Tags.Path)},
+		Status: StatusOf(s),
 	}
 }
 
@@ -115,4 +116,19 @@ func DecisionOf(d *plan.Decision, tickets []string) Decision {
 	}
 	return Decision{ID: d.ID, Title: d.Title, Status: st, Tech: tech, Context: d.Context,
 		Decision: d.Decision, Consequences: d.Consequences, Tickets: tickets}
+}
+
+// StatusOf returns the JSON form of a status.
+func StatusOf(s plan.Status) Status {
+	out := Status{
+		State: StateNames[s.State], Text: s.String(), Note: s.Note, Human: s.Human, Blocked: s.Blocked,
+		Commit: s.Commit, By: s.By, Date: s.Date, Tests: s.Tests, Reason: s.Reason,
+		Issue: s.Issue, Before: s.Before, Link: s.Link, Aliases: s.Aliases,
+		SupersededBy: s.SupersededBy, Change: s.Change,
+	}
+	if s.Prev != nil {
+		prev := StatusOf(*s.Prev)
+		out.Was = &prev
+	}
+	return out
 }

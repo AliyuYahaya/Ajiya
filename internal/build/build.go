@@ -48,20 +48,24 @@ type Project struct {
 	Prefix string `json:"prefix"`
 }
 
-// Counts are tickets by state. Total includes dropped tickets.
+// Counts are tickets by state. Total leaves out dropped and superseded
+// tickets, which are counted only in Dropped and Superseded.
 type Counts struct {
 	Total      int `json:"total"`
 	Done       int `json:"done"`
 	InProgress int `json:"in_progress"`
 	Pending    int `json:"pending"`
 	Dropped    int `json:"dropped"`
+	Superseded int `json:"superseded"`
 }
 
-// Closed is done plus dropped.
-func (c Counts) Closed() int { return c.Done + c.Dropped }
+// Closed is the done tickets: dropped and superseded ones are not in Total.
+func (c Counts) Closed() int { return c.Done }
 
 func (c *Counts) add(t *plan.Ticket) {
-	c.Total++
+	if !t.Status.Excluded() {
+		c.Total++
+	}
 	switch t.Status.State {
 	case plan.Done:
 		c.Done++
@@ -69,6 +73,8 @@ func (c *Counts) add(t *plan.Ticket) {
 		c.InProgress++
 	case plan.Dropped:
 		c.Dropped++
+	case plan.Superseded:
+		c.Superseded++
 	default:
 		c.Pending++
 	}

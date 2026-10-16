@@ -178,7 +178,7 @@ h2.section .count { color: var(--c-faint); font-weight: 600; font-size: 13px; }
 .badge.done { background: var(--c-green-pale); color: var(--c-green); }
 .badge.in_progress { background: var(--c-amber-pale); color: var(--c-amber-text); }
 .badge.pending { background: var(--c-red-pale); color: var(--c-red); }
-.badge.dropped, .badge.plain { background: var(--c-page); color: var(--c-muted); }
+.badge.dropped, .badge.superseded, .badge.plain { background: var(--c-page); color: var(--c-muted); }
 .badge.ms { background: var(--c-blue-pale); color: var(--c-blue); }
 .badge.ready { background: var(--c-blue); color: var(--c-on-accent); }
 .badge.human, .badge.agent { background: var(--c-violet-pale); color: var(--c-violet); }
@@ -190,7 +190,7 @@ h2.section .count { color: var(--c-faint); font-weight: 600; font-size: 13px; }
 .chip.unknown { cursor: default; text-decoration: line-through; }
 .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 .dot.done { background: var(--c-green); } .dot.in_progress { background: var(--c-amber); } .dot.pending { background: var(--c-red); }
-.dot.dropped, .dot.none { background: var(--c-faint); } .dot.ready { background: var(--c-blue); } .dot.human { background: var(--c-violet); }
+.dot.dropped, .dot.superseded, .dot.none { background: var(--c-faint); } .dot.ready { background: var(--c-blue); } .dot.human { background: var(--c-violet); }
 
 /* Board */
 .board-tools { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; color: var(--c-muted); font-size: 13px; }
@@ -415,6 +415,7 @@ dialog::backdrop { background: var(--c-backdrop); }
             <option value="in_progress">In progress</option>
             <option value="done">Done</option>
             <option value="dropped">Dropped</option>
+            <option value="superseded">Superseded</option>
           </optgroup>
           <optgroup label="Open tickets">
             <option value="ready">Can start now</option>
@@ -534,29 +535,30 @@ dialog::backdrop { background: var(--c-backdrop); }
   const phaseTitle = slug => (phaseBySlug.get(slug) || {}).title || slug;
 
   const state = t => t.status.state;
-  const closed = t => state(t) === 'done' || state(t) === 'dropped';
+  const closed = t => state(t) === 'done' || state(t) === 'dropped' || state(t) === 'superseded';
   const human = t => !closed(t) && !!t.status.human;
   // Board column. A ticket that needs a human sits there whatever else holds;
   // in progress comes before "can start now" because started tickets are ready too.
   const column = t => closed(t) ? 'done' : human(t) ? 'human' : state(t) === 'in_progress' ? 'doing' : t.ready ? 'ready' : 'waiting';
-  const stateLabel = { pending: 'Pending', in_progress: 'In progress', done: 'Done', dropped: 'Dropped' };
+  const stateLabel = { pending: 'Pending', in_progress: 'In progress', done: 'Done', dropped: 'Dropped', superseded: 'Superseded' };
   // Phase display order, then ID: the order used everywhere except Next up.
   const byPlan = (a, b) => (phaseIndex.get(a.phase) ?? 1e9) - (phaseIndex.get(b.phase) ?? 1e9) || idIndex.get(a.id) - idIndex.get(b.id);
   const byNext = (a, b) => (nextIndex.get(a.id) ?? 1e9) - (nextIndex.get(b.id) ?? 1e9) || byPlan(a, b);
 
   const countsOf = list => {
-    const c = { total: 0, done: 0, in_progress: 0, pending: 0, dropped: 0 };
-    list.forEach(t => { c.total++; c[state(t)]++; });
+    const c = { total: 0, done: 0, in_progress: 0, pending: 0, dropped: 0, superseded: 0 };
+    // Dropped and superseded tickets are not in the total.
+    list.forEach(t => { if (state(t) !== 'dropped' && state(t) !== 'superseded') c.total++; c[state(t)]++; });
     return c;
   };
   // Progress bar: green for closed (done and dropped), amber for in progress.
   const barHTML = c => {
     if (!c.total) return '<div class="bar"></div>';
     const w = n => (100 * (n || 0) / c.total).toFixed(2) + '%';
-    return `<div class="bar" role="img" aria-label="${c.done + c.dropped} closed, ${c.in_progress} in progress of ${c.total}"><span class="d" style="width:${w(c.done)}"></span><span class="x" style="width:${w(c.dropped)}"></span><span class="p" style="width:${w(c.in_progress)}"></span></div>`;
+    return `<div class="bar" role="img" aria-label="${c.done} closed, ${c.in_progress} in progress of ${c.total}"><span class="d" style="width:${w(c.done)}"></span><span class="p" style="width:${w(c.in_progress)}"></span></div>`;
   };
-  const pct = c => c.total ? Math.floor(100 * (c.done + c.dropped) / c.total) : 100;
-  const countText = c => `${c.done} done · ${c.in_progress} in progress · ${c.pending} pending${c.dropped ? ` · ${c.dropped} dropped` : ''}`;
+  const pct = c => c.total ? Math.floor(100 * (c.done) / c.total) : 100;
+  const countText = c => `${c.done} done · ${c.in_progress} in progress · ${c.pending} pending${c.dropped ? ` · ${c.dropped} dropped` : ''}${c.superseded ? ` · ${c.superseded} superseded` : ''}`;
 
   const stateBadge = t => `<span class="badge ${state(t)}">${stateLabel[state(t)] || esc(state(t))}</span>`;
   const msBadge = name => name ? `<span class="badge ms" title="Milestone">${esc(name)}</span>` : '';
@@ -676,7 +678,7 @@ dialog::backdrop { background: var(--c-backdrop); }
     });
     $('phaseNav').innerHTML = phases.length ? `<div class="nav-label hide-c">Phases</div>` + phases.map(p =>
       `<button class="phase-link hide-c" type="button" data-phase="${esc(p.slug)}" aria-current="${F.phase === p.slug}" title="${esc(p.goal)}">
-        <span class="t"><span>${esc(p.title || p.slug)}</span><span>${p.counts.done + p.counts.dropped}/${p.counts.total}</span></span>${barHTML(p.counts)}</button>`).join('') : '';
+        <span class="t"><span>${esc(p.title || p.slug)}</span><span>${p.counts.done}/${p.counts.total}</span></span>${barHTML(p.counts)}</button>`).join('') : '';
     $('sideFoot').innerHTML = `Generated <b>${esc(D.generated)}</b><br>${live ? 'Live: follows <span class="mono">ajiya serve</span>' : 'Refresh: <span class="mono">ajiya build</span>'}`;
   }
   $('nav').addEventListener('click', e => {
@@ -702,6 +704,7 @@ dialog::backdrop { background: var(--c-backdrop); }
     if (!closed(t) && s.blocked) notes.push(`<div class="note blocked">Blocked: ${esc(s.blocked)}</div>`);
     if (state(t) === 'in_progress' && s.note) notes.push(`<div class="note">${esc(s.note)}</div>`);
     if (state(t) === 'dropped' && s.reason) notes.push(`<div class="note">${esc(s.reason)}</div>`);
+    if (state(t) === 'superseded') notes.push(`<div class="note">${s.superseded_by ? `Replaced by ${esc(s.superseded_by)}` : 'Invalidated'} in ${esc(s.change)}${s.was ? `; was ${esc(stateLabel[s.was.state] || s.was.state)}` : ''}</div>`);
     const meta = [phaseTitle(t.phase), t.app].filter(Boolean).map(esc).join(' · ') + (!closed(t) && t.unblocks ? ` · unblocks ${t.unblocks}` : '');
     return `<button class="card${compact ? ' compact' : ''}${t.ready && !compact ? ' ready' : ''}" type="button" data-open="${esc(t.id)}">
       <div class="head"><span class="rid mono">${esc(t.id)}</span>${msBadge(t.milestone)}
@@ -738,10 +741,10 @@ dialog::backdrop { background: var(--c-backdrop); }
 
     h += `<h2 class="section">Milestones <span class="count">${milestones.length}</span></h2>`;
     if (milestones.length) {
-      h += `<p class="section-note">In order. Each counts the tickets it needs, including what they depend on; closed means done or dropped.</p><div class="ms-grid">` +
+      h += `<p class="section-note">In order. Each counts the tickets it needs, including what they depend on; closed means done; dropped and superseded tickets are not counted.</p><div class="ms-grid">` +
         milestones.map((m, i) => {
           const c = m.required;
-          const closedN = c.done + c.dropped;
+          const closedN = c.done;
           const sub = c.total ? `${closedN}/${c.total} closed · ${c.in_progress} in progress · ${m.ready} can start now` : 'Needs no tickets';
           return `<div class="card-box ms-card">
             <div class="top"><span class="order">${i + 1}</span><span class="nm">${esc(m.name)}</span><span class="pct"${m.percent >= 100 ? ' style="color:var(--c-green)"' : ''}>${m.percent}%</span></div>
@@ -794,7 +797,7 @@ dialog::backdrop { background: var(--c-backdrop); }
       ['doing', 'In progress', 'Started', 'in_progress'],
       ['waiting', 'Waiting', 'Open dependencies or blocked', 'pending'],
       ['human', 'Needs a human', 'Only a person can finish these', 'human'],
-      ['done', 'Done', 'Done or dropped', 'done'],
+      ['done', 'Done', 'Done, dropped or superseded', 'done'],
     ];
     const list = tickets.filter(match);
     const colHTML = ([k, label, sub, dot]) => {
@@ -1065,12 +1068,12 @@ dialog::backdrop { background: var(--c-backdrop); }
       }));
       const nodes = phases.map(p => {
         const c = p.counts, b = ph.get(p.slug);
-        const st = c.total && c.done + c.dropped === c.total ? 'done' : c.in_progress || c.done ? 'in_progress' : 'pending';
+        const st = c.total && c.done === c.total ? 'done' : c.in_progress || c.done ? 'in_progress' : 'pending';
         const meta = req ? `${b.reqN} of ${c.total} needed for ${depMs}` : filtered ? `${b.hits} of ${c.total} match the filters` : `${plural(c.total, 'ticket')} · ${plural(b.inside, 'link')} inside`;
         return {
           id: p.slug, cls: `phase ${st}${filtered && !b.hits ? ' miss' : ''}`, attr: `data-dep-phase="${esc(p.slug)}"`,
           title: `${p.title || p.slug}${p.goal ? '\n' + p.goal : ''}\n${countText(c)}\nDepends on ${plural(b.ups.size, 'phase')}, needed by ${b.downs.size}. Click to see its tickets.`,
-          html: `<span class="top"><b>${esc(p.slug)}</b><span class="r">${c.done + c.dropped}/${c.total}</span></span>
+          html: `<span class="top"><b>${esc(p.slug)}</b><span class="r">${c.done}/${c.total}</span></span>
             <span class="nm">${esc(p.title || p.slug)}</span>${barHTML(c)}<span class="top">${esc(meta)}</span>`,
         };
       });

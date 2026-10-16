@@ -149,7 +149,7 @@ func mcpTools() []mcpTool {
 			argv:  func(a mcpArgs) []string { return cat([]string{"ticket", "show"}, pos(a.str("id"))) }},
 		{name: "ajiya_ticket_list", readOnly: true, json: true,
 			desc:  "Use to find tickets by phase, app, state or milestone, in plan order.",
-			props: []mcpProp{strProp("phase", "Phase slug.", false), strProp("app", "App name.", false), strProp("state", "pending, in_progress, done, dropped, ready or human.", false), strProp("milestone", "Milestone name.", false)},
+			props: []mcpProp{strProp("phase", "Phase slug.", false), strProp("app", "App name.", false), strProp("state", "pending, in_progress, done, dropped, superseded, ready or human.", false), strProp("milestone", "Milestone name.", false)},
 			argv: func(a mcpArgs) []string {
 				return cat([]string{"ticket", "list"}, a.flag("phase", "phase"), a.flag("app", "app"), a.flag("state", "state"), a.flag("milestone", "milestone"))
 			}},
@@ -160,6 +160,13 @@ func mcpTools() []mcpTool {
 			desc:  "Use to see which files a ticket changed: the union of files in every commit whose Ajiya trailer names it, read from git (plan files in ajiya/ are left out). Empty when no commit names the ticket.",
 			props: []mcpProp{idProp},
 			argv:  func(a mcpArgs) []string { return cat([]string{"ticket", "files"}, pos(a.str("id"))) }},
+		{name: "ajiya_snapshot_list", readOnly: true, json: true,
+			desc: "Use to see the plan snapshots (tags ajiya/plan/<name>) with their date and commit.",
+			argv: func(a mcpArgs) []string { return []string{"snapshot", "list"} }},
+		{name: "ajiya_snapshot",
+			desc:  "Use before a risky change to the plan: tags the committed plan as ajiya/plan/<name> so it can be compared or restored. Refuses while ajiya/ has uncommitted changes, a bad name or an existing name; commit first.",
+			props: []mcpProp{strProp("name", "Snapshot name, such as before-supabase: a valid tag name without spaces.", true)},
+			argv:  func(a mcpArgs) []string { return cat([]string{"snapshot"}, pos(a.str("name"))) }},
 		{name: "ajiya_phase_list", readOnly: true, json: true,
 			desc: "Use to see each phase with its progress and earliest milestone.",
 			argv: func(a mcpArgs) []string { return []string{"phase", "list"} }},
