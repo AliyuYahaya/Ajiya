@@ -125,14 +125,20 @@ func TestJSON(t *testing.T) {
 		PhaseTitle   string `json:"phase_title"`
 		Dependencies []struct{ ID, Title, State string }
 		Dependants   []struct{ ID, Title, State string }
+		Decisions    []struct{ ID, Title, State, Status string }
 		Commits      []struct{ Hash, Date, Subject string }
 	}
 	decode(t, ajiya(t, dir, 0, "ticket", "show", "DE-0001", "--json"), &show)
 	if show.Status.State != "done" || show.Status.Note != "first try" || len(show.Status.Commit) != 7 ||
 		show.PhaseTitle != "Core" || len(show.Dependencies) != 0 || show.Dependencies == nil ||
-		len(show.Dependants) != 1 || show.Dependants[0].State != "pending" ||
+		len(show.Dependants) != 1 || show.Dependants[0].State != "pending" || show.Decisions == nil || len(show.Decisions) != 0 ||
 		len(show.Commits) != 1 || show.Commits[0].Subject != "Deploy" || len(show.Commits[0].Hash) != 40 {
 		t.Errorf("ticket show --json = %+v", show)
+	}
+
+	decode(t, ajiya(t, dir, 0, "ticket", "show", "DE-0002", "--json"), &show)
+	if len(show.Decisions) != 1 || show.Decisions[0].ID != "DEC-0003" || show.Decisions[0].State != "missing" {
+		t.Errorf("ticket show --json decisions = %+v", show.Decisions)
 	}
 
 	var launch = none
@@ -146,7 +152,8 @@ func TestJSON(t *testing.T) {
 	ajiya(t, dir, 0, "phase", "add", "empty", "Nothing yet")
 	var findings []struct{ Code, Level, Location, Message, Fix string }
 	decode(t, ajiya(t, dir, 1, "check", "--strict", "--json"), &findings)
-	if len(findings) != 1 || findings[0].Code != "W001" || findings[0].Level != "warning" || findings[0].Location != "ajiya/empty.md:1" {
+	// DE-0002 links DEC-0003, which does not exist.
+	if len(findings) != 2 || findings[0].Code != "E014" || findings[0].Level != "error" || findings[1].Code != "W001" || findings[1].Level != "warning" || findings[1].Location != "ajiya/empty.md:1" {
 		t.Errorf("check --json = %+v", findings)
 	}
 }

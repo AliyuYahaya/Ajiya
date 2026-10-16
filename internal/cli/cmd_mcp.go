@@ -108,6 +108,7 @@ func strProp(name, desc string, required bool) mcpProp {
 func boolProp(name, desc string) mcpProp { return mcpProp{name, "boolean", desc, false} }
 
 var idProp = strProp("id", "Ticket ID, such as AJ-0043.", true)
+var decIDProp = strProp("id", "Decision ID, such as DEC-0003.", true)
 
 // Tags are optional. Add tech only when the ticket depends on a specific
 // technology or service; check ajiya_tags first to reuse an existing value.
@@ -230,6 +231,26 @@ func mcpTools() []mcpTool {
 			desc:  "Use when planning to set the launch target: the phase or ticket that means the project has launched.",
 			props: []mcpProp{strProp("target", "A phase slug or a ticket ID.", true)},
 			argv:  func(a mcpArgs) []string { return cat([]string{"launch", "set"}, pos(a.str("target"))) }},
+		{name: "ajiya_decision_add",
+			desc:  "Use when you make or find a choice the plan rests on (a technology, a service, an approach): record it as a Proposed decision. A person accepts it; link tickets to it with ajiya_ticket_edit decisions.",
+			props: []mcpProp{strProp("title", "Short title, such as \"Use PostgreSQL on AWS RDS\".", true), strProp("decision", "What was chosen.", true), strProp("context", "Why the choice was needed.", false), strProp("consequences", "What follows from it, including what it rules out.", false), techProp, strProp("by", "Who proposed it.", false)},
+			argv: func(a mcpArgs) []string {
+				return cat([]string{"decision", "add"}, a.flag("decision", "decision"), a.flag("context", "context"), a.flag("consequences", "consequences"), a.flag("tech", "tech"), a.flag("by", "by"), pos(a.str("title")))
+			}},
+		{name: "ajiya_decision_show", readOnly: true, json: true,
+			desc:  "Use to read a decision in full (context, decision, consequences, status) and the tickets that link it.",
+			props: []mcpProp{decIDProp},
+			argv:  func(a mcpArgs) []string { return cat([]string{"decision", "show"}, pos(a.str("id"))) }},
+		{name: "ajiya_decision_list", readOnly: true, json: true,
+			desc:  "Use to see every decision with its status, or only those about one technology.",
+			props: []mcpProp{strProp("tag", "Only decisions with this tag, such as tech:postgres.", false)},
+			argv:  func(a mcpArgs) []string { return cat([]string{"decision", "list"}, a.flag("tag", "tag")) }},
+		{name: "ajiya_decision_accept",
+			desc:  "Use only when a person has said they accept a proposed decision; record their name.",
+			props: []mcpProp{decIDProp, strProp("by", "Name of the person who decided.", true)},
+			argv: func(a mcpArgs) []string {
+				return cat([]string{"decision", "accept"}, a.flag("by", "by"), pos(a.str("id")))
+			}},
 		{name: "ajiya_init",
 			desc:  "Use in a folder that has no ajiya.toml to set up Ajiya there, registering the apps it detects. Equivalent to 'ajiya init --yes'.",
 			props: []mcpProp{strProp("name", "Project name (default: the folder name).", false), strProp("prefix", "Ticket ID prefix, such as AJ.", false)},

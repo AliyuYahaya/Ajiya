@@ -16,6 +16,7 @@
 //	E011 a ticket marked done has no evidence
 //	E012 a milestone target (or the [launch] target) is neither a phase nor a ticket
 //	E013 [phases] order lists a slug that is not a phase
+//	E014 to E016 decisions, listed in decisions.go
 //
 // A milestone name used twice has no code here: config.Parse refuses such an
 // ajiya.toml ("milestone ... is listed twice"), so every command, check
@@ -139,6 +140,7 @@ func Run(cfg *config.Config, p *plan.Plan) []Finding {
 	}
 
 	fs = append(fs, phaseOrder(cfg, p)...)
+	fs = append(fs, decisionFindings(p)...)
 	fs = append(fs, planWarnings(cfg, p)...)
 	Sort(fs)
 	return fs

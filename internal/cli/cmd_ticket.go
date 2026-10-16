@@ -12,6 +12,7 @@ import (
 	"github.com/AliyuYahaya/Ajiya/internal/config"
 	"github.com/AliyuYahaya/Ajiya/internal/gitx"
 	"github.com/AliyuYahaya/Ajiya/internal/plan"
+	"github.com/AliyuYahaya/Ajiya/internal/view"
 )
 
 func runTicketAdd(e *env, args []string) error {
@@ -259,17 +260,22 @@ func runTicketShow(e *env, args []string) error {
 			}
 			return out
 		}
+		decs := []decLink{}
+		for _, id := range t.Tags.Dec {
+			decs = append(decs, pr.decLink(id))
+		}
 		cs := []commit{}
 		for _, c := range commits {
 			cs = append(cs, commit{c.Hash, c.Date, c.Subject, pr.repoLabel(c.Repo)})
 		}
 		return writeJSON(e, struct {
 			jsonTicket
-			PhaseTitle   string   `json:"phase_title"`
-			Dependencies []link   `json:"dependencies"`
-			Dependants   []link   `json:"dependants"`
-			Commits      []commit `json:"commits"`
-		}{toJSON(t), ph.Title, links(t.Depends), links(dependants), cs})
+			PhaseTitle   string    `json:"phase_title"`
+			Dependencies []link    `json:"dependencies"`
+			Dependants   []link    `json:"dependants"`
+			Decisions    []decLink `json:"decisions"`
+			Commits      []commit  `json:"commits"`
+		}{toJSON(t), ph.Title, links(t.Depends), links(dependants), decs, cs})
 	}
 	w := e.stdout
 	fmt.Fprintf(w, "%s  %s\n", t.ID, t.Title)
@@ -296,6 +302,18 @@ func runTicketShow(e *env, args []string) error {
 	}
 	list("Depends:", t.Depends)
 	list("Needed by:", dependants)
+	for i, id := range t.Tags.Dec {
+		label := "Decisions:"
+		if i > 0 {
+			label = ""
+		}
+		l := pr.decLink(id)
+		text := "(does not exist)"
+		if l.State != "missing" {
+			text = l.Status + " " + l.Title
+		}
+		fmt.Fprintf(w, "%-11s %s %s\n", label, id, text)
+	}
 	if len(commits) == 0 {
 		fmt.Fprintf(w, "%-11s -\n", "Commits:")
 	}
@@ -311,6 +329,22 @@ func runTicketShow(e *env, args []string) error {
 		fmt.Fprintf(w, "%-11s %s %s %s%s\n", label, c.Short(), c.Date, c.Subject, where)
 	}
 	return nil
+}
+
+// decLink is a decision a ticket links with a dec tag.
+type decLink struct {
+	ID     string `json:"id"`
+	Title  string `json:"title,omitempty"`
+	State  string `json:"state"`            // proposed, accepted, superseded; missing when the ID does not exist
+	Status string `json:"status,omitempty"` // the Status line as written
+}
+
+func (pr *project) decLink(id string) decLink {
+	d := pr.plan.Decision(id)
+	if d == nil {
+		return decLink{ID: id, State: "missing"}
+	}
+	return decLink{ID: id, Title: d.Title, State: view.DecisionStateName(d.Status.State), Status: d.Status.String()}
 }
 
 func runTicketEdit(e *env, args []string) error {

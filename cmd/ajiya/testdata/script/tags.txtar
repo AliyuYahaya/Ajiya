@@ -54,6 +54,9 @@ stdout '"dec": \[\s+"DEC-0003",\s+"DEC-0004"\s+\]'
 exec ajiya build
 grep '"tech": \[\s*"aws-rds"' ajiya/data.js
 
+# Decisions that do not exist are an error (E014), so drop the links here.
+exec ajiya ticket edit DE-0002 --decisions -
+
 # Near-duplicate tech values are a warning.
 exec ajiya ticket edit DE-0003 --tech postgres
 exec ajiya ticket edit DE-0002 --tech postgresql

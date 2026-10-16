@@ -59,6 +59,117 @@
       "idempotentHint": false,
       "readOnlyHint": false
     },
+    "description": "Use only when a person has said they accept a proposed decision; record their name.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "by": {
+          "description": "Name of the person who decided.",
+          "type": "string"
+        },
+        "id": {
+          "description": "Decision ID, such as DEC-0003.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "by"
+      ],
+      "type": "object"
+    },
+    "name": "ajiya_decision_accept"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "idempotentHint": false,
+      "readOnlyHint": false
+    },
+    "description": "Use when you make or find a choice the plan rests on (a technology, a service, an approach): record it as a Proposed decision. A person accepts it; link tickets to it with ajiya_ticket_edit decisions.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "by": {
+          "description": "Who proposed it.",
+          "type": "string"
+        },
+        "consequences": {
+          "description": "What follows from it, including what it rules out.",
+          "type": "string"
+        },
+        "context": {
+          "description": "Why the choice was needed.",
+          "type": "string"
+        },
+        "decision": {
+          "description": "What was chosen.",
+          "type": "string"
+        },
+        "tech": {
+          "description": "Comma-separated technologies or services the ticket depends on, as lower-case slugs such as aws-rds. Leave out unless the ticket needs a specific one; reuse values from ajiya_tags.",
+          "type": "string"
+        },
+        "title": {
+          "description": "Short title, such as \"Use PostgreSQL on AWS RDS\".",
+          "type": "string"
+        }
+      },
+      "required": [
+        "title",
+        "decision"
+      ],
+      "type": "object"
+    },
+    "name": "ajiya_decision_add"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "idempotentHint": false,
+      "readOnlyHint": true
+    },
+    "description": "Use to see every decision with its status, or only those about one technology.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "tag": {
+          "description": "Only decisions with this tag, such as tech:postgres.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "name": "ajiya_decision_list"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "idempotentHint": false,
+      "readOnlyHint": true
+    },
+    "description": "Use to read a decision in full (context, decision, consequences, status) and the tickets that link it.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "description": "Decision ID, such as DEC-0003.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "name": "ajiya_decision_show"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "idempotentHint": false,
+      "readOnlyHint": false
+    },
     "description": "Use in a folder that has no ajiya.toml to set up Ajiya there, registering the apps it detects. Equivalent to 'ajiya init --yes'.",
     "inputSchema": {
       "additionalProperties": false,

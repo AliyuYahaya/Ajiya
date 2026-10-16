@@ -1,0 +1,18 @@
+A ticket links a decision that does not exist. Tickets with no dec tag are not affected.
+
+-- ajiya.toml --
+[project]
+name = "Fixture"
+prefix = "FX"
+-- ajiya/core.md --
+<!-- Written by ajiya. Do not edit by hand: use ajiya commands. -->
+# Core
+
+Goal: g
+
+| ID | App | Ticket | Done when | Depends | Tags | Status |
+|---|---|---|---|---|---|---|
+| FX-0001 | infra | A | a | - | dec:DEC-0003 | 🟥 Pending |
+| FX-0002 | infra | B | b | - | - | 🟥 Pending |
+-- want --
+E014 ajiya/core.md:8: FX-0001 links decision DEC-0003, which does not exist. Fix: add it with 'ajiya decision add', or correct the tag with 'ajiya ticket edit FX-0001 --decisions <existing IDs>|-'
