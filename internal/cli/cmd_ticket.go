@@ -205,6 +205,7 @@ func runTicketDone(e *env, args []string) error {
 	if evidenceRepo != "" {
 		fmt.Fprintf(e.stdout, "evidence: %s in %s\n", t.Status.Commit, evidenceRepo)
 	}
+	fmt.Fprintf(e.stdout, "Commit the plan change in ajiya/ with the trailer 'Ajiya: %s'.\n", t.ID)
 	return nil
 }
 

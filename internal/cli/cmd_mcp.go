@@ -351,7 +351,8 @@ func (m *mcpServer) call(t mcpTool, a mcpArgs, dir string) *mcp.CallToolResult {
 		return textResult(true, msg)
 	}
 	if !t.json {
-		return textResult(false, firstLine(out), restLines(out), strings.TrimSpace(errOut))
+		// Warnings go before the rest so that the command's own last line stays last.
+		return textResult(false, firstLine(out), strings.TrimSpace(errOut), restLines(out))
 	}
 	// The one-line summary is the first line of the command's own text output.
 	// Read commands do not change anything, so running twice is safe.
@@ -404,9 +405,13 @@ func (m *mcpServer) projectDir(ctx context.Context, sess *mcp.ServerSession, for
 }
 
 // clientRoots returns the local folders the client sent as MCP roots, if it
-// sends any.
+// declared the capability and sends any.
 func clientRoots(ctx context.Context, sess *mcp.ServerSession) []string {
 	if sess == nil {
+		return nil
+	}
+	// Ask only a client that declared the roots capability in initialize.
+	if p := sess.InitializeParams(); p == nil || p.Capabilities == nil || p.Capabilities.RootsV2 == nil {
 		return nil
 	}
 	res, err := sess.ListRoots(ctx, nil)
