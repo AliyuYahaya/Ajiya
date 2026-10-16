@@ -70,13 +70,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 84,
-        "done": 79,
-        "in_progress": 1,
-        "pending": 4,
+        "done": 80,
+        "in_progress": 2,
+        "pending": 2,
         "dropped": 0,
         "superseded": 0
       },
-      "percent": 94,
+      "percent": 95,
       "ready": 0
     },
     {
@@ -86,13 +86,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 83,
-        "done": 79,
-        "in_progress": 1,
-        "pending": 3,
+        "done": 80,
+        "in_progress": 2,
+        "pending": 1,
         "dropped": 0,
         "superseded": 0
       },
-      "percent": 95,
+      "percent": 96,
       "ready": 0
     },
     {
@@ -104,13 +104,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 88,
-        "done": 81,
-        "in_progress": 1,
-        "pending": 6,
+        "done": 82,
+        "in_progress": 2,
+        "pending": 4,
         "dropped": 0,
         "superseded": 0
       },
-      "percent": 92,
+      "percent": 93,
       "ready": 0
     }
   ],
@@ -234,13 +234,13 @@ window.AJIYA = {
       "description": "",
       "counts": {
         "total": 11,
-        "done": 5,
-        "in_progress": 1,
-        "pending": 5,
+        "done": 6,
+        "in_progress": 2,
+        "pending": 3,
         "dropped": 0,
         "superseded": 0
       },
-      "percent": 45,
+      "percent": 54,
       "milestone": "v0-3"
     },
     {
@@ -266,9 +266,9 @@ window.AJIYA = {
       "path": ".",
       "counts": {
         "total": 111,
-        "done": 102,
-        "in_progress": 1,
-        "pending": 8,
+        "done": 103,
+        "in_progress": 2,
+        "pending": 6,
         "dropped": 0,
         "superseded": 0
       }
@@ -1894,17 +1894,20 @@ window.AJIYA = {
         "path": []
       },
       "status": {
-        "state": "in_progress",
-        "text": "🟨 In progress"
+        "state": "done",
+        "text": "🟩 Done · e0409bc · 2026-10-16 · tests passed",
+        "commit": "e0409bc",
+        "date": "2026-10-16",
+        "tests_passed": true
       },
       "milestone": "v0-3",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0054",
         "AJ-0058"
       ],
-      "unblocks": 8
+      "unblocks": 0
     },
     {
       "id": "AJ-0054",
@@ -1921,14 +1924,12 @@ window.AJIYA = {
         "path": []
       },
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "in_progress",
+        "text": "🟨 In progress"
       },
       "milestone": "v0-3",
-      "ready": false,
-      "waiting_on": [
-        "AJ-0053"
-      ],
+      "ready": true,
+      "waiting_on": [],
       "dependants": [
         "AJ-0055",
         "AJ-0058"
@@ -1950,8 +1951,8 @@ window.AJIYA = {
         "path": []
       },
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "in_progress",
+        "text": "🟨 In progress"
       },
       "milestone": "v0-3",
       "ready": false,
@@ -2053,7 +2054,6 @@ window.AJIYA = {
       "milestone": "v0-3",
       "ready": false,
       "waiting_on": [
-        "AJ-0053",
         "AJ-0054",
         "AJ-0055",
         "AJ-0056"
@@ -3613,6 +3613,62 @@ window.AJIYA = {
   "next": [],
   "checks": [],
   "activity": [
+    {
+      "hash": "e0409bc4f1b770c99fbe191d144408452658f6ee",
+      "short": "e0409bc",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Merge AJ-0053: change open and change impact",
+      "refs": [
+        "AJ-0053"
+      ],
+      "chore": false,
+      "merge": true,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792163124
+    },
+    {
+      "hash": "a055a2bca0859cd1e7022241fcd755f6f4655fd4",
+      "short": "a055a2b",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Mark AJ-0111 done",
+      "refs": [
+        "AJ-0111"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0111",
+          "phase": "agent-access",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · a984d1d · 2026-10-16 · tests passed"
+        }
+      ],
+      "time": 1792163086
+    },
+    {
+      "hash": "e0ff3e667f3e03d9a0a042b928fd4572953a4a92",
+      "short": "e0ff3e6",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Add change open and change impact",
+      "refs": [
+        "AJ-0053"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792163066
+    },
     {
       "hash": "a984d1dd9026e50c49a5cfd2a2ee1762e270d882",
       "short": "a984d1d",
@@ -10241,5 +10297,6 @@ window.AJIYA = {
       "time": 1790630482
     }
   ],
-  "decisions": []
+  "decisions": [],
+  "changes": []
 };
