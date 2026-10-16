@@ -36,7 +36,7 @@ targets = ["AJ-0057"]
 
 [[milestones]]
 name = "v0-3-1"
-targets = ["AJ-0109", "AJ-0110", "AJ-0111"]
+targets = ["AJ-0109", "AJ-0110", "AJ-0111", "AJ-0112"]
 
 [[apps]]
 name = "ajiya"

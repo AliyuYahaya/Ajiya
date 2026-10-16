@@ -10,9 +10,9 @@ Generated 2026-10-16.
 | v0-1 | 37 | 37 | 100% | 0 |
 | v0-2 | 74 | 74 | 100% | 0 |
 | v0-2-1 | 83 | 83 | 100% | 0 |
-| v0-3 | 82 | 84 | 97% | 1 |
-| after-v0-3 | 82 | 83 | 98% | 1 |
-| v0-3-1 | 84 | 88 | 95% | 1 |
+| v0-3 | 82 | 84 | 97% | 0 |
+| after-v0-3 | 82 | 83 | 98% | 0 |
+| v0-3-1 | 84 | 89 | 94% | 1 |
 
 ## Phases
 
@@ -25,14 +25,12 @@ Generated 2026-10-16.
 | Release | 5 | 0 | 0 | 5 | 100% | v0-1 |
 | Agent-access | 10 | 0 | 0 | 10 | 100% | v0-2 |
 | Install | 24 | 0 | 0 | 24 | 100% | v0-2 |
-| Decisions-and-changes | 8 | 0 | 4 | 12 | 66% | v0-3 |
+| Decisions-and-changes | 8 | 2 | 2 | 12 | 66% | v0-3 |
 | Dashboard views | 1 | 0 | 3 | 4 | 25% | v0-3-1 |
 
 ## Can start now
 
-- **AJ-0056** Guides and skill for decisions and changes (ajiya) · v0-3
-- **AJ-0057** Dashboard: open changes and decisions (ajiya) · after-v0-3
-- **AJ-0112** change approve retargets milestones (ajiya)
+- **AJ-0112** change approve retargets milestones (ajiya) · v0-3-1
 
 ## Waiting
 
@@ -47,6 +45,10 @@ Generated 2026-10-16.
 
 ## Recent activity
 
+- 2026-10-16 `915a93b` Mark AJ-0054, AJ-0055 done; add the milestone retarget ticket (chore)
+  - AJ-0054: in_progress → done
+  - AJ-0055: in_progress → done
+  - AJ-0112: new → pending
 - 2026-10-16 `78a3e86` Merge AJ-0054, AJ-0055: change assess, approve and reject (AJ-0054, AJ-0055)
 - 2026-10-16 `637df59` Add change approve and change reject (AJ-0055)
 - 2026-10-16 `e4c98da` Add change assess: record a verdict on a candidate (AJ-0054)
@@ -68,11 +70,8 @@ Generated 2026-10-16.
   - AJ-0111: new → pending
 - 2026-10-16 `3e35786` Refresh the agent kit (AJ-0107)
 - 2026-10-16 `55fc3bf` Merge AJ-0107: phase descriptions (AJ-0107)
-- 2026-10-16 `b09ec5d` Phase descriptions: phase describe, --description, JSON, data.js and MCP (AJ-0107)
-- and 274 more in data.js
+- and 275 more in data.js
 
 ## Checks
 
-0 error(s), 1 warning(s).
-
-- W010 ajiya.toml: 1 open ticket is in no milestone: AJ-0112. Fix: make a milestone's targets depend on them, or add a milestone for the later work
+No problems found.

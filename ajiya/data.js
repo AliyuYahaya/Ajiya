@@ -71,13 +71,13 @@ window.AJIYA = {
       "required": {
         "total": 84,
         "done": 82,
-        "in_progress": 0,
-        "pending": 2,
+        "in_progress": 1,
+        "pending": 1,
         "dropped": 0,
         "superseded": 0
       },
       "percent": 97,
-      "ready": 1
+      "ready": 0
     },
     {
       "name": "after-v0-3",
@@ -87,30 +87,31 @@ window.AJIYA = {
       "required": {
         "total": 83,
         "done": 82,
-        "in_progress": 0,
-        "pending": 1,
+        "in_progress": 1,
+        "pending": 0,
         "dropped": 0,
         "superseded": 0
       },
       "percent": 98,
-      "ready": 1
+      "ready": 0
     },
     {
       "name": "v0-3-1",
       "targets": [
         "AJ-0109",
         "AJ-0110",
-        "AJ-0111"
+        "AJ-0111",
+        "AJ-0112"
       ],
       "required": {
-        "total": 88,
+        "total": 89,
         "done": 84,
-        "in_progress": 0,
+        "in_progress": 1,
         "pending": 4,
         "dropped": 0,
         "superseded": 0
       },
-      "percent": 95,
+      "percent": 94,
       "ready": 1
     }
   ],
@@ -235,8 +236,8 @@ window.AJIYA = {
       "counts": {
         "total": 12,
         "done": 8,
-        "in_progress": 0,
-        "pending": 4,
+        "in_progress": 2,
+        "pending": 2,
         "dropped": 0,
         "superseded": 0
       },
@@ -267,8 +268,8 @@ window.AJIYA = {
       "counts": {
         "total": 112,
         "done": 105,
-        "in_progress": 0,
-        "pending": 7,
+        "in_progress": 2,
+        "pending": 5,
         "dropped": 0,
         "superseded": 0
       }
@@ -1986,8 +1987,8 @@ window.AJIYA = {
         "path": []
       },
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "in_progress",
+        "text": "🟨 In progress"
       },
       "milestone": "v0-3",
       "ready": true,
@@ -2013,8 +2014,8 @@ window.AJIYA = {
         "path": []
       },
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "in_progress",
+        "text": "🟨 In progress"
       },
       "milestone": "after-v0-3",
       "ready": true,
@@ -3626,7 +3627,7 @@ window.AJIYA = {
         "state": "pending",
         "text": "🟥 Pending"
       },
-      "milestone": "",
+      "milestone": "v0-3-1",
       "ready": true,
       "waiting_on": [],
       "dependants": [],
@@ -3634,20 +3635,46 @@ window.AJIYA = {
     }
   ],
   "next": [
-    "AJ-0056",
-    "AJ-0057",
     "AJ-0112"
   ],
-  "checks": [
-    {
-      "code": "W010",
-      "level": "warning",
-      "location": "ajiya.toml",
-      "message": "1 open ticket is in no milestone: AJ-0112",
-      "fix": "make a milestone's targets depend on them, or add a milestone for the later work"
-    }
-  ],
+  "checks": [],
   "activity": [
+    {
+      "hash": "915a93be9982fbfcafd2c86676c2677a8abd1d03",
+      "short": "915a93b",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Mark AJ-0054, AJ-0055 done; add the milestone retarget ticket",
+      "refs": [],
+      "chore": true,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0054",
+          "phase": "decisions-and-changes",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · 78a3e86 · 2026-10-16 · tests passed"
+        },
+        {
+          "id": "AJ-0055",
+          "phase": "decisions-and-changes",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · 78a3e86 · 2026-10-16 · tests passed"
+        },
+        {
+          "id": "AJ-0112",
+          "phase": "decisions-and-changes",
+          "from": "",
+          "to": "pending",
+          "text": "🟥 Pending"
+        }
+      ],
+      "time": 1792164096
+    },
     {
       "hash": "78a3e863be99a7d01bf63b6303eb3c903499b0eb",
       "short": "78a3e86",
