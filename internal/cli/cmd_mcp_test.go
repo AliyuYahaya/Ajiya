@@ -206,6 +206,7 @@ func TestMCPInitThenPlan(t *testing.T) {
 		{"ajiya_milestone_add", map[string]any{"name": "alpha", "targets": "core"}},
 		{"ajiya_ticket_start", map[string]any{"id": "DE-0001"}},
 		{"ajiya_ticket_block", map[string]any{"id": "DE-0001", "reason": "waiting for a key"}},
+		{"ajiya_ticket_block", map[string]any{"id": "DE-0001", "reason": "-reason"}},
 		{"ajiya_launch_set", map[string]any{"target": "core"}},
 	} {
 		if r := mcpCall(t, cs, step.tool, step.args); r.IsError {
@@ -215,6 +216,13 @@ func TestMCPInitThenPlan(t *testing.T) {
 	r = mcpCall(t, cs, "ajiya_phase_list", nil)
 	if !strings.Contains(resultText(r, 1), `"description": "Not a flag\n\nSecond paragraph."`) {
 		t.Errorf("phase list lacks the description: %v", resultText(r, 1))
+	}
+	if r := mcpCall(t, cs, "ajiya_phase_describe", map[string]any{"slug": "core", "text": "- first point"}); r.IsError {
+		t.Fatalf("phase describe dash: %s", resultText(r, 0))
+	}
+	r = mcpCall(t, cs, "ajiya_phase_list", nil)
+	if !strings.Contains(resultText(r, 1), `"description": "- first point"`) {
+		t.Errorf("dash-leading description lost: %v", resultText(r, 1))
 	}
 	if r := mcpCall(t, cs, "ajiya_phase_describe", map[string]any{"slug": "core", "text": "-"}); r.IsError {
 		t.Fatalf("phase describe clear: %s", resultText(r, 0))
