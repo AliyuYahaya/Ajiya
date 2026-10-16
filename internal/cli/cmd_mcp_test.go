@@ -114,7 +114,7 @@ func TestMCPExcludedTools(t *testing.T) {
 	allowed := strings.Fields(`ajiya_status ajiya_next ajiya_ticket_show ajiya_ticket_list ajiya_phase_list
 		ajiya_milestone_list ajiya_milestone_show ajiya_check ajiya_ticket_add ajiya_ticket_edit
 		ajiya_ticket_start ajiya_ticket_done ajiya_ticket_block ajiya_phase_add ajiya_app_add
-		ajiya_milestone_add ajiya_launch_set ajiya_init ajiya_tags`)
+		ajiya_milestone_add ajiya_launch_set ajiya_init ajiya_tags ajiya_ticket_files`)
 	var got []string
 	for n := range have {
 		got = append(got, n)
@@ -294,6 +294,7 @@ func TestMCPReadToolParity(t *testing.T) {
 		{"ajiya_next", nil, []string{"next"}},
 		{"ajiya_next", map[string]any{"milestone": "staging"}, []string{"next", "--milestone", "staging"}},
 		{"ajiya_ticket_show", map[string]any{"id": "DE-0003"}, []string{"ticket", "show", "DE-0003"}},
+		{"ajiya_ticket_files", map[string]any{"id": "DE-0003"}, []string{"ticket", "files", "DE-0003"}},
 		{"ajiya_ticket_list", nil, []string{"ticket", "list"}},
 		{"ajiya_ticket_list", map[string]any{"phase": "api", "state": "in_progress"}, []string{"ticket", "list", "--phase", "api", "--state", "in_progress"}},
 		{"ajiya_phase_list", nil, []string{"phase", "list"}},

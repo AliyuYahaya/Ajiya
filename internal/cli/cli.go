@@ -97,6 +97,7 @@ func init() {
 		{"ticket show", "<ID> [--json]", "Show a ticket, its dependencies and dependants", runTicketShow},
 		{"ticket edit", `<ID> [--title "<title>"] [--done-when "<check>"] [--depends <IDs>|-] [--app <app>] [--phase <slug>] [--tech <slugs>|-] [--decisions <DEC IDs>|-] [--paths <globs>|-]  (at least one flag; a tag flag replaces that key's values, "-" clears them)`, "Change a ticket", runTicketEdit},
 		{"tags", "[--json]", "List every tag in use with its ticket count", runTags},
+		{"ticket files", "<ID> [--json]", "List the files changed by the commits that reference a ticket", runTicketFiles},
 		{"ticket list", "[--phase <slug>] [--app <app>] [--state <state>] [--milestone <name>] [--json]", "List tickets in plan order with ID, app, state and title", runTicketList},
 		{"status", "[--brief | --json]", "Summarise the project: milestones, work in progress, what can start, checks and recent activity", runStatus},
 		{"next", "[--app <app>] [--launch | --milestone <name>] [--json]", "List tickets that can start now", runNext},

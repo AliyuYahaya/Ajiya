@@ -447,6 +447,28 @@
       "idempotentHint": false,
       "readOnlyHint": true
     },
+    "description": "Use to see which files a ticket changed: the union of files in every commit whose Ajiya trailer names it, read from git (plan files in ajiya/ are left out). Empty when no commit names the ticket.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "description": "Ticket ID, such as AJ-0043.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "name": "ajiya_ticket_files"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "idempotentHint": false,
+      "readOnlyHint": true
+    },
     "description": "Use to find tickets by phase, app, state or milestone, in plan order.",
     "inputSchema": {
       "additionalProperties": false,
