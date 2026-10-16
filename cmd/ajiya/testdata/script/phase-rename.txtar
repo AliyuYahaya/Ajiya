@@ -52,16 +52,16 @@ stdout 'No problems found.'
 
 Goal: The API works
 
-| ID | App | Ticket | Done when | Depends | Status |
-|---|---|---|---|---|---|
-| DE-0001 | infra | Endpoint | Returns 200 | - | 🟥 Pending |
-| DE-0002 | infra | Deploy | Reachable | DE-0001 | 🟥 Pending |
+| ID | App | Ticket | Done when | Depends | Tags | Status |
+|---|---|---|---|---|---|---|
+| DE-0001 | infra | Endpoint | Returns 200 | - | - | 🟥 Pending |
+| DE-0002 | infra | Deploy | Reachable | DE-0001 | - | 🟥 Pending |
 -- release.golden --
 <!-- Written by ajiya. Do not edit by hand: use ajiya commands. -->
 # Release day
 
 Goal: Live
 
-| ID | App | Ticket | Done when | Depends | Status |
-|---|---|---|---|---|---|
-| DE-0003 | infra | Ship | Live | DE-0002 | 🟥 Pending |
+| ID | App | Ticket | Done when | Depends | Tags | Status |
+|---|---|---|---|---|---|---|
+| DE-0003 | infra | Ship | Live | DE-0002 | - | 🟥 Pending |

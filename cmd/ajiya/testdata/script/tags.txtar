@@ -1,0 +1,147 @@
+# tags: written from flags, replaced or cleared by ticket edit, listed by ajiya tags.
+
+exec ajiya init --name Demo --prefix DE
+exec ajiya phase add core 'The core works'
+
+# Tags are optional: a ticket without any is valid and check says nothing.
+exec ajiya ticket add --phase core --app infra 'Add a form' --done-when 'The form shows'
+exec ajiya tags
+stdout '^No tags in use\.$'
+exec ajiya check --strict
+stdout '^No problems found\.$'
+
+# Tags come from flags; values are sorted and repeats dropped.
+exec ajiya ticket add --phase core --app infra 'Configure RDS backups' --done-when 'Daily snapshot' --tech aws-rds,postgresql,aws-rds --decisions DEC-0003 --paths 'infra/rds/**'
+cmp ajiya/core.md added.golden
+exec ajiya ticket add --phase core --app infra 'Query bookings' --done-when 'Returns rows' --tech postgresql
+exec ajiya tags
+cmp stdout tags.golden
+exec ajiya tags --json
+cmp stdout tags.json
+
+# Bad keys and values are refused from the flags.
+! exec ajiya ticket add --phase core --app infra 'x' --done-when y --tech Postgres
+stderr '--tech: tech tag "Postgres" must be a lower-case slug'
+! exec ajiya ticket add --phase core --app infra 'x' --done-when y --decisions 3
+stderr '--decisions: dec tag "3" must be a decision ID'
+! exec ajiya ticket add --phase core --app infra 'x' --done-when y --paths 'a b'
+stderr '--paths: path tag "a b"'
+! exec ajiya ticket add --phase core --app infra 'x' --done-when y --comp database
+stderr 'flag provided but not defined: -comp'
+
+# ticket edit: a tag flag replaces that key's values and leaves the others.
+exec ajiya ticket edit DE-0002 --tech aws-rds
+stdout 'tags: tech:aws-rds dec:DEC-0003 path:infra/rds/\*\*'
+# "-" or an empty value clears the key.
+exec ajiya ticket edit DE-0002 --decisions -
+stdout 'tags: tech:aws-rds path:infra/rds/\*\*'
+exec ajiya ticket edit DE-0002 --tech '' --paths ''
+! stdout tags:
+exec ajiya ticket show DE-0002
+stdout 'Tags:       -'
+exec ajiya ticket edit DE-0002 --tech aws-rds --decisions DEC-0003,DEC-0004
+
+# Tags show in ticket show, in both forms, and in ticket list --json.
+exec ajiya ticket show DE-0002
+stdout 'Tags:       tech:aws-rds dec:DEC-0003 dec:DEC-0004'
+exec ajiya ticket show DE-0002 --json
+stdout '"tech": \[\s+"aws-rds"\s+\]'
+stdout '"path": \[\]'
+exec ajiya ticket list --json
+stdout '"dec": \[\s+"DEC-0003",\s+"DEC-0004"\s+\]'
+
+# The dashboard data carries them.
+exec ajiya build
+grep '"tech": \[\s*"aws-rds"' ajiya/data.js
+
+# Near-duplicate tech values are a warning.
+exec ajiya ticket edit DE-0003 --tech postgres
+exec ajiya ticket edit DE-0002 --tech postgresql
+exec ajiya check
+stdout 'W013 ajiya/core.md:\d+: tech tags postgres and postgresql look like the same technology'
+exec ajiya ticket edit DE-0003 --tech postgresql
+exec ajiya check --strict
+
+# An unknown key in a file is a check error.
+cp bad-key.md ajiya/core.md
+! exec ajiya check
+stdout 'E001 ajiya/core.md:8: DE-0001: tag key "comp" is not one of tech, dec, path'
+
+# An old six-column file is read, reported once, and upgraded by any write.
+cp six.md ajiya/core.md
+exec ajiya check
+stdout -count=1 'W012 '
+! stdout E002
+exec ajiya next
+stdout 'DE-0001'
+exec ajiya ticket add --phase core --app infra 'Second' --done-when 'Done'
+cmp ajiya/core.md upgraded.golden
+exec ajiya check --strict
+stdout '^No problems found\.$'
+
+-- added.golden --
+<!-- Written by ajiya. Do not edit by hand: use ajiya commands. -->
+# Core
+
+Goal: The core works
+
+| ID | App | Ticket | Done when | Depends | Tags | Status |
+|---|---|---|---|---|---|---|
+| DE-0001 | infra | Add a form | The form shows | - | - | 🟥 Pending |
+| DE-0002 | infra | Configure RDS backups | Daily snapshot | - | tech:aws-rds tech:postgresql dec:DEC-0003 path:infra/rds/** | 🟥 Pending |
+-- tags.golden --
+tech:aws-rds       1
+tech:postgresql    2
+dec:DEC-0003       1
+path:infra/rds/**  1
+-- tags.json --
+[
+  {
+    "key": "tech",
+    "value": "aws-rds",
+    "tickets": 1
+  },
+  {
+    "key": "tech",
+    "value": "postgresql",
+    "tickets": 2
+  },
+  {
+    "key": "dec",
+    "value": "DEC-0003",
+    "tickets": 1
+  },
+  {
+    "key": "path",
+    "value": "infra/rds/**",
+    "tickets": 1
+  }
+]
+-- bad-key.md --
+<!-- Written by ajiya. Do not edit by hand: use ajiya commands. -->
+# Core
+
+Goal: The core works
+
+| ID | App | Ticket | Done when | Depends | Tags | Status |
+|---|---|---|---|---|---|---|
+| DE-0001 | infra | Add a form | The form shows | - | comp:database | 🟥 Pending |
+-- six.md --
+<!-- Written by ajiya. Do not edit by hand: use ajiya commands. -->
+# Core
+
+Goal: The core works
+
+| ID | App | Ticket | Done when | Depends | Status |
+|---|---|---|---|---|---|
+| DE-0001 | infra | Add a form | The form shows | - | 🟥 Pending |
+-- upgraded.golden --
+<!-- Written by ajiya. Do not edit by hand: use ajiya commands. -->
+# Core
+
+Goal: The core works
+
+| ID | App | Ticket | Done when | Depends | Tags | Status |
+|---|---|---|---|---|---|---|
+| DE-0001 | infra | Add a form | The form shows | - | - | 🟥 Pending |
+| DE-0002 | infra | Second | Done | - | - | 🟥 Pending |

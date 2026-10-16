@@ -47,6 +47,7 @@ type ticket struct {
 	ID, Phase, App, Title string
 	DoneWhen              string `json:"done_when"`
 	Depends               []string
+	Tags                  struct{ Tech, Dec, Path []string }
 	Status                status
 }
 
@@ -83,7 +84,7 @@ func TestJSON(t *testing.T) {
 
 	ajiya(t, dir, 0, "phase", "add", "core", "Core works")
 	ajiya(t, dir, 0, "ticket", "add", "--phase", "core", "--app", "infra", "--done-when", "x", "Deploy")
-	ajiya(t, dir, 0, "ticket", "add", "--phase", "core", "--app", "infra", "--done-when", "y", "--depends", "DE-0001", "--human", "keys", "Go live")
+	ajiya(t, dir, 0, "ticket", "add", "--phase", "core", "--app", "infra", "--done-when", "y", "--depends", "DE-0001", "--human", "keys", "--tech", "aws-rds", "--decisions", "DEC-0003", "Go live")
 	ajiya(t, dir, 0, "launch", "set", "DE-0002")
 	os.WriteFile(filepath.Join(dir, "x.txt"), []byte("x"), 0o644)
 	gitIn(t, dir, "add", "-A")
@@ -106,6 +107,10 @@ func TestJSON(t *testing.T) {
 	decode(t, ajiya(t, dir, 0, "ticket", "list", "--json"), &list)
 	if len(list) != 2 || list[0].ID != "DE-0001" || list[0].Status.State != "done" || list[1].ID != "DE-0002" || list[1].Status.Human != "keys" {
 		t.Errorf("ticket list --json = %+v", list)
+	}
+	if got := list[1].Tags; len(got.Tech) != 1 || got.Tech[0] != "aws-rds" || len(got.Dec) != 1 || got.Dec[0] != "DEC-0003" ||
+		got.Path == nil || len(got.Path) != 0 || list[0].Tags.Tech == nil {
+		t.Errorf("ticket list --json tags = %+v, %+v", list[0].Tags, got)
 	}
 	decode(t, ajiya(t, dir, 0, "ticket", "list", "--state", "human", "--json"), &list)
 	if len(list) != 1 || list[0].ID != "DE-0002" {

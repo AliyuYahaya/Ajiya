@@ -259,6 +259,20 @@
     "annotations": {
       "destructiveHint": false,
       "idempotentHint": false,
+      "readOnlyHint": true
+    },
+    "description": "Use before tagging a ticket to see every tag in use with its ticket count, so you reuse an existing value instead of inventing a near-duplicate (postgres against postgresql).",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {},
+      "type": "object"
+    },
+    "name": "ajiya_tags"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "idempotentHint": false,
       "readOnlyHint": false
     },
     "description": "Use when you find work that is not in the plan: add a ticket instead of widening the current one.",
@@ -267,6 +281,10 @@
       "properties": {
         "app": {
           "description": "App name.",
+          "type": "string"
+        },
+        "decisions": {
+          "description": "Comma-separated decision IDs, such as DEC-0003.",
           "type": "string"
         },
         "depends": {
@@ -281,8 +299,16 @@
           "description": "Reason, when only a person can do this ticket.",
           "type": "string"
         },
+        "paths": {
+          "description": "Comma-separated file globs the ticket touches, for open tickets whose files commits cannot show yet.",
+          "type": "string"
+        },
         "phase": {
           "description": "Phase slug.",
+          "type": "string"
+        },
+        "tech": {
+          "description": "Comma-separated technologies or services the ticket depends on, as lower-case slugs such as aws-rds. Leave out unless the ticket needs a specific one; reuse values from ajiya_tags.",
           "type": "string"
         },
         "title": {
@@ -367,12 +393,16 @@
       "idempotentHint": false,
       "readOnlyHint": false
     },
-    "description": "Use to correct a ticket's title, done-when, dependencies, app or phase. Give at least one field; depends replaces the whole list.",
+    "description": "Use to correct a ticket's title, done-when, dependencies, app, phase or tags. Give at least one field; depends, tech, decisions and paths each replace the whole list, and \"-\" clears it.",
     "inputSchema": {
       "additionalProperties": false,
       "properties": {
         "app": {
           "description": "New app.",
+          "type": "string"
+        },
+        "decisions": {
+          "description": "Comma-separated decision IDs, such as DEC-0003. Replaces the ticket's decision tags; \"-\" clears them.",
           "type": "string"
         },
         "depends": {
@@ -387,8 +417,16 @@
           "description": "Ticket ID, such as AJ-0043.",
           "type": "string"
         },
+        "paths": {
+          "description": "Comma-separated file globs the ticket touches, for open tickets whose files commits cannot show yet. Replaces the ticket's path tags; \"-\" clears them.",
+          "type": "string"
+        },
         "phase": {
           "description": "New phase slug.",
+          "type": "string"
+        },
+        "tech": {
+          "description": "Comma-separated technologies or services the ticket depends on, as lower-case slugs such as aws-rds. Leave out unless the ticket needs a specific one; reuse values from ajiya_tags. Replaces the ticket's tech tags; \"-\" clears them.",
           "type": "string"
         },
         "title": {

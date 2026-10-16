@@ -109,6 +109,20 @@ func boolProp(name, desc string) mcpProp { return mcpProp{name, "boolean", desc,
 
 var idProp = strProp("id", "Ticket ID, such as AJ-0043.", true)
 
+// Tags are optional. Add tech only when the ticket depends on a specific
+// technology or service; check ajiya_tags first to reuse an existing value.
+const (
+	techDesc      = "Comma-separated technologies or services the ticket depends on, as lower-case slugs such as aws-rds. Leave out unless the ticket needs a specific one; reuse values from ajiya_tags."
+	decisionsDesc = "Comma-separated decision IDs, such as DEC-0003."
+	pathsDesc     = "Comma-separated file globs the ticket touches, for open tickets whose files commits cannot show yet."
+)
+
+var (
+	techProp      = strProp("tech", techDesc, false)
+	decisionsProp = strProp("decisions", decisionsDesc, false)
+	pathsProp     = strProp("paths", pathsDesc, false)
+)
+
 // mcpExcluded lists the commands that are never offered over MCP, because a
 // person decides them. A test keeps this list and the tools apart.
 var mcpExcluded = []string{
@@ -138,6 +152,9 @@ func mcpTools() []mcpTool {
 			argv: func(a mcpArgs) []string {
 				return cat([]string{"ticket", "list"}, a.flag("phase", "phase"), a.flag("app", "app"), a.flag("state", "state"), a.flag("milestone", "milestone"))
 			}},
+		{name: "ajiya_tags", readOnly: true, json: true,
+			desc: "Use before tagging a ticket to see every tag in use with its ticket count, so you reuse an existing value instead of inventing a near-duplicate (postgres against postgresql).",
+			argv: func(a mcpArgs) []string { return []string{"tags"} }},
 		{name: "ajiya_phase_list", readOnly: true, json: true,
 			desc: "Use to see each phase with its progress and earliest milestone.",
 			argv: func(a mcpArgs) []string { return []string{"phase", "list"} }},
@@ -156,15 +173,18 @@ func mcpTools() []mcpTool {
 			}},
 		{name: "ajiya_ticket_add",
 			desc:  "Use when you find work that is not in the plan: add a ticket instead of widening the current one.",
-			props: []mcpProp{strProp("title", "Ticket title.", true), strProp("phase", "Phase slug.", true), strProp("app", "App name.", true), strProp("done_when", "The check that proves the ticket is done.", true), strProp("depends", "Comma-separated IDs this ticket depends on.", false), strProp("human", "Reason, when only a person can do this ticket.", false)},
+			props: []mcpProp{strProp("title", "Ticket title.", true), strProp("phase", "Phase slug.", true), strProp("app", "App name.", true), strProp("done_when", "The check that proves the ticket is done.", true), strProp("depends", "Comma-separated IDs this ticket depends on.", false), strProp("human", "Reason, when only a person can do this ticket.", false), techProp, decisionsProp, pathsProp},
 			argv: func(a mcpArgs) []string {
-				return cat([]string{"ticket", "add"}, a.flag("phase", "phase"), a.flag("app", "app"), a.flag("done-when", "done_when"), a.flag("depends", "depends"), a.flag("human", "human"), pos(a.str("title")))
+				return cat([]string{"ticket", "add"}, a.flag("phase", "phase"), a.flag("app", "app"), a.flag("done-when", "done_when"), a.flag("depends", "depends"), a.flag("human", "human"),
+					a.flag("tech", "tech"), a.flag("decisions", "decisions"), a.flag("paths", "paths"), pos(a.str("title")))
 			}},
 		{name: "ajiya_ticket_edit",
-			desc:  "Use to correct a ticket's title, done-when, dependencies, app or phase. Give at least one field; depends replaces the whole list.",
-			props: []mcpProp{idProp, strProp("title", "New title.", false), strProp("done_when", "New done-when.", false), strProp("depends", "New dependency list, comma separated, or \"-\" for none.", false), strProp("app", "New app.", false), strProp("phase", "New phase slug.", false)},
+			desc: "Use to correct a ticket's title, done-when, dependencies, app, phase or tags. Give at least one field; depends, tech, decisions and paths each replace the whole list, and \"-\" clears it.",
+			props: []mcpProp{idProp, strProp("title", "New title.", false), strProp("done_when", "New done-when.", false), strProp("depends", "New dependency list, comma separated, or \"-\" for none.", false), strProp("app", "New app.", false), strProp("phase", "New phase slug.", false),
+				strProp("tech", techDesc+" Replaces the ticket's tech tags; \"-\" clears them.", false), strProp("decisions", decisionsDesc+" Replaces the ticket's decision tags; \"-\" clears them.", false), strProp("paths", pathsDesc+" Replaces the ticket's path tags; \"-\" clears them.", false)},
 			argv: func(a mcpArgs) []string {
-				return cat([]string{"ticket", "edit"}, a.flag("title", "title"), a.flag("done-when", "done_when"), a.flag("depends", "depends"), a.flag("app", "app"), a.flag("phase", "phase"), pos(a.str("id")))
+				return cat([]string{"ticket", "edit"}, a.flag("title", "title"), a.flag("done-when", "done_when"), a.flag("depends", "depends"), a.flag("app", "app"), a.flag("phase", "phase"),
+					a.flag("tech", "tech"), a.flag("decisions", "decisions"), a.flag("paths", "paths"), pos(a.str("id")))
 			}},
 		{name: "ajiya_ticket_start",
 			desc:  "Use before you begin work on a ticket. It marks the ticket in progress and clears a block.",
