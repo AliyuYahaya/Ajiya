@@ -67,12 +67,12 @@ window.AJIYA = {
       ],
       "required": {
         "total": 84,
-        "done": 76,
-        "in_progress": 3,
+        "done": 77,
+        "in_progress": 2,
         "pending": 5,
         "dropped": 0
       },
-      "percent": 90,
+      "percent": 91,
       "ready": 0
     },
     {
@@ -82,12 +82,12 @@ window.AJIYA = {
       ],
       "required": {
         "total": 83,
-        "done": 76,
-        "in_progress": 3,
+        "done": 77,
+        "in_progress": 2,
         "pending": 4,
         "dropped": 0
       },
-      "percent": 91,
+      "percent": 92,
       "ready": 0
     },
     {
@@ -98,12 +98,12 @@ window.AJIYA = {
       ],
       "required": {
         "total": 87,
-        "done": 76,
-        "in_progress": 3,
+        "done": 77,
+        "in_progress": 2,
         "pending": 8,
         "dropped": 0
       },
-      "percent": 87,
+      "percent": 88,
       "ready": 1
     }
   ],
@@ -212,12 +212,12 @@ window.AJIYA = {
       "goal": "Plans change without losing history: tags, decisions, superseded work and approved change requests",
       "counts": {
         "total": 11,
-        "done": 2,
-        "in_progress": 3,
+        "done": 3,
+        "in_progress": 2,
         "pending": 6,
         "dropped": 0
       },
-      "percent": 18,
+      "percent": 27,
       "milestone": "v0-3"
     },
     {
@@ -241,8 +241,8 @@ window.AJIYA = {
       "path": ".",
       "counts": {
         "total": 110,
-        "done": 97,
-        "in_progress": 3,
+        "done": 98,
+        "in_progress": 2,
         "pending": 10,
         "dropped": 0
       }
@@ -1774,17 +1774,20 @@ window.AJIYA = {
         "path": []
       },
       "status": {
-        "state": "in_progress",
-        "text": "🟨 In progress"
+        "state": "done",
+        "text": "🟩 Done · a00f089 · 2026-10-16 · tests passed",
+        "commit": "a00f089",
+        "date": "2026-10-16",
+        "tests_passed": true
       },
       "milestone": "v0-3",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0053",
         "AJ-0058"
       ],
-      "unblocks": 9
+      "unblocks": 0
     },
     {
       "id": "AJ-0051",
@@ -1867,7 +1870,6 @@ window.AJIYA = {
       "milestone": "v0-3",
       "ready": false,
       "waiting_on": [
-        "AJ-0050",
         "AJ-0051",
         "AJ-0052"
       ],
@@ -2024,7 +2026,6 @@ window.AJIYA = {
       "milestone": "v0-3",
       "ready": false,
       "waiting_on": [
-        "AJ-0050",
         "AJ-0051",
         "AJ-0052",
         "AJ-0053",
@@ -3562,6 +3563,62 @@ window.AJIYA = {
   ],
   "checks": [],
   "activity": [
+    {
+      "hash": "a00f089b95baee67ef24638ab17d148fe5cb9f1e",
+      "short": "a00f089",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Merge AJ-0050: decision records and commands",
+      "refs": [
+        "AJ-0050"
+      ],
+      "chore": false,
+      "merge": true,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792162049
+    },
+    {
+      "hash": "c9781ab0fc9f9c581c026e993640ce614bec48e2",
+      "short": "c9781ab",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Add decision records and the decision commands",
+      "refs": [
+        "AJ-0050"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792161938
+    },
+    {
+      "hash": "27ac944457e61ff1d3f13f457e579d6b468be5dc",
+      "short": "27ac944",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Mark AJ-0049 done",
+      "refs": [
+        "AJ-0049"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0049",
+          "phase": "decisions-and-changes",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · 542d6e2 · 2026-10-16 · tests passed"
+        }
+      ],
+      "time": 1792161531
+    },
     {
       "hash": "542d6e2ea781f91acb069c2b6712af255d371d75",
       "short": "542d6e2",
@@ -9854,5 +9911,6 @@ window.AJIYA = {
       "changes": [],
       "time": 1790630482
     }
-  ]
+  ],
+  "decisions": []
 };
