@@ -10,7 +10,7 @@ Generated 2026-10-16.
 | v0-1 | 37 | 37 | 100% | 0 |
 | v0-2 | 74 | 74 | 100% | 0 |
 | v0-2-1 | 83 | 83 | 100% | 0 |
-| v0-3 | 82 | 84 | 97% | 0 |
+| v0-3 | 83 | 84 | 98% | 1 |
 | after-v0-3 | 82 | 83 | 98% | 0 |
 | v0-3-1 | 85 | 89 | 95% | 0 |
 
@@ -25,16 +25,15 @@ Generated 2026-10-16.
 | Release | 5 | 0 | 0 | 5 | 100% | v0-1 |
 | Agent-access | 10 | 0 | 0 | 10 | 100% | v0-2 |
 | Install | 24 | 0 | 0 | 24 | 100% | v0-2 |
-| Decisions-and-changes | 9 | 2 | 1 | 12 | 75% | v0-3 |
+| Decisions-and-changes | 10 | 1 | 1 | 12 | 83% | v0-3 |
 | Dashboard views | 1 | 0 | 3 | 4 | 25% | v0-3-1 |
 
 ## Can start now
 
-Nothing.
+- **AJ-0058** v0.3 definition of done (ajiya) · v0-3
 
 ## Waiting
 
-- **AJ-0058** v0.3 definition of done (ajiya) waits on AJ-0056
 - **AJ-0108** Dashboard: one view per way of seeing tickets (ajiya) waits on AJ-0057
 - **AJ-0109** Dashboard: a page per phase (ajiya) waits on AJ-0108
 - **AJ-0110** Dashboard: plan history from decisions and changes (ajiya) waits on AJ-0057, AJ-0108
@@ -45,6 +44,11 @@ Nothing.
 
 ## Recent activity
 
+- 2026-10-16 `d2098d0` Refresh the agent kit (AJ-0056)
+- 2026-10-16 `e41fdef` Merge AJ-0056: guides and skill for decisions and changes (AJ-0056)
+- 2026-10-16 `ff903d4` Teach tags, decisions and the change procedure in the guides and skill (AJ-0056)
+- 2026-10-16 `c9b42e1` Mark AJ-0112 done (AJ-0112)
+  - AJ-0112: pending → done
 - 2026-10-16 `82e516d` Merge AJ-0112: change approve retargets milestones (AJ-0112)
 - 2026-10-16 `39ec8f8` Change approve retargets milestones in ajiya.toml (AJ-0112)
 - 2026-10-16 `a6747b1` Put AJ-0112 in v0.3.1; start AJ-0056, AJ-0057 (chore)
@@ -65,12 +69,7 @@ Nothing.
 - 2026-10-16 `a055a2b` Mark AJ-0111 done (AJ-0111)
   - AJ-0111: in_progress → done
 - 2026-10-16 `e0ff3e6` Add change open and change impact (AJ-0053)
-- 2026-10-16 `a984d1d` Merge AJ-0111: dash-leading positional arguments (AJ-0111)
-- 2026-10-16 `1b95d84` Read positional arguments that start with a dash as text (AJ-0111)
-- 2026-10-16 `e62e9a7` Start AJ-0111 (chore)
-  - AJ-0111: pending → in_progress
-- 2026-10-16 `e8dde3b` Put AJ-0111 in v0.3.1 (chore)
-- and 278 more in data.js
+- and 282 more in data.js
 
 ## Checks
 

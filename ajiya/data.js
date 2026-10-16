@@ -70,14 +70,14 @@ window.AJIYA = {
       ],
       "required": {
         "total": 84,
-        "done": 82,
-        "in_progress": 1,
+        "done": 83,
+        "in_progress": 0,
         "pending": 1,
         "dropped": 0,
         "superseded": 0
       },
-      "percent": 97,
-      "ready": 0
+      "percent": 98,
+      "ready": 1
     },
     {
       "name": "after-v0-3",
@@ -235,13 +235,13 @@ window.AJIYA = {
       "description": "",
       "counts": {
         "total": 12,
-        "done": 9,
-        "in_progress": 2,
+        "done": 10,
+        "in_progress": 1,
         "pending": 1,
         "dropped": 0,
         "superseded": 0
       },
-      "percent": 75,
+      "percent": 83,
       "milestone": "v0-3"
     },
     {
@@ -267,8 +267,8 @@ window.AJIYA = {
       "path": ".",
       "counts": {
         "total": 112,
-        "done": 106,
-        "in_progress": 2,
+        "done": 107,
+        "in_progress": 1,
         "pending": 4,
         "dropped": 0,
         "superseded": 0
@@ -1987,16 +1987,19 @@ window.AJIYA = {
         "path": []
       },
       "status": {
-        "state": "in_progress",
-        "text": "🟨 In progress"
+        "state": "done",
+        "text": "🟩 Done · d2098d0 · 2026-10-16 · tests passed",
+        "commit": "d2098d0",
+        "date": "2026-10-16",
+        "tests_passed": true
       },
       "milestone": "v0-3",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0058"
       ],
-      "unblocks": 1
+      "unblocks": 0
     },
     {
       "id": "AJ-0057",
@@ -2054,10 +2057,8 @@ window.AJIYA = {
         "human": "final sign-off before publishing v0.3"
       },
       "milestone": "v0-3",
-      "ready": false,
-      "waiting_on": [
-        "AJ-0056"
-      ],
+      "ready": true,
+      "waiting_on": [],
       "dependants": [],
       "unblocks": 0
     },
@@ -3637,9 +3638,83 @@ window.AJIYA = {
       "unblocks": 0
     }
   ],
-  "next": [],
+  "next": [
+    "AJ-0058"
+  ],
   "checks": [],
   "activity": [
+    {
+      "hash": "d2098d057d5e02e516001cbfc6a57ff71d1915a7",
+      "short": "d2098d0",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Refresh the agent kit",
+      "refs": [
+        "AJ-0056"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792165156
+    },
+    {
+      "hash": "e41fdefab9b90dde7b2efa4b1a6202ae53873b1b",
+      "short": "e41fdef",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Merge AJ-0056: guides and skill for decisions and changes",
+      "refs": [
+        "AJ-0056"
+      ],
+      "chore": false,
+      "merge": true,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792165132
+    },
+    {
+      "hash": "ff903d4b7b391c0a0e3eceeb2624377b3192bdeb",
+      "short": "ff903d4",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Teach tags, decisions and the change procedure in the guides and skill",
+      "refs": [
+        "AJ-0056"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792165110
+    },
+    {
+      "hash": "c9b42e16a896999de5760647540fe2cea2c2163a",
+      "short": "c9b42e1",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Mark AJ-0112 done",
+      "refs": [
+        "AJ-0112"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0112",
+          "phase": "decisions-and-changes",
+          "from": "pending",
+          "to": "done",
+          "text": "🟩 Done · 82e516d · 2026-10-16 · tests passed"
+        }
+      ],
+      "time": 1792164997
+    },
     {
       "hash": "82e516dd1956d706265106464529752343ca0b3c",
       "short": "82e516d",
