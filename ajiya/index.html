@@ -215,6 +215,23 @@ table.grouped tr.phase-row td { background: var(--c-col); padding: 14px 16px 10p
 table.grouped tr.phase-row:first-child td { border-top: 0; }
 table.grouped .phase-head h3 { font-size: 15px; }
 
+/* Phase page */
+.phase-top { padding: 20px 22px; margin-bottom: 4px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.phase-top .head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.phase-top .stats { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; color: var(--c-muted); font-size: 13px; }
+.phase-top .stats .bar { width: 220px; max-width: 100%; }
+.phase-top .goal { margin: 0; font-size: 15px; font-weight: 600; overflow-wrap: anywhere; }
+.phase-desc p { margin: 0 0 10px; max-width: 80ch; overflow-wrap: anywhere; }
+.phase-desc p:last-child { margin-bottom: 0; }
+.phase-nav { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; }
+a.plink { color: inherit; text-decoration: none; }
+a.plink:hover { color: var(--c-blue); text-decoration: underline; }
+details.fold { margin-top: 28px; }
+details.fold > summary { cursor: pointer; font-size: 16px; font-weight: 800; }
+details.fold > summary .count { color: var(--c-faint); font-weight: 600; font-size: 13px; }
+.dec-list { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
+.dec-list > div { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+
 /* Milestones */
 .ms-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(260px, 100%), 1fr)); gap: 12px; margin-top: 12px; }
 .ms-card { padding: 16px 18px; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
@@ -333,6 +350,27 @@ td .sub { color: var(--c-faint); font-size: 12px; }
 .impact tr.stale td { opacity: .6; }
 @media (max-width: 860px) { .impact .why-col, .impact th.why-col { display: none; } }
 
+/* History: a vertical timeline, newest first. */
+.tl { position: relative; margin: 8px 0 0 7px; padding-left: 28px; border-left: 2px solid var(--c-line); }
+.ev { position: relative; padding-bottom: 18px; }
+.ev:last-child { padding-bottom: 0; }
+.ev::before { content: ""; position: absolute; left: -37px; top: 20px; width: 12px; height: 12px; border-radius: 50%; background: var(--c-card); border: 2px solid var(--c-faint); }
+.ev.k-decision_accepted::before, .ev.k-change_approved::before { border-color: var(--c-green); background: var(--c-green); }
+.ev.k-decision_proposed::before, .ev.k-change_opened::before { border-color: var(--c-amber); }
+.ev.k-change_rejected::before { border-color: var(--c-red); background: var(--c-red); }
+.ev.k-decision_superseded::before { border-color: var(--c-violet); background: var(--c-violet); }
+.ev .rec { margin-bottom: 0; padding: 14px 18px; gap: 8px; }
+.ev .rec h3 { font-size: 15px; }
+.ev .when { color: var(--c-muted); font-size: 12px; }
+.ev .kv { grid-template-columns: 150px 1fr; }
+.ev .kv > div { padding: 7px 0; }
+.ev .kv .k { padding-top: 9px; }
+.ev .kv .v { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
+.ev .oi { display: flex; flex-wrap: wrap; gap: 4px 6px; align-items: center; min-width: 0; }
+.ev .oi .dim { color: var(--c-muted); font-size: 12.5px; overflow-wrap: anywhere; }
+.ev .oi .arrow { color: var(--c-faint); }
+@media (max-width: 860px) { .ev .kv { grid-template-columns: 1fr; } .tl { padding-left: 20px; } .ev::before { left: -29px; } }
+
 /* Live refresh: a small note after data.js reloads under ajiya serve. */
 .live-note {
   position: fixed; right: 16px; bottom: 16px; z-index: 30; pointer-events: none; opacity: 0; transition: opacity .3s;
@@ -395,6 +433,7 @@ dialog::backdrop { background: var(--c-backdrop); }
   <symbol id="i-git" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M3 12h6"/><path d="M15 12h6"/></symbol>
   <symbol id="i-scale" viewBox="0 0 24 24"><path d="M12 3v18"/><path d="M5 7h14"/><path d="m5 7-3 7a3 3 0 0 0 6 0Z"/><path d="m19 7-3 7a3 3 0 0 0 6 0Z"/><path d="M8 21h8"/></symbol>
   <symbol id="i-swap" viewBox="0 0 24 24"><path d="M17 4l4 4-4 4"/><path d="M3 8h18"/><path d="M7 20l-4-4 4-4"/><path d="M21 16H3"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></symbol>
   <symbol id="i-left" viewBox="0 0 24 24"><path d="m11 17-5-5 5-5"/><path d="m18 17-5-5 5-5"/></symbol>
   <symbol id="i-right" viewBox="0 0 24 24"><path d="m6 17 5-5-5-5"/><path d="m13 17 5-5-5-5"/></symbol>
   <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/></symbol>
@@ -423,6 +462,7 @@ dialog::backdrop { background: var(--c-backdrop); }
       <!-- Optional views: hidden when the plan has none of that thing. -->
       <button class="nav-item" type="button" data-tab="changes" title="Changes" hidden><svg class="i"><use href="#i-swap"/></svg><span class="hide-c">Changes</span><span class="n hide-c"></span></button>
       <button class="nav-item" type="button" data-tab="decisions" title="Decisions" hidden><svg class="i"><use href="#i-scale"/></svg><span class="hide-c">Decisions</span><span class="n hide-c"></span></button>
+      <button class="nav-item" type="button" data-tab="history" title="History" hidden><svg class="i"><use href="#i-clock"/></svg><span class="hide-c">History</span><span class="n hide-c"></span></button>
       <div id="phaseNav"></div>
     </nav>
     <div class="side-foot">
@@ -552,14 +592,14 @@ dialog::backdrop { background: var(--c-backdrop); }
   const arr = v => Array.isArray(v) ? v : [];
   // The data and its indexes. setData runs again when live refresh loads a
   // new data.js.
-  let milestones, phases, apps, tickets, checks, activity, nextIDs, project, decisions, changes;
+  let milestones, phases, apps, tickets, checks, activity, nextIDs, project, decisions, changes, timeline;
   let byID, phaseBySlug, phaseIndex, msIndex, idIndex, nextIndex;
   function setData(d) {
     D = d;
     milestones = arr(d.milestones); phases = arr(d.phases); apps = arr(d.apps);
     tickets = d.tickets; checks = arr(d.checks); activity = arr(d.activity); nextIDs = arr(d.next);
     project = d.project || {};
-    decisions = arr(d.decisions); changes = arr(d.changes);
+    decisions = arr(d.decisions); changes = arr(d.changes); timeline = arr(d.history);
     byID = new Map(tickets.map(t => [t.id, t]));
     phaseBySlug = new Map(phases.map(p => [p.slug, p]));
     phaseIndex = new Map(phases.map((p, i) => [p.slug, i]));
@@ -625,11 +665,13 @@ dialog::backdrop { background: var(--c-backdrop); }
     activity: { label: 'Activity', sub: 'Commits from the last 30 days, newest first, with the status changes they made.', filters: 'search' },
     changes: { label: 'Changes', sub: 'Plan changes: open ones first, with the tickets each might affect and the verdicts so far.', optional: () => changes.length, filters: 'search' },
     decisions: { label: 'Decisions', sub: 'Choices the plan rests on, and the tickets that link them.', optional: () => decisions.length, filters: 'search' },
+    history: { label: 'History', sub: 'How the plan changed, newest first: decisions made and replaced, and the changes that were approved or rejected.', optional: () => timeline.length, filters: 'search' },
   };
   const renderers = {
     overview: renderOverview, board: renderBoard, deps: renderDeps,
     tickets: renderTickets, apps: renderApps, checks: renderChecks, activity: renderActivity,
-    changes: renderChanges, decisions: renderDecisions,
+    changes: renderChanges, decisions: renderDecisions, history: renderHistory,
+    phase: renderPhase,
   };
 
   // Old tab names (links, a saved tab) land on the view that replaced them.
@@ -641,16 +683,31 @@ dialog::backdrop { background: var(--c-backdrop); }
     if (k === 'phases') setGrouped(true);
     return ALIAS[k] || k;
   };
+  // A phase has a page of its own, #phase/<slug>. It is a route, not a tab:
+  // it has no nav button and is not remembered as the last tab.
+  const ROUTES = { phase: { label: 'Phase', sub: '', filters: false } };
+  const route = h => {
+    const m = /^phase\/(.+)$/.exec(h || '');
+    if (!m) return { tab: resolve(h), slug: '' };
+    let slug = m[1];
+    try { slug = decodeURIComponent(slug); } catch (e) {}
+    return { tab: 'phase', slug };
+  };
+  const viewOf = k => VIEWS[k] || ROUTES[k];
   // An optional view (Changes, Decisions) exists only while the plan has some.
-  const shown = k => !!VIEWS[k] && (!VIEWS[k].optional || VIEWS[k].optional());
-  let tab = resolve(location.hash.slice(1) || store.get(key('tab')));
+  const shown = k => !!ROUTES[k] || (!!VIEWS[k] && (!VIEWS[k].optional || VIEWS[k].optional()));
+  const saved = route(location.hash.slice(1) || store.get(key('tab')));
+  let tab = saved.tab, phaseSlug = saved.slug;
   if (!shown(tab)) tab = 'overview';
+  const hashOf = () => tab === 'phase' ? 'phase/' + encodeURIComponent(phaseSlug) : tab;
   window.addEventListener('hashchange', () => {
-    const h = resolve(location.hash.slice(1));
-    if (shown(h) && (h !== tab || location.hash.slice(1) !== tab)) go(h);
+    const r = route(location.hash.slice(1));
+    if (shown(r.tab) && (r.tab !== tab || r.slug !== phaseSlug || location.hash.slice(1) !== hashOf())) go(r.tab, r.slug);
   });
-  function go(t) {
-    tab = t; store.set(key('tab'), t); ticketLimit = 150; activityLimit = 100;
+  function go(t, slug) {
+    tab = t; phaseSlug = t === 'phase' ? slug || '' : '';
+    if (t !== 'phase') store.set(key('tab'), t);
+    ticketLimit = 150; activityLimit = 100;
     shell.classList.remove('open');
     render();
     document.querySelector('main').scrollTop = 0;
@@ -722,7 +779,7 @@ dialog::backdrop { background: var(--c-backdrop); }
     const n = {
       board: tickets.length, deps: tickets.filter(t => arr(t.depends).length).length, tickets: tickets.length,
       apps: apps.length, checks: checks.length, activity: activity.length,
-      changes: changes.filter(c => c.status.state === 'open').length || changes.length, decisions: decisions.length,
+      changes: changes.filter(c => c.status.state === 'open').length || changes.length, decisions: decisions.length, history: timeline.length,
     };
     document.querySelectorAll('#nav [data-tab]').forEach(b => {
       const k = b.dataset.tab;
@@ -732,7 +789,7 @@ dialog::backdrop { background: var(--c-backdrop); }
       if (s) { s.textContent = n[k] ? n[k] : ''; s.classList.toggle('bad', k === 'checks' && errors > 0); }
     });
     $('phaseNav').innerHTML = phases.length ? `<div class="nav-label hide-c">Phases</div>` + phases.map(p =>
-      `<button class="phase-link hide-c" type="button" data-phase="${esc(p.slug)}" aria-current="${F.phase === p.slug}" title="${esc(p.goal)}">
+      `<button class="phase-link hide-c" type="button" data-phase="${esc(p.slug)}" aria-current="${tab === 'phase' ? phaseSlug === p.slug : F.phase === p.slug}" title="${esc(p.goal)}">
         <span class="t"><span>${esc(p.title || p.slug)}</span><span>${p.counts.done}/${p.counts.total}</span></span>${barHTML(p.counts)}</button>`).join('') : '';
     $('sideFoot').innerHTML = `Generated <b>${esc(D.generated)}</b><br>${live ? 'Live: follows <span class="mono">ajiya serve</span>' : 'Refresh: <span class="mono">ajiya build</span>'}`;
   }
@@ -740,17 +797,13 @@ dialog::backdrop { background: var(--c-backdrop); }
     const t = e.target.closest('[data-tab]');
     if (t) return go(t.dataset.tab);
     const ph = e.target.closest('[data-phase]');
-    if (ph) openPhase(ph.dataset.phase, true);
+    if (ph) openPhase(ph.dataset.phase);
   });
-  // The one place a phase is opened from: the sidebar and the Overview rows.
-  // Today that is Tickets grouped by phase and filtered to it (a sidebar click
-  // on the open phase clears the filter).
-  function openPhase(slug, toggle) {
-    F.phase = toggle && F.phase === slug ? '' : slug;
-    store.set(key('phase'), F.phase);
-    $('phaseF').value = F.phase;
-    setGrouped(true);
-    go('tickets');
+  // The one place a phase is opened from: the sidebar, the Overview rows, the
+  // phase headers in Tickets and the links on a phase page. It opens the
+  // phase's own page.
+  function openPhase(slug) {
+    go('phase', slug);
   }
 
   /* -------------------------------------------------------------------------
@@ -1179,7 +1232,7 @@ dialog::backdrop { background: var(--c-backdrop); }
         <td>${arr(t.depends).map(id => chip(id, true)).join(' ')}</td>
         <td class="note">${note}</td></tr>`;
     };
-    const phaseRow = p => `<tr class="phase-row"><td colspan="6"><div class="phase-head"><h3>${esc(p.title || p.slug)} <span class="mono" style="color:var(--c-faint);font-weight:500">${esc(p.slug)}</span> ${msBadge(p.milestone)}</h3>
+    const phaseRow = p => `<tr class="phase-row"><td colspan="6"><div class="phase-head"><h3>${p.slug ? `<a class="plink" href="#phase/${esc(encodeURIComponent(p.slug))}" data-phase-go="${esc(p.slug)}">${esc(p.title || p.slug)}</a>` : esc(p.title || p.slug)} <span class="mono" style="color:var(--c-faint);font-weight:500">${esc(p.slug)}</span> ${msBadge(p.milestone)}</h3>
         <div class="stats"><span>${p.percent}% · ${countText(p.counts)}</span>${barHTML(p.counts)}</div></div>
         ${p.goal ? `<p class="phase-goal">${md(p.goal)}</p>` : ''}</td></tr>`;
     let rows = '', left = ticketLimit;
@@ -1208,6 +1261,68 @@ dialog::backdrop { background: var(--c-backdrop); }
     $('groupBtn').onclick = () => { setGrouped(!grouped); renderTickets(); };
     const more = $('more');
     if (more) more.onclick = () => { ticketLimit += 150; renderTickets(); };
+  }
+
+  /* Phase page: one phase with its goal, description, tickets by state and
+     the phases it is tied to. Reached from #phase/<slug>. */
+  // Phases this one depends on (tickets here depend on tickets there) and
+  // phases that need it, each with the number of ticket links and how many of
+  // them are still open (the dependency is not closed).
+  function phaseLinks(slug) {
+    const up = new Map(), down = new Map();
+    const bump = (m, ph, dep) => { const l = m.get(ph) || { n: 0, open: 0 }; l.n++; if (!closed(dep)) l.open++; m.set(ph, l); };
+    tickets.forEach(t => arr(t.depends).forEach(id => {
+      const u = byID.get(id);
+      if (!u || u.phase === t.phase) return;
+      if (t.phase === slug && phaseBySlug.has(u.phase)) bump(up, u.phase, u);
+      if (u.phase === slug && phaseBySlug.has(t.phase)) bump(down, t.phase, u);
+    }));
+    const order = m => [...m].sort((a, b) => phaseIndex.get(a[0]) - phaseIndex.get(b[0]));
+    return { up: order(up), down: order(down) };
+  }
+  // Paragraphs split on blank lines; a single newline is a line break.
+  const paragraphs = s => String(s || '').split(/\n{2,}/).map(x => x.trim()).filter(Boolean).map(x => `<p>${md(x).replace(/\n/g, '<br>')}</p>`).join('');
+  function renderPhase() {
+    const p = phaseBySlug.get(phaseSlug);
+    if (!p) {
+      $('title').textContent = 'Phase not found';
+      view.innerHTML = `<div class="empty">${phaseSlug ? `There is no phase <span class="mono">${esc(phaseSlug)}</span> in this plan.` : 'No phase was chosen.'}
+        <div style="margin-top:10px"><button type="button" class="link-btn" data-go="overview">Back to Overview</button></div></div>`;
+      return;
+    }
+    $('title').textContent = p.title || p.slug;
+    $('subtitle').textContent = `Phase ${p.slug}`;
+    const mine = tickets.filter(t => t.phase === p.slug);
+    const by = k => mine.filter(t => column(t) === k).sort(k === 'ready' ? byNext : byPlan);
+    const doneList = by('done');
+    const sect = (label, list) => list.length ? `<h2 class="section">${label} <span class="count">${list.length}</span></h2><div class="grid">${list.map(t => card(t, true)).join('')}</div>` : '';
+    const shut = doneList.filter(t => state(t) !== 'done');
+    const links = phaseLinks(p.slug);
+    const linkCard = ([slug, l]) => {
+      const q = phaseBySlug.get(slug);
+      return `<button class="card compact" type="button" data-phase-go="${esc(slug)}">
+        <div class="head"><span class="name">${esc(q.title || q.slug)}</span><span class="mono" style="margin-left:auto;color:var(--c-faint)">${q.counts.done}/${q.counts.total}</span></div>
+        ${barHTML(q.counts)}<div class="meta">${plural(l.n, 'ticket link')} · ${l.open ? `${l.open} still open` : 'all closed'}</div></button>`;
+    };
+    const phaseSect = (label, note, list) => `<h2 class="section">${label} <span class="count">${list.length}</span></h2>` +
+      (list.length ? `<p class="section-note">${note}</p><div class="grid">${list.map(linkCard).join('')}</div>` : `<p class="section-note">None.</p>`);
+    const decs = decisions.filter(d => mine.some(t => decsOfTicket(t).includes(d)));
+
+    view.innerHTML = `<div class="phase-nav">
+        <button type="button" class="pill-toggle" data-go="overview">${icon('left')}Overview</button>
+        <button type="button" class="pill-toggle" data-phase-tickets="${esc(p.slug)}">Show in Tickets</button></div>
+      <div class="card-box phase-top">
+        <div class="head"><span class="rid mono">${esc(p.slug)}</span>${msBadge(p.milestone)}</div>
+        <div class="stats">${barHTML(p.counts)}<span>${p.percent}% · ${countText(p.counts)}</span></div>
+        ${p.goal ? `<p class="goal">${md(p.goal)}</p>` : ''}
+        ${p.description ? `<div class="phase-desc">${paragraphs(p.description)}</div>` : ''}
+      </div>
+      ${mine.length ? '' : '<div class="empty" style="margin-top:16px">No tickets in this phase yet. Add one with <span class="mono">ajiya ticket add</span>.</div>'}
+      ${sect('In progress', by('doing'))}${sect('Can start now', by('ready'))}${sect('Waiting', by('waiting'))}${sect('Needs a human', by('human'))}${sect('Done', doneList.filter(t => state(t) === 'done'))}
+      ${shut.length ? `<details class="fold"><summary>Dropped and superseded <span class="count">${shut.length}</span></summary><div class="grid">${shut.map(t => card(t, true)).join('')}</div></details>` : ''}
+      ${phaseSect('Depends on phases', 'Tickets here wait on tickets in these phases.', links.up)}
+      ${phaseSect('Needed by phases', 'Tickets in these phases wait on tickets here.', links.down)}
+      ${decs.length ? `<h2 class="section">Decisions <span class="count">${decs.length}</span></h2><div class="dec-list">${decs.map(d => `<div>${decChip(d.id)} <span class="badge ${esc(d.status.state)}">${esc(d.status.state)}</span> <span>${md(d.title)}</span></div>`).join('')}</div>` : ''}`;
   }
 
   /* Apps: progress per app. Click to see its tickets. */
@@ -1344,6 +1459,50 @@ dialog::backdrop { background: var(--c-backdrop); }
     const list = decisions.filter(d => recMatch([d.id, d.title, d.status.text, ...arr(d.tech), d.context, d.decision, d.consequences, ...arr(d.tickets)]));
     view.innerHTML = list.length ? list.map(decisionHTML).join('') : noMatch;
   }
+  /* History: decisions and changes in the order they happened, newest first.
+     data.js carries the events (history, oldest first); each links to its card
+     in Decisions or Changes, and ticket IDs open the ticket dialog. */
+  const evKinds = {
+    decision_proposed: ['Decision proposed', 'proposed'], decision_accepted: ['Decision accepted', 'accepted'],
+    decision_superseded: ['Decision superseded', 'superseded'], change_opened: ['Change opened', 'open'],
+    change_approved: ['Change approved', 'approved'], change_rejected: ['Change rejected', 'rejected'],
+  };
+  const ticketTitle = id => (byID.get(id) || {}).title;
+  // A ticket chip with its title beside it.
+  const chipT = id => `${chip(id)}${ticketTitle(id) ? ` <span class="dim">${md(ticketTitle(id))}</span>` : ''}`;
+  function outcomeHTML(o) {
+    if (!o) return '';
+    const rows = [];
+    const add = (k, items) => { if (items.length) rows.push(`<div class="k">${k}</div><div class="v">${items.map(x => `<div class="oi">${x}</div>`).join('')}</div>`); };
+    add('Created', arr(o.created).map(c => `${chipT(c.id)}${c.replaces ? ` <span class="dim">replaces</span> ${chip(c.replaces)}` : ''}${c.follow_up ? ` <span class="dim">follows</span> ${chip(c.follow_up)}` : ''}`));
+    add('Superseded', arr(o.superseded).map(x => `${chip(x.id)} <span class="arrow">${x.by ? '&rarr;' : ''}</span> ${x.by ? chip(x.by) : '<span class="dim">no replacement</span>'}${
+      x.was_state ? ` <span class="badge ${esc(x.was_state)}" title="State before the change">was ${esc(stateLabel[x.was_state] || x.was_state)}</span>` : ''} <span class="dim">${esc(x.was)}</span>`));
+    add('Edited', arr(o.edited).map(x => `${chipT(x.id)} <span class="dim">${esc(arr(x.fields).join(', '))}</span>`));
+    add('Dependencies moved', arr(o.moved).map(x => `${chip(x.id)} <span class="dim">was</span> ${arr(x.from).map(id => chip(id)).join('') || '<span class="dim">none</span>'} <span class="arrow">&rarr;</span> ${arr(x.to).map(id => chip(id)).join('') || '<span class="dim">none</span>'}`));
+    add('Decisions', arr(o.decisions).map(x => `${decChip(x.id)} <span class="arrow">${x.by ? '&rarr;' : ''}</span> ${x.by ? decChip(x.by) : '<span class="dim">no replacement</span>'}`));
+    add('Milestones', arr(o.milestones).map(m => `<span class="dim">${md(m)}</span>`));
+    return rows.length ? `<div class="kv">${rows.join('')}</div>` : '<div class="section-note" style="margin:0">No ticket or decision needed changing.</div>';
+  }
+  function eventHTML(e) {
+    const [label, cls] = evKinds[e.kind] || [e.kind, 'plain'];
+    const isDec = e.kind.startsWith('decision_');
+    const self = isDec ? decChip(e.id) : chgChip(e.id);
+    const tags = [];
+    if (arr(e.replaces).length) tags.push(`<span class="lbl">Replaces</span>${e.replaces.map(decChip).join('')}`);
+    if (e.kind === 'decision_superseded') tags.push(`<span class="lbl">Replaced by</span>${e.superseded_by ? decChip(e.superseded_by) : '<span>nothing</span>'}${e.change ? `<span class="lbl">in</span>${chgChip(e.change)}` : ''}`);
+    return `<div class="ev k-${esc(e.kind)}"><div class="card-box rec">
+      <div class="head"><span class="badge ${esc(cls)}">${esc(label)}</span>${self}${e.date ? `<span class="when">${esc(e.date)}${e.by ? ' · ' + esc(e.by) : ''}</span>` : ''}</div>
+      <h3>${md(e.title)}</h3>
+      ${tags.map(x => `<div class="tags">${x}</div>`).join('')}
+      ${e.reason ? `<div class="alert bad">Rejected: ${md(e.reason)}</div>` : ''}${outcomeHTML(e.outcome)}</div></div>`;
+  }
+  function renderHistory() {
+    const text = e => [e.id, e.title, e.text, e.kind, e.by, e.reason, e.date, e.change, e.superseded_by, ...arr(e.replaces),
+      ...(e.outcome ? [...arr(e.outcome.created).flatMap(c => [c.id, c.replaces, c.follow_up]), ...arr(e.outcome.superseded).flatMap(x => [x.id, x.by]),
+        ...arr(e.outcome.edited).map(x => x.id), ...arr(e.outcome.moved).map(x => x.id), ...arr(e.outcome.decisions).flatMap(x => [x.id, x.by])] : [])];
+    const list = timeline.filter(e => recMatch(text(e))).reverse();
+    view.innerHTML = list.length ? `<p class="section-note">${plural(list.length, 'event')}${F.q ? ' match' : ''}. Click a decision or change ID to see its card, a ticket ID to see the ticket.</p><div class="tl">${list.map(eventHTML).join('')}</div>` : noMatch;
+  }
   // Jump from a decision or change ID to its card in the other tab.
   function jumpTo(tabName, prefix, id) {
     if (tab !== tabName) go(tabName);
@@ -1360,17 +1519,18 @@ dialog::backdrop { background: var(--c-backdrop); }
   function render() {
     if (!shown(tab)) tab = 'overview'; // the last Change or Decision went away on a live refresh
     renderNav();
-    const v = VIEWS[tab];
+    const v = viewOf(tab);
     $('title').textContent = v.label;
     $('subtitle').textContent = v.sub;
     document.title = `${v.label} · ${project$}`;
-    if (location.hash.slice(1) !== tab) { try { history.replaceState(null, '', '#' + tab); } catch (e) { location.hash = tab; } }
+    if (location.hash.slice(1) !== hashOf()) { try { history.replaceState(null, '', '#' + hashOf()); } catch (e) { location.hash = hashOf(); } }
     $('filters').style.display = v.filters ? '' : 'none';
     $('filters').classList.toggle('search-only', v.filters === 'search');
     $('readyP').setAttribute('aria-pressed', String(F.state === 'ready'));
     $('humanP').setAttribute('aria-pressed', String(F.state === 'human'));
     $('clearF').hidden = !(v.filters === 'search' ? F.q : filtering());
     renderers[tab]();
+    if (tab === 'phase' && phaseBySlug.has(phaseSlug)) document.title = `${phaseTitle(phaseSlug)} · ${project$}`;
   }
 
   /* -------------------------------------------------------------------------
@@ -1443,7 +1603,13 @@ dialog::backdrop { background: var(--c-backdrop); }
     const g = e.target.closest('[data-go]');
     if (g) return go(g.dataset.go);
     const ph = e.target.closest('[data-phase-go]');
-    if (ph) return openPhase(ph.dataset.phaseGo, false);
+    if (ph) { e.preventDefault(); return openPhase(ph.dataset.phaseGo); }
+    const pt = e.target.closest('[data-phase-tickets]');
+    if (pt) {
+      F.phase = pt.dataset.phaseTickets; store.set(key('phase'), F.phase); $('phaseF').value = F.phase;
+      setGrouped(true);
+      return go('tickets');
+    }
     const ap = e.target.closest('[data-app-go]');
     if (ap) { F.app = ap.dataset.appGo; store.set(key('app'), F.app); $('appF').value = F.app; return go('tickets'); }
   });

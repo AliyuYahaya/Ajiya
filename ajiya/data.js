@@ -105,13 +105,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 89,
-        "done": 87,
-        "in_progress": 2,
+        "done": 89,
+        "in_progress": 0,
         "pending": 0,
         "dropped": 0,
         "superseded": 0
       },
-      "percent": 97,
+      "percent": 100,
       "ready": 0
     }
   ],
@@ -251,13 +251,13 @@ window.AJIYA = {
       "description": "",
       "counts": {
         "total": 4,
-        "done": 2,
-        "in_progress": 2,
+        "done": 4,
+        "in_progress": 0,
         "pending": 0,
         "dropped": 0,
         "superseded": 0
       },
-      "percent": 50,
+      "percent": 100,
       "milestone": "v0-3-1"
     }
   ],
@@ -267,8 +267,8 @@ window.AJIYA = {
       "path": ".",
       "counts": {
         "total": 112,
-        "done": 109,
-        "in_progress": 2,
+        "done": 111,
+        "in_progress": 0,
         "pending": 1,
         "dropped": 0,
         "superseded": 0
@@ -3550,11 +3550,14 @@ window.AJIYA = {
         "path": []
       },
       "status": {
-        "state": "in_progress",
-        "text": "🟨 In progress"
+        "state": "done",
+        "text": "🟩 Done · f4f9d70 · 2026-10-16 · tests passed",
+        "commit": "f4f9d70",
+        "date": "2026-10-16",
+        "tests_passed": true
       },
       "milestone": "v0-3-1",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [],
       "unblocks": 0
@@ -3575,11 +3578,14 @@ window.AJIYA = {
         "path": []
       },
       "status": {
-        "state": "in_progress",
-        "text": "🟨 In progress"
+        "state": "done",
+        "text": "🟩 Done · f4f9d70 · 2026-10-16 · tests passed",
+        "commit": "f4f9d70",
+        "date": "2026-10-16",
+        "tests_passed": true
       },
       "milestone": "v0-3-1",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [],
       "unblocks": 0
@@ -3642,6 +3648,93 @@ window.AJIYA = {
   ],
   "checks": [],
   "activity": [
+    {
+      "hash": "f4f9d700fd5c1473849e97536d1b8e5efb152145",
+      "short": "f4f9d70",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Merge AJ-0109, AJ-0110: phase pages and plan history",
+      "refs": [
+        "AJ-0109",
+        "AJ-0110"
+      ],
+      "chore": false,
+      "merge": true,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792172280
+    },
+    {
+      "hash": "fbe22c79be0ab9cfc7337ef84c3c58d8c5c5aacc",
+      "short": "fbe22c7",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Dashboard: plan history from decisions and changes",
+      "refs": [
+        "AJ-0110"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792172208
+    },
+    {
+      "hash": "11e5e681175ddadc0daff857a8200a759df53fb6",
+      "short": "11e5e68",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Dashboard: a page per phase",
+      "refs": [
+        "AJ-0109"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792172032
+    },
+    {
+      "hash": "ce4c0d136b16656ad6f324630148f6c8bda931c5",
+      "short": "ce4c0d1",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Mark AJ-0108 done; start AJ-0109, AJ-0110",
+      "refs": [
+        "AJ-0108"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0108",
+          "phase": "dashboard-views",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · 611bd42 · 2026-10-16 · tests passed"
+        },
+        {
+          "id": "AJ-0109",
+          "phase": "dashboard-views",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        },
+        {
+          "id": "AJ-0110",
+          "phase": "dashboard-views",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        }
+      ],
+      "time": 1792170094
+    },
     {
       "hash": "611bd422b8c319f2c51089a67e072a2350d574b4",
       "short": "611bd42",
@@ -10718,5 +10811,6 @@ window.AJIYA = {
     }
   ],
   "decisions": [],
-  "changes": []
+  "changes": [],
+  "history": []
 };
