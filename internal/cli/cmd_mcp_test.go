@@ -115,7 +115,8 @@ func TestMCPExcludedTools(t *testing.T) {
 		ajiya_milestone_list ajiya_milestone_show ajiya_check ajiya_ticket_add ajiya_ticket_edit
 		ajiya_ticket_start ajiya_ticket_done ajiya_ticket_block ajiya_phase_add ajiya_app_add
 		ajiya_milestone_add ajiya_launch_set ajiya_init ajiya_tags ajiya_ticket_files ajiya_snapshot ajiya_snapshot_list
-		ajiya_decision_add ajiya_decision_show ajiya_decision_list ajiya_decision_accept`)
+		ajiya_decision_add ajiya_decision_show ajiya_decision_list ajiya_decision_accept
+		ajiya_change_open ajiya_change_impact ajiya_change_list ajiya_change_show`)
 	var got []string
 	for n := range have {
 		got = append(got, n)

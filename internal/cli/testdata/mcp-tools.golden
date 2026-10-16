@@ -34,6 +34,102 @@
     "annotations": {
       "destructiveHint": false,
       "idempotentHint": false,
+      "readOnlyHint": false
+    },
+    "description": "Use after opening a change, and again when tickets change: list the tickets it might affect, each with why (tag, decision, path, downstream), and write them into the change file. Verdicts already given are kept.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "description": "Change ID, such as CHG-0014.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "name": "ajiya_change_impact"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "idempotentHint": false,
+      "readOnlyHint": true
+    },
+    "description": "Use to see every change request with its status.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {},
+      "type": "object"
+    },
+    "name": "ajiya_change_list"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "idempotentHint": false,
+      "readOnlyHint": false
+    },
+    "description": "Use when the plan must change (a technology or decision is being replaced): open a change request. It snapshots the committed plan, so ajiya/ must have no uncommitted changes. Give at least one of replaces, decision or paths. A person approves or rejects the change; you never do.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "decision": {
+          "description": "Comma-separated decision IDs the change would supersede, such as DEC-0003.",
+          "type": "string"
+        },
+        "paths": {
+          "description": "Comma-separated file globs the change touches, such as infra/rds/**.",
+          "type": "string"
+        },
+        "replaces": {
+          "description": "Comma-separated key:value tags of the work being replaced, such as tech:aws-rds.",
+          "type": "string"
+        },
+        "title": {
+          "description": "What is changing, such as \"Move the database from AWS RDS to Supabase\".",
+          "type": "string"
+        },
+        "with": {
+          "description": "Comma-separated key:value tags of what replaces it, such as tech:supabase.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "title"
+      ],
+      "type": "object"
+    },
+    "name": "ajiya_change_open"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "idempotentHint": false,
+      "readOnlyHint": true
+    },
+    "description": "Use to read a change request in full: what it touches, its candidates, reasons and verdicts.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "description": "Change ID, such as CHG-0014.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "name": "ajiya_change_show"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "idempotentHint": false,
       "readOnlyHint": true
     },
     "description": "Use before you finish a task to find problems in the plan; fix every error. An empty list means no problems.",

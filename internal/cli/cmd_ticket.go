@@ -270,12 +270,13 @@ func runTicketShow(e *env, args []string) error {
 		}
 		return writeJSON(e, struct {
 			jsonTicket
-			PhaseTitle   string    `json:"phase_title"`
-			Dependencies []link    `json:"dependencies"`
-			Dependants   []link    `json:"dependants"`
-			Decisions    []decLink `json:"decisions"`
-			Commits      []commit  `json:"commits"`
-		}{toJSON(t), ph.Title, links(t.Depends), links(dependants), decs, cs})
+			PhaseTitle   string       `json:"phase_title"`
+			Dependencies []link       `json:"dependencies"`
+			Dependants   []link       `json:"dependants"`
+			Decisions    []decLink    `json:"decisions"`
+			Changes      []changeLink `json:"changes"`
+			Commits      []commit     `json:"commits"`
+		}{toJSON(t), ph.Title, links(t.Depends), links(dependants), decs, pr.ticketChanges(t.ID), cs})
 	}
 	w := e.stdout
 	fmt.Fprintf(w, "%s  %s\n", t.ID, t.Title)
@@ -313,6 +314,17 @@ func runTicketShow(e *env, args []string) error {
 			text = l.Status + " " + l.Title
 		}
 		fmt.Fprintf(w, "%-11s %s %s\n", label, id, text)
+	}
+	for i, l := range pr.ticketChanges(t.ID) {
+		label := "Changes:"
+		if i > 0 {
+			label = ""
+		}
+		verdict := l.Verdict
+		if verdict == "" {
+			verdict = "no verdict yet"
+		}
+		fmt.Fprintf(w, "%-11s %s %s, %s: %s\n", label, l.ID, l.Status, verdict, l.Title)
 	}
 	if len(commits) == 0 {
 		fmt.Fprintf(w, "%-11s -\n", "Commits:")
