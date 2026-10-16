@@ -245,6 +245,42 @@
     "annotations": {
       "destructiveHint": false,
       "idempotentHint": false,
+      "readOnlyHint": false
+    },
+    "description": "Use before a risky change to the plan: tags the committed plan as ajiya/plan/\u003cname\u003e so it can be compared or restored. Refuses while ajiya/ has uncommitted changes, a bad name or an existing name; commit first.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "description": "Snapshot name, such as before-supabase: a valid tag name without spaces.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object"
+    },
+    "name": "ajiya_snapshot"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "idempotentHint": false,
+      "readOnlyHint": true
+    },
+    "description": "Use to see the plan snapshots (tags ajiya/plan/\u003cname\u003e) with their date and commit.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {},
+      "type": "object"
+    },
+    "name": "ajiya_snapshot_list"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "idempotentHint": false,
       "readOnlyHint": true
     },
     "description": "Use at the start of a session to see where the project stands: progress to each milestone, work in progress, what can start, checks and recent activity.",
@@ -464,7 +500,7 @@
           "type": "string"
         },
         "state": {
-          "description": "pending, in_progress, done, dropped, ready or human.",
+          "description": "pending, in_progress, done, dropped, superseded, ready or human.",
           "type": "string"
         }
       },
