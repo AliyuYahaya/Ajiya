@@ -350,6 +350,27 @@ td .sub { color: var(--c-faint); font-size: 12px; }
 .impact tr.stale td { opacity: .6; }
 @media (max-width: 860px) { .impact .why-col, .impact th.why-col { display: none; } }
 
+/* History: a vertical timeline, newest first. */
+.tl { position: relative; margin: 8px 0 0 7px; padding-left: 28px; border-left: 2px solid var(--c-line); }
+.ev { position: relative; padding-bottom: 18px; }
+.ev:last-child { padding-bottom: 0; }
+.ev::before { content: ""; position: absolute; left: -37px; top: 20px; width: 12px; height: 12px; border-radius: 50%; background: var(--c-card); border: 2px solid var(--c-faint); }
+.ev.k-decision_accepted::before, .ev.k-change_approved::before { border-color: var(--c-green); background: var(--c-green); }
+.ev.k-decision_proposed::before, .ev.k-change_opened::before { border-color: var(--c-amber); }
+.ev.k-change_rejected::before { border-color: var(--c-red); background: var(--c-red); }
+.ev.k-decision_superseded::before { border-color: var(--c-violet); background: var(--c-violet); }
+.ev .rec { margin-bottom: 0; padding: 14px 18px; gap: 8px; }
+.ev .rec h3 { font-size: 15px; }
+.ev .when { color: var(--c-muted); font-size: 12px; }
+.ev .kv { grid-template-columns: 150px 1fr; }
+.ev .kv > div { padding: 7px 0; }
+.ev .kv .k { padding-top: 9px; }
+.ev .kv .v { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
+.ev .oi { display: flex; flex-wrap: wrap; gap: 4px 6px; align-items: center; min-width: 0; }
+.ev .oi .dim { color: var(--c-muted); font-size: 12.5px; overflow-wrap: anywhere; }
+.ev .oi .arrow { color: var(--c-faint); }
+@media (max-width: 860px) { .ev .kv { grid-template-columns: 1fr; } .tl { padding-left: 20px; } .ev::before { left: -29px; } }
+
 /* Live refresh: a small note after data.js reloads under ajiya serve. */
 .live-note {
   position: fixed; right: 16px; bottom: 16px; z-index: 30; pointer-events: none; opacity: 0; transition: opacity .3s;
@@ -412,6 +433,7 @@ dialog::backdrop { background: var(--c-backdrop); }
   <symbol id="i-git" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M3 12h6"/><path d="M15 12h6"/></symbol>
   <symbol id="i-scale" viewBox="0 0 24 24"><path d="M12 3v18"/><path d="M5 7h14"/><path d="m5 7-3 7a3 3 0 0 0 6 0Z"/><path d="m19 7-3 7a3 3 0 0 0 6 0Z"/><path d="M8 21h8"/></symbol>
   <symbol id="i-swap" viewBox="0 0 24 24"><path d="M17 4l4 4-4 4"/><path d="M3 8h18"/><path d="M7 20l-4-4 4-4"/><path d="M21 16H3"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></symbol>
   <symbol id="i-left" viewBox="0 0 24 24"><path d="m11 17-5-5 5-5"/><path d="m18 17-5-5 5-5"/></symbol>
   <symbol id="i-right" viewBox="0 0 24 24"><path d="m6 17 5-5-5-5"/><path d="m13 17 5-5-5-5"/></symbol>
   <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/></symbol>
@@ -440,6 +462,7 @@ dialog::backdrop { background: var(--c-backdrop); }
       <!-- Optional views: hidden when the plan has none of that thing. -->
       <button class="nav-item" type="button" data-tab="changes" title="Changes" hidden><svg class="i"><use href="#i-swap"/></svg><span class="hide-c">Changes</span><span class="n hide-c"></span></button>
       <button class="nav-item" type="button" data-tab="decisions" title="Decisions" hidden><svg class="i"><use href="#i-scale"/></svg><span class="hide-c">Decisions</span><span class="n hide-c"></span></button>
+      <button class="nav-item" type="button" data-tab="history" title="History" hidden><svg class="i"><use href="#i-clock"/></svg><span class="hide-c">History</span><span class="n hide-c"></span></button>
       <div id="phaseNav"></div>
     </nav>
     <div class="side-foot">
@@ -569,14 +592,14 @@ dialog::backdrop { background: var(--c-backdrop); }
   const arr = v => Array.isArray(v) ? v : [];
   // The data and its indexes. setData runs again when live refresh loads a
   // new data.js.
-  let milestones, phases, apps, tickets, checks, activity, nextIDs, project, decisions, changes;
+  let milestones, phases, apps, tickets, checks, activity, nextIDs, project, decisions, changes, timeline;
   let byID, phaseBySlug, phaseIndex, msIndex, idIndex, nextIndex;
   function setData(d) {
     D = d;
     milestones = arr(d.milestones); phases = arr(d.phases); apps = arr(d.apps);
     tickets = d.tickets; checks = arr(d.checks); activity = arr(d.activity); nextIDs = arr(d.next);
     project = d.project || {};
-    decisions = arr(d.decisions); changes = arr(d.changes);
+    decisions = arr(d.decisions); changes = arr(d.changes); timeline = arr(d.history);
     byID = new Map(tickets.map(t => [t.id, t]));
     phaseBySlug = new Map(phases.map(p => [p.slug, p]));
     phaseIndex = new Map(phases.map((p, i) => [p.slug, i]));
@@ -642,11 +665,12 @@ dialog::backdrop { background: var(--c-backdrop); }
     activity: { label: 'Activity', sub: 'Commits from the last 30 days, newest first, with the status changes they made.', filters: 'search' },
     changes: { label: 'Changes', sub: 'Plan changes: open ones first, with the tickets each might affect and the verdicts so far.', optional: () => changes.length, filters: 'search' },
     decisions: { label: 'Decisions', sub: 'Choices the plan rests on, and the tickets that link them.', optional: () => decisions.length, filters: 'search' },
+    history: { label: 'History', sub: 'How the plan changed, newest first: decisions made and replaced, and the changes that were approved or rejected.', optional: () => timeline.length, filters: 'search' },
   };
   const renderers = {
     overview: renderOverview, board: renderBoard, deps: renderDeps,
     tickets: renderTickets, apps: renderApps, checks: renderChecks, activity: renderActivity,
-    changes: renderChanges, decisions: renderDecisions,
+    changes: renderChanges, decisions: renderDecisions, history: renderHistory,
     phase: renderPhase,
   };
 
@@ -755,7 +779,7 @@ dialog::backdrop { background: var(--c-backdrop); }
     const n = {
       board: tickets.length, deps: tickets.filter(t => arr(t.depends).length).length, tickets: tickets.length,
       apps: apps.length, checks: checks.length, activity: activity.length,
-      changes: changes.filter(c => c.status.state === 'open').length || changes.length, decisions: decisions.length,
+      changes: changes.filter(c => c.status.state === 'open').length || changes.length, decisions: decisions.length, history: timeline.length,
     };
     document.querySelectorAll('#nav [data-tab]').forEach(b => {
       const k = b.dataset.tab;
@@ -1434,6 +1458,50 @@ dialog::backdrop { background: var(--c-backdrop); }
   function renderDecisions() {
     const list = decisions.filter(d => recMatch([d.id, d.title, d.status.text, ...arr(d.tech), d.context, d.decision, d.consequences, ...arr(d.tickets)]));
     view.innerHTML = list.length ? list.map(decisionHTML).join('') : noMatch;
+  }
+  /* History: decisions and changes in the order they happened, newest first.
+     data.js carries the events (history, oldest first); each links to its card
+     in Decisions or Changes, and ticket IDs open the ticket dialog. */
+  const evKinds = {
+    decision_proposed: ['Decision proposed', 'proposed'], decision_accepted: ['Decision accepted', 'accepted'],
+    decision_superseded: ['Decision superseded', 'superseded'], change_opened: ['Change opened', 'open'],
+    change_approved: ['Change approved', 'approved'], change_rejected: ['Change rejected', 'rejected'],
+  };
+  const ticketTitle = id => (byID.get(id) || {}).title;
+  // A ticket chip with its title beside it.
+  const chipT = id => `${chip(id)}${ticketTitle(id) ? ` <span class="dim">${md(ticketTitle(id))}</span>` : ''}`;
+  function outcomeHTML(o) {
+    if (!o) return '';
+    const rows = [];
+    const add = (k, items) => { if (items.length) rows.push(`<div class="k">${k}</div><div class="v">${items.map(x => `<div class="oi">${x}</div>`).join('')}</div>`); };
+    add('Created', arr(o.created).map(c => `${chipT(c.id)}${c.replaces ? ` <span class="dim">replaces</span> ${chip(c.replaces)}` : ''}${c.follow_up ? ` <span class="dim">follows</span> ${chip(c.follow_up)}` : ''}`));
+    add('Superseded', arr(o.superseded).map(x => `${chip(x.id)} <span class="arrow">${x.by ? '&rarr;' : ''}</span> ${x.by ? chip(x.by) : '<span class="dim">no replacement</span>'}${
+      x.was_state ? ` <span class="badge ${esc(x.was_state)}" title="State before the change">was ${esc(stateLabel[x.was_state] || x.was_state)}</span>` : ''} <span class="dim">${esc(x.was)}</span>`));
+    add('Edited', arr(o.edited).map(x => `${chipT(x.id)} <span class="dim">${esc(arr(x.fields).join(', '))}</span>`));
+    add('Dependencies moved', arr(o.moved).map(x => `${chip(x.id)} <span class="dim">was</span> ${arr(x.from).map(id => chip(id)).join('') || '<span class="dim">none</span>'} <span class="arrow">&rarr;</span> ${arr(x.to).map(id => chip(id)).join('') || '<span class="dim">none</span>'}`));
+    add('Decisions', arr(o.decisions).map(x => `${decChip(x.id)} <span class="arrow">${x.by ? '&rarr;' : ''}</span> ${x.by ? decChip(x.by) : '<span class="dim">no replacement</span>'}`));
+    add('Milestones', arr(o.milestones).map(m => `<span class="dim">${md(m)}</span>`));
+    return rows.length ? `<div class="kv">${rows.join('')}</div>` : '<div class="section-note" style="margin:0">No ticket or decision needed changing.</div>';
+  }
+  function eventHTML(e) {
+    const [label, cls] = evKinds[e.kind] || [e.kind, 'plain'];
+    const isDec = e.kind.startsWith('decision_');
+    const self = isDec ? decChip(e.id) : chgChip(e.id);
+    const tags = [];
+    if (arr(e.replaces).length) tags.push(`<span class="lbl">Replaces</span>${e.replaces.map(decChip).join('')}`);
+    if (e.kind === 'decision_superseded') tags.push(`<span class="lbl">Replaced by</span>${e.superseded_by ? decChip(e.superseded_by) : '<span>nothing</span>'}${e.change ? `<span class="lbl">in</span>${chgChip(e.change)}` : ''}`);
+    return `<div class="ev k-${esc(e.kind)}"><div class="card-box rec">
+      <div class="head"><span class="badge ${esc(cls)}">${esc(label)}</span>${self}${e.date ? `<span class="when">${esc(e.date)}${e.by ? ' · ' + esc(e.by) : ''}</span>` : ''}</div>
+      <h3>${md(e.title)}</h3>
+      ${tags.map(x => `<div class="tags">${x}</div>`).join('')}
+      ${e.reason ? `<div class="alert bad">Rejected: ${md(e.reason)}</div>` : ''}${outcomeHTML(e.outcome)}</div></div>`;
+  }
+  function renderHistory() {
+    const text = e => [e.id, e.title, e.text, e.kind, e.by, e.reason, e.date, e.change, e.superseded_by, ...arr(e.replaces),
+      ...(e.outcome ? [...arr(e.outcome.created).flatMap(c => [c.id, c.replaces, c.follow_up]), ...arr(e.outcome.superseded).flatMap(x => [x.id, x.by]),
+        ...arr(e.outcome.edited).map(x => x.id), ...arr(e.outcome.moved).map(x => x.id), ...arr(e.outcome.decisions).flatMap(x => [x.id, x.by])] : [])];
+    const list = timeline.filter(e => recMatch(text(e))).reverse();
+    view.innerHTML = list.length ? `<p class="section-note">${plural(list.length, 'event')}${F.q ? ' match' : ''}. Click a decision or change ID to see its card, a ticket ID to see the ticket.</p><div class="tl">${list.map(eventHTML).join('')}</div>` : noMatch;
   }
   // Jump from a decision or change ID to its card in the other tab.
   function jumpTo(tabName, prefix, id) {

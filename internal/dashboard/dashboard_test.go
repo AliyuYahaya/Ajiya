@@ -100,7 +100,7 @@ func TestViewsInNav(t *testing.T) {
 	for _, m := range regexp.MustCompile(`(?m)^\s*(\w+): \{ label:`).FindAllStringSubmatch(reg, -1) {
 		views = append(views, m[1])
 	}
-	want := []string{"overview", "board", "deps", "tickets", "apps", "checks", "activity", "changes", "decisions"}
+	want := []string{"overview", "board", "deps", "tickets", "apps", "checks", "activity", "changes", "decisions", "history"}
 	if strings.Join(views, " ") != strings.Join(want, " ") {
 		t.Errorf("views = %v, want %v", views, want)
 	}
@@ -199,7 +199,7 @@ func TestViewFilters(t *testing.T) {
 	s := pageText(t)
 	want := map[string]string{
 		"overview": "true", "board": "true", "deps": "true",
-		"tickets": "true", "apps": "false", "checks": "'search'", "activity": "'search'", "changes": "'search'", "decisions": "'search'",
+		"tickets": "true", "apps": "false", "checks": "'search'", "activity": "'search'", "changes": "'search'", "decisions": "'search'", "history": "'search'",
 	}
 	for view, flag := range want {
 		re := regexp.MustCompile(`\n    ` + view + `: \{[^\n]*filters: ([^ ]+) \},`)
