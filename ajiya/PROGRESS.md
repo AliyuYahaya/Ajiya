@@ -12,7 +12,7 @@ Generated 2026-10-16.
 | v0-2-1 | 83 | 83 | 100% | 0 |
 | v0-3 | 82 | 84 | 97% | 0 |
 | after-v0-3 | 82 | 83 | 98% | 0 |
-| v0-3-1 | 84 | 89 | 94% | 1 |
+| v0-3-1 | 85 | 89 | 95% | 0 |
 
 ## Phases
 
@@ -25,12 +25,12 @@ Generated 2026-10-16.
 | Release | 5 | 0 | 0 | 5 | 100% | v0-1 |
 | Agent-access | 10 | 0 | 0 | 10 | 100% | v0-2 |
 | Install | 24 | 0 | 0 | 24 | 100% | v0-2 |
-| Decisions-and-changes | 8 | 2 | 2 | 12 | 66% | v0-3 |
+| Decisions-and-changes | 9 | 2 | 1 | 12 | 75% | v0-3 |
 | Dashboard views | 1 | 0 | 3 | 4 | 25% | v0-3-1 |
 
 ## Can start now
 
-- **AJ-0112** change approve retargets milestones (ajiya) · v0-3-1
+Nothing.
 
 ## Waiting
 
@@ -45,6 +45,11 @@ Generated 2026-10-16.
 
 ## Recent activity
 
+- 2026-10-16 `82e516d` Merge AJ-0112: change approve retargets milestones (AJ-0112)
+- 2026-10-16 `39ec8f8` Change approve retargets milestones in ajiya.toml (AJ-0112)
+- 2026-10-16 `a6747b1` Put AJ-0112 in v0.3.1; start AJ-0056, AJ-0057 (chore)
+  - AJ-0056: pending → in_progress
+  - AJ-0057: pending → in_progress
 - 2026-10-16 `915a93b` Mark AJ-0054, AJ-0055 done; add the milestone retarget ticket (chore)
   - AJ-0054: in_progress → done
   - AJ-0055: in_progress → done
@@ -65,12 +70,7 @@ Generated 2026-10-16.
 - 2026-10-16 `e62e9a7` Start AJ-0111 (chore)
   - AJ-0111: pending → in_progress
 - 2026-10-16 `e8dde3b` Put AJ-0111 in v0.3.1 (chore)
-- 2026-10-16 `0a90a5a` Mark AJ-0107 done; add the dash-argument ticket (chore)
-  - AJ-0107: in_progress → done
-  - AJ-0111: new → pending
-- 2026-10-16 `3e35786` Refresh the agent kit (AJ-0107)
-- 2026-10-16 `55fc3bf` Merge AJ-0107: phase descriptions (AJ-0107)
-- and 275 more in data.js
+- and 278 more in data.js
 
 ## Checks
 

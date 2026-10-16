@@ -105,14 +105,14 @@ window.AJIYA = {
       ],
       "required": {
         "total": 89,
-        "done": 84,
+        "done": 85,
         "in_progress": 1,
-        "pending": 4,
+        "pending": 3,
         "dropped": 0,
         "superseded": 0
       },
-      "percent": 94,
-      "ready": 1
+      "percent": 95,
+      "ready": 0
     }
   ],
   "phases": [
@@ -235,13 +235,13 @@ window.AJIYA = {
       "description": "",
       "counts": {
         "total": 12,
-        "done": 8,
+        "done": 9,
         "in_progress": 2,
-        "pending": 2,
+        "pending": 1,
         "dropped": 0,
         "superseded": 0
       },
-      "percent": 66,
+      "percent": 75,
       "milestone": "v0-3"
     },
     {
@@ -267,9 +267,9 @@ window.AJIYA = {
       "path": ".",
       "counts": {
         "total": 112,
-        "done": 105,
+        "done": 106,
         "in_progress": 2,
-        "pending": 5,
+        "pending": 4,
         "dropped": 0,
         "superseded": 0
       }
@@ -3624,21 +3624,83 @@ window.AJIYA = {
         "path": []
       },
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · 82e516d · 2026-10-16 · tests passed",
+        "commit": "82e516d",
+        "date": "2026-10-16",
+        "tests_passed": true
       },
       "milestone": "v0-3-1",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [],
       "unblocks": 0
     }
   ],
-  "next": [
-    "AJ-0112"
-  ],
+  "next": [],
   "checks": [],
   "activity": [
+    {
+      "hash": "82e516dd1956d706265106464529752343ca0b3c",
+      "short": "82e516d",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Merge AJ-0112: change approve retargets milestones",
+      "refs": [
+        "AJ-0112"
+      ],
+      "chore": false,
+      "merge": true,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792164961
+    },
+    {
+      "hash": "39ec8f878a75ced28baafef9ad891bd1e37b1f20",
+      "short": "39ec8f8",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Change approve retargets milestones in ajiya.toml",
+      "refs": [
+        "AJ-0112"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792164945
+    },
+    {
+      "hash": "a6747b13ae297a678c2e24971be4d731f31e1a73",
+      "short": "a6747b1",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Put AJ-0112 in v0.3.1; start AJ-0056, AJ-0057",
+      "refs": [],
+      "chore": true,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0056",
+          "phase": "decisions-and-changes",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        },
+        {
+          "id": "AJ-0057",
+          "phase": "decisions-and-changes",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        }
+      ],
+      "time": 1792164113
+    },
     {
       "hash": "915a93be9982fbfcafd2c86676c2677a8abd1d03",
       "short": "915a93b",
