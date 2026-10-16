@@ -375,3 +375,53 @@ func TestSaveUpgradesSixColumnFile(t *testing.T) {
 		t.Errorf("save did not upgrade the file:\n%s", b)
 	}
 }
+
+func TestSupersede(t *testing.T) {
+	done, err := ParseStatus("🟩 Done · 4f2a91c · 2026-09-28 · tests passed · Link: https://x.test/a")
+	if err != nil {
+		t.Fatal(err)
+	}
+	s, err := done.Supersede("AJ-0201", "CHG-0014")
+	if err != nil {
+		t.Fatal(err)
+	}
+	want := "🟩 Superseded by AJ-0201 · CHG-0014 · was: Done · 4f2a91c · 2026-09-28 · tests passed · Link: https://x.test/a"
+	if s.String() != want || !s.Closed() || !s.Excluded() || s.Mark() != markDone {
+		t.Errorf("Supersede = %q", s.String())
+	}
+	back, err := ParseStatus(want)
+	if err != nil || !reflect.DeepEqual(back, s) || back.Prev.Commit != "4f2a91c" || back.Link != "https://x.test/a" {
+		t.Errorf("round trip = %+v, %v", back, err)
+	}
+	none, err := (Status{State: Pending}).Supersede("", "CHG-0014")
+	if err != nil || none.String() != "🟩 Superseded · CHG-0014 · was: Pending" {
+		t.Errorf("no replacement = %q, %v", none.String(), err)
+	}
+	if _, err := s.Supersede("AJ-0300", "CHG-0015"); err == nil {
+		t.Error("superseded twice")
+	}
+	if _, err := done.Supersede("AJ-1", ""); err == nil {
+		t.Error("no change accepted")
+	}
+	for _, bad := range []string{
+		"🟩 Superseded", "🟩 Superseded · CHG-1", "🟩 Superseded by · CHG-1 · was: Pending",
+		"🟩 Superseded · CHG-1 · was: Nonsense", "🟩 Superseded · CHG-1 · was: Superseded · CHG-2 · was: Pending",
+	} {
+		if _, err := ParseStatus(bad); err == nil {
+			t.Errorf("%q parsed", bad)
+		}
+	}
+}
+
+// Dropped and superseded tickets are left out of required sets, but what they
+// depend on is still required, and dependants treat them as closed.
+func TestRequiredLeavesOutExcluded(t *testing.T) {
+	p := schedulePlan()
+	sup, _ := (Status{State: Pending}).Supersede("CB-0006", "CHG-0001")
+	p.Ticket("CB-0002").Status = sup
+	p.Ticket("CB-0003").Status = Status{State: Dropped, Reason: "r", By: "a"}
+	req, err := p.RequiredAll([]string{"go-live"})
+	if err != nil || keys(req) != "CB-0001 CB-0004" {
+		t.Errorf("RequiredAll = %s, %v", keys(req), err)
+	}
+}

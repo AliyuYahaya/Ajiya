@@ -110,15 +110,19 @@ func runPhaseList(e *env, args []string) error {
 	type item struct {
 		Slug      string `json:"slug"`
 		Title     string `json:"title"`
-		Done      int    `json:"done"` // closed: done or dropped
+		Done      int    `json:"done"` // closed tickets; dropped and superseded ones are not counted
 		Total     int    `json:"total"`
 		Milestone string `json:"milestone"` // earliest milestone of its tickets; empty if none
 	}
 	sched := pr.orderSchedule()
 	items := []item{}
 	for _, ph := range pr.plan.DisplayOrder(pr.cfg.Phases.Order, sched) {
-		it := item{Slug: ph.Slug, Title: ph.Title, Total: len(ph.Tickets)}
+		it := item{Slug: ph.Slug, Title: ph.Title}
 		for _, t := range ph.Tickets {
+			if t.Status.Excluded() {
+				continue
+			}
+			it.Total++
 			if t.Status.Closed() {
 				it.Done++
 			}

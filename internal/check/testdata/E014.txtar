@@ -1,0 +1,20 @@
+A superseded ticket whose replacement is missing. No replacement at all is fine.
+
+-- ajiya.toml --
+[project]
+name = "Fixture"
+prefix = "FX"
+-- ajiya/core.md --
+<!-- Written by ajiya. Do not edit by hand: use ajiya commands. -->
+# Core
+
+Goal: g
+
+| ID | App | Ticket | Done when | Depends | Tags | Status |
+|---|---|---|---|---|---|---|
+| FX-0001 | infra | Replaced | a | - | - | 🟩 Superseded by FX-0009 · CHG-0001 · was: Done · 4f2a91c |
+| FX-0002 | infra | Replaced by one that exists | b | - | - | 🟩 Superseded by FX-0004 · CHG-0001 · was: Pending |
+| FX-0003 | infra | Invalidated | b | - | - | 🟩 Superseded · CHG-0001 · was: Pending |
+| FX-0004 | infra | New | b | - | - | 🟥 Pending |
+-- want --
+E014 ajiya/core.md:8: FX-0001 is superseded by FX-0009, which does not exist. Fix: restore the row from version control, or create FX-0009 with 'ajiya ticket add'

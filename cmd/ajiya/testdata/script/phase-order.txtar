@@ -36,7 +36,7 @@ exec ajiya phase move admin --first
 stdout '^Phase order: admin, base, app, go-live, x, y, notes$'
 grep '^order = \["admin", "base", "app", "go-live", "x", "y", "notes"\]$' ajiya.toml
 exec ajiya phase list
-stdout -count=1 '^admin +Admin +1/1 +-$'
+stdout -count=1 '^admin +Admin +0/0 +-$'
 stdout '^PHASE +TITLE +DONE +MILESTONE\nadmin '
 
 # admin waits on app, so listing it first is a warning; x and y wait on
@@ -102,7 +102,7 @@ PHASE    TITLE    DONE  MILESTONE
 base     Base     0/1   launch
 app      App      0/1   launch
 go-live  Go-live  0/1   launch
-admin    Admin    1/1   -
+admin    Admin    0/0   -
 x        X        0/2   -
 y        Y        0/1   -
 notes    Notes    0/1   -
@@ -141,8 +141,8 @@ Info: phases x, y wait on each other; they are kept together, in the order they 
   {
     "slug": "admin",
     "title": "Admin",
-    "done": 1,
-    "total": 1,
+    "done": 0,
+    "total": 0,
     "milestone": ""
   },
   {

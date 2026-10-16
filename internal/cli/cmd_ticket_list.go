@@ -15,14 +15,14 @@ func runTicketList(e *env, args []string) error {
 	fs := newFlags("ticket list")
 	phase := fs.String("phase", "", "only tickets in this phase")
 	app := fs.String("app", "", "only tickets for this app")
-	state := fs.String("state", "", "only tickets in this state: pending, in_progress, done, dropped, ready or human")
+	state := fs.String("state", "", "only tickets in this state: pending, in_progress, done, dropped, superseded, ready or human")
 	milestone := fs.String("milestone", "", "only tickets required for this milestone")
 	asJSON := fs.Bool("json", false, "print JSON")
 	if _, err := parse(fs, args, 0); err != nil {
 		return err
 	}
-	if isSet(fs, "state") && !slices.Contains([]string{"pending", "in_progress", "done", "dropped", "ready", "human"}, *state) {
-		return usageErr("--state %q is not one of pending, in_progress, done, dropped, ready, human", *state)
+	if isSet(fs, "state") && !slices.Contains([]string{"pending", "in_progress", "done", "dropped", "superseded", "ready", "human"}, *state) {
+		return usageErr("--state %q is not one of pending, in_progress, done, dropped, superseded, ready, human", *state)
 	}
 	pr, err := load(e)
 	if err != nil {
