@@ -72,6 +72,11 @@ func load(e *env) (*project, error) {
 	if err != nil {
 		return nil, usageErr("%v", err)
 	}
+	return loadAt(root)
+}
+
+// loadAt reads the config and plan of the project whose ajiya.toml is in root.
+func loadAt(root string) (*project, error) {
 	cfg, err := config.Load(root)
 	if err != nil {
 		return nil, usageErr("%v", err)
