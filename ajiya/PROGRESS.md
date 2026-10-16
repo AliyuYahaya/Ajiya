@@ -12,7 +12,7 @@ Generated 2026-10-16.
 | v0-2-1 | 83 | 83 | 100% | 0 |
 | v0-3 | 83 | 84 | 98% | 1 |
 | after-v0-3 | 83 | 83 | 100% | 0 |
-| v0-3-1 | 86 | 89 | 96% | 0 |
+| v0-3-1 | 87 | 89 | 97% | 0 |
 
 ## Phases
 
@@ -26,7 +26,7 @@ Generated 2026-10-16.
 | Agent-access | 10 | 0 | 0 | 10 | 100% | v0-2 |
 | Install | 24 | 0 | 0 | 24 | 100% | v0-2 |
 | Decisions-and-changes | 11 | 0 | 1 | 12 | 91% | v0-3 |
-| Dashboard views | 1 | 1 | 2 | 4 | 25% | v0-3-1 |
+| Dashboard views | 2 | 2 | 0 | 4 | 50% | v0-3-1 |
 
 ## Can start now
 
@@ -34,8 +34,7 @@ Generated 2026-10-16.
 
 ## Waiting
 
-- **AJ-0109** Dashboard: a page per phase (ajiya) waits on AJ-0108
-- **AJ-0110** Dashboard: plan history from decisions and changes (ajiya) waits on AJ-0108
+Nothing.
 
 ## Needs a human
 
@@ -43,6 +42,12 @@ Generated 2026-10-16.
 
 ## Recent activity
 
+- 2026-10-16 `611bd42` Dashboard: in-progress tickets are not marked can start (AJ-0108)
+- 2026-10-16 `21d8aad` Merge AJ-0108: one view per way of seeing tickets (AJ-0108)
+- 2026-10-16 `32a9db2` Dashboard: one view per way of seeing tickets (AJ-0108)
+- 2026-10-16 `51e68fb` Mark AJ-0057 done; start AJ-0108 (AJ-0057)
+  - AJ-0057: in_progress → done
+  - AJ-0108: pending → in_progress
 - 2026-10-16 `7182cfb` Merge AJ-0057: dashboard changes and decisions (AJ-0057)
 - 2026-10-16 `51cd669` Dashboard: open changes and decisions (AJ-0057)
 - 2026-10-16 `8b66500` Mark AJ-0056 done (AJ-0056)
@@ -61,14 +66,7 @@ Generated 2026-10-16.
   - AJ-0054: in_progress → done
   - AJ-0055: in_progress → done
   - AJ-0112: new → pending
-- 2026-10-16 `78a3e86` Merge AJ-0054, AJ-0055: change assess, approve and reject (AJ-0054, AJ-0055)
-- 2026-10-16 `637df59` Add change approve and change reject (AJ-0055)
-- 2026-10-16 `e4c98da` Add change assess: record a verdict on a candidate (AJ-0054)
-- 2026-10-16 `6d73335` Mark AJ-0053 done; start AJ-0054, AJ-0055 (AJ-0053)
-  - AJ-0053: in_progress → done
-  - AJ-0054: pending → in_progress
-  - AJ-0055: pending → in_progress
-- and 285 more in data.js
+- and 289 more in data.js
 
 ## Checks
 

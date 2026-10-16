@@ -105,13 +105,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 89,
-        "done": 86,
-        "in_progress": 1,
-        "pending": 2,
+        "done": 87,
+        "in_progress": 2,
+        "pending": 0,
         "dropped": 0,
         "superseded": 0
       },
-      "percent": 96,
+      "percent": 97,
       "ready": 0
     }
   ],
@@ -251,13 +251,13 @@ window.AJIYA = {
       "description": "",
       "counts": {
         "total": 4,
-        "done": 1,
-        "in_progress": 1,
-        "pending": 2,
+        "done": 2,
+        "in_progress": 2,
+        "pending": 0,
         "dropped": 0,
         "superseded": 0
       },
-      "percent": 25,
+      "percent": 50,
       "milestone": "v0-3-1"
     }
   ],
@@ -267,9 +267,9 @@ window.AJIYA = {
       "path": ".",
       "counts": {
         "total": 112,
-        "done": 108,
-        "in_progress": 1,
-        "pending": 3,
+        "done": 109,
+        "in_progress": 2,
+        "pending": 1,
         "dropped": 0,
         "superseded": 0
       }
@@ -3519,17 +3519,20 @@ window.AJIYA = {
         "path": []
       },
       "status": {
-        "state": "in_progress",
-        "text": "🟨 In progress"
+        "state": "done",
+        "text": "🟩 Done · 611bd42 · 2026-10-16 · tests passed",
+        "commit": "611bd42",
+        "date": "2026-10-16",
+        "tests_passed": true
       },
       "milestone": "v0-3-1",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0109",
         "AJ-0110"
       ],
-      "unblocks": 2
+      "unblocks": 0
     },
     {
       "id": "AJ-0109",
@@ -3547,14 +3550,12 @@ window.AJIYA = {
         "path": []
       },
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "in_progress",
+        "text": "🟨 In progress"
       },
       "milestone": "v0-3-1",
-      "ready": false,
-      "waiting_on": [
-        "AJ-0108"
-      ],
+      "ready": true,
+      "waiting_on": [],
       "dependants": [],
       "unblocks": 0
     },
@@ -3574,14 +3575,12 @@ window.AJIYA = {
         "path": []
       },
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "in_progress",
+        "text": "🟨 In progress"
       },
       "milestone": "v0-3-1",
-      "ready": false,
-      "waiting_on": [
-        "AJ-0108"
-      ],
+      "ready": true,
+      "waiting_on": [],
       "dependants": [],
       "unblocks": 0
     },
@@ -3643,6 +3642,85 @@ window.AJIYA = {
   ],
   "checks": [],
   "activity": [
+    {
+      "hash": "611bd422b8c319f2c51089a67e072a2350d574b4",
+      "short": "611bd42",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Dashboard: in-progress tickets are not marked can start",
+      "refs": [
+        "AJ-0108"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792170085
+    },
+    {
+      "hash": "21d8aad65fa016ffcf72d531ef916bfca3e38abd",
+      "short": "21d8aad",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Merge AJ-0108: one view per way of seeing tickets",
+      "refs": [
+        "AJ-0108"
+      ],
+      "chore": false,
+      "merge": true,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792166055
+    },
+    {
+      "hash": "32a9db241deb6d1874bbd4f1361aeae918942955",
+      "short": "32a9db2",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Dashboard: one view per way of seeing tickets",
+      "refs": [
+        "AJ-0108"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792166034
+    },
+    {
+      "hash": "51e68fb1ce168164446d154d330831d7c2369177",
+      "short": "51e68fb",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Mark AJ-0057 done; start AJ-0108",
+      "refs": [
+        "AJ-0057"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0057",
+          "phase": "decisions-and-changes",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · 7182cfb · 2026-10-16 · tests passed"
+        },
+        {
+          "id": "AJ-0108",
+          "phase": "dashboard-views",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        }
+      ],
+      "time": 1792165441
+    },
     {
       "hash": "7182cfbe8a46410851c063d1453aeb0921cee3ba",
       "short": "7182cfb",

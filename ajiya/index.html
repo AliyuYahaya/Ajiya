@@ -211,6 +211,10 @@ h2.section .count { color: var(--c-faint); font-weight: 600; font-size: 13px; }
 .phase-head .bar { width: 160px; }
 .phase-goal { color: var(--c-muted); font-size: 13px; margin: 4px 0 0; }
 
+table.grouped tr.phase-row td { background: var(--c-col); padding: 14px 16px 10px; border-top: 1px solid var(--c-line); }
+table.grouped tr.phase-row:first-child td { border-top: 0; }
+table.grouped .phase-head h3 { font-size: 15px; }
+
 /* Milestones */
 .ms-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(260px, 100%), 1fr)); gap: 12px; margin-top: 12px; }
 .ms-card { padding: 16px 18px; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
@@ -410,10 +414,8 @@ dialog::backdrop { background: var(--c-backdrop); }
       <!-- One button per view. Each data-tab must match a key in VIEWS below
            (dashboard_test.go checks this). -->
       <button class="nav-item" type="button" data-tab="overview" title="Overview"><svg class="i"><use href="#i-dash"/></svg><span class="hide-c">Overview</span><span class="n hide-c"></span></button>
-      <button class="nav-item" type="button" data-tab="next" title="Next up"><svg class="i"><use href="#i-zap"/></svg><span class="hide-c">Next up</span><span class="n hide-c"></span></button>
       <button class="nav-item" type="button" data-tab="board" title="Board"><svg class="i"><use href="#i-kanban"/></svg><span class="hide-c">Board</span><span class="n hide-c"></span></button>
       <button class="nav-item" type="button" data-tab="deps" title="Dependencies"><svg class="i"><use href="#i-flow"/></svg><span class="hide-c">Dependencies</span><span class="n hide-c"></span></button>
-      <button class="nav-item" type="button" data-tab="phases" title="Phases"><svg class="i"><use href="#i-layers"/></svg><span class="hide-c">Phases</span><span class="n hide-c"></span></button>
       <button class="nav-item" type="button" data-tab="tickets" title="Tickets"><svg class="i"><use href="#i-list"/></svg><span class="hide-c">Tickets</span><span class="n hide-c"></span></button>
       <button class="nav-item" type="button" data-tab="apps" title="Apps"><svg class="i"><use href="#i-box"/></svg><span class="hide-c">Apps</span><span class="n hide-c"></span></button>
       <button class="nav-item" type="button" data-tab="checks" title="Checks"><svg class="i"><use href="#i-check"/></svg><span class="hide-c">Checks</span><span class="n hide-c"></span></button>
@@ -576,9 +578,11 @@ dialog::backdrop { background: var(--c-backdrop); }
   const human = t => !closed(t) && !!t.status.human;
   // Board column. A ticket that needs a human sits there whatever else holds;
   // in progress comes before "can start now" because started tickets are ready too.
+  /* Ready means nothing blocks it; can start also means not yet started, as in ajiya next. */
+  const canStart = t => t.ready && state(t) !== 'in_progress';
   const column = t => closed(t) ? 'done' : human(t) ? 'human' : state(t) === 'in_progress' ? 'doing' : t.ready ? 'ready' : 'waiting';
   const stateLabel = { pending: 'Pending', in_progress: 'In progress', done: 'Done', dropped: 'Dropped', superseded: 'Superseded' };
-  // Phase display order, then ID: the order used everywhere except Next up.
+  // Phase display order, then ID: the order used everywhere except the Can start now column.
   const byPlan = (a, b) => (phaseIndex.get(a.phase) ?? 1e9) - (phaseIndex.get(b.phase) ?? 1e9) || idIndex.get(a.id) - idIndex.get(b.id);
   const byNext = (a, b) => (nextIndex.get(a.id) ?? 1e9) - (nextIndex.get(b.id) ?? 1e9) || byPlan(a, b);
 
@@ -613,11 +617,9 @@ dialog::backdrop { background: var(--c-backdrop); }
      ----------------------------------------------------------------------- */
   const VIEWS = {
     overview: { label: 'Overview', sub: 'Progress per milestone, in order, and per phase.', filters: true },
-    next: { label: 'Next up', sub: 'Tickets that can start now, in the order ajiya next gives: earliest milestone first, then what unblocks most.', filters: true },
-    board: { label: 'Board', sub: 'Every ticket by where it stands.', filters: true },
+    board: { label: 'Board', sub: 'Every ticket by where it stands. Can start now is in the order ajiya next gives: earliest milestone first, then what unblocks most.', filters: true },
     deps: { label: 'Dependencies', sub: 'What waits on what. An arrow points from a dependency to what needs it; columns go left to right by depth.', filters: true },
-    phases: { label: 'Phases', sub: 'Tickets by phase, in display order.', filters: true },
-    tickets: { label: 'Tickets', sub: 'Every ticket in the plan.', filters: true },
+    tickets: { label: 'Tickets', sub: 'Every ticket in the plan, as a table. Group by phase to see each phase with its goal and progress.', filters: true },
     apps: { label: 'Apps', sub: 'Tickets per app.', filters: false },
     checks: { label: 'Checks', sub: 'What ajiya check reports. Fix errors first.', filters: 'search' },
     activity: { label: 'Activity', sub: 'Commits from the last 30 days, newest first, with the status changes they made.', filters: 'search' },
@@ -625,18 +627,27 @@ dialog::backdrop { background: var(--c-backdrop); }
     decisions: { label: 'Decisions', sub: 'Choices the plan rests on, and the tickets that link them.', optional: () => decisions.length, filters: 'search' },
   };
   const renderers = {
-    overview: renderOverview, next: renderNext, board: renderBoard, deps: renderDeps, phases: renderPhases,
+    overview: renderOverview, board: renderBoard, deps: renderDeps,
     tickets: renderTickets, apps: renderApps, checks: renderChecks, activity: renderActivity,
     changes: renderChanges, decisions: renderDecisions,
   };
 
-  let tab = location.hash.slice(1) || store.get(key('tab'));
+  // Old tab names (links, a saved tab) land on the view that replaced them.
+  // #phases is Tickets grouped by phase.
+  const ALIAS = { next: 'board', phases: 'tickets' };
+  let grouped = store.get(key('grouped')) === '1';
+  const setGrouped = on => { grouped = on; store.set(key('grouped'), on ? '1' : '0'); };
+  const resolve = k => {
+    if (k === 'phases') setGrouped(true);
+    return ALIAS[k] || k;
+  };
   // An optional view (Changes, Decisions) exists only while the plan has some.
   const shown = k => !!VIEWS[k] && (!VIEWS[k].optional || VIEWS[k].optional());
+  let tab = resolve(location.hash.slice(1) || store.get(key('tab')));
   if (!shown(tab)) tab = 'overview';
   window.addEventListener('hashchange', () => {
-    const h = location.hash.slice(1);
-    if (shown(h) && h !== tab) go(h);
+    const h = resolve(location.hash.slice(1));
+    if (shown(h) && (h !== tab || location.hash.slice(1) !== tab)) go(h);
   });
   function go(t) {
     tab = t; store.set(key('tab'), t); ticketLimit = 150; activityLimit = 100;
@@ -673,7 +684,7 @@ dialog::backdrop { background: var(--c-backdrop); }
     if (F.phase && t.phase !== F.phase) return false;
     if (F.ms === '-' ? t.milestone : F.ms && t.milestone !== F.ms) return false;
     if (F.state) {
-      if (F.state === 'ready') { if (!t.ready) return false; }
+      if (F.state === 'ready') { if (!canStart(t)) return false; }
       else if (F.state === 'waiting') { if (column(t) !== 'waiting') return false; }
       else if (F.state === 'human') { if (!human(t)) return false; }
       else if (state(t) !== F.state) return false;
@@ -709,7 +720,7 @@ dialog::backdrop { background: var(--c-backdrop); }
     $('brand').textContent = own; $('mobileBrand').textContent = own;
     errors = checks.filter(c => c.level === 'error').length;
     const n = {
-      next: nextIDs.length, board: tickets.length, deps: tickets.filter(t => arr(t.depends).length).length, phases: phases.length, tickets: tickets.length,
+      board: tickets.length, deps: tickets.filter(t => arr(t.depends).length).length, tickets: tickets.length,
       apps: apps.length, checks: checks.length, activity: activity.length,
       changes: changes.filter(c => c.status.state === 'open').length || changes.length, decisions: decisions.length,
     };
@@ -729,16 +740,21 @@ dialog::backdrop { background: var(--c-backdrop); }
     const t = e.target.closest('[data-tab]');
     if (t) return go(t.dataset.tab);
     const ph = e.target.closest('[data-phase]');
-    if (ph) {
-      F.phase = F.phase === ph.dataset.phase ? '' : ph.dataset.phase;
-      store.set(key('phase'), F.phase);
-      $('phaseF').value = F.phase;
-      go(VIEWS[tab].filters ? tab : 'phases');
-    }
+    if (ph) openPhase(ph.dataset.phase, true);
   });
+  // The one place a phase is opened from: the sidebar and the Overview rows.
+  // Today that is Tickets grouped by phase and filtered to it (a sidebar click
+  // on the open phase clears the filter).
+  function openPhase(slug, toggle) {
+    F.phase = toggle && F.phase === slug ? '' : slug;
+    store.set(key('phase'), F.phase);
+    $('phaseF').value = F.phase;
+    setGrouped(true);
+    go('tickets');
+  }
 
   /* -------------------------------------------------------------------------
-     Ticket card, used by Next up, Board and Phases.
+     Ticket card, used by Overview and Board.
      ----------------------------------------------------------------------- */
   function card(t, compact) {
     const s = t.status;
@@ -750,7 +766,7 @@ dialog::backdrop { background: var(--c-backdrop); }
     if (state(t) === 'dropped' && s.reason) notes.push(`<div class="note">${esc(s.reason)}</div>`);
     if (state(t) === 'superseded') notes.push(`<div class="note">${s.superseded_by ? `Replaced by ${esc(s.superseded_by)}` : 'Invalidated'} in ${esc(s.change)}${s.was ? `; was ${esc(stateLabel[s.was.state] || s.was.state)}` : ''}</div>`);
     const meta = [phaseTitle(t.phase), t.app].filter(Boolean).map(esc).join(' · ') + (!closed(t) && t.unblocks ? ` · unblocks ${t.unblocks}` : '');
-    return `<button class="card${compact ? ' compact' : ''}${t.ready && !compact ? ' ready' : ''}" type="button" data-open="${esc(t.id)}">
+    return `<button class="card${compact ? ' compact' : ''}${canStart(t) && !compact ? ' ready' : ''}" type="button" data-open="${esc(t.id)}">
       <div class="head"><span class="rid mono">${esc(t.id)}</span>${msBadge(t.milestone)}
         ${compact && column(t) !== 'done' ? '' : `<span style="margin-left:auto">${stateBadge(t)}</span>`}</div>
       <div class="name">${md(t.title)}</div>
@@ -772,7 +788,7 @@ dialog::backdrop { background: var(--c-backdrop); }
       <div class="card-box kpi"><div class="label">All tickets</div>
         <div class="value">${pct(all)}%<small> closed</small></div>${barHTML(all)}
         <div class="sub">${countText(all)} of ${all.total}</div></div>
-      <button type="button" class="card-box kpi" data-go="next"><div class="label">Can start now</div>
+      <button type="button" class="card-box kpi" data-go="board"><div class="label">Can start now</div>
         <div class="value">${nextIDs.length}<small> ${nextIDs.length === 1 ? 'ticket' : 'tickets'}</small></div>
         <div class="sub">${cols.doing} in progress · ${cols.waiting} waiting on others</div></button>
       <button type="button" class="card-box kpi" data-go="board"><div class="label">Needs a human</div>
@@ -801,7 +817,7 @@ dialog::backdrop { background: var(--c-backdrop); }
 
     const top = nextIDs.map(id => byID.get(id)).filter(t => t && match(t)).slice(0, 6);
     if (top.length) {
-      h += `<h2 class="section">Top of the queue</h2><p class="section-note">The first ${top.length} from Next up${filtering() ? ' that match the filters' : ''}.</p><div class="grid">${top.map(t => card(t)).join('')}</div>`;
+      h += `<h2 class="section">Top of the queue</h2><p class="section-note">The first ${top.length} that can start now, in the order of the Board's first column${filtering() ? ' that match the filters' : ''}.</p><div class="grid">${top.map(t => card(t)).join('')}</div>`;
     } else if (nextIDs.length && filtering()) {
       h += `<h2 class="section">Top of the queue</h2>${noMatch}`;
     }
@@ -818,26 +834,11 @@ dialog::backdrop { background: var(--c-backdrop); }
     view.innerHTML = h;
   }
 
-  /* Next up: ready tickets in 'ajiya next' order, grouped by milestone. */
-  function renderNext() {
-    const list = nextIDs.map(id => byID.get(id)).filter(t => t && match(t));
-    const groups = [];
-    list.forEach(t => {
-      const g = t.milestone || '';
-      if (!groups.length || groups[groups.length - 1].ms !== g) groups.push({ ms: g, items: [] });
-      groups[groups.length - 1].items.push(t);
-    });
-    view.innerHTML = groups.map(g =>
-      `<h2 class="section">${g.ms ? `Milestone ${esc(g.ms)}` : milestones.length ? 'Not in a milestone' : 'Can start now'} <span class="count">${g.items.length}</span></h2>
-       <div class="grid">${g.items.map(t => card(t)).join('')}</div>`).join('')
-      || (nextIDs.length ? noMatch : '<div class="empty">Nothing can start now: every open ticket is waiting on another or blocked.</div>');
-  }
-
   /* Board: five columns, optionally grouped by phase. */
   let lanes = store.get(key('lanes')) === '1';
   function renderBoard() {
     const cols = [
-      ['ready', 'Can start now', 'Open, nothing in the way', 'ready'],
+      ['ready', 'Can start now', 'Open, nothing in the way. In ajiya next order.', 'ready'],
       ['doing', 'In progress', 'Started', 'in_progress'],
       ['waiting', 'Waiting', 'Open dependencies or blocked', 'pending'],
       ['human', 'Needs a human', 'Only a person can finish these', 'human'],
@@ -848,7 +849,7 @@ dialog::backdrop { background: var(--c-backdrop); }
       const items = list.filter(t => column(t) === k).sort(k === 'ready' ? byNext : byPlan);
       let body;
       if (!items.length) body = '<div class="col-empty">None</div>';
-      else if (lanes) body = phases.map(p => {
+      else if (lanes && k !== 'ready') body = phases.map(p => {
         const inPh = items.filter(t => t.phase === p.slug);
         return inPh.length ? `<div class="lane">${esc(p.title || p.slug)}</div>${inPh.map(t => card(t, true)).join('')}` : '';
       }).join('') + items.filter(t => !phaseBySlug.has(t.phase)).map(t => card(t, true)).join('');
@@ -1062,9 +1063,9 @@ dialog::backdrop { background: var(--c-backdrop); }
     const tDown = id => arr((byID.get(id) || {}).dependants).filter(d => byID.has(d));
     // A ticket card. out: in another phase than the one shown (dashed).
     const ticketNode = (t, out) => ({
-      id: t.id, cls: `${state(t)}${t.ready ? ' ready' : ''}${out ? ' ext' : ''}${filtered && !match(t) ? ' miss' : ''}`, attr: `data-open="${esc(t.id)}"`,
-      title: `${t.id} ${plainTitle(t.title)}\n${stateLabel[state(t)] || state(t)}${t.ready ? ', can start now' : ''}\nIn phase ${phaseTitle(t.phase)}${t.milestone ? `\nMilestone ${t.milestone}` : ''}`,
-      html: `<span class="top"><b>${esc(t.id)}</b>${t.milestone ? `<span>${esc(t.milestone)}</span>` : ''}<span class="r">${t.ready ? 'can start now' : esc(phaseTitle(t.phase))}</span></span>
+      id: t.id, cls: `${state(t)}${canStart(t) ? ' ready' : ''}${out ? ' ext' : ''}${filtered && !match(t) ? ' miss' : ''}`, attr: `data-open="${esc(t.id)}"`,
+      title: `${t.id} ${plainTitle(t.title)}\n${stateLabel[state(t)] || state(t)}${canStart(t) ? ', can start now' : ''}\nIn phase ${phaseTitle(t.phase)}${t.milestone ? `\nMilestone ${t.milestone}` : ''}`,
+      html: `<span class="top"><b>${esc(t.id)}</b>${t.milestone ? `<span>${esc(t.milestone)}</span>` : ''}<span class="r">${canStart(t) ? 'can start now' : esc(phaseTitle(t.phase))}</span></span>
         <span class="nm two">${esc(plainTitle(t.title))}</span>`,
     });
     const T = { W: 232, H: 74 };
@@ -1162,37 +1163,49 @@ dialog::backdrop { background: var(--c-backdrop); }
     if ($('gMs')) $('gMs').onchange = e => { depMs = e.target.value; store.set(key('depms'), depMs); renderDeps(); };
   }
 
-  /* Phases: each phase in display order with its tickets. */
-  function renderPhases() {
-    const h = phases.map(p => {
-      const list = tickets.filter(t => t.phase === p.slug && match(t)).sort(byPlan);
-      if (!list.length && (F.q || F.app || F.ms || F.state || (F.phase && F.phase !== p.slug))) return '';
-      return `<section class="phase"><div class="phase-head"><h3>${esc(p.title || p.slug)} <span class="mono" style="color:var(--c-faint);font-weight:500">${esc(p.slug)}</span> ${msBadge(p.milestone)}</h3>
-        <div class="stats"><span>${p.percent}% · ${countText(p.counts)}</span>${barHTML(p.counts)}</div></div>
-        ${p.goal ? `<p class="phase-goal">${md(p.goal)}</p>` : ''}
-        ${list.length ? `<div class="grid">${list.map(t => card(t)).join('')}</div>` : '<div class="empty" style="margin-top:12px">No tickets yet.</div>'}</section>`;
-    }).join('');
-    view.innerHTML = h || (phases.length ? noMatch : '<div class="empty">No phases yet. Add one with <span class="mono">ajiya phase add</span>.</div>');
-  }
-
-  /* Tickets: a table, 150 rows at a time. */
+  /* Tickets: a table, 150 rows at a time. Grouped, each phase gets a header
+     row (title, slug, milestone, progress, goal) and its tickets under it. */
   let ticketLimit = 150;
   function renderTickets() {
     const list = tickets.filter(match).sort(byPlan);
-    const rows = list.slice(0, ticketLimit).map(t => {
+    const row = t => {
       const s = t.status;
       const note = closed(t) ? '' : [s.human && `Needs a human: ${s.human}`, s.blocked && `Blocked: ${s.blocked}`, s.note].filter(Boolean).map(esc).join(' · ');
       return `<tr class="click" data-open="${esc(t.id)}">
         <td class="mono" style="white-space:nowrap;font-weight:700">${esc(t.id)}</td>
-        <td>${md(t.title)}<div class="sub">${esc(phaseTitle(t.phase))} · ${esc(t.app)}</div></td>
-        <td>${stateBadge(t)}${t.ready ? ' <span class="badge ready">Ready</span>' : ''}</td>
+        <td>${md(t.title)}${grouped ? '' : `<div class="sub">${esc(phaseTitle(t.phase))} · ${esc(t.app)}</div>`}</td>
+        <td>${stateBadge(t)}${canStart(t) ? ' <span class="badge ready">Ready</span>' : ''}</td>
         <td>${msBadge(t.milestone)}</td>
         <td>${arr(t.depends).map(id => chip(id, true)).join(' ')}</td>
         <td class="note">${note}</td></tr>`;
-    }).join('');
-    view.innerHTML = `<div class="board-tools"><span>${plural(list.length, 'ticket')}</span></div>
-      ${list.length ? `<div class="table-wrap"><table><thead><tr><th>ID</th><th>Ticket</th><th>State</th><th>Milestone</th><th>Depends on</th><th class="note">Note</th></tr></thead><tbody>${rows}</tbody></table></div>` : noMatch}
+    };
+    const phaseRow = p => `<tr class="phase-row"><td colspan="6"><div class="phase-head"><h3>${esc(p.title || p.slug)} <span class="mono" style="color:var(--c-faint);font-weight:500">${esc(p.slug)}</span> ${msBadge(p.milestone)}</h3>
+        <div class="stats"><span>${p.percent}% · ${countText(p.counts)}</span>${barHTML(p.counts)}</div></div>
+        ${p.goal ? `<p class="phase-goal">${md(p.goal)}</p>` : ''}</td></tr>`;
+    let rows = '', left = ticketLimit;
+    if (grouped) {
+      // Phases in display order; tickets of an unknown phase go last. The row
+      // limit counts tickets, so a phase header never stands without a ticket
+      // unless it is empty and unfiltered.
+      const groups = phases.map(p => ({ p, items: list.filter(t => t.phase === p.slug) }));
+      const loose = list.filter(t => !phaseBySlug.has(t.phase));
+      if (loose.length) groups.push({ p: { slug: '', title: 'No phase', counts: countsOf(loose), percent: pct(countsOf(loose)) }, items: loose });
+      groups.forEach(g => {
+        if (left <= 0) return;
+        if (!g.items.length && filtering()) return;
+        const part = g.items.slice(0, left);
+        left -= part.length;
+        rows += phaseRow(g.p) + (part.length ? part.map(row).join('') : '<tr><td colspan="6" class="note">No tickets yet.</td></tr>');
+      });
+    } else {
+      rows = list.slice(0, ticketLimit).map(row).join('');
+    }
+    view.innerHTML = `<div class="board-tools">
+        <button type="button" class="pill-toggle" id="groupBtn" aria-pressed="${grouped}">Group by phase</button>
+        <span>${plural(list.length, 'ticket')}</span></div>
+      ${rows ? `<div class="table-wrap"><table${grouped ? ' class="grouped"' : ''}><thead><tr><th>ID</th><th>Ticket</th><th>State</th><th>Milestone</th><th>Depends on</th><th class="note">Note</th></tr></thead><tbody>${rows}</tbody></table></div>` : phases.length || list.length ? noMatch : '<div class="empty">No phases yet. Add one with <span class="mono">ajiya phase add</span>.</div>'}
       ${list.length > ticketLimit ? `<button class="more" id="more" type="button">Show ${Math.min(150, list.length - ticketLimit)} more</button>` : ''}`;
+    $('groupBtn').onclick = () => { setGrouped(!grouped); renderTickets(); };
     const more = $('more');
     if (more) more.onclick = () => { ticketLimit += 150; renderTickets(); };
   }
@@ -1430,7 +1443,7 @@ dialog::backdrop { background: var(--c-backdrop); }
     const g = e.target.closest('[data-go]');
     if (g) return go(g.dataset.go);
     const ph = e.target.closest('[data-phase-go]');
-    if (ph) { F.phase = ph.dataset.phaseGo; store.set(key('phase'), F.phase); $('phaseF').value = F.phase; return go('phases'); }
+    if (ph) return openPhase(ph.dataset.phaseGo, false);
     const ap = e.target.closest('[data-app-go]');
     if (ap) { F.app = ap.dataset.appGo; store.set(key('app'), F.app); $('appF').value = F.app; return go('tickets'); }
   });
