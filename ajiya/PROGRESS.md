@@ -12,7 +12,7 @@ Generated 2026-10-16.
 | v0-2-1 | 83 | 83 | 100% | 0 |
 | v0-3 | 79 | 84 | 94% | 0 |
 | after-v0-3 | 79 | 83 | 95% | 0 |
-| v0-3-1 | 80 | 87 | 91% | 0 |
+| v0-3-1 | 80 | 88 | 90% | 1 |
 
 ## Phases
 
@@ -30,7 +30,7 @@ Generated 2026-10-16.
 
 ## Can start now
 
-- **AJ-0111** Positional arguments that start with a dash (ajiya)
+- **AJ-0111** Positional arguments that start with a dash (ajiya) · v0-3-1
 
 ## Waiting
 
@@ -49,6 +49,9 @@ Generated 2026-10-16.
 
 ## Recent activity
 
+- 2026-10-16 `0a90a5a` Mark AJ-0107 done; add the dash-argument ticket (chore)
+  - AJ-0107: in_progress → done
+  - AJ-0111: new → pending
 - 2026-10-16 `3e35786` Refresh the agent kit (AJ-0107)
 - 2026-10-16 `55fc3bf` Merge AJ-0107: phase descriptions (AJ-0107)
 - 2026-10-16 `b09ec5d` Phase descriptions: phase describe, --description, JSON, data.js and MCP (AJ-0107)
@@ -69,16 +72,10 @@ Generated 2026-10-16.
   - AJ-0049: in_progress → done
 - 2026-10-16 `542d6e2` Merge AJ-0049: ajiya ticket files (AJ-0049)
 - 2026-10-16 `6293413` Add ajiya ticket files and the ajiya_ticket_files MCP tool (AJ-0049)
-- 2026-10-16 `d0bf29c` Start AJ-0049 to AJ-0052 (chore)
-  - AJ-0049: pending → in_progress
-  - AJ-0050: pending → in_progress
-  - AJ-0051: pending → in_progress
-  - AJ-0052: pending → in_progress
-- and 262 more in data.js
+- and 263 more in data.js
 
 ## Checks
 
-0 error(s), 2 warning(s).
+0 error(s), 1 warning(s).
 
-- W010 ajiya.toml: 1 open ticket is in no milestone: AJ-0111. Fix: make a milestone's targets depend on them, or add a milestone for the later work
 - W006 ajiya/agent-access.md:17: AJ-0111 was added after the plan was first built and is linked to no other ticket, so it may be missing from the launch set. Fix: link it: ajiya ticket edit AJ-0111 --depends <IDs>, or add it to the --depends of the work that needs it

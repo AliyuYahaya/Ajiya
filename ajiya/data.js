@@ -99,18 +99,19 @@ window.AJIYA = {
       "name": "v0-3-1",
       "targets": [
         "AJ-0109",
-        "AJ-0110"
+        "AJ-0110",
+        "AJ-0111"
       ],
       "required": {
-        "total": 87,
+        "total": 88,
         "done": 80,
         "in_progress": 1,
-        "pending": 6,
+        "pending": 7,
         "dropped": 0,
         "superseded": 0
       },
-      "percent": 91,
-      "ready": 0
+      "percent": 90,
+      "ready": 1
     }
   ],
   "phases": [
@@ -3599,7 +3600,7 @@ window.AJIYA = {
         "state": "pending",
         "text": "🟥 Pending"
       },
-      "milestone": "",
+      "milestone": "v0-3-1",
       "ready": true,
       "waiting_on": [],
       "dependants": [],
@@ -3611,13 +3612,6 @@ window.AJIYA = {
   ],
   "checks": [
     {
-      "code": "W010",
-      "level": "warning",
-      "location": "ajiya.toml",
-      "message": "1 open ticket is in no milestone: AJ-0111",
-      "fix": "make a milestone's targets depend on them, or add a milestone for the later work"
-    },
-    {
       "code": "W006",
       "level": "warning",
       "location": "ajiya/agent-access.md:17",
@@ -3626,6 +3620,35 @@ window.AJIYA = {
     }
   ],
   "activity": [
+    {
+      "hash": "0a90a5a577bd0c85831eca526152e7909e893d90",
+      "short": "0a90a5a",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Mark AJ-0107 done; add the dash-argument ticket",
+      "refs": [],
+      "chore": true,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0107",
+          "phase": "dashboard-views",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · 3e35786 · 2026-10-16 · tests passed"
+        },
+        {
+          "id": "AJ-0111",
+          "phase": "agent-access",
+          "from": "",
+          "to": "pending",
+          "text": "🟥 Pending"
+        }
+      ],
+      "time": 1792162785
+    },
     {
       "hash": "3e35786ca451c6b8750b217b93957c3b0fcbb798",
       "short": "3e35786",
