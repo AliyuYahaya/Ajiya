@@ -10,9 +10,9 @@ Generated 2026-10-16.
 | v0-1 | 37 | 37 | 100% | 0 |
 | v0-2 | 74 | 74 | 100% | 0 |
 | v0-2-1 | 83 | 83 | 100% | 0 |
-| v0-3 | 79 | 84 | 94% | 1 |
-| after-v0-3 | 79 | 83 | 95% | 1 |
-| v0-3-1 | 79 | 87 | 90% | 2 |
+| v0-3 | 79 | 84 | 94% | 0 |
+| after-v0-3 | 79 | 83 | 95% | 0 |
+| v0-3-1 | 79 | 87 | 90% | 0 |
 
 ## Phases
 
@@ -25,13 +25,12 @@ Generated 2026-10-16.
 | Release | 5 | 0 | 0 | 5 | 100% | v0-1 |
 | Agent-access | 9 | 0 | 0 | 9 | 100% | v0-2 |
 | Install | 24 | 0 | 0 | 24 | 100% | v0-2 |
-| Decisions-and-changes | 5 | 0 | 6 | 11 | 45% | v0-3 |
-| Dashboard views | 0 | 0 | 4 | 4 | 0% | v0-3-1 |
+| Decisions-and-changes | 5 | 1 | 5 | 11 | 45% | v0-3 |
+| Dashboard views | 0 | 1 | 3 | 4 | 0% | v0-3-1 |
 
 ## Can start now
 
-- **AJ-0053** change open and change impact (ajiya) · v0-3
-- **AJ-0107** Phase descriptions (ajiya) · v0-3-1
+Nothing.
 
 ## Waiting
 
@@ -50,6 +49,9 @@ Generated 2026-10-16.
 
 ## Recent activity
 
+- 2026-10-16 `d83269c` Mark AJ-0051, AJ-0052 done (AJ-0051, AJ-0052)
+  - AJ-0051: in_progress → done
+  - AJ-0052: in_progress → done
 - 2026-10-16 `71f6e2e` Merge AJ-0051, AJ-0052: superseded status and snapshots (AJ-0051, AJ-0052)
 - 2026-10-16 `2a56f79` Add ajiya snapshot and snapshot list: plan snapshots as annotated tags (AJ-0052)
 - 2026-10-16 `78e0cf9` Mark AJ-0050 done (AJ-0050)
@@ -71,11 +73,7 @@ Generated 2026-10-16.
 - 2026-10-16 `5540ca9` Merge AJ-0048: Tags column (AJ-0048)
 - 2026-10-16 `1778d83` Read and write the optional Tags column (AJ-0048)
 - 2026-10-16 `f2b0b99` Add ajiya tags and the tag flags for tickets (AJ-0048)
-- 2026-10-16 `20a6785` Mark AJ-0098, AJ-0106 done; start AJ-0048 (chore)
-  - AJ-0048: pending → in_progress
-  - AJ-0098: in_progress → done
-  - AJ-0106: in_progress → done
-- and 257 more in data.js
+- and 258 more in data.js
 
 ## Checks
 

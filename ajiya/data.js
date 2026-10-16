@@ -71,13 +71,13 @@ window.AJIYA = {
       "required": {
         "total": 84,
         "done": 79,
-        "in_progress": 0,
-        "pending": 5,
+        "in_progress": 1,
+        "pending": 4,
         "dropped": 0,
         "superseded": 0
       },
       "percent": 94,
-      "ready": 1
+      "ready": 0
     },
     {
       "name": "after-v0-3",
@@ -87,13 +87,13 @@ window.AJIYA = {
       "required": {
         "total": 83,
         "done": 79,
-        "in_progress": 0,
-        "pending": 4,
+        "in_progress": 1,
+        "pending": 3,
         "dropped": 0,
         "superseded": 0
       },
       "percent": 95,
-      "ready": 1
+      "ready": 0
     },
     {
       "name": "v0-3-1",
@@ -104,13 +104,13 @@ window.AJIYA = {
       "required": {
         "total": 87,
         "done": 79,
-        "in_progress": 0,
-        "pending": 8,
+        "in_progress": 2,
+        "pending": 6,
         "dropped": 0,
         "superseded": 0
       },
       "percent": 90,
-      "ready": 2
+      "ready": 0
     }
   ],
   "phases": [
@@ -226,8 +226,8 @@ window.AJIYA = {
       "counts": {
         "total": 11,
         "done": 5,
-        "in_progress": 0,
-        "pending": 6,
+        "in_progress": 1,
+        "pending": 5,
         "dropped": 0,
         "superseded": 0
       },
@@ -241,8 +241,8 @@ window.AJIYA = {
       "counts": {
         "total": 4,
         "done": 0,
-        "in_progress": 0,
-        "pending": 4,
+        "in_progress": 1,
+        "pending": 3,
         "dropped": 0,
         "superseded": 0
       },
@@ -257,8 +257,8 @@ window.AJIYA = {
       "counts": {
         "total": 110,
         "done": 100,
-        "in_progress": 0,
-        "pending": 10,
+        "in_progress": 2,
+        "pending": 8,
         "dropped": 0,
         "superseded": 0
       }
@@ -1884,8 +1884,8 @@ window.AJIYA = {
         "path": []
       },
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "in_progress",
+        "text": "🟨 In progress"
       },
       "milestone": "v0-3",
       "ready": true,
@@ -3476,8 +3476,8 @@ window.AJIYA = {
         "path": []
       },
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "in_progress",
+        "text": "🟨 In progress"
       },
       "milestone": "v0-3-1",
       "ready": true,
@@ -3573,12 +3573,41 @@ window.AJIYA = {
       "unblocks": 0
     }
   ],
-  "next": [
-    "AJ-0053",
-    "AJ-0107"
-  ],
+  "next": [],
   "checks": [],
   "activity": [
+    {
+      "hash": "d83269c862549fb19d1a5d2a2cdb41002e52c418",
+      "short": "d83269c",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Mark AJ-0051, AJ-0052 done",
+      "refs": [
+        "AJ-0051",
+        "AJ-0052"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0051",
+          "phase": "decisions-and-changes",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · 71f6e2e · 2026-10-16 · tests passed"
+        },
+        {
+          "id": "AJ-0052",
+          "phase": "decisions-and-changes",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · 71f6e2e · 2026-10-16 · tests passed"
+        }
+      ],
+      "time": 1792162305
+    },
     {
       "hash": "71f6e2ea98b6713328e47a767668d1f1fcbfcab0",
       "short": "71f6e2e",
