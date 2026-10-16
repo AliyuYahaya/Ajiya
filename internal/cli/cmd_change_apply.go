@@ -5,6 +5,7 @@ import (
 	"strings"
 
 	"github.com/AliyuYahaya/Ajiya/internal/check"
+	"github.com/AliyuYahaya/Ajiya/internal/config"
 	"github.com/AliyuYahaya/Ajiya/internal/gitx"
 	"github.com/AliyuYahaya/Ajiya/internal/plan"
 	"github.com/AliyuYahaya/Ajiya/internal/view"
@@ -64,7 +65,8 @@ func runChangeApprove(e *env, args []string) error {
 		ms = append(ms, plan.Milestone{Name: m.Name, Targets: m.Targets})
 	}
 	opts := plan.ApplyOptions{Prefix: pr.cfg.Project.Prefix, NewDecision: *newDec, By: *by, Date: e.today(), Milestones: ms}
-	if err := pr.plan.ApplyChange(c, opts); err != nil {
+	retargets, err := pr.plan.ApplyChange(c, opts)
+	if err != nil {
 		if ae, ok := err.(*plan.ApplyError); ok {
 			return refused("%s cannot be approved:\n  - %s", c.ID, strings.Join(ae.Problems, "\n  - "))
 		}
@@ -79,6 +81,12 @@ func runChangeApprove(e *env, args []string) error {
 			ph.SixColumn = false
 			touched = append(touched, ph)
 		}
+	}
+
+	// The ajiya.toml text with the milestones retargeted, computed in memory.
+	newCfg, cfgText, err := retargetConfig(pr, retargets)
+	if err != nil {
+		return refused("%s cannot be approved: %v", c.ID, err)
 	}
 
 	// Validate the whole result before writing anything: check the plan as it
@@ -105,7 +113,7 @@ func runChangeApprove(e *env, args []string) error {
 	}
 	v.RawChanges[c.ID] = c.Format()
 	var bad []string
-	for _, f := range check.Run(pr.cfg, &v) {
+	for _, f := range check.Run(newCfg, &v) {
 		if f.Level == check.Error && !baseline[f.Code+f.Message] {
 			bad = append(bad, f.String())
 		}
@@ -124,6 +132,11 @@ func runChangeApprove(e *env, args []string) error {
 			return err
 		}
 	}
+	if cfgText != "" {
+		if _, err := config.WriteText(pr.cfg.Root, cfgText); err != nil {
+			return err
+		}
+	}
 	if err := pr.plan.SaveChange(c); err != nil { // last: it is the record of what was done
 		return err
 	}
@@ -136,6 +149,37 @@ func runChangeApprove(e *env, args []string) error {
 	}
 	fmt.Fprintf(e.stdout, "Commit the plan change in ajiya/ with the trailer 'Ajiya: chore' (or the IDs it concerns).\n")
 	return nil
+}
+
+// retargetConfig applies the retargets to the text of ajiya.toml, keeping the
+// user's comments and layout, and returns the config it parses to and the new
+// text. With no retargets it returns the current config and "".
+func retargetConfig(pr *project, retargets []plan.Retarget) (*config.Config, string, error) {
+	if len(retargets) == 0 {
+		return pr.cfg, "", nil
+	}
+	text, err := config.ReadText(pr.cfg.Root)
+	if err != nil {
+		return nil, "", err
+	}
+	for _, r := range retargets {
+		if pr.cfg.Launch.Target != "" { // the one-target [launch] form
+			if len(r.Targets) != 1 {
+				return nil, "", fmt.Errorf("the [launch] target would become %s, but it takes one; run 'ajiya launch set' for one of them first", strings.Join(r.Targets, ", "))
+			}
+			text = config.SetLaunchText(text, r.Targets[0])
+			continue
+		}
+		if text, err = config.SetMilestoneTargetsText(text, r.Name, r.Targets); err != nil {
+			return nil, "", err
+		}
+	}
+	cfg, err := config.Parse([]byte(text))
+	if err != nil {
+		return nil, "", fmt.Errorf("ajiya.toml would not load: %v", err)
+	}
+	cfg.Root = pr.cfg.Root
+	return cfg, text, nil
 }
 
 // runChangeReject closes an open change without touching the plan.
