@@ -99,6 +99,23 @@ func CreateSnapshot(dir, planDir, name string) (Snapshot, error) {
 	return Snapshot{}, fmt.Errorf("tag %s was not created", tag)
 }
 
+// DirtyFiles lists the files under planDir (relative to dir) with uncommitted
+// or untracked changes. It is empty when the plan folder is clean.
+func DirtyFiles(dir, planDir string) ([]string, error) {
+	out, err := git(dir, nil, "status", "--porcelain", "--untracked-files=all", "--", planDir)
+	if err != nil {
+		return nil, err
+	}
+	var files []string
+	for _, l := range splitNonEmpty(string(out), "\n") {
+		if len(l) > 2 { // "XY path"; the first line may have lost its leading space
+			l = strings.TrimSpace(l[2:])
+		}
+		files = append(files, l)
+	}
+	return files, nil
+}
+
 // Snapshots lists the snapshot tags, newest first.
 func Snapshots(dir string) ([]Snapshot, error) {
 	// For an annotated tag, %(*objectname) is the commit and %(objectname) the tag.
