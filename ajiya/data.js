@@ -67,12 +67,12 @@ window.AJIYA = {
       ],
       "required": {
         "total": 84,
-        "done": 75,
-        "in_progress": 4,
+        "done": 76,
+        "in_progress": 3,
         "pending": 5,
         "dropped": 0
       },
-      "percent": 89,
+      "percent": 90,
       "ready": 0
     },
     {
@@ -82,12 +82,12 @@ window.AJIYA = {
       ],
       "required": {
         "total": 83,
-        "done": 75,
-        "in_progress": 4,
+        "done": 76,
+        "in_progress": 3,
         "pending": 4,
         "dropped": 0
       },
-      "percent": 90,
+      "percent": 91,
       "ready": 0
     },
     {
@@ -98,12 +98,12 @@ window.AJIYA = {
       ],
       "required": {
         "total": 87,
-        "done": 75,
-        "in_progress": 4,
+        "done": 76,
+        "in_progress": 3,
         "pending": 8,
         "dropped": 0
       },
-      "percent": 86,
+      "percent": 87,
       "ready": 1
     }
   ],
@@ -212,12 +212,12 @@ window.AJIYA = {
       "goal": "Plans change without losing history: tags, decisions, superseded work and approved change requests",
       "counts": {
         "total": 11,
-        "done": 1,
-        "in_progress": 4,
+        "done": 2,
+        "in_progress": 3,
         "pending": 6,
         "dropped": 0
       },
-      "percent": 9,
+      "percent": 18,
       "milestone": "v0-3"
     },
     {
@@ -241,8 +241,8 @@ window.AJIYA = {
       "path": ".",
       "counts": {
         "total": 110,
-        "done": 96,
-        "in_progress": 4,
+        "done": 97,
+        "in_progress": 3,
         "pending": 10,
         "dropped": 0
       }
@@ -1744,17 +1744,20 @@ window.AJIYA = {
         "path": []
       },
       "status": {
-        "state": "in_progress",
-        "text": "🟨 In progress"
+        "state": "done",
+        "text": "🟩 Done · 542d6e2 · 2026-10-16 · tests passed",
+        "commit": "542d6e2",
+        "date": "2026-10-16",
+        "tests_passed": true
       },
       "milestone": "v0-3",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0053",
         "AJ-0058"
       ],
-      "unblocks": 9
+      "unblocks": 0
     },
     {
       "id": "AJ-0050",
@@ -1864,7 +1867,6 @@ window.AJIYA = {
       "milestone": "v0-3",
       "ready": false,
       "waiting_on": [
-        "AJ-0049",
         "AJ-0050",
         "AJ-0051",
         "AJ-0052"
@@ -2022,7 +2024,6 @@ window.AJIYA = {
       "milestone": "v0-3",
       "ready": false,
       "waiting_on": [
-        "AJ-0049",
         "AJ-0050",
         "AJ-0051",
         "AJ-0052",
@@ -3561,6 +3562,81 @@ window.AJIYA = {
   ],
   "checks": [],
   "activity": [
+    {
+      "hash": "542d6e2ea781f91acb069c2b6712af255d371d75",
+      "short": "542d6e2",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Merge AJ-0049: ajiya ticket files",
+      "refs": [
+        "AJ-0049"
+      ],
+      "chore": false,
+      "merge": true,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792161488
+    },
+    {
+      "hash": "62934136874f33db05f8278aaf6e2d31088e4f2a",
+      "short": "6293413",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Add ajiya ticket files and the ajiya_ticket_files MCP tool",
+      "refs": [
+        "AJ-0049"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792161466
+    },
+    {
+      "hash": "d0bf29c40a827c681336f4eb95e99fd9ee86e40b",
+      "short": "d0bf29c",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Start AJ-0049 to AJ-0052",
+      "refs": [],
+      "chore": true,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0049",
+          "phase": "decisions-and-changes",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        },
+        {
+          "id": "AJ-0050",
+          "phase": "decisions-and-changes",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        },
+        {
+          "id": "AJ-0051",
+          "phase": "decisions-and-changes",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        },
+        {
+          "id": "AJ-0052",
+          "phase": "decisions-and-changes",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        }
+      ],
+      "time": 1792160731
+    },
     {
       "hash": "d3f7bb9b3b083871a487713cc31c6b3dcd046d2b",
       "short": "d3f7bb9",
