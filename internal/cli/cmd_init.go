@@ -42,7 +42,7 @@ func runInit(e *env, args []string) error {
 		return err
 	}
 	if outer, err := config.Find(filepath.Dir(abs)); err == nil {
-		fmt.Fprintf(e.stderr, "warning: %s already holds a %s, so this will be a project nested inside it. "+
+		fmt.Fprintf(e.stderr, "warning: %s already holds an %s, so this will be a project nested inside it. "+
 			"Its commit hooks check commits against the plan of the repository they are made in; "+
 			"if you meant to use that plan, run ajiya from there instead.\n",
 			outer, config.FileName)

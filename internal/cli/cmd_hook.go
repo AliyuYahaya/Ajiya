@@ -87,11 +87,13 @@ func hookCommitMsg(e *env, file string) error {
 // not from the working folder, which may hold an ajiya.toml of its own (a
 // nested project) that belongs to a different repository.
 func hookPlanRoot(e *env) (string, error) {
-	start := e.dir
 	if top, err := gitx.Toplevel(e.dir); err == nil {
-		start = top
+		if root, err := config.Find(top); err == nil {
+			return root, nil
+		}
 	}
-	return config.Find(start)
+	// No plan above the repository: one may sit in a folder inside it.
+	return config.Find(e.dir)
 }
 
 // loadHook loads the plan that owns the repository being committed to.
