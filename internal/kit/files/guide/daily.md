@@ -62,6 +62,12 @@ Ajiya: CB-0142
 - `Ajiya: chore` is for upkeep with no ticket: dependency updates, formatting,
   config, plan-only changes.
 - Merge commits and reverts need no trailer.
+- Other trailers may sit in the same last paragraph. Git reads them all:
+
+  ```
+  Ajiya: CB-0142
+  Co-Authored-By: Name <name@example.com>
+  ```
 
 The git hooks from `ajiya hook install` check the trailer and pre-fill it from the
 tickets in progress. If a hook refuses a commit, fix the message; never skip the
