@@ -24,8 +24,8 @@ in progress (and for how long), what can start, tickets that need a human, the
 check results and the latest activity. `ajiya status --brief` is three lines.
 Finish what is in progress before you start something new.
 
-It lists the tickets that can start now: open, not blocked, every dependency
-done. The earliest milestone comes first, then what unblocks the most work. Take
+It lists the tickets that can start now: not started, not blocked, every
+dependency done. The earliest milestone comes first, then what unblocks the most work. Take
 the first one unless the user asked for something else. Skip tickets marked
 `Needs a human` unless the user asks for them: tell the user about them instead.
 

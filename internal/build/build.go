@@ -236,12 +236,12 @@ func Collect(cfg *config.Config, p *plan.Plan, order []*plan.Phase) (*Data, erro
 	return d, nil
 }
 
-// nextOrder sorts ready tickets as 'ajiya next' does: earliest milestone first
-// (unscheduled last), then by how many open tickets each unblocks, then ID.
 // canStart reports whether a ticket is ready and not yet started. An
 // in-progress ticket is ready (nothing blocks it) but has already started.
 func (t Ticket) canStart() bool { return t.Ready && t.Status.State != "in_progress" }
 
+// nextOrder sorts ready tickets as 'ajiya next' does: earliest milestone first
+// (unscheduled last), then by how many open tickets each unblocks, then ID.
 func nextOrder(ts []Ticket, sched *plan.Schedule, schedErr error) []string {
 	rank := func(t Ticket) int {
 		if schedErr != nil || t.Milestone == "" {
