@@ -12,7 +12,7 @@ Generated 2026-10-16.
 | v0-2-1 | 83 | 83 | 100% | 0 |
 | v0-3 | 79 | 84 | 94% | 0 |
 | after-v0-3 | 79 | 83 | 95% | 0 |
-| v0-3-1 | 80 | 88 | 90% | 1 |
+| v0-3-1 | 80 | 88 | 90% | 0 |
 
 ## Phases
 
@@ -23,14 +23,14 @@ Generated 2026-10-16.
 | Outputs | 12 | 0 | 0 | 12 | 100% | v0-1 |
 | Onboarding | 21 | 0 | 0 | 21 | 100% | v0-1 |
 | Release | 5 | 0 | 0 | 5 | 100% | v0-1 |
-| Agent-access | 9 | 0 | 1 | 10 | 90% | v0-2 |
+| Agent-access | 9 | 1 | 0 | 10 | 90% | v0-2 |
 | Install | 24 | 0 | 0 | 24 | 100% | v0-2 |
 | Decisions-and-changes | 5 | 1 | 5 | 11 | 45% | v0-3 |
 | Dashboard views | 1 | 0 | 3 | 4 | 25% | v0-3-1 |
 
 ## Can start now
 
-- **AJ-0111** Positional arguments that start with a dash (ajiya) · v0-3-1
+Nothing.
 
 ## Waiting
 
@@ -49,6 +49,7 @@ Generated 2026-10-16.
 
 ## Recent activity
 
+- 2026-10-16 `e8dde3b` Put AJ-0111 in v0.3.1 (chore)
 - 2026-10-16 `0a90a5a` Mark AJ-0107 done; add the dash-argument ticket (chore)
   - AJ-0107: in_progress → done
   - AJ-0111: new → pending
@@ -71,8 +72,7 @@ Generated 2026-10-16.
 - 2026-10-16 `27ac944` Mark AJ-0049 done (AJ-0049)
   - AJ-0049: in_progress → done
 - 2026-10-16 `542d6e2` Merge AJ-0049: ajiya ticket files (AJ-0049)
-- 2026-10-16 `6293413` Add ajiya ticket files and the ajiya_ticket_files MCP tool (AJ-0049)
-- and 263 more in data.js
+- and 264 more in data.js
 
 ## Checks
 

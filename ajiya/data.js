@@ -105,13 +105,13 @@ window.AJIYA = {
       "required": {
         "total": 88,
         "done": 80,
-        "in_progress": 1,
-        "pending": 7,
+        "in_progress": 2,
+        "pending": 6,
         "dropped": 0,
         "superseded": 0
       },
       "percent": 90,
-      "ready": 1
+      "ready": 0
     }
   ],
   "phases": [
@@ -203,8 +203,8 @@ window.AJIYA = {
       "counts": {
         "total": 10,
         "done": 9,
-        "in_progress": 0,
-        "pending": 1,
+        "in_progress": 1,
+        "pending": 0,
         "dropped": 0,
         "superseded": 0
       },
@@ -267,8 +267,8 @@ window.AJIYA = {
       "counts": {
         "total": 111,
         "done": 101,
-        "in_progress": 1,
-        "pending": 9,
+        "in_progress": 2,
+        "pending": 8,
         "dropped": 0,
         "superseded": 0
       }
@@ -3597,8 +3597,8 @@ window.AJIYA = {
         "path": []
       },
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "in_progress",
+        "text": "🟨 In progress"
       },
       "milestone": "v0-3-1",
       "ready": true,
@@ -3607,9 +3607,7 @@ window.AJIYA = {
       "unblocks": 0
     }
   ],
-  "next": [
-    "AJ-0111"
-  ],
+  "next": [],
   "checks": [
     {
       "code": "W006",
@@ -3620,6 +3618,20 @@ window.AJIYA = {
     }
   ],
   "activity": [
+    {
+      "hash": "e8dde3b5296e5286c08866e18e1db19a5577add3",
+      "short": "e8dde3b",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Put AJ-0111 in v0.3.1",
+      "refs": [],
+      "chore": true,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792162803
+    },
     {
       "hash": "0a90a5a577bd0c85831eca526152e7909e893d90",
       "short": "0a90a5a",
