@@ -1,7 +1,7 @@
 // Written by ajiya build. Do not edit: run 'ajiya build'.
 window.AJIYA = {
   "schema": 1,
-  "generated": "2026-10-01",
+  "generated": "2026-10-16",
   "project": {
     "name": "Ajiya",
     "prefix": "AJ"
@@ -52,13 +52,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 83,
-        "done": 74,
-        "in_progress": 0,
-        "pending": 9,
+        "done": 80,
+        "in_progress": 3,
+        "pending": 0,
         "dropped": 0
       },
-      "percent": 89,
-      "ready": 9
+      "percent": 96,
+      "ready": 3
     },
     {
       "name": "v0-3",
@@ -98,12 +98,12 @@ window.AJIYA = {
       "goal": "Every commit names 1 to 3 tickets, enforced by hooks with a CI check as backup",
       "counts": {
         "total": 9,
-        "done": 8,
+        "done": 9,
         "in_progress": 0,
-        "pending": 1,
+        "pending": 0,
         "dropped": 0
       },
-      "percent": 88,
+      "percent": 100,
       "milestone": "v0-1"
     },
     {
@@ -112,12 +112,12 @@ window.AJIYA = {
       "goal": "Apps are detected and managed, launch readiness is defined, and every check in the spec runs",
       "counts": {
         "total": 15,
-        "done": 14,
+        "done": 15,
         "in_progress": 0,
-        "pending": 1,
+        "pending": 0,
         "dropped": 0
       },
-      "percent": 93,
+      "percent": 100,
       "milestone": "v0-1"
     },
     {
@@ -140,12 +140,12 @@ window.AJIYA = {
       "goal": "A new or existing project can be set up by an agent using only the installed kit and importers",
       "counts": {
         "total": 21,
-        "done": 17,
+        "done": 21,
         "in_progress": 0,
-        "pending": 4,
+        "pending": 0,
         "dropped": 0
       },
-      "percent": 80,
+      "percent": 100,
       "milestone": "v0-1"
     },
     {
@@ -169,8 +169,8 @@ window.AJIYA = {
       "counts": {
         "total": 9,
         "done": 6,
-        "in_progress": 0,
-        "pending": 3,
+        "in_progress": 3,
+        "pending": 0,
         "dropped": 0
       },
       "percent": 66,
@@ -211,9 +211,9 @@ window.AJIYA = {
       "path": ".",
       "counts": {
         "total": 106,
-        "done": 86,
-        "in_progress": 0,
-        "pending": 20,
+        "done": 92,
+        "in_progress": 3,
+        "pending": 11,
         "dropped": 0
       }
     }
@@ -2696,8 +2696,8 @@ window.AJIYA = {
         "AJ-0047"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "in_progress",
+        "text": "🟨 In progress"
       },
       "milestone": "v0-2-1",
       "ready": true,
@@ -2715,11 +2715,14 @@ window.AJIYA = {
         "AJ-0047"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · d96483a · 2026-10-16 · tests passed",
+        "commit": "d96483a",
+        "date": "2026-10-16",
+        "tests_passed": true
       },
       "milestone": "v0-2-1",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [],
       "unblocks": 0
@@ -2734,11 +2737,14 @@ window.AJIYA = {
         "AJ-0047"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · 52a348c · 2026-10-16 · tests passed",
+        "commit": "52a348c",
+        "date": "2026-10-16",
+        "tests_passed": true
       },
       "milestone": "v0-2-1",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [],
       "unblocks": 0
@@ -2753,11 +2759,14 @@ window.AJIYA = {
         "AJ-0047"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · ca13988 · 2026-10-16 · tests passed",
+        "commit": "ca13988",
+        "date": "2026-10-16",
+        "tests_passed": true
       },
       "milestone": "v0-2-1",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [],
       "unblocks": 0
@@ -2772,8 +2781,8 @@ window.AJIYA = {
         "AJ-0047"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "in_progress",
+        "text": "🟨 In progress"
       },
       "milestone": "v0-2-1",
       "ready": true,
@@ -2791,11 +2800,14 @@ window.AJIYA = {
         "AJ-0047"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · 52a348c · 2026-10-16 · tests passed",
+        "commit": "52a348c",
+        "date": "2026-10-16",
+        "tests_passed": true
       },
       "milestone": "v0-2-1",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [],
       "unblocks": 0
@@ -2810,11 +2822,14 @@ window.AJIYA = {
         "AJ-0047"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · 2d69dc7 · 2026-10-16 · tests passed",
+        "commit": "2d69dc7",
+        "date": "2026-10-16",
+        "tests_passed": true
       },
       "milestone": "v0-2-1",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [],
       "unblocks": 0
@@ -2829,11 +2844,14 @@ window.AJIYA = {
         "AJ-0047"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · cc4b027 · 2026-10-16 · tests passed",
+        "commit": "cc4b027",
+        "date": "2026-10-16",
+        "tests_passed": true
       },
       "milestone": "v0-2-1",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [],
       "unblocks": 0
@@ -2848,8 +2866,8 @@ window.AJIYA = {
         "AJ-0047"
       ],
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "in_progress",
+        "text": "🟨 In progress"
       },
       "milestone": "v0-2-1",
       "ready": true,
@@ -2860,18 +2878,307 @@ window.AJIYA = {
   ],
   "next": [
     "AJ-0098",
-    "AJ-0099",
-    "AJ-0100",
-    "AJ-0101",
     "AJ-0102",
-    "AJ-0103",
-    "AJ-0104",
-    "AJ-0105",
     "AJ-0106",
     "AJ-0048"
   ],
-  "checks": [],
+  "checks": [
+    {
+      "code": "W008",
+      "level": "warning",
+      "location": "ajiya/decisions-and-changes.md:18",
+      "message": "AJ-0058 has needed a human (final sign-off before publishing v0.3) for 17 days",
+      "fix": "ask the person named, or close it with 'ajiya ticket done --by'"
+    }
+  ],
   "activity": [
+    {
+      "hash": "52a348c0d83fb0d35f4ac8d33376baa89e086d3c",
+      "short": "52a348c",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Refresh the agent kit",
+      "refs": [
+        "AJ-0100",
+        "AJ-0103"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792159112
+    },
+    {
+      "hash": "2d69dc7c4516eee9886fb857c19ad426cb1ff9a5",
+      "short": "2d69dc7",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Merge AJ-0100, AJ-0103, AJ-0104: guide and README",
+      "refs": [
+        "AJ-0100",
+        "AJ-0103",
+        "AJ-0104"
+      ],
+      "chore": false,
+      "merge": true,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792159093
+    },
+    {
+      "hash": "ca13988bcd81c0f37a943eb4bcde611e0d602ec9",
+      "short": "ca13988",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Hooks fall back to a plan inside the repository",
+      "refs": [
+        "AJ-0101"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792159084
+    },
+    {
+      "hash": "0919a7d7bd7f54c8bdb1ec472d4b16a51152c8b0",
+      "short": "0919a7d",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Merge AJ-0101: nested projects",
+      "refs": [
+        "AJ-0101"
+      ],
+      "chore": false,
+      "merge": true,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792159062
+    },
+    {
+      "hash": "66ec2cf9abf2e86ebb6c0d2cf350e528a7f2f131",
+      "short": "66ec2cf",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "README: non-interactive init and the auto-added trailer",
+      "refs": [
+        "AJ-0104"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792159055
+    },
+    {
+      "hash": "b71a9694b7209af9e39edb232f119373734b9028",
+      "short": "b71a969",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Guide: what ticket done and ajiya build change",
+      "refs": [
+        "AJ-0103"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792159051
+    },
+    {
+      "hash": "5da975fc918e9d6a76e52d679d132b2a17938a9a",
+      "short": "5da975f",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Guide: other trailers can share the Ajiya paragraph",
+      "refs": [
+        "AJ-0100"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792159039
+    },
+    {
+      "hash": "63dc87d5b508e0bde123f6b542e864d6ed26b9e3",
+      "short": "63dc87d",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Nested projects: init warns, hooks check the owning plan",
+      "refs": [
+        "AJ-0101"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792159031
+    },
+    {
+      "hash": "d96483a8ce0e68569964316eef6b109d2b69a1fc",
+      "short": "d96483a",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Merge AJ-0099: app add quotes the path",
+      "refs": [
+        "AJ-0099"
+      ],
+      "chore": false,
+      "merge": true,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792159000
+    },
+    {
+      "hash": "cc4b027c1b442865802c59cd01ac2b0ef4a3a18f",
+      "short": "cc4b027",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Merge AJ-0105: per-app test commands",
+      "refs": [
+        "AJ-0105"
+      ],
+      "chore": false,
+      "merge": true,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792158980
+    },
+    {
+      "hash": "8a6329950bfe91cfa0ed402220d9b23d511c0cab",
+      "short": "8a63299",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "app add quotes the path it registered",
+      "refs": [
+        "AJ-0099"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792158971
+    },
+    {
+      "hash": "2a96159fe7775f0da0a1ca4515846cd2cc5dd556",
+      "short": "2a96159",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "init suggests per-app test commands in a monorepo",
+      "refs": [
+        "AJ-0105"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792158959
+    },
+    {
+      "hash": "85cb6fe15cc671035fb42ed050068e05ebfbe49e",
+      "short": "85cb6fe",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Start the v0.2.1 tickets",
+      "refs": [],
+      "chore": true,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0098",
+          "phase": "agent-access",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        },
+        {
+          "id": "AJ-0099",
+          "phase": "apps-launch",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        },
+        {
+          "id": "AJ-0100",
+          "phase": "onboarding",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        },
+        {
+          "id": "AJ-0101",
+          "phase": "commit-rule",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        },
+        {
+          "id": "AJ-0102",
+          "phase": "agent-access",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        },
+        {
+          "id": "AJ-0103",
+          "phase": "onboarding",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        },
+        {
+          "id": "AJ-0104",
+          "phase": "onboarding",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        },
+        {
+          "id": "AJ-0105",
+          "phase": "onboarding",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        },
+        {
+          "id": "AJ-0106",
+          "phase": "agent-access",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        }
+      ],
+      "time": 1792158694
+    },
+    {
+      "hash": "d3981876d047c0e25d5804f7b588787db38e45cf",
+      "short": "d398187",
+      "date": "2026-10-08",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Search every app repository for ticket evidence",
+      "refs": [],
+      "chore": true,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1791481486
+    },
     {
       "hash": "33020e167ba68e5afaf0e7aeae6c6d1230f06b40",
       "short": "33020e1",
