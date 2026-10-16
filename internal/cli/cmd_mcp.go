@@ -99,6 +99,17 @@ func cat(head []string, groups ...[]string) []string {
 	return out
 }
 
+// beforeTerminator returns argv with flag placed before any "--", so the flag
+// is not read as a positional value.
+func beforeTerminator(argv []string, flag string) []string {
+	for i, a := range argv {
+		if a == "--" {
+			return cat(argv[:i], []string{flag}, argv[i:])
+		}
+	}
+	return cat(argv, []string{flag})
+}
+
 // pos marks positional values, so one that starts with "-" is not a flag.
 func pos(vals ...string) []string { return append([]string{"--"}, vals...) }
 
@@ -108,11 +119,28 @@ func strProp(name, desc string, required bool) mcpProp {
 func boolProp(name, desc string) mcpProp { return mcpProp{name, "boolean", desc, false} }
 
 var idProp = strProp("id", "Ticket ID, such as AJ-0043.", true)
+var decIDProp = strProp("id", "Decision ID, such as DEC-0003.", true)
+var chgIDProp = strProp("id", "Change ID, such as CHG-0014.", true)
+
+// Tags are optional. Add tech only when the ticket depends on a specific
+// technology or service; check ajiya_tags first to reuse an existing value.
+const (
+	techDesc      = "Comma-separated technologies or services the ticket depends on, as lower-case slugs such as aws-rds. Leave out unless the ticket needs a specific one; reuse values from ajiya_tags."
+	decisionsDesc = "Comma-separated decision IDs, such as DEC-0003."
+	pathsDesc     = "Comma-separated file globs the ticket touches, for open tickets whose files commits cannot show yet."
+)
+
+var (
+	techProp      = strProp("tech", techDesc, false)
+	decisionsProp = strProp("decisions", decisionsDesc, false)
+	pathsProp     = strProp("paths", pathsDesc, false)
+)
 
 // mcpExcluded lists the commands that are never offered over MCP, because a
 // person decides them. A test keeps this list and the tools apart.
 var mcpExcluded = []string{
 	"ticket drop", "app remove", "milestone remove", "milestone move", "hook install",
+	"change approve", "change reject",
 }
 
 // mcpTools is the whole MCP surface, in the order tools/list returns it. Names
@@ -134,10 +162,24 @@ func mcpTools() []mcpTool {
 			argv:  func(a mcpArgs) []string { return cat([]string{"ticket", "show"}, pos(a.str("id"))) }},
 		{name: "ajiya_ticket_list", readOnly: true, json: true,
 			desc:  "Use to find tickets by phase, app, state or milestone, in plan order.",
-			props: []mcpProp{strProp("phase", "Phase slug.", false), strProp("app", "App name.", false), strProp("state", "pending, in_progress, done, dropped, ready or human.", false), strProp("milestone", "Milestone name.", false)},
+			props: []mcpProp{strProp("phase", "Phase slug.", false), strProp("app", "App name.", false), strProp("state", "pending, in_progress, done, dropped, superseded, ready or human.", false), strProp("milestone", "Milestone name.", false)},
 			argv: func(a mcpArgs) []string {
 				return cat([]string{"ticket", "list"}, a.flag("phase", "phase"), a.flag("app", "app"), a.flag("state", "state"), a.flag("milestone", "milestone"))
 			}},
+		{name: "ajiya_tags", readOnly: true, json: true,
+			desc: "Use before tagging a ticket to see every tag in use with its ticket count, so you reuse an existing value instead of inventing a near-duplicate (postgres against postgresql).",
+			argv: func(a mcpArgs) []string { return []string{"tags"} }},
+		{name: "ajiya_ticket_files", readOnly: true, json: true,
+			desc:  "Use to see which files a ticket changed: the union of files in every commit whose Ajiya trailer names it, read from git (plan files in ajiya/ are left out). Empty when no commit names the ticket.",
+			props: []mcpProp{idProp},
+			argv:  func(a mcpArgs) []string { return cat([]string{"ticket", "files"}, pos(a.str("id"))) }},
+		{name: "ajiya_snapshot_list", readOnly: true, json: true,
+			desc: "Use to see the plan snapshots (tags ajiya/plan/<name>) with their date and commit.",
+			argv: func(a mcpArgs) []string { return []string{"snapshot", "list"} }},
+		{name: "ajiya_snapshot",
+			desc:  "Use before a risky change to the plan: tags the committed plan as ajiya/plan/<name> so it can be compared or restored. Refuses while ajiya/ has uncommitted changes, a bad name or an existing name; commit first.",
+			props: []mcpProp{strProp("name", "Snapshot name, such as before-supabase: a valid tag name without spaces.", true)},
+			argv:  func(a mcpArgs) []string { return cat([]string{"snapshot"}, pos(a.str("name"))) }},
 		{name: "ajiya_phase_list", readOnly: true, json: true,
 			desc: "Use to see each phase with its progress and earliest milestone.",
 			argv: func(a mcpArgs) []string { return []string{"phase", "list"} }},
@@ -156,15 +198,18 @@ func mcpTools() []mcpTool {
 			}},
 		{name: "ajiya_ticket_add",
 			desc:  "Use when you find work that is not in the plan: add a ticket instead of widening the current one.",
-			props: []mcpProp{strProp("title", "Ticket title.", true), strProp("phase", "Phase slug.", true), strProp("app", "App name.", true), strProp("done_when", "The check that proves the ticket is done.", true), strProp("depends", "Comma-separated IDs this ticket depends on.", false), strProp("human", "Reason, when only a person can do this ticket.", false)},
+			props: []mcpProp{strProp("title", "Ticket title.", true), strProp("phase", "Phase slug.", true), strProp("app", "App name.", true), strProp("done_when", "The check that proves the ticket is done.", true), strProp("depends", "Comma-separated IDs this ticket depends on.", false), strProp("human", "Reason, when only a person can do this ticket.", false), techProp, decisionsProp, pathsProp},
 			argv: func(a mcpArgs) []string {
-				return cat([]string{"ticket", "add"}, a.flag("phase", "phase"), a.flag("app", "app"), a.flag("done-when", "done_when"), a.flag("depends", "depends"), a.flag("human", "human"), pos(a.str("title")))
+				return cat([]string{"ticket", "add"}, a.flag("phase", "phase"), a.flag("app", "app"), a.flag("done-when", "done_when"), a.flag("depends", "depends"), a.flag("human", "human"),
+					a.flag("tech", "tech"), a.flag("decisions", "decisions"), a.flag("paths", "paths"), pos(a.str("title")))
 			}},
 		{name: "ajiya_ticket_edit",
-			desc:  "Use to correct a ticket's title, done-when, dependencies, app or phase. Give at least one field; depends replaces the whole list.",
-			props: []mcpProp{idProp, strProp("title", "New title.", false), strProp("done_when", "New done-when.", false), strProp("depends", "New dependency list, comma separated, or \"-\" for none.", false), strProp("app", "New app.", false), strProp("phase", "New phase slug.", false)},
+			desc: "Use to correct a ticket's title, done-when, dependencies, app, phase or tags. Give at least one field; depends, tech, decisions and paths each replace the whole list, and \"-\" clears it.",
+			props: []mcpProp{idProp, strProp("title", "New title.", false), strProp("done_when", "New done-when.", false), strProp("depends", "New dependency list, comma separated, or \"-\" for none.", false), strProp("app", "New app.", false), strProp("phase", "New phase slug.", false),
+				strProp("tech", techDesc+" Replaces the ticket's tech tags; \"-\" clears them.", false), strProp("decisions", decisionsDesc+" Replaces the ticket's decision tags; \"-\" clears them.", false), strProp("paths", pathsDesc+" Replaces the ticket's path tags; \"-\" clears them.", false)},
 			argv: func(a mcpArgs) []string {
-				return cat([]string{"ticket", "edit"}, a.flag("title", "title"), a.flag("done-when", "done_when"), a.flag("depends", "depends"), a.flag("app", "app"), a.flag("phase", "phase"), pos(a.str("id")))
+				return cat([]string{"ticket", "edit"}, a.flag("title", "title"), a.flag("done-when", "done_when"), a.flag("depends", "depends"), a.flag("app", "app"), a.flag("phase", "phase"),
+					a.flag("tech", "tech"), a.flag("decisions", "decisions"), a.flag("paths", "paths"), pos(a.str("id")))
 			}},
 		{name: "ajiya_ticket_start",
 			desc:  "Use before you begin work on a ticket. It marks the ticket in progress and clears a block.",
@@ -186,10 +231,14 @@ func mcpTools() []mcpTool {
 			}},
 		{name: "ajiya_phase_add",
 			desc:  "Use when planning a project to add a phase, a stage of work with one goal.",
-			props: []mcpProp{strProp("slug", "Short lowercase name used in file names.", true), strProp("goal", "What the phase achieves.", true), strProp("title", "Display title.", false)},
+			props: []mcpProp{strProp("slug", "Short lowercase name used in file names.", true), strProp("goal", "What the phase achieves.", true), strProp("title", "Display title.", false), strProp("description", "Longer description under the goal, one or more paragraphs.", false)},
 			argv: func(a mcpArgs) []string {
-				return cat([]string{"phase", "add"}, a.flag("title", "title"), pos(a.str("slug"), a.str("goal")))
+				return cat([]string{"phase", "add"}, a.flag("title", "title"), a.flag("description", "description"), pos(a.str("slug"), a.str("goal")))
 			}},
+		{name: "ajiya_phase_describe",
+			desc:  "Use to set or change a phase's description, the paragraphs under its goal. \"-\" clears it.",
+			props: []mcpProp{strProp("slug", "Phase slug.", true), strProp("text", "The description; \"-\" clears it.", true)},
+			argv:  func(a mcpArgs) []string { return cat([]string{"phase", "describe"}, pos(a.str("slug"), a.str("text"))) }},
 		{name: "ajiya_app_add",
 			desc:  "Use in the same task that creates a new app folder, so tickets can name it. Create the folder first.",
 			props: []mcpProp{strProp("name", "App name.", true), strProp("path", "Folder of the app, relative to the project.", true), boolProp("library", "The app is a shared package.")},
@@ -206,6 +255,49 @@ func mcpTools() []mcpTool {
 			desc:  "Use when planning to set the launch target: the phase or ticket that means the project has launched.",
 			props: []mcpProp{strProp("target", "A phase slug or a ticket ID.", true)},
 			argv:  func(a mcpArgs) []string { return cat([]string{"launch", "set"}, pos(a.str("target"))) }},
+		{name: "ajiya_decision_add",
+			desc:  "Use when you make or find a choice the plan rests on (a technology, a service, an approach): record it as a Proposed decision. A person accepts it; link tickets to it with ajiya_ticket_edit decisions.",
+			props: []mcpProp{strProp("title", "Short title, such as \"Use PostgreSQL on AWS RDS\".", true), strProp("decision", "What was chosen.", true), strProp("context", "Why the choice was needed.", false), strProp("consequences", "What follows from it, including what it rules out.", false), techProp, strProp("by", "Who proposed it.", false)},
+			argv: func(a mcpArgs) []string {
+				return cat([]string{"decision", "add"}, a.flag("decision", "decision"), a.flag("context", "context"), a.flag("consequences", "consequences"), a.flag("tech", "tech"), a.flag("by", "by"), pos(a.str("title")))
+			}},
+		{name: "ajiya_decision_show", readOnly: true, json: true,
+			desc:  "Use to read a decision in full (context, decision, consequences, status) and the tickets that link it.",
+			props: []mcpProp{decIDProp},
+			argv:  func(a mcpArgs) []string { return cat([]string{"decision", "show"}, pos(a.str("id"))) }},
+		{name: "ajiya_decision_list", readOnly: true, json: true,
+			desc:  "Use to see every decision with its status, or only those about one technology.",
+			props: []mcpProp{strProp("tag", "Only decisions with this tag, such as tech:postgres.", false)},
+			argv:  func(a mcpArgs) []string { return cat([]string{"decision", "list"}, a.flag("tag", "tag")) }},
+		{name: "ajiya_decision_accept",
+			desc:  "Use only when a person has said they accept a proposed decision; record their name.",
+			props: []mcpProp{decIDProp, strProp("by", "Name of the person who decided.", true)},
+			argv: func(a mcpArgs) []string {
+				return cat([]string{"decision", "accept"}, a.flag("by", "by"), pos(a.str("id")))
+			}},
+		{name: "ajiya_change_open",
+			desc:  "Use when the plan must change (a technology or decision is being replaced): open a change request. It snapshots the committed plan, so ajiya/ must have no uncommitted changes. Give at least one of replaces, decision or paths. A person approves or rejects the change; you never do.",
+			props: []mcpProp{strProp("title", "What is changing, such as \"Move the database from AWS RDS to Supabase\".", true), strProp("replaces", "Comma-separated key:value tags of the work being replaced, such as tech:aws-rds.", false), strProp("with", "Comma-separated key:value tags of what replaces it, such as tech:supabase.", false), strProp("decision", "Comma-separated decision IDs the change would supersede, such as DEC-0003.", false), strProp("paths", "Comma-separated file globs the change touches, such as infra/rds/**.", false)},
+			argv: func(a mcpArgs) []string {
+				return cat([]string{"change", "open"}, a.flag("replaces", "replaces"), a.flag("with", "with"), a.flag("decision", "decision"), a.flag("paths", "paths"), pos(a.str("title")))
+			}},
+		{name: "ajiya_change_impact", json: true,
+			desc:  "Use after opening a change, and again when tickets change: list the tickets it might affect, each with why (tag, decision, path, downstream), and write them into the change file. Verdicts already given are kept.",
+			props: []mcpProp{chgIDProp},
+			argv:  func(a mcpArgs) []string { return cat([]string{"change", "impact"}, pos(a.str("id"))) }},
+		{name: "ajiya_change_assess", json: true,
+			desc:  "Use to record your judgement of one candidate of an open change: unaffected, modify, replace, invalidate or investigate, with a reason. replace needs title and done_when for the new ticket; modify of a done ticket needs them for a follow-up ticket; modify of an open ticket needs title, done_when or both. The other verdicts take neither. Assessing again overwrites the verdict. A person approves; investigate blocks approval.",
+			props: []mcpProp{chgIDProp, strProp("ticket", "Ticket ID of the candidate, such as AJ-0043.", true), strProp("verdict", "One of unaffected, modify, replace, invalidate, investigate.", true), strProp("reason", "Why you chose this verdict.", true), strProp("title", "Title of the new ticket, or the edited title for modify of an open ticket.", false), strProp("done_when", "Done-when of the new ticket, or the edited done-when.", false)},
+			argv: func(a mcpArgs) []string {
+				return cat([]string{"change", "assess"}, a.flag("verdict", "verdict"), a.flag("reason", "reason"), a.flag("title", "title"), a.flag("done-when", "done_when"), pos(a.str("id"), a.str("ticket")))
+			}},
+		{name: "ajiya_change_list", readOnly: true, json: true,
+			desc: "Use to see every change request with its status.",
+			argv: func(a mcpArgs) []string { return []string{"change", "list"} }},
+		{name: "ajiya_change_show", readOnly: true, json: true,
+			desc:  "Use to read a change request in full: what it touches, its candidates, reasons and verdicts.",
+			props: []mcpProp{chgIDProp},
+			argv:  func(a mcpArgs) []string { return cat([]string{"change", "show"}, pos(a.str("id"))) }},
 		{name: "ajiya_init",
 			desc:  "Use in a folder that has no ajiya.toml to set up Ajiya there, registering the apps it detects. Equivalent to 'ajiya init --yes'.",
 			props: []mcpProp{strProp("name", "Project name (default: the folder name).", false), strProp("prefix", "Ticket ID prefix, such as AJ.", false)},
@@ -351,11 +443,12 @@ func (m *mcpServer) call(t mcpTool, a mcpArgs, dir string) *mcp.CallToolResult {
 		return textResult(true, msg)
 	}
 	if !t.json {
-		return textResult(false, firstLine(out), restLines(out), strings.TrimSpace(errOut))
+		// Warnings go before the rest so that the command's own last line stays last.
+		return textResult(false, firstLine(out), strings.TrimSpace(errOut), restLines(out))
 	}
 	// The one-line summary is the first line of the command's own text output.
 	// Read commands do not change anything, so running twice is safe.
-	jout, _, _ := m.exec(dir, append(append([]string{}, argv...), "--json"))
+	jout, _, _ := m.exec(dir, beforeTerminator(argv, "--json"))
 	plain := out
 	if t.findings { // check prints the findings, then a count line
 		lines := strings.Split(strings.TrimSpace(out), "\n")
@@ -404,9 +497,13 @@ func (m *mcpServer) projectDir(ctx context.Context, sess *mcp.ServerSession, for
 }
 
 // clientRoots returns the local folders the client sent as MCP roots, if it
-// sends any.
+// declared the capability and sends any.
 func clientRoots(ctx context.Context, sess *mcp.ServerSession) []string {
 	if sess == nil {
+		return nil
+	}
+	// Ask only a client that declared the roots capability in initialize.
+	if p := sess.InitializeParams(); p == nil || p.Capabilities == nil || p.Capabilities.RootsV2 == nil {
 		return nil
 	}
 	res, err := sess.ListRoots(ctx, nil)

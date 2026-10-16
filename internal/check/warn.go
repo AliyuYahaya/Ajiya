@@ -14,11 +14,18 @@ package check
 //	W009 an earlier milestone already requires everything a later one does
 //	W010 open tickets are in no milestone, when a [[milestones]] list exists
 //	W011 [phases] order lists a phase before a phase it waits on
+//	W012 a phase file is in the old six-column form, without Tags
+//	W013 two tech tags differ only by punctuation or a trailing ql, js or s
+//	W014 an open ticket links a superseded decision
+//	W015 a change has been open for more than 14 days
+//
+// A ticket with no tags is valid: there is no warning for missing tags.
 
 import (
 	"errors"
 	"fmt"
 	"path"
+	"path/filepath"
 	"regexp"
 	"sort"
 	"strings"
@@ -63,6 +70,13 @@ func planWarnings(cfg *config.Config, p *plan.Plan) []Finding {
 				"the goal of %s names %s, but every ticket is for %s", ph.Slug, strings.Join(named, " and "), only))
 		}
 	}
+
+	for _, ph := range p.Phases {
+		if ph.SixColumn {
+			fs = append(fs, oldFormWarning(ph))
+		}
+	}
+	fs = append(fs, techWarnings(p)...)
 
 	if cfg.Root != "" {
 		dirs, _ := detect.AppManifestDirs(cfg.Root)
@@ -204,6 +218,39 @@ func exemptFromApps(f string) bool {
 	return !strings.Contains(f, "/") || strings.HasPrefix(f, ".") || strings.HasPrefix(f, plan.Dir+"/")
 }
 
+// commitFiles returns the paths a commit changed, relative to the project
+// root. It looks in the root's repository first, then in the repository of
+// each app, so evidence from a plan over several repositories is found. It
+// returns nil when no repository has the commit.
+func commitFiles(cfg *config.Config, rev string) []string {
+	if files, err := gitx.CommitFiles(cfg.Root, rev); err == nil {
+		return files
+	}
+	var dirs []string
+	for _, a := range cfg.Apps {
+		dirs = append(dirs, filepath.Join(cfg.Root, filepath.FromSlash(a.Path)))
+	}
+	root := cfg.Root
+	if r, err := filepath.EvalSymlinks(root); err == nil {
+		root = r
+	}
+	for _, repo := range gitx.Repos(cfg.Root, dirs) {
+		files, err := gitx.CommitFiles(repo, rev)
+		if err != nil {
+			continue
+		}
+		rel, err := filepath.Rel(root, repo)
+		if err != nil || rel == "." || rel == ".." || strings.HasPrefix(rel, ".."+string(filepath.Separator)) {
+			return files // the root's own repository: paths are already right
+		}
+		for i, f := range files {
+			files[i] = path.Join(filepath.ToSlash(rel), f)
+		}
+		return files
+	}
+	return nil
+}
+
 // History returns the warnings that need git history: W003, W006 and W008.
 // now is passed in so tests can fix it.
 func History(cfg *config.Config, p *plan.Plan, now time.Time) ([]Finding, error) {
@@ -221,10 +268,7 @@ func History(cfg *config.Config, p *plan.Plan, now time.Time) ([]Finding, error)
 		}
 		changed, ok := files[t.Status.Commit]
 		if !ok {
-			var err error
-			if changed, err = gitx.CommitFiles(root, t.Status.Commit); err != nil {
-				changed = nil // a commit that is gone is not this check's business
-			}
+			changed = commitFiles(cfg, t.Status.Commit) // nil: a commit that is gone is not this check's business
 			files[t.Status.Commit] = changed
 		}
 		touched := false
@@ -269,6 +313,7 @@ func History(cfg *config.Config, p *plan.Plan, now time.Time) ([]Finding, error)
 				"%s has needed a human (%s) for %d days", t.ID, t.Status.Human, int(waited.Hours()/24)))
 		}
 	}
+	fs = append(fs, openChangeWarnings(p, now)...)
 	return fs, nil
 }
 

@@ -10,8 +10,8 @@ prefix = "FX"
 
 Goal: g
 
-| ID | App | Ticket | Done when | Depends | Status |
-|---|---|---|---|---|---|
-| FX-0001 | infra | A | a | FX-0001 | 🟥 Pending |
+| ID | App | Ticket | Done when | Depends | Tags | Status |
+|---|---|---|---|---|---|---|
+| FX-0001 | infra | A | a | FX-0001 | - | 🟥 Pending |
 -- want --
 E006 ajiya/core.md:8: FX-0001 depends on itself. Fix: ajiya ticket edit FX-0001 --depends <IDs without FX-0001>

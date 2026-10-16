@@ -57,13 +57,13 @@ Some notes that are not items.
 
 Goal: Imported items waiting to be organised
 
-| ID | App | Ticket | Done when | Depends | Status |
-|---|---|---|---|---|---|
-| CB-0001 | infra | Book a hosting account | - | - | 🟥 Pending · Link: notes/todo.md:5 |
-| CB-0002 | infra | Register the domain | - | - | 🟩 Done · Done before Ajiya · Link: notes/todo.md:6 |
-| CB-0003 | infra | Write the privacy page | - | - | 🟥 Pending · Link: notes/todo.md:7 |
-| CB-0004 | infra | Pick a name | - | - | 🟩 Done · Done before Ajiya · Link: notes/todo.md:8 |
-| CB-0005 | infra | Set up the database | - | - | 🟥 Pending · Link: notes/todo.md:9 |
-| CB-0006 | infra | Add backups | - | - | 🟥 Pending · Link: notes/todo.md:10 |
-| CB-0007 | infra | Nested: nightly dump | - | - | 🟩 Done · Done before Ajiya · Link: notes/todo.md:11 |
-| CB-0008 | infra | Escape a \| pipe in the title | - | - | 🟥 Pending · Link: notes/todo.md:12 |
+| ID | App | Ticket | Done when | Depends | Tags | Status |
+|---|---|---|---|---|---|---|
+| CB-0001 | infra | Book a hosting account | - | - | - | 🟥 Pending · Link: notes/todo.md:5 |
+| CB-0002 | infra | Register the domain | - | - | - | 🟩 Done · Done before Ajiya · Link: notes/todo.md:6 |
+| CB-0003 | infra | Write the privacy page | - | - | - | 🟥 Pending · Link: notes/todo.md:7 |
+| CB-0004 | infra | Pick a name | - | - | - | 🟩 Done · Done before Ajiya · Link: notes/todo.md:8 |
+| CB-0005 | infra | Set up the database | - | - | - | 🟥 Pending · Link: notes/todo.md:9 |
+| CB-0006 | infra | Add backups | - | - | - | 🟥 Pending · Link: notes/todo.md:10 |
+| CB-0007 | infra | Nested: nightly dump | - | - | - | 🟩 Done · Done before Ajiya · Link: notes/todo.md:11 |
+| CB-0008 | infra | Escape a \| pipe in the title | - | - | - | 🟥 Pending · Link: notes/todo.md:12 |

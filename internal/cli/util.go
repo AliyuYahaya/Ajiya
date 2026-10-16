@@ -4,10 +4,12 @@ import (
 	"errors"
 	"flag"
 	"io"
+	"path/filepath"
 	"strings"
 	"time"
 
 	"github.com/AliyuYahaya/Ajiya/internal/config"
+	"github.com/AliyuYahaya/Ajiya/internal/gitx"
 	"github.com/AliyuYahaya/Ajiya/internal/plan"
 )
 
@@ -30,12 +32,15 @@ func parse(fs *flag.FlagSet, args []string, npos int) ([]string, error) {
 			}
 			return nil, usageErr("%v", err)
 		}
-		args = fs.Args()
-		if len(args) == 0 {
+		rest := fs.Args()
+		// The flag package consumes the "--" terminator itself; when it did,
+		// everything left is positional, even if it starts with "-".
+		if n := len(args) - len(rest); n > 0 && args[n-1] == "--" {
+			pos = append(pos, rest...)
 			break
 		}
-		if args[0] == "--" {
-			pos = append(pos, args[1:]...)
+		args = rest
+		if len(args) == 0 {
 			break
 		}
 		pos = append(pos, args[0])
@@ -58,6 +63,35 @@ func isSet(fs *flag.FlagSet, name string) bool {
 	return set
 }
 
+// tagFlags are the flags that write a ticket's Tags cell. Each takes a
+// comma-separated list and replaces that key's values; an empty value or "-"
+// clears the key (only 'ticket edit' has anything to clear).
+type tagFlags struct{ tech, decisions, paths *string }
+
+func addTagFlags(fs *flag.FlagSet) tagFlags {
+	return tagFlags{
+		tech:      fs.String("tech", "", "technology or service tags, comma separated (lower-case slugs such as aws-rds)"),
+		decisions: fs.String("decisions", "", "decision IDs, comma separated (such as DEC-0003)"),
+		paths:     fs.String("paths", "", "file globs, comma separated"),
+	}
+}
+
+// apply returns tags with every key whose flag was given replaced.
+func (f tagFlags) apply(fs *flag.FlagSet, tags plan.Tags) (plan.Tags, error) {
+	for _, k := range []struct{ flag, key, v string }{
+		{"tech", plan.TagTech, *f.tech}, {"decisions", plan.TagDec, *f.decisions}, {"paths", plan.TagPath, *f.paths},
+	} {
+		if !isSet(fs, k.flag) {
+			continue
+		}
+		var err error
+		if tags, err = tags.With(k.key, plan.ParseTagList(k.v)); err != nil {
+			return tags, usageErr("--%s: %v", k.flag, err)
+		}
+	}
+	return tags, nil
+}
+
 // project is a loaded config and plan.
 type project struct {
 	cfg  *config.Config
@@ -70,6 +104,11 @@ func load(e *env) (*project, error) {
 	if err != nil {
 		return nil, usageErr("%v", err)
 	}
+	return loadAt(root)
+}
+
+// loadAt reads the config and plan of the project whose ajiya.toml is in root.
+func loadAt(root string) (*project, error) {
 	cfg, err := config.Load(root)
 	if err != nil {
 		return nil, usageErr("%v", err)
@@ -186,4 +225,31 @@ func (pr *project) newTicket(ph *plan.Phase, app, title, doneWhen string, deps [
 	}
 	ph.Tickets = append(ph.Tickets, t)
 	return t
+}
+
+// repos returns the git work trees whose commits count as evidence: the one
+// holding ajiya.toml (if it is in one) and the one holding each app folder,
+// without duplicates. A project in a single repository has just that one.
+func (pr *project) repos() []string {
+	var dirs []string
+	for _, a := range pr.cfg.Apps {
+		dirs = append(dirs, filepath.Join(pr.cfg.Root, filepath.FromSlash(a.Path)))
+	}
+	return gitx.Repos(pr.cfg.Root, dirs)
+}
+
+// repoLabel names a repository for people: its path from the project root with
+// / separators, or "" for the repository that holds the project root itself.
+func (pr *project) repoLabel(repo string) string {
+	root := pr.cfg.Root
+	if r, err := filepath.EvalSymlinks(root); err == nil {
+		root = r
+	}
+	if top, err := gitx.Toplevel(root); err == nil && top == repo {
+		return ""
+	}
+	if rel, err := filepath.Rel(root, repo); err == nil {
+		return filepath.ToSlash(rel)
+	}
+	return filepath.ToSlash(repo)
 }

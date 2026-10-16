@@ -52,9 +52,10 @@ func (pr *project) checkMilestone(name string) error {
 	return refused("no milestone %q; milestones are %s", name, strings.Join(names, ", "))
 }
 
-// canStart reports whether a ticket is open, not blocked and waits on nothing.
+// canStart reports whether a ticket is open, not yet started, not blocked and
+// waits on nothing.
 func canStart(pr *project, t *plan.Ticket) bool {
-	return !t.Status.Closed() && t.Status.Blocked == "" && len(waitingOn(pr, t)) == 0
+	return !t.Status.Closed() && t.Status.State != plan.InProgress && t.Status.Blocked == "" && len(waitingOn(pr, t)) == 0
 }
 
 // editConfig applies an edit to ajiya.toml, validates it and writes it.

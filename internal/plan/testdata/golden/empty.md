@@ -3,5 +3,5 @@
 
 Goal: The app is live for real patients
 
-| ID | App | Ticket | Done when | Depends | Status |
-|---|---|---|---|---|---|
+| ID | App | Ticket | Done when | Depends | Tags | Status |
+|---|---|---|---|---|---|---|

@@ -41,7 +41,7 @@ type Commit struct {
 	Subject string `json:"subject"`
 }
 
-var stateNames = map[plan.State]string{plan.Pending: "pending", plan.InProgress: "in_progress", plan.Done: "done", plan.Dropped: "dropped"}
+var stateNames = map[plan.State]string{plan.Pending: "pending", plan.InProgress: "in_progress", plan.Done: "done", plan.Dropped: "dropped", plan.Superseded: "superseded"}
 
 // Build groups commits (newest first, as gitx.Log returns them) by phase and
 // ticket. A commit naming several tickets is listed under each; an old ID

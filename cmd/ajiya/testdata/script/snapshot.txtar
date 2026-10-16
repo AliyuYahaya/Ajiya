@@ -1,0 +1,69 @@
+# snapshot: an annotated tag ajiya/plan/<name> on HEAD, refused with
+# uncommitted or untracked changes in ajiya/, a bad name or an existing name.
+
+exec ajiya init --name Demo --prefix DE
+exec ajiya phase add core 'Core works'
+exec ajiya ticket add --phase core --app infra --done-when x 'Schema'
+
+# Nothing committed yet.
+! exec ajiya snapshot first
+stderr 'no commits'
+
+env GIT_COMMITTER_DATE=2026-09-01T10:00:00
+env GIT_AUTHOR_DATE=2026-09-01T10:00:00
+exec git add -A
+exec git commit -q -m 'Plan' -m 'Ajiya: DE-0001'
+
+exec ajiya snapshot list
+stdout 'No snapshots yet'
+
+exec ajiya snapshot before-change
+stdout 'Snapshot before-change: tag ajiya/plan/before-change at '
+exec git cat-file -t ajiya/plan/before-change
+stdout '^tag$'
+exec git tag -l -n1 ajiya/plan/before-change
+stdout 'Ajiya plan snapshot before-change'
+
+# The list shows the date and the commit.
+exec ajiya snapshot list
+stdout '^SNAPSHOT +DATE +COMMIT$'
+stdout '^before-change +2026-09-01 +'
+exec ajiya snapshot list --json
+stdout '"name": "before-change"'
+stdout '"tag": "ajiya/plan/before-change"'
+stdout '"date": "2026-09-01"'
+
+# An existing name, and names git cannot use.
+! exec ajiya snapshot before-change
+stderr 'already exists'
+! exec ajiya snapshot 'two words'
+stderr 'must not contain spaces'
+! exec ajiya snapshot 'a..b'
+stderr 'not a valid git tag name'
+! exec ajiya snapshot list-not-this/
+stderr 'not a valid git tag name'
+! exec ajiya snapshot list extra
+stderr 'expected 0 argument'
+! exec ajiya snapshot
+stderr 'expected 1 argument'
+
+# Uncommitted changes in ajiya/ are refused, and the files are named.
+exec ajiya ticket add --phase core --app infra --done-when x 'Endpoint'
+! exec ajiya snapshot dirty
+stderr 'ajiya/ has uncommitted or untracked changes: ajiya/core.md'
+exec ajiya snapshot list --json
+! stdout '"name": "dirty"'
+
+# Untracked files too.
+exec git add -A
+exec git commit -q -m 'Endpoint' -m 'Ajiya: DE-0002'
+exec ajiya build
+! exec ajiya snapshot untracked
+stderr 'ajiya/PROGRESS.md'
+
+# Once committed, a snapshot works again, and the list holds both.
+exec git add -A
+exec git commit -q -m 'Build' -m 'Ajiya: chore'
+exec ajiya snapshot later
+exec ajiya snapshot list
+stdout -count=2 '2026-0'

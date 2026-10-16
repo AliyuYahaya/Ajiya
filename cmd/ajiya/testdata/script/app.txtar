@@ -5,7 +5,7 @@ exec ajiya phase add core 'Core works'
 mkdir apps/api
 
 exec ajiya app add api --path apps/api
-stdout 'Registered app api at apps/api.'
+stdout 'Registered app api at `apps/api`.'
 ! stderr .
 exec ajiya app add ui --path packages/ui --library
 stderr 'warning: packages/ui is not a folder yet'

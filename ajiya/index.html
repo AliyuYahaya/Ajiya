@@ -178,7 +178,7 @@ h2.section .count { color: var(--c-faint); font-weight: 600; font-size: 13px; }
 .badge.done { background: var(--c-green-pale); color: var(--c-green); }
 .badge.in_progress { background: var(--c-amber-pale); color: var(--c-amber-text); }
 .badge.pending { background: var(--c-red-pale); color: var(--c-red); }
-.badge.dropped, .badge.plain { background: var(--c-page); color: var(--c-muted); }
+.badge.dropped, .badge.superseded, .badge.plain { background: var(--c-page); color: var(--c-muted); }
 .badge.ms { background: var(--c-blue-pale); color: var(--c-blue); }
 .badge.ready { background: var(--c-blue); color: var(--c-on-accent); }
 .badge.human, .badge.agent { background: var(--c-violet-pale); color: var(--c-violet); }
@@ -190,7 +190,7 @@ h2.section .count { color: var(--c-faint); font-weight: 600; font-size: 13px; }
 .chip.unknown { cursor: default; text-decoration: line-through; }
 .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 .dot.done { background: var(--c-green); } .dot.in_progress { background: var(--c-amber); } .dot.pending { background: var(--c-red); }
-.dot.dropped, .dot.none { background: var(--c-faint); } .dot.ready { background: var(--c-blue); } .dot.human { background: var(--c-violet); }
+.dot.dropped, .dot.superseded, .dot.none { background: var(--c-faint); } .dot.ready { background: var(--c-blue); } .dot.human { background: var(--c-violet); }
 
 /* Board */
 .board-tools { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; color: var(--c-muted); font-size: 13px; }
@@ -210,6 +210,27 @@ h2.section .count { color: var(--c-faint); font-weight: 600; font-size: 13px; }
 .phase-head .stats { color: var(--c-muted); font-size: 12px; display: flex; align-items: center; gap: 10px; }
 .phase-head .bar { width: 160px; }
 .phase-goal { color: var(--c-muted); font-size: 13px; margin: 4px 0 0; }
+
+table.grouped tr.phase-row td { background: var(--c-col); padding: 14px 16px 10px; border-top: 1px solid var(--c-line); }
+table.grouped tr.phase-row:first-child td { border-top: 0; }
+table.grouped .phase-head h3 { font-size: 15px; }
+
+/* Phase page */
+.phase-top { padding: 20px 22px; margin-bottom: 4px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.phase-top .head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.phase-top .stats { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; color: var(--c-muted); font-size: 13px; }
+.phase-top .stats .bar { width: 220px; max-width: 100%; }
+.phase-top .goal { margin: 0; font-size: 15px; font-weight: 600; overflow-wrap: anywhere; }
+.phase-desc p { margin: 0 0 10px; max-width: 80ch; overflow-wrap: anywhere; }
+.phase-desc p:last-child { margin-bottom: 0; }
+.phase-nav { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; }
+a.plink { color: inherit; text-decoration: none; }
+a.plink:hover { color: var(--c-blue); text-decoration: underline; }
+details.fold { margin-top: 28px; }
+details.fold > summary { cursor: pointer; font-size: 16px; font-weight: 800; }
+details.fold > summary .count { color: var(--c-faint); font-weight: 600; font-size: 13px; }
+.dec-list { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
+.dec-list > div { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
 
 /* Milestones */
 .ms-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(260px, 100%), 1fr)); gap: 12px; margin-top: 12px; }
@@ -298,6 +319,58 @@ td .sub { color: var(--c-faint); font-size: 12px; }
 .gnode.miss > *, .gnode.miss::before { opacity: .25; }
 .gnode .nm.two { white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
 
+/* Changes and Decisions */
+.nav-item[hidden] { display: none; }
+.badge.proposed, .badge.open { background: var(--c-amber-pale); color: var(--c-amber-text); }
+.badge.accepted, .badge.approved { background: var(--c-green-pale); color: var(--c-green); }
+.badge.rejected { background: var(--c-red-pale); color: var(--c-red); }
+.badge.v-unaffected { background: var(--c-page); color: var(--c-muted); }
+.badge.v-modify { background: var(--c-blue-pale); color: var(--c-blue); }
+.badge.v-replace, .badge.v-invalidate { background: var(--c-violet-pale); color: var(--c-violet); }
+.badge.v-investigate { background: var(--c-red-pale); color: var(--c-red); }
+.badge.v-none { background: var(--c-amber-pale); color: var(--c-amber-text); }
+.rec { padding: 18px 20px; margin-bottom: 14px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.rec .head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.rec .rid { font-weight: 700; }
+.rec h3 { margin: 0; font-size: 16px; font-weight: 800; overflow-wrap: anywhere; }
+.rec .tags { display: flex; flex-wrap: wrap; gap: 4px 6px; align-items: center; font-size: 12px; color: var(--c-muted); }
+.rec .tags .arrow { color: var(--c-faint); }
+.rec .lbl { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--c-faint); margin-right: 2px; }
+.rec .prose { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+.rec .prose-k { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--c-faint); margin: 4px 0 2px; }
+.rec .alert { border-radius: 12px; padding: 8px 12px; font-size: 13px; font-weight: 600; background: var(--c-amber-pale); color: var(--c-amber-text); }
+.rec .alert.bad { background: var(--c-red-pale); color: var(--c-red); }
+.rec .alert.ok { background: var(--c-green-pale); color: var(--c-green); }
+.rec details > summary { cursor: pointer; font-weight: 600; color: var(--c-muted); }
+.rec .table-wrap { border-radius: 12px; }
+.impact td, .impact th { padding: 8px 12px; }
+.impact .why { color: var(--c-muted); font-size: 12.5px; overflow-wrap: anywhere; }
+.impact .reasons { display: flex; flex-wrap: wrap; gap: 4px; }
+.impact .newv { margin-top: 4px; font-size: 12.5px; overflow-wrap: anywhere; }
+.impact tr.stale td { opacity: .6; }
+@media (max-width: 860px) { .impact .why-col, .impact th.why-col { display: none; } }
+
+/* History: a vertical timeline, newest first. */
+.tl { position: relative; margin: 8px 0 0 7px; padding-left: 28px; border-left: 2px solid var(--c-line); }
+.ev { position: relative; padding-bottom: 18px; }
+.ev:last-child { padding-bottom: 0; }
+.ev::before { content: ""; position: absolute; left: -37px; top: 20px; width: 12px; height: 12px; border-radius: 50%; background: var(--c-card); border: 2px solid var(--c-faint); }
+.ev.k-decision_accepted::before, .ev.k-change_approved::before { border-color: var(--c-green); background: var(--c-green); }
+.ev.k-decision_proposed::before, .ev.k-change_opened::before { border-color: var(--c-amber); }
+.ev.k-change_rejected::before { border-color: var(--c-red); background: var(--c-red); }
+.ev.k-decision_superseded::before { border-color: var(--c-violet); background: var(--c-violet); }
+.ev .rec { margin-bottom: 0; padding: 14px 18px; gap: 8px; }
+.ev .rec h3 { font-size: 15px; }
+.ev .when { color: var(--c-muted); font-size: 12px; }
+.ev .kv { grid-template-columns: 150px 1fr; }
+.ev .kv > div { padding: 7px 0; }
+.ev .kv .k { padding-top: 9px; }
+.ev .kv .v { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
+.ev .oi { display: flex; flex-wrap: wrap; gap: 4px 6px; align-items: center; min-width: 0; }
+.ev .oi .dim { color: var(--c-muted); font-size: 12.5px; overflow-wrap: anywhere; }
+.ev .oi .arrow { color: var(--c-faint); }
+@media (max-width: 860px) { .ev .kv { grid-template-columns: 1fr; } .tl { padding-left: 20px; } .ev::before { left: -29px; } }
+
 /* Live refresh: a small note after data.js reloads under ajiya serve. */
 .live-note {
   position: fixed; right: 16px; bottom: 16px; z-index: 30; pointer-events: none; opacity: 0; transition: opacity .3s;
@@ -358,6 +431,9 @@ dialog::backdrop { background: var(--c-backdrop); }
   <symbol id="i-box" viewBox="0 0 24 24"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></symbol>
   <symbol id="i-check" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></symbol>
   <symbol id="i-git" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M3 12h6"/><path d="M15 12h6"/></symbol>
+  <symbol id="i-scale" viewBox="0 0 24 24"><path d="M12 3v18"/><path d="M5 7h14"/><path d="m5 7-3 7a3 3 0 0 0 6 0Z"/><path d="m19 7-3 7a3 3 0 0 0 6 0Z"/><path d="M8 21h8"/></symbol>
+  <symbol id="i-swap" viewBox="0 0 24 24"><path d="M17 4l4 4-4 4"/><path d="M3 8h18"/><path d="M7 20l-4-4 4-4"/><path d="M21 16H3"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></symbol>
   <symbol id="i-left" viewBox="0 0 24 24"><path d="m11 17-5-5 5-5"/><path d="m18 17-5-5 5-5"/></symbol>
   <symbol id="i-right" viewBox="0 0 24 24"><path d="m6 17 5-5-5-5"/><path d="m13 17 5-5-5-5"/></symbol>
   <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/></symbol>
@@ -377,14 +453,16 @@ dialog::backdrop { background: var(--c-backdrop); }
       <!-- One button per view. Each data-tab must match a key in VIEWS below
            (dashboard_test.go checks this). -->
       <button class="nav-item" type="button" data-tab="overview" title="Overview"><svg class="i"><use href="#i-dash"/></svg><span class="hide-c">Overview</span><span class="n hide-c"></span></button>
-      <button class="nav-item" type="button" data-tab="next" title="Next up"><svg class="i"><use href="#i-zap"/></svg><span class="hide-c">Next up</span><span class="n hide-c"></span></button>
       <button class="nav-item" type="button" data-tab="board" title="Board"><svg class="i"><use href="#i-kanban"/></svg><span class="hide-c">Board</span><span class="n hide-c"></span></button>
       <button class="nav-item" type="button" data-tab="deps" title="Dependencies"><svg class="i"><use href="#i-flow"/></svg><span class="hide-c">Dependencies</span><span class="n hide-c"></span></button>
-      <button class="nav-item" type="button" data-tab="phases" title="Phases"><svg class="i"><use href="#i-layers"/></svg><span class="hide-c">Phases</span><span class="n hide-c"></span></button>
       <button class="nav-item" type="button" data-tab="tickets" title="Tickets"><svg class="i"><use href="#i-list"/></svg><span class="hide-c">Tickets</span><span class="n hide-c"></span></button>
       <button class="nav-item" type="button" data-tab="apps" title="Apps"><svg class="i"><use href="#i-box"/></svg><span class="hide-c">Apps</span><span class="n hide-c"></span></button>
       <button class="nav-item" type="button" data-tab="checks" title="Checks"><svg class="i"><use href="#i-check"/></svg><span class="hide-c">Checks</span><span class="n hide-c"></span></button>
       <button class="nav-item" type="button" data-tab="activity" title="Activity"><svg class="i"><use href="#i-git"/></svg><span class="hide-c">Activity</span><span class="n hide-c"></span></button>
+      <!-- Optional views: hidden when the plan has none of that thing. -->
+      <button class="nav-item" type="button" data-tab="changes" title="Changes" hidden><svg class="i"><use href="#i-swap"/></svg><span class="hide-c">Changes</span><span class="n hide-c"></span></button>
+      <button class="nav-item" type="button" data-tab="decisions" title="Decisions" hidden><svg class="i"><use href="#i-scale"/></svg><span class="hide-c">Decisions</span><span class="n hide-c"></span></button>
+      <button class="nav-item" type="button" data-tab="history" title="History" hidden><svg class="i"><use href="#i-clock"/></svg><span class="hide-c">History</span><span class="n hide-c"></span></button>
       <div id="phaseNav"></div>
     </nav>
     <div class="side-foot">
@@ -415,6 +493,7 @@ dialog::backdrop { background: var(--c-backdrop); }
             <option value="in_progress">In progress</option>
             <option value="done">Done</option>
             <option value="dropped">Dropped</option>
+            <option value="superseded">Superseded</option>
           </optgroup>
           <optgroup label="Open tickets">
             <option value="ready">Can start now</option>
@@ -513,13 +592,14 @@ dialog::backdrop { background: var(--c-backdrop); }
   const arr = v => Array.isArray(v) ? v : [];
   // The data and its indexes. setData runs again when live refresh loads a
   // new data.js.
-  let milestones, phases, apps, tickets, checks, activity, nextIDs, project;
+  let milestones, phases, apps, tickets, checks, activity, nextIDs, project, decisions, changes, timeline;
   let byID, phaseBySlug, phaseIndex, msIndex, idIndex, nextIndex;
   function setData(d) {
     D = d;
     milestones = arr(d.milestones); phases = arr(d.phases); apps = arr(d.apps);
     tickets = d.tickets; checks = arr(d.checks); activity = arr(d.activity); nextIDs = arr(d.next);
     project = d.project || {};
+    decisions = arr(d.decisions); changes = arr(d.changes); timeline = arr(d.history);
     byID = new Map(tickets.map(t => [t.id, t]));
     phaseBySlug = new Map(phases.map(p => [p.slug, p]));
     phaseIndex = new Map(phases.map((p, i) => [p.slug, i]));
@@ -534,29 +614,32 @@ dialog::backdrop { background: var(--c-backdrop); }
   const phaseTitle = slug => (phaseBySlug.get(slug) || {}).title || slug;
 
   const state = t => t.status.state;
-  const closed = t => state(t) === 'done' || state(t) === 'dropped';
+  const closed = t => state(t) === 'done' || state(t) === 'dropped' || state(t) === 'superseded';
   const human = t => !closed(t) && !!t.status.human;
   // Board column. A ticket that needs a human sits there whatever else holds;
   // in progress comes before "can start now" because started tickets are ready too.
+  /* Ready means nothing blocks it; can start also means not yet started, as in ajiya next. */
+  const canStart = t => t.ready && state(t) !== 'in_progress';
   const column = t => closed(t) ? 'done' : human(t) ? 'human' : state(t) === 'in_progress' ? 'doing' : t.ready ? 'ready' : 'waiting';
-  const stateLabel = { pending: 'Pending', in_progress: 'In progress', done: 'Done', dropped: 'Dropped' };
-  // Phase display order, then ID: the order used everywhere except Next up.
+  const stateLabel = { pending: 'Pending', in_progress: 'In progress', done: 'Done', dropped: 'Dropped', superseded: 'Superseded' };
+  // Phase display order, then ID: the order used everywhere except the Can start now column.
   const byPlan = (a, b) => (phaseIndex.get(a.phase) ?? 1e9) - (phaseIndex.get(b.phase) ?? 1e9) || idIndex.get(a.id) - idIndex.get(b.id);
   const byNext = (a, b) => (nextIndex.get(a.id) ?? 1e9) - (nextIndex.get(b.id) ?? 1e9) || byPlan(a, b);
 
   const countsOf = list => {
-    const c = { total: 0, done: 0, in_progress: 0, pending: 0, dropped: 0 };
-    list.forEach(t => { c.total++; c[state(t)]++; });
+    const c = { total: 0, done: 0, in_progress: 0, pending: 0, dropped: 0, superseded: 0 };
+    // Dropped and superseded tickets are not in the total.
+    list.forEach(t => { if (state(t) !== 'dropped' && state(t) !== 'superseded') c.total++; c[state(t)]++; });
     return c;
   };
   // Progress bar: green for closed (done and dropped), amber for in progress.
   const barHTML = c => {
     if (!c.total) return '<div class="bar"></div>';
     const w = n => (100 * (n || 0) / c.total).toFixed(2) + '%';
-    return `<div class="bar" role="img" aria-label="${c.done + c.dropped} closed, ${c.in_progress} in progress of ${c.total}"><span class="d" style="width:${w(c.done)}"></span><span class="x" style="width:${w(c.dropped)}"></span><span class="p" style="width:${w(c.in_progress)}"></span></div>`;
+    return `<div class="bar" role="img" aria-label="${c.done} closed, ${c.in_progress} in progress of ${c.total}"><span class="d" style="width:${w(c.done)}"></span><span class="p" style="width:${w(c.in_progress)}"></span></div>`;
   };
-  const pct = c => c.total ? Math.floor(100 * (c.done + c.dropped) / c.total) : 100;
-  const countText = c => `${c.done} done · ${c.in_progress} in progress · ${c.pending} pending${c.dropped ? ` · ${c.dropped} dropped` : ''}`;
+  const pct = c => c.total ? Math.floor(100 * (c.done) / c.total) : 100;
+  const countText = c => `${c.done} done · ${c.in_progress} in progress · ${c.pending} pending${c.dropped ? ` · ${c.dropped} dropped` : ''}${c.superseded ? ` · ${c.superseded} superseded` : ''}`;
 
   const stateBadge = t => `<span class="badge ${state(t)}">${stateLabel[state(t)] || esc(state(t))}</span>`;
   const msBadge = name => name ? `<span class="badge ms" title="Milestone">${esc(name)}</span>` : '';
@@ -574,28 +657,57 @@ dialog::backdrop { background: var(--c-backdrop); }
      ----------------------------------------------------------------------- */
   const VIEWS = {
     overview: { label: 'Overview', sub: 'Progress per milestone, in order, and per phase.', filters: true },
-    next: { label: 'Next up', sub: 'Tickets that can start now, in the order ajiya next gives: earliest milestone first, then what unblocks most.', filters: true },
-    board: { label: 'Board', sub: 'Every ticket by where it stands.', filters: true },
+    board: { label: 'Board', sub: 'Every ticket by where it stands. Can start now is in the order ajiya next gives: earliest milestone first, then what unblocks most.', filters: true },
     deps: { label: 'Dependencies', sub: 'What waits on what. An arrow points from a dependency to what needs it; columns go left to right by depth.', filters: true },
-    phases: { label: 'Phases', sub: 'Tickets by phase, in display order.', filters: true },
-    tickets: { label: 'Tickets', sub: 'Every ticket in the plan.', filters: true },
+    tickets: { label: 'Tickets', sub: 'Every ticket in the plan, as a table. Group by phase to see each phase with its goal and progress.', filters: true },
     apps: { label: 'Apps', sub: 'Tickets per app.', filters: false },
     checks: { label: 'Checks', sub: 'What ajiya check reports. Fix errors first.', filters: 'search' },
     activity: { label: 'Activity', sub: 'Commits from the last 30 days, newest first, with the status changes they made.', filters: 'search' },
+    changes: { label: 'Changes', sub: 'Plan changes: open ones first, with the tickets each might affect and the verdicts so far.', optional: () => changes.length, filters: 'search' },
+    decisions: { label: 'Decisions', sub: 'Choices the plan rests on, and the tickets that link them.', optional: () => decisions.length, filters: 'search' },
+    history: { label: 'History', sub: 'How the plan changed, newest first: decisions made and replaced, and the changes that were approved or rejected.', optional: () => timeline.length, filters: 'search' },
   };
   const renderers = {
-    overview: renderOverview, next: renderNext, board: renderBoard, deps: renderDeps, phases: renderPhases,
+    overview: renderOverview, board: renderBoard, deps: renderDeps,
     tickets: renderTickets, apps: renderApps, checks: renderChecks, activity: renderActivity,
+    changes: renderChanges, decisions: renderDecisions, history: renderHistory,
+    phase: renderPhase,
   };
 
-  let tab = location.hash.slice(1) || store.get(key('tab'));
-  if (!VIEWS[tab]) tab = 'overview';
+  // Old tab names (links, a saved tab) land on the view that replaced them.
+  // #phases is Tickets grouped by phase.
+  const ALIAS = { next: 'board', phases: 'tickets' };
+  let grouped = store.get(key('grouped')) === '1';
+  const setGrouped = on => { grouped = on; store.set(key('grouped'), on ? '1' : '0'); };
+  const resolve = k => {
+    if (k === 'phases') setGrouped(true);
+    return ALIAS[k] || k;
+  };
+  // A phase has a page of its own, #phase/<slug>. It is a route, not a tab:
+  // it has no nav button and is not remembered as the last tab.
+  const ROUTES = { phase: { label: 'Phase', sub: '', filters: false } };
+  const route = h => {
+    const m = /^phase\/(.+)$/.exec(h || '');
+    if (!m) return { tab: resolve(h), slug: '' };
+    let slug = m[1];
+    try { slug = decodeURIComponent(slug); } catch (e) {}
+    return { tab: 'phase', slug };
+  };
+  const viewOf = k => VIEWS[k] || ROUTES[k];
+  // An optional view (Changes, Decisions) exists only while the plan has some.
+  const shown = k => !!ROUTES[k] || (!!VIEWS[k] && (!VIEWS[k].optional || VIEWS[k].optional()));
+  const saved = route(location.hash.slice(1) || store.get(key('tab')));
+  let tab = saved.tab, phaseSlug = saved.slug;
+  if (!shown(tab)) tab = 'overview';
+  const hashOf = () => tab === 'phase' ? 'phase/' + encodeURIComponent(phaseSlug) : tab;
   window.addEventListener('hashchange', () => {
-    const h = location.hash.slice(1);
-    if (VIEWS[h] && h !== tab) go(h);
+    const r = route(location.hash.slice(1));
+    if (shown(r.tab) && (r.tab !== tab || r.slug !== phaseSlug || location.hash.slice(1) !== hashOf())) go(r.tab, r.slug);
   });
-  function go(t) {
-    tab = t; store.set(key('tab'), t); ticketLimit = 150; activityLimit = 100;
+  function go(t, slug) {
+    tab = t; phaseSlug = t === 'phase' ? slug || '' : '';
+    if (t !== 'phase') store.set(key('tab'), t);
+    ticketLimit = 150; activityLimit = 100;
     shell.classList.remove('open');
     render();
     document.querySelector('main').scrollTop = 0;
@@ -629,7 +741,7 @@ dialog::backdrop { background: var(--c-backdrop); }
     if (F.phase && t.phase !== F.phase) return false;
     if (F.ms === '-' ? t.milestone : F.ms && t.milestone !== F.ms) return false;
     if (F.state) {
-      if (F.state === 'ready') { if (!t.ready) return false; }
+      if (F.state === 'ready') { if (!canStart(t)) return false; }
       else if (F.state === 'waiting') { if (column(t) !== 'waiting') return false; }
       else if (F.state === 'human') { if (!human(t)) return false; }
       else if (state(t) !== F.state) return false;
@@ -665,34 +777,37 @@ dialog::backdrop { background: var(--c-backdrop); }
     $('brand').textContent = own; $('mobileBrand').textContent = own;
     errors = checks.filter(c => c.level === 'error').length;
     const n = {
-      next: nextIDs.length, board: tickets.length, deps: tickets.filter(t => arr(t.depends).length).length, phases: phases.length, tickets: tickets.length,
+      board: tickets.length, deps: tickets.filter(t => arr(t.depends).length).length, tickets: tickets.length,
       apps: apps.length, checks: checks.length, activity: activity.length,
+      changes: changes.filter(c => c.status.state === 'open').length || changes.length, decisions: decisions.length, history: timeline.length,
     };
     document.querySelectorAll('#nav [data-tab]').forEach(b => {
       const k = b.dataset.tab;
+      b.hidden = !shown(k);
       b.setAttribute('aria-current', String(k === tab));
       const s = b.querySelector('.n');
       if (s) { s.textContent = n[k] ? n[k] : ''; s.classList.toggle('bad', k === 'checks' && errors > 0); }
     });
     $('phaseNav').innerHTML = phases.length ? `<div class="nav-label hide-c">Phases</div>` + phases.map(p =>
-      `<button class="phase-link hide-c" type="button" data-phase="${esc(p.slug)}" aria-current="${F.phase === p.slug}" title="${esc(p.goal)}">
-        <span class="t"><span>${esc(p.title || p.slug)}</span><span>${p.counts.done + p.counts.dropped}/${p.counts.total}</span></span>${barHTML(p.counts)}</button>`).join('') : '';
+      `<button class="phase-link hide-c" type="button" data-phase="${esc(p.slug)}" aria-current="${tab === 'phase' ? phaseSlug === p.slug : F.phase === p.slug}" title="${esc(p.goal)}">
+        <span class="t"><span>${esc(p.title || p.slug)}</span><span>${p.counts.done}/${p.counts.total}</span></span>${barHTML(p.counts)}</button>`).join('') : '';
     $('sideFoot').innerHTML = `Generated <b>${esc(D.generated)}</b><br>${live ? 'Live: follows <span class="mono">ajiya serve</span>' : 'Refresh: <span class="mono">ajiya build</span>'}`;
   }
   $('nav').addEventListener('click', e => {
     const t = e.target.closest('[data-tab]');
     if (t) return go(t.dataset.tab);
     const ph = e.target.closest('[data-phase]');
-    if (ph) {
-      F.phase = F.phase === ph.dataset.phase ? '' : ph.dataset.phase;
-      store.set(key('phase'), F.phase);
-      $('phaseF').value = F.phase;
-      go(VIEWS[tab].filters ? tab : 'phases');
-    }
+    if (ph) openPhase(ph.dataset.phase);
   });
+  // The one place a phase is opened from: the sidebar, the Overview rows, the
+  // phase headers in Tickets and the links on a phase page. It opens the
+  // phase's own page.
+  function openPhase(slug) {
+    go('phase', slug);
+  }
 
   /* -------------------------------------------------------------------------
-     Ticket card, used by Next up, Board and Phases.
+     Ticket card, used by Overview and Board.
      ----------------------------------------------------------------------- */
   function card(t, compact) {
     const s = t.status;
@@ -702,8 +817,9 @@ dialog::backdrop { background: var(--c-backdrop); }
     if (!closed(t) && s.blocked) notes.push(`<div class="note blocked">Blocked: ${esc(s.blocked)}</div>`);
     if (state(t) === 'in_progress' && s.note) notes.push(`<div class="note">${esc(s.note)}</div>`);
     if (state(t) === 'dropped' && s.reason) notes.push(`<div class="note">${esc(s.reason)}</div>`);
+    if (state(t) === 'superseded') notes.push(`<div class="note">${s.superseded_by ? `Replaced by ${esc(s.superseded_by)}` : 'Invalidated'} in ${esc(s.change)}${s.was ? `; was ${esc(stateLabel[s.was.state] || s.was.state)}` : ''}</div>`);
     const meta = [phaseTitle(t.phase), t.app].filter(Boolean).map(esc).join(' · ') + (!closed(t) && t.unblocks ? ` · unblocks ${t.unblocks}` : '');
-    return `<button class="card${compact ? ' compact' : ''}${t.ready && !compact ? ' ready' : ''}" type="button" data-open="${esc(t.id)}">
+    return `<button class="card${compact ? ' compact' : ''}${canStart(t) && !compact ? ' ready' : ''}" type="button" data-open="${esc(t.id)}">
       <div class="head"><span class="rid mono">${esc(t.id)}</span>${msBadge(t.milestone)}
         ${compact && column(t) !== 'done' ? '' : `<span style="margin-left:auto">${stateBadge(t)}</span>`}</div>
       <div class="name">${md(t.title)}</div>
@@ -725,7 +841,7 @@ dialog::backdrop { background: var(--c-backdrop); }
       <div class="card-box kpi"><div class="label">All tickets</div>
         <div class="value">${pct(all)}%<small> closed</small></div>${barHTML(all)}
         <div class="sub">${countText(all)} of ${all.total}</div></div>
-      <button type="button" class="card-box kpi" data-go="next"><div class="label">Can start now</div>
+      <button type="button" class="card-box kpi" data-go="board"><div class="label">Can start now</div>
         <div class="value">${nextIDs.length}<small> ${nextIDs.length === 1 ? 'ticket' : 'tickets'}</small></div>
         <div class="sub">${cols.doing} in progress · ${cols.waiting} waiting on others</div></button>
       <button type="button" class="card-box kpi" data-go="board"><div class="label">Needs a human</div>
@@ -738,10 +854,10 @@ dialog::backdrop { background: var(--c-backdrop); }
 
     h += `<h2 class="section">Milestones <span class="count">${milestones.length}</span></h2>`;
     if (milestones.length) {
-      h += `<p class="section-note">In order. Each counts the tickets it needs, including what they depend on; closed means done or dropped.</p><div class="ms-grid">` +
+      h += `<p class="section-note">In order. Each counts the tickets it needs, including what they depend on; closed means done; dropped and superseded tickets are not counted.</p><div class="ms-grid">` +
         milestones.map((m, i) => {
           const c = m.required;
-          const closedN = c.done + c.dropped;
+          const closedN = c.done;
           const sub = c.total ? `${closedN}/${c.total} closed · ${c.in_progress} in progress · ${m.ready} can start now` : 'Needs no tickets';
           return `<div class="card-box ms-card">
             <div class="top"><span class="order">${i + 1}</span><span class="nm">${esc(m.name)}</span><span class="pct"${m.percent >= 100 ? ' style="color:var(--c-green)"' : ''}>${m.percent}%</span></div>
@@ -754,7 +870,7 @@ dialog::backdrop { background: var(--c-backdrop); }
 
     const top = nextIDs.map(id => byID.get(id)).filter(t => t && match(t)).slice(0, 6);
     if (top.length) {
-      h += `<h2 class="section">Top of the queue</h2><p class="section-note">The first ${top.length} from Next up${filtering() ? ' that match the filters' : ''}.</p><div class="grid">${top.map(t => card(t)).join('')}</div>`;
+      h += `<h2 class="section">Top of the queue</h2><p class="section-note">The first ${top.length} that can start now, in the order of the Board's first column${filtering() ? ' that match the filters' : ''}.</p><div class="grid">${top.map(t => card(t)).join('')}</div>`;
     } else if (nextIDs.length && filtering()) {
       h += `<h2 class="section">Top of the queue</h2>${noMatch}`;
     }
@@ -771,37 +887,22 @@ dialog::backdrop { background: var(--c-backdrop); }
     view.innerHTML = h;
   }
 
-  /* Next up: ready tickets in 'ajiya next' order, grouped by milestone. */
-  function renderNext() {
-    const list = nextIDs.map(id => byID.get(id)).filter(t => t && match(t));
-    const groups = [];
-    list.forEach(t => {
-      const g = t.milestone || '';
-      if (!groups.length || groups[groups.length - 1].ms !== g) groups.push({ ms: g, items: [] });
-      groups[groups.length - 1].items.push(t);
-    });
-    view.innerHTML = groups.map(g =>
-      `<h2 class="section">${g.ms ? `Milestone ${esc(g.ms)}` : milestones.length ? 'Not in a milestone' : 'Can start now'} <span class="count">${g.items.length}</span></h2>
-       <div class="grid">${g.items.map(t => card(t)).join('')}</div>`).join('')
-      || (nextIDs.length ? noMatch : '<div class="empty">Nothing can start now: every open ticket is waiting on another or blocked.</div>');
-  }
-
   /* Board: five columns, optionally grouped by phase. */
   let lanes = store.get(key('lanes')) === '1';
   function renderBoard() {
     const cols = [
-      ['ready', 'Can start now', 'Open, nothing in the way', 'ready'],
+      ['ready', 'Can start now', 'Open, nothing in the way. In ajiya next order.', 'ready'],
       ['doing', 'In progress', 'Started', 'in_progress'],
       ['waiting', 'Waiting', 'Open dependencies or blocked', 'pending'],
       ['human', 'Needs a human', 'Only a person can finish these', 'human'],
-      ['done', 'Done', 'Done or dropped', 'done'],
+      ['done', 'Done', 'Done, dropped or superseded', 'done'],
     ];
     const list = tickets.filter(match);
     const colHTML = ([k, label, sub, dot]) => {
       const items = list.filter(t => column(t) === k).sort(k === 'ready' ? byNext : byPlan);
       let body;
       if (!items.length) body = '<div class="col-empty">None</div>';
-      else if (lanes) body = phases.map(p => {
+      else if (lanes && k !== 'ready') body = phases.map(p => {
         const inPh = items.filter(t => t.phase === p.slug);
         return inPh.length ? `<div class="lane">${esc(p.title || p.slug)}</div>${inPh.map(t => card(t, true)).join('')}` : '';
       }).join('') + items.filter(t => !phaseBySlug.has(t.phase)).map(t => card(t, true)).join('');
@@ -1015,9 +1116,9 @@ dialog::backdrop { background: var(--c-backdrop); }
     const tDown = id => arr((byID.get(id) || {}).dependants).filter(d => byID.has(d));
     // A ticket card. out: in another phase than the one shown (dashed).
     const ticketNode = (t, out) => ({
-      id: t.id, cls: `${state(t)}${t.ready ? ' ready' : ''}${out ? ' ext' : ''}${filtered && !match(t) ? ' miss' : ''}`, attr: `data-open="${esc(t.id)}"`,
-      title: `${t.id} ${plainTitle(t.title)}\n${stateLabel[state(t)] || state(t)}${t.ready ? ', can start now' : ''}\nIn phase ${phaseTitle(t.phase)}${t.milestone ? `\nMilestone ${t.milestone}` : ''}`,
-      html: `<span class="top"><b>${esc(t.id)}</b>${t.milestone ? `<span>${esc(t.milestone)}</span>` : ''}<span class="r">${t.ready ? 'can start now' : esc(phaseTitle(t.phase))}</span></span>
+      id: t.id, cls: `${state(t)}${canStart(t) ? ' ready' : ''}${out ? ' ext' : ''}${filtered && !match(t) ? ' miss' : ''}`, attr: `data-open="${esc(t.id)}"`,
+      title: `${t.id} ${plainTitle(t.title)}\n${stateLabel[state(t)] || state(t)}${canStart(t) ? ', can start now' : ''}\nIn phase ${phaseTitle(t.phase)}${t.milestone ? `\nMilestone ${t.milestone}` : ''}`,
+      html: `<span class="top"><b>${esc(t.id)}</b>${t.milestone ? `<span>${esc(t.milestone)}</span>` : ''}<span class="r">${canStart(t) ? 'can start now' : esc(phaseTitle(t.phase))}</span></span>
         <span class="nm two">${esc(plainTitle(t.title))}</span>`,
     });
     const T = { W: 232, H: 74 };
@@ -1065,12 +1166,12 @@ dialog::backdrop { background: var(--c-backdrop); }
       }));
       const nodes = phases.map(p => {
         const c = p.counts, b = ph.get(p.slug);
-        const st = c.total && c.done + c.dropped === c.total ? 'done' : c.in_progress || c.done ? 'in_progress' : 'pending';
+        const st = c.total && c.done === c.total ? 'done' : c.in_progress || c.done ? 'in_progress' : 'pending';
         const meta = req ? `${b.reqN} of ${c.total} needed for ${depMs}` : filtered ? `${b.hits} of ${c.total} match the filters` : `${plural(c.total, 'ticket')} · ${plural(b.inside, 'link')} inside`;
         return {
           id: p.slug, cls: `phase ${st}${filtered && !b.hits ? ' miss' : ''}`, attr: `data-dep-phase="${esc(p.slug)}"`,
           title: `${p.title || p.slug}${p.goal ? '\n' + p.goal : ''}\n${countText(c)}\nDepends on ${plural(b.ups.size, 'phase')}, needed by ${b.downs.size}. Click to see its tickets.`,
-          html: `<span class="top"><b>${esc(p.slug)}</b><span class="r">${c.done + c.dropped}/${c.total}</span></span>
+          html: `<span class="top"><b>${esc(p.slug)}</b><span class="r">${c.done}/${c.total}</span></span>
             <span class="nm">${esc(p.title || p.slug)}</span>${barHTML(c)}<span class="top">${esc(meta)}</span>`,
         };
       });
@@ -1115,39 +1216,113 @@ dialog::backdrop { background: var(--c-backdrop); }
     if ($('gMs')) $('gMs').onchange = e => { depMs = e.target.value; store.set(key('depms'), depMs); renderDeps(); };
   }
 
-  /* Phases: each phase in display order with its tickets. */
-  function renderPhases() {
-    const h = phases.map(p => {
-      const list = tickets.filter(t => t.phase === p.slug && match(t)).sort(byPlan);
-      if (!list.length && (F.q || F.app || F.ms || F.state || (F.phase && F.phase !== p.slug))) return '';
-      return `<section class="phase"><div class="phase-head"><h3>${esc(p.title || p.slug)} <span class="mono" style="color:var(--c-faint);font-weight:500">${esc(p.slug)}</span> ${msBadge(p.milestone)}</h3>
-        <div class="stats"><span>${p.percent}% · ${countText(p.counts)}</span>${barHTML(p.counts)}</div></div>
-        ${p.goal ? `<p class="phase-goal">${md(p.goal)}</p>` : ''}
-        ${list.length ? `<div class="grid">${list.map(t => card(t)).join('')}</div>` : '<div class="empty" style="margin-top:12px">No tickets yet.</div>'}</section>`;
-    }).join('');
-    view.innerHTML = h || (phases.length ? noMatch : '<div class="empty">No phases yet. Add one with <span class="mono">ajiya phase add</span>.</div>');
-  }
-
-  /* Tickets: a table, 150 rows at a time. */
+  /* Tickets: a table, 150 rows at a time. Grouped, each phase gets a header
+     row (title, slug, milestone, progress, goal) and its tickets under it. */
   let ticketLimit = 150;
   function renderTickets() {
     const list = tickets.filter(match).sort(byPlan);
-    const rows = list.slice(0, ticketLimit).map(t => {
+    const row = t => {
       const s = t.status;
       const note = closed(t) ? '' : [s.human && `Needs a human: ${s.human}`, s.blocked && `Blocked: ${s.blocked}`, s.note].filter(Boolean).map(esc).join(' · ');
       return `<tr class="click" data-open="${esc(t.id)}">
         <td class="mono" style="white-space:nowrap;font-weight:700">${esc(t.id)}</td>
-        <td>${md(t.title)}<div class="sub">${esc(phaseTitle(t.phase))} · ${esc(t.app)}</div></td>
-        <td>${stateBadge(t)}${t.ready ? ' <span class="badge ready">Ready</span>' : ''}</td>
+        <td>${md(t.title)}${grouped ? '' : `<div class="sub">${esc(phaseTitle(t.phase))} · ${esc(t.app)}</div>`}</td>
+        <td>${stateBadge(t)}${canStart(t) ? ' <span class="badge ready">Ready</span>' : ''}</td>
         <td>${msBadge(t.milestone)}</td>
         <td>${arr(t.depends).map(id => chip(id, true)).join(' ')}</td>
         <td class="note">${note}</td></tr>`;
-    }).join('');
-    view.innerHTML = `<div class="board-tools"><span>${plural(list.length, 'ticket')}</span></div>
-      ${list.length ? `<div class="table-wrap"><table><thead><tr><th>ID</th><th>Ticket</th><th>State</th><th>Milestone</th><th>Depends on</th><th class="note">Note</th></tr></thead><tbody>${rows}</tbody></table></div>` : noMatch}
+    };
+    const phaseRow = p => `<tr class="phase-row"><td colspan="6"><div class="phase-head"><h3>${p.slug ? `<a class="plink" href="#phase/${esc(encodeURIComponent(p.slug))}" data-phase-go="${esc(p.slug)}">${esc(p.title || p.slug)}</a>` : esc(p.title || p.slug)} <span class="mono" style="color:var(--c-faint);font-weight:500">${esc(p.slug)}</span> ${msBadge(p.milestone)}</h3>
+        <div class="stats"><span>${p.percent}% · ${countText(p.counts)}</span>${barHTML(p.counts)}</div></div>
+        ${p.goal ? `<p class="phase-goal">${md(p.goal)}</p>` : ''}</td></tr>`;
+    let rows = '', left = ticketLimit;
+    if (grouped) {
+      // Phases in display order; tickets of an unknown phase go last. The row
+      // limit counts tickets, so a phase header never stands without a ticket
+      // unless it is empty and unfiltered.
+      const groups = phases.map(p => ({ p, items: list.filter(t => t.phase === p.slug) }));
+      const loose = list.filter(t => !phaseBySlug.has(t.phase));
+      if (loose.length) groups.push({ p: { slug: '', title: 'No phase', counts: countsOf(loose), percent: pct(countsOf(loose)) }, items: loose });
+      groups.forEach(g => {
+        if (left <= 0) return;
+        if (!g.items.length && filtering()) return;
+        const part = g.items.slice(0, left);
+        left -= part.length;
+        rows += phaseRow(g.p) + (part.length ? part.map(row).join('') : '<tr><td colspan="6" class="note">No tickets yet.</td></tr>');
+      });
+    } else {
+      rows = list.slice(0, ticketLimit).map(row).join('');
+    }
+    view.innerHTML = `<div class="board-tools">
+        <button type="button" class="pill-toggle" id="groupBtn" aria-pressed="${grouped}">Group by phase</button>
+        <span>${plural(list.length, 'ticket')}</span></div>
+      ${rows ? `<div class="table-wrap"><table${grouped ? ' class="grouped"' : ''}><thead><tr><th>ID</th><th>Ticket</th><th>State</th><th>Milestone</th><th>Depends on</th><th class="note">Note</th></tr></thead><tbody>${rows}</tbody></table></div>` : phases.length || list.length ? noMatch : '<div class="empty">No phases yet. Add one with <span class="mono">ajiya phase add</span>.</div>'}
       ${list.length > ticketLimit ? `<button class="more" id="more" type="button">Show ${Math.min(150, list.length - ticketLimit)} more</button>` : ''}`;
+    $('groupBtn').onclick = () => { setGrouped(!grouped); renderTickets(); };
     const more = $('more');
     if (more) more.onclick = () => { ticketLimit += 150; renderTickets(); };
+  }
+
+  /* Phase page: one phase with its goal, description, tickets by state and
+     the phases it is tied to. Reached from #phase/<slug>. */
+  // Phases this one depends on (tickets here depend on tickets there) and
+  // phases that need it, each with the number of ticket links and how many of
+  // them are still open (the dependency is not closed).
+  function phaseLinks(slug) {
+    const up = new Map(), down = new Map();
+    const bump = (m, ph, dep) => { const l = m.get(ph) || { n: 0, open: 0 }; l.n++; if (!closed(dep)) l.open++; m.set(ph, l); };
+    tickets.forEach(t => arr(t.depends).forEach(id => {
+      const u = byID.get(id);
+      if (!u || u.phase === t.phase) return;
+      if (t.phase === slug && phaseBySlug.has(u.phase)) bump(up, u.phase, u);
+      if (u.phase === slug && phaseBySlug.has(t.phase)) bump(down, t.phase, u);
+    }));
+    const order = m => [...m].sort((a, b) => phaseIndex.get(a[0]) - phaseIndex.get(b[0]));
+    return { up: order(up), down: order(down) };
+  }
+  // Paragraphs split on blank lines; a single newline is a line break.
+  const paragraphs = s => String(s || '').split(/\n{2,}/).map(x => x.trim()).filter(Boolean).map(x => `<p>${md(x).replace(/\n/g, '<br>')}</p>`).join('');
+  function renderPhase() {
+    const p = phaseBySlug.get(phaseSlug);
+    if (!p) {
+      $('title').textContent = 'Phase not found';
+      view.innerHTML = `<div class="empty">${phaseSlug ? `There is no phase <span class="mono">${esc(phaseSlug)}</span> in this plan.` : 'No phase was chosen.'}
+        <div style="margin-top:10px"><button type="button" class="link-btn" data-go="overview">Back to Overview</button></div></div>`;
+      return;
+    }
+    $('title').textContent = p.title || p.slug;
+    $('subtitle').textContent = `Phase ${p.slug}`;
+    const mine = tickets.filter(t => t.phase === p.slug);
+    const by = k => mine.filter(t => column(t) === k).sort(k === 'ready' ? byNext : byPlan);
+    const doneList = by('done');
+    const sect = (label, list) => list.length ? `<h2 class="section">${label} <span class="count">${list.length}</span></h2><div class="grid">${list.map(t => card(t, true)).join('')}</div>` : '';
+    const shut = doneList.filter(t => state(t) !== 'done');
+    const links = phaseLinks(p.slug);
+    const linkCard = ([slug, l]) => {
+      const q = phaseBySlug.get(slug);
+      return `<button class="card compact" type="button" data-phase-go="${esc(slug)}">
+        <div class="head"><span class="name">${esc(q.title || q.slug)}</span><span class="mono" style="margin-left:auto;color:var(--c-faint)">${q.counts.done}/${q.counts.total}</span></div>
+        ${barHTML(q.counts)}<div class="meta">${plural(l.n, 'ticket link')} · ${l.open ? `${l.open} still open` : 'all closed'}</div></button>`;
+    };
+    const phaseSect = (label, note, list) => `<h2 class="section">${label} <span class="count">${list.length}</span></h2>` +
+      (list.length ? `<p class="section-note">${note}</p><div class="grid">${list.map(linkCard).join('')}</div>` : `<p class="section-note">None.</p>`);
+    const decs = decisions.filter(d => mine.some(t => decsOfTicket(t).includes(d)));
+
+    view.innerHTML = `<div class="phase-nav">
+        <button type="button" class="pill-toggle" data-go="overview">${icon('left')}Overview</button>
+        <button type="button" class="pill-toggle" data-phase-tickets="${esc(p.slug)}">Show in Tickets</button></div>
+      <div class="card-box phase-top">
+        <div class="head"><span class="rid mono">${esc(p.slug)}</span>${msBadge(p.milestone)}</div>
+        <div class="stats">${barHTML(p.counts)}<span>${p.percent}% · ${countText(p.counts)}</span></div>
+        ${p.goal ? `<p class="goal">${md(p.goal)}</p>` : ''}
+        ${p.description ? `<div class="phase-desc">${paragraphs(p.description)}</div>` : ''}
+      </div>
+      ${mine.length ? '' : '<div class="empty" style="margin-top:16px">No tickets in this phase yet. Add one with <span class="mono">ajiya ticket add</span>.</div>'}
+      ${sect('In progress', by('doing'))}${sect('Can start now', by('ready'))}${sect('Waiting', by('waiting'))}${sect('Needs a human', by('human'))}${sect('Done', doneList.filter(t => state(t) === 'done'))}
+      ${shut.length ? `<details class="fold"><summary>Dropped and superseded <span class="count">${shut.length}</span></summary><div class="grid">${shut.map(t => card(t, true)).join('')}</div></details>` : ''}
+      ${phaseSect('Depends on phases', 'Tickets here wait on tickets in these phases.', links.up)}
+      ${phaseSect('Needed by phases', 'Tickets in these phases wait on tickets here.', links.down)}
+      ${decs.length ? `<h2 class="section">Decisions <span class="count">${decs.length}</span></h2><div class="dec-list">${decs.map(d => `<div>${decChip(d.id)} <span class="badge ${esc(d.status.state)}">${esc(d.status.state)}</span> <span>${md(d.title)}</span></div>`).join('')}</div>` : ''}`;
   }
 
   /* Apps: progress per app. Click to see its tickets. */
@@ -1215,21 +1390,147 @@ dialog::backdrop { background: var(--c-backdrop); }
   }
 
   /* -------------------------------------------------------------------------
+     Changes and Decisions. Self-contained: own render functions, own helpers.
+     ----------------------------------------------------------------------- */
+  const plainChips = list => arr(list).map(x => `<span class="chip" style="cursor:default">${esc(x)}</span>`).join('');
+  const tagChips = (label, list) => arr(list).length ? `<span class="lbl">${label}</span>${plainChips(list)}` : '';
+  // A change's tags (tech/dec/path) as one flat list of key:value strings.
+  const flatTags = t => t ? [...arr(t.tech).map(x => 'tech:' + x), ...arr(t.dec).map(x => 'dec:' + x), ...arr(t.path).map(x => 'path:' + x)] : [];
+  const decByID = id => decisions.find(d => d.id === id);
+  const chgByID = id => changes.find(c => c.id === id);
+  // Clickable decision / change IDs; they jump to the card in its tab.
+  const decChip = id => decByID(id) ? `<span class="chip" role="button" tabindex="0" data-dec="${esc(id)}" title="${esc(decByID(id).title)}">${esc(id)}</span>` : `<span class="chip unknown" title="Not in the plan">${esc(id)}</span>`;
+  const chgChip = id => chgByID(id) ? `<span class="chip" role="button" tabindex="0" data-chg="${esc(id)}" title="${esc(chgByID(id).title)}">${esc(id)}</span>` : `<span class="chip unknown">${esc(id)}</span>`;
+  const verdictBadge = v => v ? `<span class="badge v-${esc(v)}">${esc(v)}</span>` : '<span class="badge v-none">needs verdict</span>';
+  const recMatch = parts => !F.q || parts.join(' ').toLowerCase().includes(F.q);
+  // Candidates that still need a verdict (stale ones are kept for history only).
+  const needVerdict = c => arr(c.candidates).filter(k => !k.verdict && !k.stale);
+
+  function impactTable(c) {
+    const cands = arr(c.candidates);
+    if (!cands.length) return '<div class="section-note" style="margin:0">No candidates. Run <span class="mono">ajiya change impact</span> to find them.</div>';
+    return `<div class="table-wrap"><table class="impact"><thead><tr><th>Ticket</th><th>Reasons</th><th>Verdict</th><th class="why-col">Why</th></tr></thead><tbody>${cands.map(k => `<tr${k.stale ? ' class="stale"' : ''}>
+      <td>${chip(k.id)}${k.stale ? ' <span class="badge plain" title="Impact no longer finds this ticket; kept for its verdict">stale</span>' : ''}<div>${md(k.title)}</div></td>
+      <td><div class="reasons">${arr(k.reasons).map(r => `<span class="badge plain">${esc(r)}</span>`).join('')}</div></td>
+      <td>${verdictBadge(k.verdict)}${k.new_title || k.new_done_when ? `<div class="newv">${k.new_title ? `<b>${md(k.new_title)}</b>` : ''}${k.new_done_when ? `<div class="why">Done when: ${md(k.new_done_when)}</div>` : ''}</div>` : ''}</td>
+      <td class="why why-col">${md(k.why)}</td></tr>`).join('')}</tbody></table></div>`;
+  }
+  function changeHTML(c) {
+    const st = c.status, open = st.state === 'open';
+    const pending = needVerdict(c).length, inv = arr(c.candidates).filter(k => k.verdict === 'investigate').length;
+    const rep = flatTags(c.replaces), wth = flatTags(c.with);
+    const tags = [
+      rep.length || wth.length ? `<span class="lbl">Replaces</span>${plainChips(rep) || '<span>-</span>'}<span class="arrow">with</span>${plainChips(wth) || '<span>-</span>'}` : '',
+      arr(c.decisions).length ? `<span class="lbl">Decisions</span>${c.decisions.map(decChip).join('')}` : '',
+      tagChips('Paths', c.paths),
+      c.snapshot ? `<span class="lbl">Snapshot</span>${plainChips([c.snapshot])}` : '',
+    ].filter(Boolean).map(x => `<div class="tags">${x}</div>`).join('');
+    let status = '';
+    if (open) {
+      if (inv) status += `<div class="alert bad">Approval blocked: ${plural(inv, 'candidate')} marked investigate. Resolve ${inv === 1 ? 'it' : 'them'} first.</div>`;
+      if (pending) status += `<div class="alert">${plural(pending, 'candidate')} still ${pending === 1 ? 'needs' : 'need'} a verdict.</div>`;
+      else if (arr(c.candidates).length && !inv) status += '<div class="alert ok">Every candidate has a verdict. Ready for a person to approve.</div>';
+    } else if (st.reason) status = `<div class="alert bad">Rejected: ${md(st.reason)}</div>`;
+    const results = c.results ? `<div><div class="prose-k">Results</div><p class="prose">${md(c.results)}</p></div>` : '';
+    const inner = `${tags}${status}${impactTable(c)}${results}`;
+    return `<div class="card-box rec" id="chg-${esc(c.id)}">
+      <div class="head"><span class="rid mono">${esc(c.id)}</span><span class="badge ${esc(st.state)}">${esc(st.state)}</span>${st.date ? `<span style="color:var(--c-muted);font-size:12px">${esc(st.date)}${st.by ? ' · ' + esc(st.by) : ''}</span>` : ''}</div>
+      <h3>${md(c.title)}</h3>${open ? inner : `${results}<details><summary>Details and ${plural(arr(c.candidates).length, 'candidate')}</summary><div style="display:flex;flex-direction:column;gap:10px;margin-top:10px">${tags}${status}${impactTable(c)}</div></details>`}</div>`;
+  }
+  function renderChanges() {
+    const list = changes.filter(c => recMatch([c.id, c.title, c.status.text, ...flatTags(c.replaces), ...flatTags(c.with), ...arr(c.decisions), ...arr(c.paths)]));
+    if (!list.length) { view.innerHTML = noMatch; return; }
+    const open = list.filter(c => c.status.state === 'open'), shut = list.filter(c => c.status.state !== 'open');
+    view.innerHTML = (open.length ? `<h2 class="section">Open <span class="count">${open.length}</span></h2>${open.map(changeHTML).join('')}` : '')
+      + (shut.length ? `<h2 class="section">Closed <span class="count">${shut.length}</span></h2><p class="section-note">Approved and rejected changes stay in the plan as history.</p>${shut.map(changeHTML).join('')}` : '');
+  }
+  function decisionHTML(d) {
+    const st = d.status;
+    const sup = st.state === 'superseded' ? `<div class="alert">Superseded${st.superseded_by ? ` by ${decChip(st.superseded_by)}` : ''}${st.change ? ` in change ${chgChip(st.change)}` : ''}${st.was ? ` (was ${esc(st.was)})` : ''}.</div>` : '';
+    const prose = (k, v) => v ? `<div><div class="prose-k">${k}</div><p class="prose">${md(v)}</p></div>` : '';
+    return `<div class="card-box rec" id="dec-${esc(d.id)}">
+      <div class="head"><span class="rid mono">${esc(d.id)}</span><span class="badge ${esc(st.state)}">${esc(st.state)}</span>${st.date || st.by ? `<span style="color:var(--c-muted);font-size:12px">${[st.date, st.by && 'decided by ' + st.by].filter(Boolean).map(esc).join(' · ')}</span>` : ''}</div>
+      <h3>${md(d.title)}</h3>${sup}
+      ${arr(d.tech).length ? `<div class="tags">${tagChips('Tech', d.tech.map(x => 'tech:' + x))}</div>` : ''}
+      ${prose('Context', d.context)}${prose('Decision', d.decision)}${prose('Consequences', d.consequences)}
+      <div class="tags"><span class="lbl">Tickets</span>${arr(d.tickets).length ? d.tickets.map(id => chip(id, true)).join('') : '<span>none link this decision</span>'}</div></div>`;
+  }
+  function renderDecisions() {
+    const list = decisions.filter(d => recMatch([d.id, d.title, d.status.text, ...arr(d.tech), d.context, d.decision, d.consequences, ...arr(d.tickets)]));
+    view.innerHTML = list.length ? list.map(decisionHTML).join('') : noMatch;
+  }
+  /* History: decisions and changes in the order they happened, newest first.
+     data.js carries the events (history, oldest first); each links to its card
+     in Decisions or Changes, and ticket IDs open the ticket dialog. */
+  const evKinds = {
+    decision_proposed: ['Decision proposed', 'proposed'], decision_accepted: ['Decision accepted', 'accepted'],
+    decision_superseded: ['Decision superseded', 'superseded'], change_opened: ['Change opened', 'open'],
+    change_approved: ['Change approved', 'approved'], change_rejected: ['Change rejected', 'rejected'],
+  };
+  const ticketTitle = id => (byID.get(id) || {}).title;
+  // A ticket chip with its title beside it.
+  const chipT = id => `${chip(id)}${ticketTitle(id) ? ` <span class="dim">${md(ticketTitle(id))}</span>` : ''}`;
+  function outcomeHTML(o) {
+    if (!o) return '';
+    const rows = [];
+    const add = (k, items) => { if (items.length) rows.push(`<div class="k">${k}</div><div class="v">${items.map(x => `<div class="oi">${x}</div>`).join('')}</div>`); };
+    add('Created', arr(o.created).map(c => `${chipT(c.id)}${c.replaces ? ` <span class="dim">replaces</span> ${chip(c.replaces)}` : ''}${c.follow_up ? ` <span class="dim">follows</span> ${chip(c.follow_up)}` : ''}`));
+    add('Superseded', arr(o.superseded).map(x => `${chip(x.id)} <span class="arrow">${x.by ? '&rarr;' : ''}</span> ${x.by ? chip(x.by) : '<span class="dim">no replacement</span>'}${
+      x.was_state ? ` <span class="badge ${esc(x.was_state)}" title="State before the change">was ${esc(stateLabel[x.was_state] || x.was_state)}</span>` : ''} <span class="dim">${esc(x.was)}</span>`));
+    add('Edited', arr(o.edited).map(x => `${chipT(x.id)} <span class="dim">${esc(arr(x.fields).join(', '))}</span>`));
+    add('Dependencies moved', arr(o.moved).map(x => `${chip(x.id)} <span class="dim">was</span> ${arr(x.from).map(id => chip(id)).join('') || '<span class="dim">none</span>'} <span class="arrow">&rarr;</span> ${arr(x.to).map(id => chip(id)).join('') || '<span class="dim">none</span>'}`));
+    add('Decisions', arr(o.decisions).map(x => `${decChip(x.id)} <span class="arrow">${x.by ? '&rarr;' : ''}</span> ${x.by ? decChip(x.by) : '<span class="dim">no replacement</span>'}`));
+    add('Milestones', arr(o.milestones).map(m => `<span class="dim">${md(m)}</span>`));
+    return rows.length ? `<div class="kv">${rows.join('')}</div>` : '<div class="section-note" style="margin:0">No ticket or decision needed changing.</div>';
+  }
+  function eventHTML(e) {
+    const [label, cls] = evKinds[e.kind] || [e.kind, 'plain'];
+    const isDec = e.kind.startsWith('decision_');
+    const self = isDec ? decChip(e.id) : chgChip(e.id);
+    const tags = [];
+    if (arr(e.replaces).length) tags.push(`<span class="lbl">Replaces</span>${e.replaces.map(decChip).join('')}`);
+    if (e.kind === 'decision_superseded') tags.push(`<span class="lbl">Replaced by</span>${e.superseded_by ? decChip(e.superseded_by) : '<span>nothing</span>'}${e.change ? `<span class="lbl">in</span>${chgChip(e.change)}` : ''}`);
+    return `<div class="ev k-${esc(e.kind)}"><div class="card-box rec">
+      <div class="head"><span class="badge ${esc(cls)}">${esc(label)}</span>${self}${e.date ? `<span class="when">${esc(e.date)}${e.by ? ' · ' + esc(e.by) : ''}</span>` : ''}</div>
+      <h3>${md(e.title)}</h3>
+      ${tags.map(x => `<div class="tags">${x}</div>`).join('')}
+      ${e.reason ? `<div class="alert bad">Rejected: ${md(e.reason)}</div>` : ''}${outcomeHTML(e.outcome)}</div></div>`;
+  }
+  function renderHistory() {
+    const text = e => [e.id, e.title, e.text, e.kind, e.by, e.reason, e.date, e.change, e.superseded_by, ...arr(e.replaces),
+      ...(e.outcome ? [...arr(e.outcome.created).flatMap(c => [c.id, c.replaces, c.follow_up]), ...arr(e.outcome.superseded).flatMap(x => [x.id, x.by]),
+        ...arr(e.outcome.edited).map(x => x.id), ...arr(e.outcome.moved).map(x => x.id), ...arr(e.outcome.decisions).flatMap(x => [x.id, x.by])] : [])];
+    const list = timeline.filter(e => recMatch(text(e))).reverse();
+    view.innerHTML = list.length ? `<p class="section-note">${plural(list.length, 'event')}${F.q ? ' match' : ''}. Click a decision or change ID to see its card, a ticket ID to see the ticket.</p><div class="tl">${list.map(eventHTML).join('')}</div>` : noMatch;
+  }
+  // Jump from a decision or change ID to its card in the other tab.
+  function jumpTo(tabName, prefix, id) {
+    if (tab !== tabName) go(tabName);
+    const el = document.getElementById(prefix + id);
+    if (el) { el.scrollIntoView({ block: 'start' }); el.style.borderColor = 'var(--c-blue)'; }
+  }
+  // Decisions and changes a ticket touches, for its detail dialog.
+  const decsOfTicket = t => decisions.filter(d => arr(d.tickets).includes(t.id) || arr(t.tags && t.tags.dec).includes(d.id));
+  const chgsOfTicket = t => changes.filter(c => arr(c.candidates).some(k => k.id === t.id));
+
+  /* -------------------------------------------------------------------------
      Render the current view.
      ----------------------------------------------------------------------- */
   function render() {
+    if (!shown(tab)) tab = 'overview'; // the last Change or Decision went away on a live refresh
     renderNav();
-    const v = VIEWS[tab];
+    const v = viewOf(tab);
     $('title').textContent = v.label;
     $('subtitle').textContent = v.sub;
     document.title = `${v.label} · ${project$}`;
-    if (location.hash.slice(1) !== tab) { try { history.replaceState(null, '', '#' + tab); } catch (e) { location.hash = tab; } }
+    if (location.hash.slice(1) !== hashOf()) { try { history.replaceState(null, '', '#' + hashOf()); } catch (e) { location.hash = hashOf(); } }
     $('filters').style.display = v.filters ? '' : 'none';
     $('filters').classList.toggle('search-only', v.filters === 'search');
     $('readyP').setAttribute('aria-pressed', String(F.state === 'ready'));
     $('humanP').setAttribute('aria-pressed', String(F.state === 'human'));
     $('clearF').hidden = !(v.filters === 'search' ? F.q : filtering());
     renderers[tab]();
+    if (tab === 'phase' && phaseBySlug.has(phaseSlug)) document.title = `${phaseTitle(phaseSlug)} · ${project$}`;
   }
 
   /* -------------------------------------------------------------------------
@@ -1271,6 +1572,10 @@ dialog::backdrop { background: var(--c-backdrop); }
     if (!closed(t) && arr(t.waiting_on).length) add('Waiting on', t.waiting_on.map(d => chip(d, true)).join(''));
     add('Needed by', arr(t.dependants).map(d => chip(d, true)).join(''));
     if (!closed(t) && t.unblocks) add('Unblocks', `${plural(t.unblocks, 'open ticket')}, directly or not`);
+    const tg = t.tags || {};
+    add('Tags', plainChips([...arr(tg.tech).map(x => 'tech:' + x), ...arr(tg.path).map(x => 'path:' + x)]));
+    add('Decisions', decsOfTicket(t).map(d => `${decChip(d.id)} <span class="badge ${esc(d.status.state)}">${esc(d.status.state)}</span> ${md(d.title)}`).join('<br>'), true);
+    add('Changes', chgsOfTicket(t).map(c => `${chgChip(c.id)} <span class="badge ${esc(c.status.state)}">${esc(c.status.state)}</span> ${verdictBadge(c.candidates.find(x => x.id === t.id).verdict)} ${md(c.title)}`).join('<br>'), true);
     const commits = activity.filter(e => arr(e.refs).includes(t.id) || arr(e.changes).some(c => c.id === t.id));
     if (commits.length) add('Commits', commits.map(e => `<span class="mono" title="${esc(e.date)}">${esc(e.short)}</span> ${esc(e.subject)}`).join('<br>'), true);
     $('dlgBody').innerHTML = `<div class="kv">${rows.join('')}</div>`;
@@ -1282,24 +1587,36 @@ dialog::backdrop { background: var(--c-backdrop); }
   dlg.addEventListener('click', e => {
     if (e.target === dlg) return closeDlg();
     const c = e.target.closest('[data-open]');
-    if (c) openTicket(c.dataset.open);
+    if (c) return openTicket(c.dataset.open);
+    const dc = e.target.closest('[data-dec]'), cc = e.target.closest('[data-chg]');
+    if (dc || cc) { closeDlg(); if (dc) jumpTo('decisions', 'dec-', dc.dataset.dec); else jumpTo('changes', 'chg-', cc.dataset.chg); }
   });
 
   /* Clicks in the main view: ticket chips and cards, KPI shortcuts, phase and app rows. */
   view.addEventListener('click', e => {
     const op = e.target.closest('[data-open]');
     if (op) { e.stopPropagation(); return openTicket(op.dataset.open); }
+    const dc = e.target.closest('[data-dec]');
+    if (dc) return jumpTo('decisions', 'dec-', dc.dataset.dec);
+    const cc = e.target.closest('[data-chg]');
+    if (cc) return jumpTo('changes', 'chg-', cc.dataset.chg);
     const g = e.target.closest('[data-go]');
     if (g) return go(g.dataset.go);
     const ph = e.target.closest('[data-phase-go]');
-    if (ph) { F.phase = ph.dataset.phaseGo; store.set(key('phase'), F.phase); $('phaseF').value = F.phase; return go('phases'); }
+    if (ph) { e.preventDefault(); return openPhase(ph.dataset.phaseGo); }
+    const pt = e.target.closest('[data-phase-tickets]');
+    if (pt) {
+      F.phase = pt.dataset.phaseTickets; store.set(key('phase'), F.phase); $('phaseF').value = F.phase;
+      setGrouped(true);
+      return go('tickets');
+    }
     const ap = e.target.closest('[data-app-go]');
     if (ap) { F.app = ap.dataset.appGo; store.set(key('app'), F.app); $('appF').value = F.app; return go('tickets'); }
   });
 
   // Keyboard: Enter or Space on a chip opens its ticket, like a button.
   document.addEventListener('keydown', e => {
-    if ((e.key === 'Enter' || e.key === ' ') && e.target.matches && e.target.matches('span[data-open]')) { e.preventDefault(); e.target.click(); }
+    if ((e.key === 'Enter' || e.key === ' ') && e.target.matches && e.target.matches('span[data-open], span[data-dec], span[data-chg]')) { e.preventDefault(); e.target.click(); }
   });
 
   /* -------------------------------------------------------------------------

@@ -47,6 +47,7 @@ type ticket struct {
 	ID, Phase, App, Title string
 	DoneWhen              string `json:"done_when"`
 	Depends               []string
+	Tags                  struct{ Tech, Dec, Path []string }
 	Status                status
 }
 
@@ -83,7 +84,7 @@ func TestJSON(t *testing.T) {
 
 	ajiya(t, dir, 0, "phase", "add", "core", "Core works")
 	ajiya(t, dir, 0, "ticket", "add", "--phase", "core", "--app", "infra", "--done-when", "x", "Deploy")
-	ajiya(t, dir, 0, "ticket", "add", "--phase", "core", "--app", "infra", "--done-when", "y", "--depends", "DE-0001", "--human", "keys", "Go live")
+	ajiya(t, dir, 0, "ticket", "add", "--phase", "core", "--app", "infra", "--done-when", "y", "--depends", "DE-0001", "--human", "keys", "--tech", "aws-rds", "--decisions", "DEC-0003", "Go live")
 	ajiya(t, dir, 0, "launch", "set", "DE-0002")
 	os.WriteFile(filepath.Join(dir, "x.txt"), []byte("x"), 0o644)
 	gitIn(t, dir, "add", "-A")
@@ -107,6 +108,10 @@ func TestJSON(t *testing.T) {
 	if len(list) != 2 || list[0].ID != "DE-0001" || list[0].Status.State != "done" || list[1].ID != "DE-0002" || list[1].Status.Human != "keys" {
 		t.Errorf("ticket list --json = %+v", list)
 	}
+	if got := list[1].Tags; len(got.Tech) != 1 || got.Tech[0] != "aws-rds" || len(got.Dec) != 1 || got.Dec[0] != "DEC-0003" ||
+		got.Path == nil || len(got.Path) != 0 || list[0].Tags.Tech == nil {
+		t.Errorf("ticket list --json tags = %+v, %+v", list[0].Tags, got)
+	}
 	decode(t, ajiya(t, dir, 0, "ticket", "list", "--state", "human", "--json"), &list)
 	if len(list) != 1 || list[0].ID != "DE-0002" {
 		t.Errorf("ticket list --state human --json = %+v", list)
@@ -120,14 +125,21 @@ func TestJSON(t *testing.T) {
 		PhaseTitle   string `json:"phase_title"`
 		Dependencies []struct{ ID, Title, State string }
 		Dependants   []struct{ ID, Title, State string }
+		Decisions    []struct{ ID, Title, State, Status string }
+		Changes      []struct{ ID, Title, Status, Verdict string }
 		Commits      []struct{ Hash, Date, Subject string }
 	}
 	decode(t, ajiya(t, dir, 0, "ticket", "show", "DE-0001", "--json"), &show)
 	if show.Status.State != "done" || show.Status.Note != "first try" || len(show.Status.Commit) != 7 ||
 		show.PhaseTitle != "Core" || len(show.Dependencies) != 0 || show.Dependencies == nil ||
-		len(show.Dependants) != 1 || show.Dependants[0].State != "pending" ||
+		len(show.Dependants) != 1 || show.Dependants[0].State != "pending" || show.Decisions == nil || len(show.Decisions) != 0 || show.Changes == nil || len(show.Changes) != 0 ||
 		len(show.Commits) != 1 || show.Commits[0].Subject != "Deploy" || len(show.Commits[0].Hash) != 40 {
 		t.Errorf("ticket show --json = %+v", show)
+	}
+
+	decode(t, ajiya(t, dir, 0, "ticket", "show", "DE-0002", "--json"), &show)
+	if len(show.Decisions) != 1 || show.Decisions[0].ID != "DEC-0003" || show.Decisions[0].State != "missing" {
+		t.Errorf("ticket show --json decisions = %+v", show.Decisions)
 	}
 
 	var launch = none
@@ -141,7 +153,8 @@ func TestJSON(t *testing.T) {
 	ajiya(t, dir, 0, "phase", "add", "empty", "Nothing yet")
 	var findings []struct{ Code, Level, Location, Message, Fix string }
 	decode(t, ajiya(t, dir, 1, "check", "--strict", "--json"), &findings)
-	if len(findings) != 1 || findings[0].Code != "W001" || findings[0].Level != "warning" || findings[0].Location != "ajiya/empty.md:1" {
+	// DE-0002 links DEC-0003, which does not exist.
+	if len(findings) != 2 || findings[0].Code != "E014" || findings[0].Level != "error" || findings[1].Code != "W001" || findings[1].Level != "warning" || findings[1].Location != "ajiya/empty.md:1" {
 		t.Errorf("check --json = %+v", findings)
 	}
 }

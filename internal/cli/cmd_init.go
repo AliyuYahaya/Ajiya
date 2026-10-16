@@ -37,6 +37,16 @@ func runInit(e *env, args []string) error {
 	} else if !errors.Is(err, os.ErrNotExist) {
 		return err
 	}
+	abs, err := filepath.Abs(e.dir)
+	if err != nil {
+		return err
+	}
+	if outer, err := config.Find(filepath.Dir(abs)); err == nil {
+		fmt.Fprintf(e.stderr, "warning: %s already holds an %s, so this will be a project nested inside it. "+
+			"Its commit hooks check commits against the plan of the repository they are made in; "+
+			"if you meant to use that plan, run ajiya from there instead.\n",
+			outer, config.FileName)
+	}
 	text := config.Template(*name, *prefix)
 	testCmd := detect.TestCommand(e.dir)
 	if testCmd != "" {
@@ -52,6 +62,22 @@ func runInit(e *env, args []string) error {
 	chosen, err := chooseApps(e, cands, *yes)
 	if err != nil {
 		return err
+	}
+	if testCmd == "" {
+		paths := make([]string, len(chosen))
+		for i, c := range chosen {
+			paths[i] = c.Path
+		}
+		var steps []string
+		if testCmd, steps = detect.AppTestCommand(e.dir, paths); testCmd != "" {
+			text = config.WithTestCommand(text, testCmd)
+			if len(steps) > 1 {
+				fmt.Fprintln(e.stdout, "Tests found per app:")
+				for _, s := range steps {
+					fmt.Fprintf(e.stdout, "  %s\n", s)
+				}
+			}
+		}
 	}
 	for _, c := range chosen {
 		text = config.AddAppText(text, config.App{Name: c.Name, Path: c.Path, Kind: c.Kind})
@@ -158,6 +184,7 @@ func pickApps(cands []detect.Candidate, answer string) ([]detect.Candidate, erro
 func runPhaseAdd(e *env, args []string) error {
 	fs := newFlags("phase add")
 	title := fs.String("title", "", "phase title (default: from the slug)")
+	description := fs.String("description", "", "longer description, kept under the goal")
 	pos, err := parse(fs, args, 2)
 	if err != nil {
 		return err
@@ -178,6 +205,10 @@ func runPhaseAdd(e *env, args []string) error {
 	if err := plan.CheckText("title", *title); err != nil {
 		return usageErr("%v", err)
 	}
+	desc, err := plan.NormalizeDescription(*description)
+	if err != nil {
+		return usageErr("%v", err)
+	}
 	pr, err := loadForChange(e)
 	if err != nil {
 		return err
@@ -185,7 +216,7 @@ func runPhaseAdd(e *env, args []string) error {
 	if _, exists := pr.plan.Raw[slug]; exists {
 		return refused("phase %q already exists in %s", slug, plan.Path(slug))
 	}
-	ph := &plan.Phase{Slug: slug, Title: *title, Goal: goal}
+	ph := &plan.Phase{Slug: slug, Title: *title, Goal: goal, Description: desc}
 	if err := pr.plan.Save(ph); err != nil {
 		return err
 	}

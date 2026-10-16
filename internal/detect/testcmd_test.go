@@ -38,3 +38,58 @@ func TestTestCommand(t *testing.T) {
 		})
 	}
 }
+
+func TestAppTestCommand(t *testing.T) {
+	write := func(t *testing.T, dir string, files map[string]string) {
+		for name, body := range files {
+			full := filepath.Join(dir, filepath.FromSlash(name))
+			if err := os.MkdirAll(filepath.Dir(full), 0o755); err != nil {
+				t.Fatal(err)
+			}
+			if err := os.WriteFile(full, []byte(body), 0o644); err != nil {
+				t.Fatal(err)
+			}
+		}
+	}
+	cases := []struct {
+		name  string
+		files map[string]string
+		paths []string
+		want  string
+	}{
+		{"pnpm workspace, tests in apps only", map[string]string{
+			"package.json":          `{"name":"root","private":true}`,
+			"pnpm-lock.yaml":        "",
+			"apps/web/package.json": `{"name":"web","scripts":{"test":"vitest"}}`,
+			"apps/api/package.json": `{"name":"api","scripts":{"test":"jest"}}`,
+		}, []string{"apps/web", "apps/api"}, "pnpm --filter web test && pnpm --filter api test"},
+		{"one app has tests", map[string]string{
+			"pnpm-lock.yaml":        "",
+			"apps/web/package.json": `{"name":"web","scripts":{"test":"vitest"}}`,
+			"apps/api/package.json": `{"name":"api","scripts":{"dev":"node ."}}`,
+		}, []string{"apps/web", "apps/api"}, "pnpm --filter web test"},
+		{"npm apps", map[string]string{
+			"apps/web/package.json": `{"name":"web","scripts":{"test":"jest"}}`,
+		}, []string{"apps/web"}, "cd apps/web && npm test"},
+		{"go app", map[string]string{"svc/go.mod": "module x\n"}, []string{"svc"}, "cd svc && go test ./..."},
+		{"no app tests", map[string]string{
+			"pnpm-lock.yaml":        "",
+			"apps/web/package.json": `{"name":"web"}`,
+		}, []string{"apps/web"}, ""},
+		{"no apps", map[string]string{}, nil, ""},
+		{"root path skipped", map[string]string{"package.json": `{"scripts":{"test":"jest"}}`}, []string{"."}, ""},
+	}
+	for _, c := range cases {
+		t.Run(c.name, func(t *testing.T) {
+			dir := t.TempDir()
+			write(t, dir, c.files)
+			got, steps := AppTestCommand(dir, c.paths)
+			if got != c.want {
+				t.Errorf("AppTestCommand = %q, want %q", got, c.want)
+			}
+			if (got == "") != (len(steps) == 0) {
+				t.Errorf("steps = %v, command %q", steps, got)
+			}
+		})
+	}
+}

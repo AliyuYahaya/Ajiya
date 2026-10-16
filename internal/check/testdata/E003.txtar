@@ -10,10 +10,10 @@ prefix = "FX"
 
 Goal: g
 
-| ID | App | Ticket | Done when | Depends | Status |
-|---|---|---|---|---|---|
-| AB-0002 | infra | Wrong prefix | a | - | 🟥 Pending |
-| FX-001 | infra | Three digits | b | - | 🟥 Pending |
+| ID | App | Ticket | Done when | Depends | Tags | Status |
+|---|---|---|---|---|---|---|
+| AB-0002 | infra | Wrong prefix | a | - | - | 🟥 Pending |
+| FX-001 | infra | Three digits | b | - | - | 🟥 Pending |
 -- want --
 E003 ajiya/core.md:8: ID "AB-0002" does not match the form FX-0001. Fix: restore the row from git; IDs are only assigned by 'ajiya ticket add'
 E003 ajiya/core.md:9: ID "FX-001" does not match the form FX-0001. Fix: restore the row from git; IDs are only assigned by 'ajiya ticket add'

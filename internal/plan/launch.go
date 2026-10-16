@@ -10,7 +10,7 @@ type Milestone struct {
 
 // Required returns the tickets required for one target: the target's own
 // tickets (a phase's, or the ticket itself) plus everything they depend on,
-// directly or not. kind is "phase" or "ticket".
+// directly or not, without dropped or superseded tickets. kind is "phase" or "ticket".
 func (p *Plan) Required(target string) (ids map[string]bool, kind string, err error) {
 	ids = map[string]bool{}
 	kind, err = p.addRequired(ids, NewGraph(p.Tickets()), target)
@@ -42,10 +42,17 @@ func (p *Plan) addRequired(ids map[string]bool, g *Graph, target string) (kind s
 	} else {
 		return "", fmt.Errorf("target %q is neither a phase nor a ticket", target)
 	}
+	// Dropped and superseded tickets are left out of the set, but what they
+	// depend on is still required.
+	add := func(id string) {
+		if t := p.Ticket(id); t != nil && !t.Status.Excluded() {
+			ids[id] = true
+		}
+	}
 	for _, r := range roots {
-		ids[r] = true
+		add(r)
 		for _, u := range g.Upstream(r) {
-			ids[u] = true
+			add(u)
 		}
 	}
 	return kind, nil

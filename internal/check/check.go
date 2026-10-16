@@ -16,6 +16,10 @@
 //	E011 a ticket marked done has no evidence
 //	E012 a milestone target (or the [launch] target) is neither a phase nor a ticket
 //	E013 [phases] order lists a slug that is not a phase
+//	E014 to E016 decisions, listed in decisions.go
+//	E017 a superseded ticket's replacement does not exist
+//	E018 a change file does not parse
+//	E019 a change file is not in canonical form (edited by hand)
 //
 // A milestone name used twice has no code here: config.Parse refuses such an
 // ajiya.toml ("milestone ... is listed twice"), so every command, check
@@ -73,7 +77,11 @@ func Run(cfg *config.Config, p *plan.Plan) []Finding {
 		add("E001", fmt.Sprintf("%s:%d", plan.Path(slug), pe.Line), restore(slug), "%s", pe.Msg)
 	}
 	for _, ph := range p.Phases {
-		if line := firstDiff(p.Raw[ph.Slug], ph.Format()); line > 0 {
+		canonical := ph.Format()
+		if ph.SixColumn { // an old file is not hand-edited; W012 reports it
+			canonical = ph.FormatSixColumn()
+		}
+		if line := firstDiff(p.Raw[ph.Slug], canonical); line > 0 {
 			add("E002", fmt.Sprintf("%s:%d", plan.Path(ph.Slug), line), restore(ph.Slug),
 				"file is not in the form ajiya writes (edited by hand?)")
 		}
@@ -116,6 +124,12 @@ func Run(cfg *config.Config, p *plan.Plan) []Finding {
 				"%s is marked done without evidence: a commit, a person, an issue or 'Done before Ajiya'", t.ID)
 		}
 	}
+	for _, t := range tickets {
+		if by := t.Status.SupersededBy; t.Status.State == plan.Superseded && by != "" && p.Ticket(by) == nil {
+			add("E017", loc(t), fmt.Sprintf("restore the row from version control, or create %s with 'ajiya ticket add'", by),
+				"%s is superseded by %s, which does not exist", t.ID, by)
+		}
+	}
 	for _, m := range cfg.MilestoneList() {
 		for _, target := range m.Targets {
 			if _, _, err := p.Required(target); err != nil {
@@ -135,6 +149,8 @@ func Run(cfg *config.Config, p *plan.Plan) []Finding {
 	}
 
 	fs = append(fs, phaseOrder(cfg, p)...)
+	fs = append(fs, decisionFindings(p)...)
+	fs = append(fs, changeFindings(p)...)
 	fs = append(fs, planWarnings(cfg, p)...)
 	Sort(fs)
 	return fs

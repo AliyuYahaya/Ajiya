@@ -10,7 +10,7 @@ prefix = "FX"
 
 Goal: g
 
-| ID | App | Ticket | Done when | Depends | Status |
-|---|---|---|---|---|---|
+| ID | App | Ticket | Done when | Depends | Tags | Status |
+|---|---|---|---|---|---|---|
 -- want --
 W001 ajiya/empty.md:1: phase empty has no tickets. Fix: ajiya ticket add --phase empty ...

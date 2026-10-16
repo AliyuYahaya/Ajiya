@@ -1,7 +1,7 @@
 // Written by ajiya build. Do not edit: run 'ajiya build'.
 window.AJIYA = {
   "schema": 1,
-  "generated": "2026-10-01",
+  "generated": "2026-10-16",
   "project": {
     "name": "Ajiya",
     "prefix": "AJ"
@@ -17,7 +17,8 @@ window.AJIYA = {
         "done": 37,
         "in_progress": 0,
         "pending": 0,
-        "dropped": 0
+        "dropped": 0,
+        "superseded": 0
       },
       "percent": 100,
       "ready": 0
@@ -32,7 +33,8 @@ window.AJIYA = {
         "done": 74,
         "in_progress": 0,
         "pending": 0,
-        "dropped": 0
+        "dropped": 0,
+        "superseded": 0
       },
       "percent": 100,
       "ready": 0
@@ -52,13 +54,14 @@ window.AJIYA = {
       ],
       "required": {
         "total": 83,
-        "done": 74,
+        "done": 83,
         "in_progress": 0,
-        "pending": 9,
-        "dropped": 0
+        "pending": 0,
+        "dropped": 0,
+        "superseded": 0
       },
-      "percent": 89,
-      "ready": 9
+      "percent": 100,
+      "ready": 0
     },
     {
       "name": "v0-3",
@@ -67,12 +70,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 84,
-        "done": 74,
+        "done": 83,
         "in_progress": 0,
-        "pending": 10,
-        "dropped": 0
+        "pending": 1,
+        "dropped": 0,
+        "superseded": 0
       },
-      "percent": 88,
+      "percent": 98,
       "ready": 1
     },
     {
@@ -82,13 +86,33 @@ window.AJIYA = {
       ],
       "required": {
         "total": 83,
-        "done": 74,
+        "done": 83,
         "in_progress": 0,
-        "pending": 9,
-        "dropped": 0
+        "pending": 0,
+        "dropped": 0,
+        "superseded": 0
       },
-      "percent": 89,
-      "ready": 1
+      "percent": 100,
+      "ready": 0
+    },
+    {
+      "name": "v0-3-1",
+      "targets": [
+        "AJ-0109",
+        "AJ-0110",
+        "AJ-0111",
+        "AJ-0112"
+      ],
+      "required": {
+        "total": 89,
+        "done": 89,
+        "in_progress": 0,
+        "pending": 0,
+        "dropped": 0,
+        "superseded": 0
+      },
+      "percent": 100,
+      "ready": 0
     }
   ],
   "phases": [
@@ -96,40 +120,46 @@ window.AJIYA = {
       "slug": "commit-rule",
       "title": "Commit-rule",
       "goal": "Every commit names 1 to 3 tickets, enforced by hooks with a CI check as backup",
+      "description": "",
       "counts": {
         "total": 9,
-        "done": 8,
+        "done": 9,
         "in_progress": 0,
-        "pending": 1,
-        "dropped": 0
+        "pending": 0,
+        "dropped": 0,
+        "superseded": 0
       },
-      "percent": 88,
+      "percent": 100,
       "milestone": "v0-1"
     },
     {
       "slug": "apps-launch",
       "title": "Apps-launch",
       "goal": "Apps are detected and managed, launch readiness is defined, and every check in the spec runs",
+      "description": "",
       "counts": {
         "total": 15,
-        "done": 14,
+        "done": 15,
         "in_progress": 0,
-        "pending": 1,
-        "dropped": 0
+        "pending": 0,
+        "dropped": 0,
+        "superseded": 0
       },
-      "percent": 93,
+      "percent": 100,
       "milestone": "v0-1"
     },
     {
       "slug": "outputs",
       "title": "Outputs",
       "goal": "PROGRESS.md, data.js, the dashboard and serve show the plan and its activity",
+      "description": "",
       "counts": {
         "total": 12,
         "done": 12,
         "in_progress": 0,
         "pending": 0,
-        "dropped": 0
+        "dropped": 0,
+        "superseded": 0
       },
       "percent": 100,
       "milestone": "v0-1"
@@ -138,26 +168,30 @@ window.AJIYA = {
       "slug": "onboarding",
       "title": "Onboarding",
       "goal": "A new or existing project can be set up by an agent using only the installed kit and importers",
+      "description": "",
       "counts": {
         "total": 21,
-        "done": 17,
+        "done": 21,
         "in_progress": 0,
-        "pending": 4,
-        "dropped": 0
+        "pending": 0,
+        "dropped": 0,
+        "superseded": 0
       },
-      "percent": 80,
+      "percent": 100,
       "milestone": "v0-1"
     },
     {
       "slug": "release",
       "title": "Release",
       "goal": "v0.1 is ready to publish: binaries, Homebrew cask, README walkthroughs and changelog",
+      "description": "",
       "counts": {
         "total": 5,
         "done": 5,
         "in_progress": 0,
         "pending": 0,
-        "dropped": 0
+        "dropped": 0,
+        "superseded": 0
       },
       "percent": 100,
       "milestone": "v0-1"
@@ -166,26 +200,30 @@ window.AJIYA = {
       "slug": "agent-access",
       "title": "Agent-access",
       "goal": "Agents read and change the plan through ajiya status and an MCP server they register with in one step",
+      "description": "",
       "counts": {
-        "total": 9,
-        "done": 6,
+        "total": 10,
+        "done": 10,
         "in_progress": 0,
-        "pending": 3,
-        "dropped": 0
+        "pending": 0,
+        "dropped": 0,
+        "superseded": 0
       },
-      "percent": 66,
+      "percent": 100,
       "milestone": "v0-2"
     },
     {
       "slug": "install",
       "title": "Install",
       "goal": "Ajiya installs in one step, with a Claude Code plugin",
+      "description": "",
       "counts": {
         "total": 24,
         "done": 24,
         "in_progress": 0,
         "pending": 0,
-        "dropped": 0
+        "dropped": 0,
+        "superseded": 0
       },
       "percent": 100,
       "milestone": "v0-2"
@@ -194,15 +232,33 @@ window.AJIYA = {
       "slug": "decisions-and-changes",
       "title": "Decisions-and-changes",
       "goal": "Plans change without losing history: tags, decisions, superseded work and approved change requests",
+      "description": "",
       "counts": {
-        "total": 11,
-        "done": 0,
+        "total": 12,
+        "done": 11,
         "in_progress": 0,
-        "pending": 11,
-        "dropped": 0
+        "pending": 1,
+        "dropped": 0,
+        "superseded": 0
       },
-      "percent": 0,
+      "percent": 91,
       "milestone": "v0-3"
+    },
+    {
+      "slug": "dashboard-views",
+      "title": "Dashboard views",
+      "goal": "The dashboard shows each thing once, explains every phase, and shows how the plan changed over time",
+      "description": "",
+      "counts": {
+        "total": 4,
+        "done": 4,
+        "in_progress": 0,
+        "pending": 0,
+        "dropped": 0,
+        "superseded": 0
+      },
+      "percent": 100,
+      "milestone": "v0-3-1"
     }
   ],
   "apps": [
@@ -210,11 +266,12 @@ window.AJIYA = {
       "name": "ajiya",
       "path": ".",
       "counts": {
-        "total": 106,
-        "done": 86,
+        "total": 112,
+        "done": 111,
         "in_progress": 0,
-        "pending": 20,
-        "dropped": 0
+        "pending": 1,
+        "dropped": 0,
+        "superseded": 0
       }
     }
   ],
@@ -226,6 +283,11 @@ window.AJIYA = {
       "title": "Parse Ajiya trailers with git's own rules",
       "done_when": "Refs, chore, merge and revert exemptions agree between message files and history; table tests pass",
       "depends": [],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · 4cc2b3f · 2026-09-28",
@@ -255,6 +317,11 @@ window.AJIYA = {
       "depends": [
         "AJ-0001"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · 4a49882 · 2026-09-28",
@@ -278,6 +345,11 @@ window.AJIYA = {
       "depends": [
         "AJ-0001"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · ea005bf · 2026-09-28",
@@ -301,6 +373,11 @@ window.AJIYA = {
       "depends": [
         "AJ-0001"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · 6f015d8 · 2026-09-28",
@@ -325,6 +402,11 @@ window.AJIYA = {
         "AJ-0003",
         "AJ-0004"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · 58e9736 · 2026-09-28",
@@ -349,6 +431,11 @@ window.AJIYA = {
         "AJ-0002",
         "AJ-0005"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · 5c94eca · 2026-09-29 · Note: hooks installed here; unknown-ID commit refused",
@@ -371,6 +458,11 @@ window.AJIYA = {
       "depends": [
         "AJ-0001"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · 2f9d28a · 2026-09-29",
@@ -390,6 +482,11 @@ window.AJIYA = {
       "title": "App detection in init",
       "done_when": "Suggests apps from workspace files and manifests, ranked, skipping vendor folders; --yes accepts; fixture repos pass",
       "depends": [],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · 83f20ca · 2026-09-29 · tests passed",
@@ -412,6 +509,11 @@ window.AJIYA = {
       "title": "ajiya app add, remove and move",
       "done_when": "Refuses to orphan open tickets unless --to is given; script tests pass",
       "depends": [],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · 57e4454 · 2026-09-29",
@@ -433,6 +535,11 @@ window.AJIYA = {
       "title": "ajiya launch set and show",
       "done_when": "Required set is the target's tickets plus everything they depend on; table tests pass",
       "depends": [],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · 3349f60 · 2026-09-29",
@@ -458,6 +565,11 @@ window.AJIYA = {
       "depends": [
         "AJ-0010"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · d32c066 · 2026-09-29",
@@ -482,6 +594,11 @@ window.AJIYA = {
         "AJ-0009",
         "AJ-0010"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · 7bac540 · 2026-09-29 · tests passed",
@@ -507,6 +624,11 @@ window.AJIYA = {
         "AJ-0001",
         "AJ-0012"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · b3d5792 · 2026-09-29 · tests passed",
@@ -532,6 +654,11 @@ window.AJIYA = {
       "depends": [
         "AJ-0013"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · e2b8505 · 2026-09-29 · tests passed",
@@ -552,6 +679,11 @@ window.AJIYA = {
       "title": "ajiya ticket done --test",
       "done_when": "Runs the configured test command, records tests passed, refuses on failure",
       "depends": [],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · c0239ef · 2026-09-29 · tests passed",
@@ -572,6 +704,11 @@ window.AJIYA = {
       "title": "ajiya ticket block and ticket drop",
       "done_when": "block sets a reason; drop needs --reason and --by and counts as closed",
       "depends": [],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · 1ad6b45 · 2026-09-29",
@@ -593,6 +730,11 @@ window.AJIYA = {
       "depends": [
         "AJ-0001"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · 8c2dea8 · 2026-09-29 · tests passed",
@@ -620,6 +762,11 @@ window.AJIYA = {
         "AJ-0038",
         "AJ-0040"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · 7b6a1fb · 2026-09-29 · tests passed",
@@ -645,6 +792,11 @@ window.AJIYA = {
         "AJ-0018",
         "AJ-0038"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · 994ad17 · 2026-09-29 · tests passed",
@@ -675,6 +827,11 @@ window.AJIYA = {
       "depends": [
         "AJ-0019"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · 28b8618 · 2026-09-29 · tests passed",
@@ -707,6 +864,11 @@ window.AJIYA = {
         "AJ-0063",
         "AJ-0064"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · 61d1f54 · 2026-09-29 · tests passed · Note: milestone list shows v0-1, v0-2, v0-3 in order; ajiya serve shows this repo's plan live",
@@ -733,6 +895,11 @@ window.AJIYA = {
       "depends": [
         "AJ-0021"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · 8d5cafe · 2026-09-29 · tests passed",
@@ -758,6 +925,11 @@ window.AJIYA = {
       "depends": [
         "AJ-0021"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · 8d5cafe · 2026-09-29 · tests passed",
@@ -783,6 +955,11 @@ window.AJIYA = {
         "AJ-0022",
         "AJ-0023"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · 39cb092 · 2026-09-28 · tests passed",
@@ -808,6 +985,11 @@ window.AJIYA = {
         "AJ-0008",
         "AJ-0024"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · 15cad8a · 2026-09-29 · tests passed",
@@ -831,6 +1013,11 @@ window.AJIYA = {
       "title": "ajiya import todo",
       "done_when": "Checkbox and bullet items land in the inbox phase unchanged; ticked items are done before Ajiya",
       "depends": [],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · 5cf99f1 · 2026-09-29 · tests passed",
@@ -851,6 +1038,11 @@ window.AJIYA = {
       "title": "ajiya import github",
       "done_when": "Uses gh to import open issues as pending and closed issues as done, each keeping its URL",
       "depends": [],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · da34caf · 2026-09-29 · tests passed",
@@ -871,6 +1063,11 @@ window.AJIYA = {
       "title": "ajiya import legacy",
       "done_when": "Reads the collate.py format with new IDs, old IDs kept as aliases and a duplicate report; tested on reference/private if present",
       "depends": [],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · 3b606af · 2026-09-29 · tests passed",
@@ -893,6 +1090,11 @@ window.AJIYA = {
       "depends": [
         "AJ-0025"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · c93b4be · 2026-09-29 · tests passed",
@@ -918,6 +1120,11 @@ window.AJIYA = {
       "depends": [
         "AJ-0029"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · 9a2c69c · 2026-09-29 · tests passed · Note: goreleaser release --snapshot --clean: 6 binaries, version stamped",
@@ -947,6 +1154,11 @@ window.AJIYA = {
       "depends": [
         "AJ-0030"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · bb6e0eb · 2026-09-29 · tests passed · Note: snapshot writes dist/homebrew/Casks/ajiya.rb with quarantine removal; skip_upload true",
@@ -974,6 +1186,11 @@ window.AJIYA = {
       "depends": [
         "AJ-0001"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · d84543c · 2026-09-29 · tests passed",
@@ -998,6 +1215,11 @@ window.AJIYA = {
       "depends": [
         "AJ-0029"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · 6fb1bcc · 2026-09-29 · tests passed",
@@ -1033,6 +1255,11 @@ window.AJIYA = {
         "AJ-0065",
         "AJ-0066"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · by Aliyu Yahaya · 2026-09-29 · Note: v0.1 approved by the maintainer; check --strict and check --commits since M2 pass; agent-only walkthrough test runs after sign-off",
@@ -1067,6 +1294,11 @@ window.AJIYA = {
       "title": "ajiya phase rename",
       "done_when": "ajiya phase rename \u003cold\u003e \u003cnew\u003e renames the file and moves every ticket; refused if the new slug exists; the launch target follows the rename",
       "depends": [],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · 145c34f · 2026-09-29 · tests passed",
@@ -1091,6 +1323,11 @@ window.AJIYA = {
       "depends": [
         "AJ-0019"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · a0210e3 · 2026-09-29 · tests passed",
@@ -1116,6 +1353,11 @@ window.AJIYA = {
       "depends": [
         "AJ-0010"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · 8a327fa · 2026-09-29 · tests passed",
@@ -1144,6 +1386,11 @@ window.AJIYA = {
         "AJ-0011",
         "AJ-0037"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · a36d139 · 2026-09-29 · tests passed",
@@ -1174,6 +1421,11 @@ window.AJIYA = {
       "depends": [
         "AJ-0037"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · 1828a44 · 2026-09-29 · tests passed",
@@ -1198,6 +1450,11 @@ window.AJIYA = {
       "depends": [
         "AJ-0037"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · 999e8f1 · 2026-09-29 · tests passed",
@@ -1226,6 +1483,11 @@ window.AJIYA = {
         "AJ-0038",
         "AJ-0040"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · 7d547a5 · 2026-09-29 · tests passed",
@@ -1251,6 +1513,11 @@ window.AJIYA = {
         "AJ-0034",
         "AJ-0038"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · cbdcde9 · 2026-09-29 · tests passed",
@@ -1277,6 +1544,11 @@ window.AJIYA = {
       "depends": [
         "AJ-0042"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · 0852975 · 2026-09-30 · tests passed",
@@ -1303,6 +1575,11 @@ window.AJIYA = {
       "depends": [
         "AJ-0043"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · 592adc8 · 2026-09-30 · tests passed",
@@ -1337,6 +1614,11 @@ window.AJIYA = {
         "AJ-0031",
         "AJ-0044"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · 0ae147d · 2026-09-30 · tests passed",
@@ -1364,6 +1646,11 @@ window.AJIYA = {
         "AJ-0042",
         "AJ-0043"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · 83cfc3f · 2026-09-30 · tests passed",
@@ -1407,6 +1694,11 @@ window.AJIYA = {
         "AJ-0096",
         "AJ-0097"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · by Aliyu Yahaya · 2026-09-30 · Note: v0.2 signed off by the maintainer: rc.4 rehearsal (signed, notarised, npm next, installs in test-app); MCP walkthrough in a fresh repo planned and finished a ticket through MCP tools in 34s; clean-account run not done",
@@ -1440,20 +1732,29 @@ window.AJIYA = {
       "depends": [
         "AJ-0047"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · 5540ca9 · 2026-10-16 · tests passed",
+        "commit": "5540ca9",
+        "date": "2026-10-16",
+        "tests_passed": true
       },
       "milestone": "v0-3",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0049",
         "AJ-0050",
         "AJ-0051",
-        "AJ-0058"
+        "AJ-0058",
+        "AJ-0107"
       ],
-      "unblocks": 10
+      "unblocks": 0
     },
     {
       "id": "AJ-0049",
@@ -1464,20 +1765,26 @@ window.AJIYA = {
       "depends": [
         "AJ-0048"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · 542d6e2 · 2026-10-16 · tests passed",
+        "commit": "542d6e2",
+        "date": "2026-10-16",
+        "tests_passed": true
       },
       "milestone": "v0-3",
       "ready": false,
-      "waiting_on": [
-        "AJ-0048"
-      ],
+      "waiting_on": [],
       "dependants": [
         "AJ-0053",
         "AJ-0058"
       ],
-      "unblocks": 6
+      "unblocks": 0
     },
     {
       "id": "AJ-0050",
@@ -1488,20 +1795,26 @@ window.AJIYA = {
       "depends": [
         "AJ-0048"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · a00f089 · 2026-10-16 · tests passed",
+        "commit": "a00f089",
+        "date": "2026-10-16",
+        "tests_passed": true
       },
       "milestone": "v0-3",
       "ready": false,
-      "waiting_on": [
-        "AJ-0048"
-      ],
+      "waiting_on": [],
       "dependants": [
         "AJ-0053",
         "AJ-0058"
       ],
-      "unblocks": 6
+      "unblocks": 0
     },
     {
       "id": "AJ-0051",
@@ -1512,21 +1825,27 @@ window.AJIYA = {
       "depends": [
         "AJ-0048"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · 71f6e2e · 2026-10-16 · tests passed",
+        "commit": "71f6e2e",
+        "date": "2026-10-16",
+        "tests_passed": true
       },
       "milestone": "v0-3",
       "ready": false,
-      "waiting_on": [
-        "AJ-0048"
-      ],
+      "waiting_on": [],
       "dependants": [
         "AJ-0052",
         "AJ-0053",
         "AJ-0058"
       ],
-      "unblocks": 7
+      "unblocks": 0
     },
     {
       "id": "AJ-0052",
@@ -1537,20 +1856,26 @@ window.AJIYA = {
       "depends": [
         "AJ-0051"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · 71f6e2e · 2026-10-16 · tests passed",
+        "commit": "71f6e2e",
+        "date": "2026-10-16",
+        "tests_passed": true
       },
       "milestone": "v0-3",
       "ready": false,
-      "waiting_on": [
-        "AJ-0051"
-      ],
+      "waiting_on": [],
       "dependants": [
         "AJ-0053",
         "AJ-0058"
       ],
-      "unblocks": 6
+      "unblocks": 0
     },
     {
       "id": "AJ-0053",
@@ -1564,23 +1889,26 @@ window.AJIYA = {
         "AJ-0051",
         "AJ-0052"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · e0409bc · 2026-10-16 · tests passed",
+        "commit": "e0409bc",
+        "date": "2026-10-16",
+        "tests_passed": true
       },
       "milestone": "v0-3",
       "ready": false,
-      "waiting_on": [
-        "AJ-0049",
-        "AJ-0050",
-        "AJ-0051",
-        "AJ-0052"
-      ],
+      "waiting_on": [],
       "dependants": [
         "AJ-0054",
         "AJ-0058"
       ],
-      "unblocks": 5
+      "unblocks": 0
     },
     {
       "id": "AJ-0054",
@@ -1591,20 +1919,26 @@ window.AJIYA = {
       "depends": [
         "AJ-0053"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · 78a3e86 · 2026-10-16 · tests passed",
+        "commit": "78a3e86",
+        "date": "2026-10-16",
+        "tests_passed": true
       },
       "milestone": "v0-3",
       "ready": false,
-      "waiting_on": [
-        "AJ-0053"
-      ],
+      "waiting_on": [],
       "dependants": [
         "AJ-0055",
         "AJ-0058"
       ],
-      "unblocks": 4
+      "unblocks": 0
     },
     {
       "id": "AJ-0055",
@@ -1615,21 +1949,28 @@ window.AJIYA = {
       "depends": [
         "AJ-0054"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · 78a3e86 · 2026-10-16 · tests passed",
+        "commit": "78a3e86",
+        "date": "2026-10-16",
+        "tests_passed": true
       },
       "milestone": "v0-3",
       "ready": false,
-      "waiting_on": [
-        "AJ-0054"
-      ],
+      "waiting_on": [],
       "dependants": [
         "AJ-0056",
         "AJ-0057",
-        "AJ-0058"
+        "AJ-0058",
+        "AJ-0112"
       ],
-      "unblocks": 3
+      "unblocks": 0
     },
     {
       "id": "AJ-0056",
@@ -1640,19 +1981,25 @@ window.AJIYA = {
       "depends": [
         "AJ-0055"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · d2098d0 · 2026-10-16 · tests passed",
+        "commit": "d2098d0",
+        "date": "2026-10-16",
+        "tests_passed": true
       },
       "milestone": "v0-3",
       "ready": false,
-      "waiting_on": [
-        "AJ-0055"
-      ],
+      "waiting_on": [],
       "dependants": [
         "AJ-0058"
       ],
-      "unblocks": 1
+      "unblocks": 0
     },
     {
       "id": "AJ-0057",
@@ -1664,16 +2011,25 @@ window.AJIYA = {
         "AJ-0019",
         "AJ-0055"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · 7182cfb · 2026-10-16 · tests passed",
+        "commit": "7182cfb",
+        "date": "2026-10-16",
+        "tests_passed": true
       },
       "milestone": "after-v0-3",
       "ready": false,
-      "waiting_on": [
-        "AJ-0055"
+      "waiting_on": [],
+      "dependants": [
+        "AJ-0108",
+        "AJ-0110"
       ],
-      "dependants": [],
       "unblocks": 0
     },
     {
@@ -1693,24 +2049,19 @@ window.AJIYA = {
         "AJ-0055",
         "AJ-0056"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "pending",
         "text": "🟥 Pending · Needs a human: final sign-off before publishing v0.3",
         "human": "final sign-off before publishing v0.3"
       },
       "milestone": "v0-3",
-      "ready": false,
-      "waiting_on": [
-        "AJ-0048",
-        "AJ-0049",
-        "AJ-0050",
-        "AJ-0051",
-        "AJ-0052",
-        "AJ-0053",
-        "AJ-0054",
-        "AJ-0055",
-        "AJ-0056"
-      ],
+      "ready": true,
+      "waiting_on": [],
       "dependants": [],
       "unblocks": 0
     },
@@ -1724,6 +2075,11 @@ window.AJIYA = {
         "AJ-0035",
         "AJ-0038"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · 57776dc · 2026-09-29 · tests passed",
@@ -1749,6 +2105,11 @@ window.AJIYA = {
         "AJ-0019",
         "AJ-0020"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · 3ae5531 · 2026-09-29 · tests passed",
@@ -1773,6 +2134,11 @@ window.AJIYA = {
       "depends": [
         "AJ-0019"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · d84de11 · 2026-09-29 · tests passed",
@@ -1797,6 +2163,11 @@ window.AJIYA = {
       "depends": [
         "AJ-0019"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · d84de11 · 2026-09-29 · tests passed",
@@ -1821,6 +2192,11 @@ window.AJIYA = {
       "depends": [
         "AJ-0036"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · d84de11 · 2026-09-29 · tests passed",
@@ -1845,6 +2221,11 @@ window.AJIYA = {
       "depends": [
         "AJ-0019"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · 40d743d · 2026-09-29 · tests passed",
@@ -1867,6 +2248,11 @@ window.AJIYA = {
       "title": "ticket done takes evidence only from commits after the ticket started",
       "done_when": "ticket start records the start time locally (in the git directory); ticket done refuses when every commit naming the ticket predates it and names the ignored commit; tests cover a pre-start commit alone, a pre-start plus a later commit, and a ticket with no start record",
       "depends": [],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · 5c1af99 · 2026-09-29 · tests passed",
@@ -1891,6 +2277,11 @@ window.AJIYA = {
       "depends": [
         "AJ-0025"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · 5a75b38 · 2026-09-29 · tests passed",
@@ -1915,6 +2306,11 @@ window.AJIYA = {
       "depends": [
         "AJ-0034"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · by Aliyu Yahaya · 2026-09-29 · Note: npm ships per-platform optional packages behind a small ajiya wrapper, not a postinstall download (agreed in session)",
@@ -1939,6 +2335,11 @@ window.AJIYA = {
       "depends": [
         "AJ-0034"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · by Aliyu Yahaya · 2026-09-29 · Note: haidardotdev has 2FA; npm org ajiya created; @ajiya/cli 0.0.0 placeholder published (ajiya was refused as too similar to tjika)",
@@ -1963,6 +2364,11 @@ window.AJIYA = {
       "depends": [
         "AJ-0034"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · by Aliyu Yahaya · 2026-09-29 · Note: AliyuYahaya/homebrew-tap created; fine-grained token (Contents read and write on the tap only) stored as HOMEBREW_TAP_TOKEN in the homebrew-release environment",
@@ -1987,6 +2393,11 @@ window.AJIYA = {
       "depends": [
         "AJ-0034"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · by Aliyu Yahaya · 2026-09-29 · Note: install scripts live on GitHub as release assets: releases/latest/download/install.sh and install.ps1; no domain for now",
@@ -2011,6 +2422,11 @@ window.AJIYA = {
       "depends": [
         "AJ-0034"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · by Aliyu Yahaya · 2026-09-29 · Note: created with gh at the maintainer's request: homebrew-release and npm-release, reviewer AliyuYahaya, deployments only from v* tags",
@@ -2036,6 +2452,11 @@ window.AJIYA = {
       "depends": [
         "AJ-0034"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · d1df3f0 · 2026-09-29 · tests passed",
@@ -2062,6 +2483,11 @@ window.AJIYA = {
         "AJ-0030",
         "AJ-0044"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · 321e6bc · 2026-09-30 · tests passed · Note: install.ps1 passes installer CI run 36756977435 on windows-latest under PowerShell 7 and 5.1",
@@ -2089,6 +2515,11 @@ window.AJIYA = {
         "AJ-0045",
         "AJ-0073"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · 36e4c5f · 2026-09-30 · tests passed · Note: installers job green on ubuntu, macOS and Windows in run 36756977435",
@@ -2116,6 +2547,11 @@ window.AJIYA = {
         "AJ-0067",
         "AJ-0068"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · b8e9dbb · 2026-09-30 · tests passed",
@@ -2142,6 +2578,11 @@ window.AJIYA = {
       "depends": [
         "AJ-0075"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · 6956c08 · 2026-09-30 · tests passed",
@@ -2168,6 +2609,11 @@ window.AJIYA = {
         "AJ-0044",
         "AJ-0069"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · f805edf · 2026-09-30 · tests passed",
@@ -2195,6 +2641,11 @@ window.AJIYA = {
         "AJ-0070",
         "AJ-0073"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · 76c7805 · 2026-09-30 · tests passed · Note: v0.2.0-rc.4 release carries install.sh and install.ps1; install.sh from the release installed rc.4 in test-app",
@@ -2223,6 +2674,11 @@ window.AJIYA = {
         "AJ-0075",
         "AJ-0077"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · eeccc95 · 2026-09-30 · tests passed · Note: rc.4 run 36775559939: approval gates, wait for publish, npm published 7 packages under next with provenance, tap left alone for a prerelease",
@@ -2248,6 +2704,11 @@ window.AJIYA = {
       "depends": [
         "AJ-0075"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · by Aliyu Yahaya · 2026-09-30 · Note: all 7 @ajiya packages published once and linked with npm trust github to AliyuYahaya/Ajiya release.yml, environment npm-release, publish allowed",
@@ -2277,6 +2738,11 @@ window.AJIYA = {
         "AJ-0080",
         "AJ-0084"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · by Aliyu Yahaya · 2026-09-30 · Note: v0.2.0-rc.4 rehearsal: maintainer approved release, published the pre-release, approved npm and tap; npm next=0.2.0-rc.4 installs and runs in test-app; binaries notarised",
@@ -2301,6 +2767,11 @@ window.AJIYA = {
       "depends": [
         "AJ-0081"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · e3e65f6 · 2026-09-30 · tests passed",
@@ -2325,6 +2796,11 @@ window.AJIYA = {
       "depends": [
         "AJ-0071"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · by Aliyu Yahaya · 2026-09-30 · Note: Developer ID Application .p12 and App Store Connect API key stored in the release environment: MACOS_SIGN_P12, MACOS_SIGN_PASSWORD, MACOS_NOTARY_KEY, MACOS_NOTARY_KEY_ID, MACOS_NOTARY_ISSUER_ID (base64 for the files)",
@@ -2351,6 +2827,11 @@ window.AJIYA = {
         "AJ-0077",
         "AJ-0083"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · eeccc95 · 2026-09-30 · tests passed · Note: rc.4 darwin amd64 and arm64: spctl install assessment accepted, source=Notarized Developer ID; macos-verify green; cask quarantine hook removed",
@@ -2376,6 +2857,11 @@ window.AJIYA = {
       "depends": [
         "AJ-0034"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · 980c627 · 2026-09-29 · tests passed",
@@ -2401,6 +2887,11 @@ window.AJIYA = {
       "depends": [
         "AJ-0034"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · 4e23e52 · 2026-09-29 · tests passed",
@@ -2426,6 +2917,11 @@ window.AJIYA = {
       "depends": [
         "AJ-0034"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · ac6842b · 2026-09-29 · tests passed",
@@ -2450,6 +2946,11 @@ window.AJIYA = {
       "depends": [
         "AJ-0034"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · ac6842b · 2026-09-29 · tests passed",
@@ -2475,6 +2976,11 @@ window.AJIYA = {
       "depends": [
         "AJ-0034"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · ac6842b · 2026-09-29 · tests passed",
@@ -2499,6 +3005,11 @@ window.AJIYA = {
       "depends": [
         "AJ-0034"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · 23f1de8 · 2026-09-29 · tests passed",
@@ -2525,6 +3036,11 @@ window.AJIYA = {
         "AJ-0086",
         "AJ-0088"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · 9f1c49a · 2026-09-29 · tests passed",
@@ -2549,6 +3065,11 @@ window.AJIYA = {
       "depends": [
         "AJ-0046"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · 39f18c9 · 2026-09-30 · tests passed",
@@ -2574,6 +3095,11 @@ window.AJIYA = {
       "depends": [
         "AJ-0044"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · 5cff5a1 · 2026-09-30 · tests passed",
@@ -2598,6 +3124,11 @@ window.AJIYA = {
       "depends": [
         "AJ-0044"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · 4e223ae · 2026-09-30 · tests passed",
@@ -2622,6 +3153,11 @@ window.AJIYA = {
       "depends": [
         "AJ-0044"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · 6e41253 · 2026-09-30 · tests passed",
@@ -2646,6 +3182,11 @@ window.AJIYA = {
       "depends": [
         "AJ-0044"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · 926cdc8 · 2026-09-30 · tests passed",
@@ -2671,6 +3212,11 @@ window.AJIYA = {
         "AJ-0044",
         "AJ-0092"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
         "state": "done",
         "text": "🟩 Done · c5c8987 · 2026-09-30 · tests passed",
@@ -2695,12 +3241,20 @@ window.AJIYA = {
       "depends": [
         "AJ-0047"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · 477fa25 · 2026-10-16 · tests passed",
+        "commit": "477fa25",
+        "date": "2026-10-16",
+        "tests_passed": true
       },
       "milestone": "v0-2-1",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [],
       "unblocks": 0
@@ -2714,12 +3268,20 @@ window.AJIYA = {
       "depends": [
         "AJ-0047"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · d96483a · 2026-10-16 · tests passed",
+        "commit": "d96483a",
+        "date": "2026-10-16",
+        "tests_passed": true
       },
       "milestone": "v0-2-1",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [],
       "unblocks": 0
@@ -2733,12 +3295,20 @@ window.AJIYA = {
       "depends": [
         "AJ-0047"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · 52a348c · 2026-10-16 · tests passed",
+        "commit": "52a348c",
+        "date": "2026-10-16",
+        "tests_passed": true
       },
       "milestone": "v0-2-1",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [],
       "unblocks": 0
@@ -2752,12 +3322,20 @@ window.AJIYA = {
       "depends": [
         "AJ-0047"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · ca13988 · 2026-10-16 · tests passed",
+        "commit": "ca13988",
+        "date": "2026-10-16",
+        "tests_passed": true
       },
       "milestone": "v0-2-1",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [],
       "unblocks": 0
@@ -2771,12 +3349,20 @@ window.AJIYA = {
       "depends": [
         "AJ-0047"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · 38087da · 2026-10-16 · tests passed",
+        "commit": "38087da",
+        "date": "2026-10-16",
+        "tests_passed": true
       },
       "milestone": "v0-2-1",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [],
       "unblocks": 0
@@ -2790,12 +3376,20 @@ window.AJIYA = {
       "depends": [
         "AJ-0047"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · 52a348c · 2026-10-16 · tests passed",
+        "commit": "52a348c",
+        "date": "2026-10-16",
+        "tests_passed": true
       },
       "milestone": "v0-2-1",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [],
       "unblocks": 0
@@ -2809,12 +3403,20 @@ window.AJIYA = {
       "depends": [
         "AJ-0047"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · 2d69dc7 · 2026-10-16 · tests passed",
+        "commit": "2d69dc7",
+        "date": "2026-10-16",
+        "tests_passed": true
       },
       "milestone": "v0-2-1",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [],
       "unblocks": 0
@@ -2828,12 +3430,20 @@ window.AJIYA = {
       "depends": [
         "AJ-0047"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · cc4b027 · 2026-10-16 · tests passed",
+        "commit": "cc4b027",
+        "date": "2026-10-16",
+        "tests_passed": true
       },
       "milestone": "v0-2-1",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [],
       "unblocks": 0
@@ -2847,31 +3457,1771 @@ window.AJIYA = {
       "depends": [
         "AJ-0047"
       ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
       "status": {
-        "state": "pending",
-        "text": "🟥 Pending"
+        "state": "done",
+        "text": "🟩 Done · 103008b · 2026-10-16 · tests passed",
+        "commit": "103008b",
+        "date": "2026-10-16",
+        "tests_passed": true
       },
       "milestone": "v0-2-1",
-      "ready": true,
+      "ready": false,
+      "waiting_on": [],
+      "dependants": [],
+      "unblocks": 0
+    },
+    {
+      "id": "AJ-0107",
+      "phase": "dashboard-views",
+      "app": "ajiya",
+      "title": "Phase descriptions",
+      "done_when": "phase add takes --description and a new phase describe \u003cslug\u003e \"\u003ctext\u003e\" sets it; the description is kept as a paragraph under Goal in the phase file, round-trips with goldens, appears in phase list --json, ajiya build data and an MCP tool",
+      "depends": [
+        "AJ-0048"
+      ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
+      "status": {
+        "state": "done",
+        "text": "🟩 Done · 3e35786 · 2026-10-16 · tests passed",
+        "commit": "3e35786",
+        "date": "2026-10-16",
+        "tests_passed": true
+      },
+      "milestone": "v0-3-1",
+      "ready": false,
+      "waiting_on": [],
+      "dependants": [
+        "AJ-0109"
+      ],
+      "unblocks": 0
+    },
+    {
+      "id": "AJ-0108",
+      "phase": "dashboard-views",
+      "app": "ajiya",
+      "title": "Dashboard: one view per way of seeing tickets",
+      "done_when": "Next is folded into Board's Can start now column, and Phases and Tickets become one Tickets view with a group-by-phase toggle; no two tabs list the same tickets in the same grouping; old #next and #phases links land on the new view; dashboard tests updated",
+      "depends": [
+        "AJ-0057"
+      ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
+      "status": {
+        "state": "done",
+        "text": "🟩 Done · 611bd42 · 2026-10-16 · tests passed",
+        "commit": "611bd42",
+        "date": "2026-10-16",
+        "tests_passed": true
+      },
+      "milestone": "v0-3-1",
+      "ready": false,
+      "waiting_on": [],
+      "dependants": [
+        "AJ-0109",
+        "AJ-0110"
+      ],
+      "unblocks": 0
+    },
+    {
+      "id": "AJ-0109",
+      "phase": "dashboard-views",
+      "app": "ajiya",
+      "title": "Dashboard: a page per phase",
+      "done_when": "Clicking a phase opens its page with goal, description, milestone, progress, tickets grouped by state, and the phases it depends on and that depend on it; the page has its own link (#phase/\u003cslug\u003e); dashboard test covers a phase with and without a description",
+      "depends": [
+        "AJ-0107",
+        "AJ-0108"
+      ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
+      "status": {
+        "state": "done",
+        "text": "🟩 Done · f4f9d70 · 2026-10-16 · tests passed",
+        "commit": "f4f9d70",
+        "date": "2026-10-16",
+        "tests_passed": true
+      },
+      "milestone": "v0-3-1",
+      "ready": false,
+      "waiting_on": [],
+      "dependants": [],
+      "unblocks": 0
+    },
+    {
+      "id": "AJ-0110",
+      "phase": "dashboard-views",
+      "app": "ajiya",
+      "title": "Dashboard: plan history from decisions and changes",
+      "done_when": "A History view lists decisions and approved or rejected changes in date order; each change shows what it superseded and created and links to those tickets, and each decision shows what it replaced or was replaced by; ajiya build data carries the history; dashboard test covers a plan with one approved change",
+      "depends": [
+        "AJ-0057",
+        "AJ-0108"
+      ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
+      "status": {
+        "state": "done",
+        "text": "🟩 Done · f4f9d70 · 2026-10-16 · tests passed",
+        "commit": "f4f9d70",
+        "date": "2026-10-16",
+        "tests_passed": true
+      },
+      "milestone": "v0-3-1",
+      "ready": false,
+      "waiting_on": [],
+      "dependants": [],
+      "unblocks": 0
+    },
+    {
+      "id": "AJ-0111",
+      "phase": "agent-access",
+      "app": "ajiya",
+      "title": "Positional arguments that start with a dash",
+      "done_when": "A positional argument after the flags that starts with - (e.g. phase describe web \"- first point\" or ticket block \u003cID\u003e \"-reason\") is read as text, not a flag, from the CLI after -- and from MCP tools; tests cover both",
+      "depends": [],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
+      "status": {
+        "state": "done",
+        "text": "🟩 Done · a984d1d · 2026-10-16 · tests passed",
+        "commit": "a984d1d",
+        "date": "2026-10-16",
+        "tests_passed": true
+      },
+      "milestone": "v0-3-1",
+      "ready": false,
+      "waiting_on": [],
+      "dependants": [],
+      "unblocks": 0
+    },
+    {
+      "id": "AJ-0112",
+      "phase": "decisions-and-changes",
+      "app": "ajiya",
+      "title": "change approve retargets milestones",
+      "done_when": "When approve supersedes a ticket that a milestone (or [launch]) targets, ajiya.toml is updated in the same write to target the replacement (or the invalidated ticket's dependencies), and the Results list it; the Supabase scenario covers a targeted ticket",
+      "depends": [
+        "AJ-0055"
+      ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
+      "status": {
+        "state": "done",
+        "text": "🟩 Done · 82e516d · 2026-10-16 · tests passed",
+        "commit": "82e516d",
+        "date": "2026-10-16",
+        "tests_passed": true
+      },
+      "milestone": "v0-3-1",
+      "ready": false,
       "waiting_on": [],
       "dependants": [],
       "unblocks": 0
     }
   ],
   "next": [
-    "AJ-0098",
-    "AJ-0099",
-    "AJ-0100",
-    "AJ-0101",
-    "AJ-0102",
-    "AJ-0103",
-    "AJ-0104",
-    "AJ-0105",
-    "AJ-0106",
-    "AJ-0048"
+    "AJ-0058"
   ],
   "checks": [],
   "activity": [
+    {
+      "hash": "f4f9d700fd5c1473849e97536d1b8e5efb152145",
+      "short": "f4f9d70",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Merge AJ-0109, AJ-0110: phase pages and plan history",
+      "refs": [
+        "AJ-0109",
+        "AJ-0110"
+      ],
+      "chore": false,
+      "merge": true,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792172280
+    },
+    {
+      "hash": "fbe22c79be0ab9cfc7337ef84c3c58d8c5c5aacc",
+      "short": "fbe22c7",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Dashboard: plan history from decisions and changes",
+      "refs": [
+        "AJ-0110"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792172208
+    },
+    {
+      "hash": "11e5e681175ddadc0daff857a8200a759df53fb6",
+      "short": "11e5e68",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Dashboard: a page per phase",
+      "refs": [
+        "AJ-0109"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792172032
+    },
+    {
+      "hash": "ce4c0d136b16656ad6f324630148f6c8bda931c5",
+      "short": "ce4c0d1",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Mark AJ-0108 done; start AJ-0109, AJ-0110",
+      "refs": [
+        "AJ-0108"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0108",
+          "phase": "dashboard-views",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · 611bd42 · 2026-10-16 · tests passed"
+        },
+        {
+          "id": "AJ-0109",
+          "phase": "dashboard-views",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        },
+        {
+          "id": "AJ-0110",
+          "phase": "dashboard-views",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        }
+      ],
+      "time": 1792170094
+    },
+    {
+      "hash": "611bd422b8c319f2c51089a67e072a2350d574b4",
+      "short": "611bd42",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Dashboard: in-progress tickets are not marked can start",
+      "refs": [
+        "AJ-0108"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792170085
+    },
+    {
+      "hash": "21d8aad65fa016ffcf72d531ef916bfca3e38abd",
+      "short": "21d8aad",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Merge AJ-0108: one view per way of seeing tickets",
+      "refs": [
+        "AJ-0108"
+      ],
+      "chore": false,
+      "merge": true,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792166055
+    },
+    {
+      "hash": "32a9db241deb6d1874bbd4f1361aeae918942955",
+      "short": "32a9db2",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Dashboard: one view per way of seeing tickets",
+      "refs": [
+        "AJ-0108"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792166034
+    },
+    {
+      "hash": "51e68fb1ce168164446d154d330831d7c2369177",
+      "short": "51e68fb",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Mark AJ-0057 done; start AJ-0108",
+      "refs": [
+        "AJ-0057"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0057",
+          "phase": "decisions-and-changes",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · 7182cfb · 2026-10-16 · tests passed"
+        },
+        {
+          "id": "AJ-0108",
+          "phase": "dashboard-views",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        }
+      ],
+      "time": 1792165441
+    },
+    {
+      "hash": "7182cfbe8a46410851c063d1453aeb0921cee3ba",
+      "short": "7182cfb",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Merge AJ-0057: dashboard changes and decisions",
+      "refs": [
+        "AJ-0057"
+      ],
+      "chore": false,
+      "merge": true,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792165305
+    },
+    {
+      "hash": "51cd6693a5ee50a7338e1a1e3ad90add0a2660db",
+      "short": "51cd669",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Dashboard: open changes and decisions",
+      "refs": [
+        "AJ-0057"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792165287
+    },
+    {
+      "hash": "8b66500b0af558507e3e2c625f64e36b83ec7ab0",
+      "short": "8b66500",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Mark AJ-0056 done",
+      "refs": [
+        "AJ-0056"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0056",
+          "phase": "decisions-and-changes",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · d2098d0 · 2026-10-16 · tests passed"
+        }
+      ],
+      "time": 1792165164
+    },
+    {
+      "hash": "d2098d057d5e02e516001cbfc6a57ff71d1915a7",
+      "short": "d2098d0",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Refresh the agent kit",
+      "refs": [
+        "AJ-0056"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792165156
+    },
+    {
+      "hash": "e41fdefab9b90dde7b2efa4b1a6202ae53873b1b",
+      "short": "e41fdef",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Merge AJ-0056: guides and skill for decisions and changes",
+      "refs": [
+        "AJ-0056"
+      ],
+      "chore": false,
+      "merge": true,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792165132
+    },
+    {
+      "hash": "ff903d4b7b391c0a0e3eceeb2624377b3192bdeb",
+      "short": "ff903d4",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Teach tags, decisions and the change procedure in the guides and skill",
+      "refs": [
+        "AJ-0056"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792165110
+    },
+    {
+      "hash": "c9b42e16a896999de5760647540fe2cea2c2163a",
+      "short": "c9b42e1",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Mark AJ-0112 done",
+      "refs": [
+        "AJ-0112"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0112",
+          "phase": "decisions-and-changes",
+          "from": "pending",
+          "to": "done",
+          "text": "🟩 Done · 82e516d · 2026-10-16 · tests passed"
+        }
+      ],
+      "time": 1792164997
+    },
+    {
+      "hash": "82e516dd1956d706265106464529752343ca0b3c",
+      "short": "82e516d",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Merge AJ-0112: change approve retargets milestones",
+      "refs": [
+        "AJ-0112"
+      ],
+      "chore": false,
+      "merge": true,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792164961
+    },
+    {
+      "hash": "39ec8f878a75ced28baafef9ad891bd1e37b1f20",
+      "short": "39ec8f8",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Change approve retargets milestones in ajiya.toml",
+      "refs": [
+        "AJ-0112"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792164945
+    },
+    {
+      "hash": "a6747b13ae297a678c2e24971be4d731f31e1a73",
+      "short": "a6747b1",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Put AJ-0112 in v0.3.1; start AJ-0056, AJ-0057",
+      "refs": [],
+      "chore": true,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0056",
+          "phase": "decisions-and-changes",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        },
+        {
+          "id": "AJ-0057",
+          "phase": "decisions-and-changes",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        }
+      ],
+      "time": 1792164113
+    },
+    {
+      "hash": "915a93be9982fbfcafd2c86676c2677a8abd1d03",
+      "short": "915a93b",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Mark AJ-0054, AJ-0055 done; add the milestone retarget ticket",
+      "refs": [],
+      "chore": true,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0054",
+          "phase": "decisions-and-changes",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · 78a3e86 · 2026-10-16 · tests passed"
+        },
+        {
+          "id": "AJ-0055",
+          "phase": "decisions-and-changes",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · 78a3e86 · 2026-10-16 · tests passed"
+        },
+        {
+          "id": "AJ-0112",
+          "phase": "decisions-and-changes",
+          "from": "",
+          "to": "pending",
+          "text": "🟥 Pending"
+        }
+      ],
+      "time": 1792164096
+    },
+    {
+      "hash": "78a3e863be99a7d01bf63b6303eb3c903499b0eb",
+      "short": "78a3e86",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Merge AJ-0054, AJ-0055: change assess, approve and reject",
+      "refs": [
+        "AJ-0054",
+        "AJ-0055"
+      ],
+      "chore": false,
+      "merge": true,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792164060
+    },
+    {
+      "hash": "637df59eaf7b30e344f9ca633a6403d55d035510",
+      "short": "637df59",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Add change approve and change reject",
+      "refs": [
+        "AJ-0055"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792164019
+    },
+    {
+      "hash": "e4c98daf3cf8fd56bc036ce8ce62e51a42ba4b1e",
+      "short": "e4c98da",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Add change assess: record a verdict on a candidate",
+      "refs": [
+        "AJ-0054"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792163809
+    },
+    {
+      "hash": "6d73335c1d1bece2aef65221e9d7032c0e4122a9",
+      "short": "6d73335",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Mark AJ-0053 done; start AJ-0054, AJ-0055",
+      "refs": [
+        "AJ-0053"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0053",
+          "phase": "decisions-and-changes",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · e0409bc · 2026-10-16 · tests passed"
+        },
+        {
+          "id": "AJ-0054",
+          "phase": "decisions-and-changes",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        },
+        {
+          "id": "AJ-0055",
+          "phase": "decisions-and-changes",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        }
+      ],
+      "time": 1792163133
+    },
+    {
+      "hash": "e0409bc4f1b770c99fbe191d144408452658f6ee",
+      "short": "e0409bc",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Merge AJ-0053: change open and change impact",
+      "refs": [
+        "AJ-0053"
+      ],
+      "chore": false,
+      "merge": true,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792163124
+    },
+    {
+      "hash": "a055a2bca0859cd1e7022241fcd755f6f4655fd4",
+      "short": "a055a2b",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Mark AJ-0111 done",
+      "refs": [
+        "AJ-0111"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0111",
+          "phase": "agent-access",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · a984d1d · 2026-10-16 · tests passed"
+        }
+      ],
+      "time": 1792163086
+    },
+    {
+      "hash": "e0ff3e667f3e03d9a0a042b928fd4572953a4a92",
+      "short": "e0ff3e6",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Add change open and change impact",
+      "refs": [
+        "AJ-0053"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792163066
+    },
+    {
+      "hash": "a984d1dd9026e50c49a5cfd2a2ee1762e270d882",
+      "short": "a984d1d",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Merge AJ-0111: dash-leading positional arguments",
+      "refs": [
+        "AJ-0111"
+      ],
+      "chore": false,
+      "merge": true,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792163063
+    },
+    {
+      "hash": "1b95d84d74929f33d370548d9d6367954cb7356c",
+      "short": "1b95d84",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Read positional arguments that start with a dash as text",
+      "refs": [
+        "AJ-0111"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792163046
+    },
+    {
+      "hash": "e62e9a7e23882d3c099ff2cbc8dca4e6907da664",
+      "short": "e62e9a7",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Start AJ-0111",
+      "refs": [],
+      "chore": true,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0111",
+          "phase": "agent-access",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        }
+      ],
+      "time": 1792162815
+    },
+    {
+      "hash": "e8dde3b5296e5286c08866e18e1db19a5577add3",
+      "short": "e8dde3b",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Put AJ-0111 in v0.3.1",
+      "refs": [],
+      "chore": true,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792162803
+    },
+    {
+      "hash": "0a90a5a577bd0c85831eca526152e7909e893d90",
+      "short": "0a90a5a",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Mark AJ-0107 done; add the dash-argument ticket",
+      "refs": [],
+      "chore": true,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0107",
+          "phase": "dashboard-views",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · 3e35786 · 2026-10-16 · tests passed"
+        },
+        {
+          "id": "AJ-0111",
+          "phase": "agent-access",
+          "from": "",
+          "to": "pending",
+          "text": "🟥 Pending"
+        }
+      ],
+      "time": 1792162785
+    },
+    {
+      "hash": "3e35786ca451c6b8750b217b93957c3b0fcbb798",
+      "short": "3e35786",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Refresh the agent kit",
+      "refs": [
+        "AJ-0107"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792162775
+    },
+    {
+      "hash": "55fc3bfefb518aae83ced98737f387ca1d205aed",
+      "short": "55fc3bf",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Merge AJ-0107: phase descriptions",
+      "refs": [
+        "AJ-0107"
+      ],
+      "chore": false,
+      "merge": true,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792162748
+    },
+    {
+      "hash": "b09ec5d6010f00f3a59f96f5c51b45c089b040a0",
+      "short": "b09ec5d",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Phase descriptions: phase describe, --description, JSON, data.js and MCP",
+      "refs": [
+        "AJ-0107"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792162723
+    },
+    {
+      "hash": "1a7f462f2dcecabf23b597b881c4534c237d0294",
+      "short": "1a7f462",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Start AJ-0053, AJ-0107",
+      "refs": [],
+      "chore": true,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0053",
+          "phase": "decisions-and-changes",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        },
+        {
+          "id": "AJ-0107",
+          "phase": "dashboard-views",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        }
+      ],
+      "time": 1792162327
+    },
+    {
+      "hash": "d83269c862549fb19d1a5d2a2cdb41002e52c418",
+      "short": "d83269c",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Mark AJ-0051, AJ-0052 done",
+      "refs": [
+        "AJ-0051",
+        "AJ-0052"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0051",
+          "phase": "decisions-and-changes",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · 71f6e2e · 2026-10-16 · tests passed"
+        },
+        {
+          "id": "AJ-0052",
+          "phase": "decisions-and-changes",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · 71f6e2e · 2026-10-16 · tests passed"
+        }
+      ],
+      "time": 1792162305
+    },
+    {
+      "hash": "71f6e2ea98b6713328e47a767668d1f1fcbfcab0",
+      "short": "71f6e2e",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Merge AJ-0051, AJ-0052: superseded status and snapshots",
+      "refs": [
+        "AJ-0051",
+        "AJ-0052"
+      ],
+      "chore": false,
+      "merge": true,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792162294
+    },
+    {
+      "hash": "2a56f797907c7cbe33cdbf405f0d7f175fa7fb19",
+      "short": "2a56f79",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Add ajiya snapshot and snapshot list: plan snapshots as annotated tags",
+      "refs": [
+        "AJ-0052"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792162161
+    },
+    {
+      "hash": "78e0cf9519c5c72707cc520eaa3932c6cd528197",
+      "short": "78e0cf9",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Mark AJ-0050 done",
+      "refs": [
+        "AJ-0050"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0050",
+          "phase": "decisions-and-changes",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · a00f089 · 2026-10-16 · tests passed"
+        }
+      ],
+      "time": 1792162057
+    },
+    {
+      "hash": "a00f089b95baee67ef24638ab17d148fe5cb9f1e",
+      "short": "a00f089",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Merge AJ-0050: decision records and commands",
+      "refs": [
+        "AJ-0050"
+      ],
+      "chore": false,
+      "merge": true,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792162049
+    },
+    {
+      "hash": "c9781ab0fc9f9c581c026e993640ce614bec48e2",
+      "short": "c9781ab",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Add decision records and the decision commands",
+      "refs": [
+        "AJ-0050"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792161938
+    },
+    {
+      "hash": "9ddf7b0fd59a693ad5616111b7bad69e9c87e7b4",
+      "short": "9ddf7b0",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Add the Superseded status, excluded from totals and required sets",
+      "refs": [
+        "AJ-0051"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792161814
+    },
+    {
+      "hash": "27ac944457e61ff1d3f13f457e579d6b468be5dc",
+      "short": "27ac944",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Mark AJ-0049 done",
+      "refs": [
+        "AJ-0049"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0049",
+          "phase": "decisions-and-changes",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · 542d6e2 · 2026-10-16 · tests passed"
+        }
+      ],
+      "time": 1792161531
+    },
+    {
+      "hash": "542d6e2ea781f91acb069c2b6712af255d371d75",
+      "short": "542d6e2",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Merge AJ-0049: ajiya ticket files",
+      "refs": [
+        "AJ-0049"
+      ],
+      "chore": false,
+      "merge": true,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792161488
+    },
+    {
+      "hash": "62934136874f33db05f8278aaf6e2d31088e4f2a",
+      "short": "6293413",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Add ajiya ticket files and the ajiya_ticket_files MCP tool",
+      "refs": [
+        "AJ-0049"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792161466
+    },
+    {
+      "hash": "d0bf29c40a827c681336f4eb95e99fd9ee86e40b",
+      "short": "d0bf29c",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Start AJ-0049 to AJ-0052",
+      "refs": [],
+      "chore": true,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0049",
+          "phase": "decisions-and-changes",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        },
+        {
+          "id": "AJ-0050",
+          "phase": "decisions-and-changes",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        },
+        {
+          "id": "AJ-0051",
+          "phase": "decisions-and-changes",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        },
+        {
+          "id": "AJ-0052",
+          "phase": "decisions-and-changes",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        }
+      ],
+      "time": 1792160731
+    },
+    {
+      "hash": "d3f7bb9b3b083871a487713cc31c6b3dcd046d2b",
+      "short": "d3f7bb9",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Upgrade the plan to the Tags column; mark AJ-0048 done",
+      "refs": [
+        "AJ-0048"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0048",
+          "phase": "decisions-and-changes",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · 5540ca9 · 2026-10-16 · tests passed"
+        }
+      ],
+      "time": 1792160725
+    },
+    {
+      "hash": "5540ca9e0f206403f870c4595d98044935d9696e",
+      "short": "5540ca9",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Merge AJ-0048: Tags column",
+      "refs": [
+        "AJ-0048"
+      ],
+      "chore": false,
+      "merge": true,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792160688
+    },
+    {
+      "hash": "1778d833ce6f5dd5a3d8ecaa3ab91cb1f86f0315",
+      "short": "1778d83",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Read and write the optional Tags column",
+      "refs": [
+        "AJ-0048"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792160655
+    },
+    {
+      "hash": "f2b0b991f20ac372ce0e9d320648b822cfbd769e",
+      "short": "f2b0b99",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Add ajiya tags and the tag flags for tickets",
+      "refs": [
+        "AJ-0048"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792160655
+    },
+    {
+      "hash": "20a6785fa1f92d08090c75eb4e91b443061e5b4e",
+      "short": "20a6785",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Mark AJ-0098, AJ-0106 done; start AJ-0048",
+      "refs": [],
+      "chore": true,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0048",
+          "phase": "decisions-and-changes",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        },
+        {
+          "id": "AJ-0098",
+          "phase": "agent-access",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · 477fa25 · 2026-10-16 · tests passed"
+        },
+        {
+          "id": "AJ-0106",
+          "phase": "agent-access",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · 103008b · 2026-10-16 · tests passed"
+        }
+      ],
+      "time": 1792159398
+    },
+    {
+      "hash": "477fa25e1d31a0d1b491309bf55b25ca16007c6a",
+      "short": "477fa25",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Single-repo evidence test expects the commit reminder",
+      "refs": [
+        "AJ-0098"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792159390
+    },
+    {
+      "hash": "103008b8e5e1086b77cdfa46861e670d2941d6d2",
+      "short": "103008b",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Merge AJ-0098, AJ-0106: done reminder and MCP roots",
+      "refs": [
+        "AJ-0098",
+        "AJ-0106"
+      ],
+      "chore": false,
+      "merge": true,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792159350
+    },
+    {
+      "hash": "4697cabadb8494e22c65c8cdf3dba511c731185f",
+      "short": "4697cab",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "ticket done reminds to commit the plan change",
+      "refs": [
+        "AJ-0098"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792159292
+    },
+    {
+      "hash": "449faf35c038e8893aaf7f3fd63fb87ff301569f",
+      "short": "449faf3",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Ask for MCP roots only from clients that declare them",
+      "refs": [
+        "AJ-0106"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792159226
+    },
+    {
+      "hash": "2e0576b8a30de603c18acfade95f2dde44ca79a2",
+      "short": "2e0576b",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Plan v0.3.1: dashboard views, phase pages and plan history",
+      "refs": [],
+      "chore": true,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0107",
+          "phase": "dashboard-views",
+          "from": "",
+          "to": "pending",
+          "text": "🟥 Pending"
+        },
+        {
+          "id": "AJ-0108",
+          "phase": "dashboard-views",
+          "from": "",
+          "to": "pending",
+          "text": "🟥 Pending"
+        },
+        {
+          "id": "AJ-0109",
+          "phase": "dashboard-views",
+          "from": "",
+          "to": "pending",
+          "text": "🟥 Pending"
+        },
+        {
+          "id": "AJ-0110",
+          "phase": "dashboard-views",
+          "from": "",
+          "to": "pending",
+          "text": "🟥 Pending"
+        }
+      ],
+      "time": 1792159214
+    },
+    {
+      "hash": "cd24d9ad61e8a3b5ebcf869e20406103290ea841",
+      "short": "cd24d9a",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Mark AJ-0102 done",
+      "refs": [],
+      "chore": true,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0102",
+          "phase": "agent-access",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · 38087da · 2026-10-16 · tests passed"
+        }
+      ],
+      "time": 1792159169
+    },
+    {
+      "hash": "38087da63a049688dfe239d947eb8ba4b7d43f47",
+      "short": "38087da",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Guide says next lists tickets not yet started",
+      "refs": [
+        "AJ-0102"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792159161
+    },
+    {
+      "hash": "01f9d729193c4234119356832cbc52cf374657e0",
+      "short": "01f9d72",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Merge AJ-0102: status counts only tickets that can start",
+      "refs": [
+        "AJ-0102"
+      ],
+      "chore": false,
+      "merge": true,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792159143
+    },
+    {
+      "hash": "dfb4394f58c057df78fefe8a9b0146457a270fff",
+      "short": "dfb4394",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Mark AJ-0099, AJ-0100, AJ-0101, AJ-0103, AJ-0104, AJ-0105 done",
+      "refs": [],
+      "chore": true,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0099",
+          "phase": "apps-launch",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · d96483a · 2026-10-16 · tests passed"
+        },
+        {
+          "id": "AJ-0100",
+          "phase": "onboarding",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · 52a348c · 2026-10-16 · tests passed"
+        },
+        {
+          "id": "AJ-0101",
+          "phase": "commit-rule",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · ca13988 · 2026-10-16 · tests passed"
+        },
+        {
+          "id": "AJ-0103",
+          "phase": "onboarding",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · 52a348c · 2026-10-16 · tests passed"
+        },
+        {
+          "id": "AJ-0104",
+          "phase": "onboarding",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · 2d69dc7 · 2026-10-16 · tests passed"
+        },
+        {
+          "id": "AJ-0105",
+          "phase": "onboarding",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · cc4b027 · 2026-10-16 · tests passed"
+        }
+      ],
+      "time": 1792159128
+    },
+    {
+      "hash": "52a348c0d83fb0d35f4ac8d33376baa89e086d3c",
+      "short": "52a348c",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Refresh the agent kit",
+      "refs": [
+        "AJ-0100",
+        "AJ-0103"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792159112
+    },
+    {
+      "hash": "253d827c1955f579cdd8fcdda74af21573ed2053",
+      "short": "253d827",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "status counts only tickets that can start",
+      "refs": [
+        "AJ-0102"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792159100
+    },
+    {
+      "hash": "2d69dc7c4516eee9886fb857c19ad426cb1ff9a5",
+      "short": "2d69dc7",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Merge AJ-0100, AJ-0103, AJ-0104: guide and README",
+      "refs": [
+        "AJ-0100",
+        "AJ-0103",
+        "AJ-0104"
+      ],
+      "chore": false,
+      "merge": true,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792159093
+    },
+    {
+      "hash": "ca13988bcd81c0f37a943eb4bcde611e0d602ec9",
+      "short": "ca13988",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Hooks fall back to a plan inside the repository",
+      "refs": [
+        "AJ-0101"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792159084
+    },
+    {
+      "hash": "0919a7d7bd7f54c8bdb1ec472d4b16a51152c8b0",
+      "short": "0919a7d",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Merge AJ-0101: nested projects",
+      "refs": [
+        "AJ-0101"
+      ],
+      "chore": false,
+      "merge": true,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792159062
+    },
+    {
+      "hash": "66ec2cf9abf2e86ebb6c0d2cf350e528a7f2f131",
+      "short": "66ec2cf",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "README: non-interactive init and the auto-added trailer",
+      "refs": [
+        "AJ-0104"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792159055
+    },
+    {
+      "hash": "b71a9694b7209af9e39edb232f119373734b9028",
+      "short": "b71a969",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Guide: what ticket done and ajiya build change",
+      "refs": [
+        "AJ-0103"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792159051
+    },
+    {
+      "hash": "5da975fc918e9d6a76e52d679d132b2a17938a9a",
+      "short": "5da975f",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Guide: other trailers can share the Ajiya paragraph",
+      "refs": [
+        "AJ-0100"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792159039
+    },
+    {
+      "hash": "63dc87d5b508e0bde123f6b542e864d6ed26b9e3",
+      "short": "63dc87d",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Nested projects: init warns, hooks check the owning plan",
+      "refs": [
+        "AJ-0101"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792159031
+    },
+    {
+      "hash": "d96483a8ce0e68569964316eef6b109d2b69a1fc",
+      "short": "d96483a",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Merge AJ-0099: app add quotes the path",
+      "refs": [
+        "AJ-0099"
+      ],
+      "chore": false,
+      "merge": true,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792159000
+    },
+    {
+      "hash": "cc4b027c1b442865802c59cd01ac2b0ef4a3a18f",
+      "short": "cc4b027",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Merge AJ-0105: per-app test commands",
+      "refs": [
+        "AJ-0105"
+      ],
+      "chore": false,
+      "merge": true,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792158980
+    },
+    {
+      "hash": "8a6329950bfe91cfa0ed402220d9b23d511c0cab",
+      "short": "8a63299",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "app add quotes the path it registered",
+      "refs": [
+        "AJ-0099"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792158971
+    },
+    {
+      "hash": "2a96159fe7775f0da0a1ca4515846cd2cc5dd556",
+      "short": "2a96159",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "init suggests per-app test commands in a monorepo",
+      "refs": [
+        "AJ-0105"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792158959
+    },
+    {
+      "hash": "85cb6fe15cc671035fb42ed050068e05ebfbe49e",
+      "short": "85cb6fe",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Start the v0.2.1 tickets",
+      "refs": [],
+      "chore": true,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0098",
+          "phase": "agent-access",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        },
+        {
+          "id": "AJ-0099",
+          "phase": "apps-launch",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        },
+        {
+          "id": "AJ-0100",
+          "phase": "onboarding",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        },
+        {
+          "id": "AJ-0101",
+          "phase": "commit-rule",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        },
+        {
+          "id": "AJ-0102",
+          "phase": "agent-access",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        },
+        {
+          "id": "AJ-0103",
+          "phase": "onboarding",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        },
+        {
+          "id": "AJ-0104",
+          "phase": "onboarding",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        },
+        {
+          "id": "AJ-0105",
+          "phase": "onboarding",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        },
+        {
+          "id": "AJ-0106",
+          "phase": "agent-access",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        }
+      ],
+      "time": 1792158694
+    },
+    {
+      "hash": "d3981876d047c0e25d5804f7b588787db38e45cf",
+      "short": "d398187",
+      "date": "2026-10-08",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Search every app repository for ticket evidence",
+      "refs": [],
+      "chore": true,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1791481486
+    },
     {
       "hash": "33020e167ba68e5afaf0e7aeae6c6d1230f06b40",
       "short": "33020e1",
@@ -8459,5 +10809,8 @@ window.AJIYA = {
       "changes": [],
       "time": 1790630482
     }
-  ]
+  ],
+  "decisions": [],
+  "changes": [],
+  "history": []
 };

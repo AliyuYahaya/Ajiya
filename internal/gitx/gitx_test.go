@@ -123,3 +123,49 @@ func TestNotARepo(t *testing.T) {
 		t.Errorf("err = %v, want ErrNotRepo", err)
 	}
 }
+
+func TestReposAndReferencingIn(t *testing.T) {
+	root := t.TempDir() // not a repository
+	t.Setenv("HOME", root)
+	t.Setenv("GIT_CONFIG_NOSYSTEM", "1")
+	for _, k := range []string{"AUTHOR", "COMMITTER"} {
+		t.Setenv("GIT_"+k+"_NAME", "T")
+		t.Setenv("GIT_"+k+"_EMAIL", "t@example.com")
+	}
+	a, b, plain := filepath.Join(root, "a"), filepath.Join(root, "b"), filepath.Join(root, "plain")
+	for _, d := range []string{filepath.Join(a, "sub"), b, plain} {
+		if err := os.MkdirAll(d, 0o755); err != nil {
+			t.Fatal(err)
+		}
+	}
+	run(t, a, "init", "-q", "-b", "main")
+	run(t, b, "init", "-q", "-b", "main")
+	run(t, a, "commit", "-q", "--allow-empty", "-m", "In a", "-m", "Ajiya: AB-0001")
+	run(t, b, "commit", "-q", "--allow-empty", "-m", "In b", "-m", "Ajiya: AB-0001, AB-0002")
+
+	// root and plain are not repositories, a/sub repeats a, "gone" is missing.
+	repos := Repos(root, []string{a, filepath.Join(a, "sub"), b, plain, filepath.Join(root, "gone"), b})
+	if len(repos) != 2 {
+		t.Fatalf("Repos = %v, want a and b once each", repos)
+	}
+	got, err := ReferencingIn(repos, "AB-0001")
+	if err != nil || len(got) != 2 {
+		t.Fatalf("ReferencingIn = %+v, %v", got, err)
+	}
+	if got[0].Repo == got[1].Repo {
+		t.Errorf("both commits attributed to %s", got[0].Repo)
+	}
+	if one, _ := ReferencingIn(repos, "AB-0002"); len(one) != 1 || one[0].Subject != "In b" || filepath.Base(one[0].Repo) != "b" {
+		t.Errorf("AB-0002 = %+v", one)
+	}
+	if none, err := ReferencingIn(repos, "AB-0009"); err != nil || len(none) != 0 {
+		t.Errorf("AB-0009 = %+v, %v", none, err)
+	}
+	if _, err := ReferencingIn(Repos(root, []string{plain}), "AB-0001"); err != ErrNotRepo {
+		t.Errorf("no repositories: err = %v, want ErrNotRepo", err)
+	}
+	// A root that is itself a repository is searched too, once.
+	if r := Repos(a, []string{a, filepath.Join(a, "sub")}); len(r) != 1 {
+		t.Errorf("Repos(a) = %v", r)
+	}
+}

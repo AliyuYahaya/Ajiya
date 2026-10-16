@@ -149,3 +149,13 @@ func TestAgo(t *testing.T) {
 		}
 	}
 }
+
+func TestTicketDoneRemindsToCommit(t *testing.T) {
+	dir := statusFixture(t)
+	out := strings.TrimSpace(statusRun(t, dir, "ticket", "done", "DE-0003"))
+	lines := strings.Split(out, "\n")
+	want := "Commit the plan change in ajiya/ with the trailer 'Ajiya: DE-0003'."
+	if lines[len(lines)-1] != want {
+		t.Errorf("output = %q, want it to end with %q", out, want)
+	}
+}

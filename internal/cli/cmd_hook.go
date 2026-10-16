@@ -18,8 +18,8 @@ func runHookRun(e *env, args []string) error {
 	if len(args) == 0 {
 		return usageErr("name a hook: commit-msg or prepare-commit-msg")
 	}
-	if _, err := config.Find(e.dir); errors.Is(err, config.ErrNotFound) {
-		return nil // not an ajiya project: the hook has nothing to enforce
+	if _, err := hookPlanRoot(e); errors.Is(err, config.ErrNotFound) {
+		return nil // no plan owns this repository: the hook has nothing to enforce
 	}
 	switch args[0] {
 	case "commit-msg":
@@ -46,11 +46,11 @@ func runHookRun(e *env, args []string) error {
 
 // hookCommitMsg enforces the commit rule on a message about to be committed.
 func hookCommitMsg(e *env, file string) error {
-	pr, err := load(e)
+	pr, err := loadHook(e)
 	if err != nil {
 		return err
 	}
-	root := pr.cfg.Root
+	root := hookRepo(e, pr)
 	if merging, err := inMerge(root); err != nil || merging {
 		return err
 	}
@@ -80,6 +80,39 @@ func hookCommitMsg(e *env, file string) error {
 		return refused("commit refused: the message names %d tickets, more than %d; split the work into smaller commits", n, check.MaxRefs)
 	}
 	return nil
+}
+
+// hookPlanRoot returns the folder of the ajiya.toml that owns the repository
+// being committed to: found by walking up from that repository's top folder,
+// not from the working folder, which may hold an ajiya.toml of its own (a
+// nested project) that belongs to a different repository.
+func hookPlanRoot(e *env) (string, error) {
+	if top, err := gitx.Toplevel(e.dir); err == nil {
+		if root, err := config.Find(top); err == nil {
+			return root, nil
+		}
+	}
+	// No plan above the repository: one may sit in a folder inside it.
+	return config.Find(e.dir)
+}
+
+// loadHook loads the plan that owns the repository being committed to.
+func loadHook(e *env) (*project, error) {
+	root, err := hookPlanRoot(e)
+	if err != nil {
+		return nil, usageErr("%v", err)
+	}
+	return loadAt(root)
+}
+
+// hookRepo is the repository a hook runs in. Git runs hooks in the top folder
+// of the work tree being committed to, which may be an app repository below
+// the folder holding ajiya.toml, or the root itself.
+func hookRepo(e *env, pr *project) string {
+	if top, err := gitx.Toplevel(e.dir); err == nil {
+		return top
+	}
+	return pr.cfg.Root
 }
 
 // inMerge reports whether a merge is being committed.
@@ -123,11 +156,11 @@ func hookPrepare(e *env, file, source string) error {
 	case "merge", "squash", "commit":
 		return nil
 	}
-	pr, err := load(e)
+	pr, err := loadHook(e)
 	if err != nil {
 		return err
 	}
-	root := pr.cfg.Root
+	root := hookRepo(e, pr)
 	msg, err := os.ReadFile(file)
 	if err != nil {
 		return err
@@ -139,7 +172,7 @@ func hookPrepare(e *env, file, source string) error {
 	if len(refs.IDs) > 0 || refs.Chore {
 		return nil
 	}
-	ids, err := trailerCandidates(pr)
+	ids, err := trailerCandidates(pr, root)
 	if err != nil || len(ids) == 0 {
 		return err
 	}
@@ -175,8 +208,7 @@ func stripComments(msg string) string {
 }
 
 // trailerCandidates returns the tickets a commit is probably about.
-func trailerCandidates(pr *project) ([]string, error) {
-	root := pr.cfg.Root
+func trailerCandidates(pr *project, root string) ([]string, error) {
 	staged, err := gitx.StagedFiles(root)
 	if err != nil {
 		return nil, err

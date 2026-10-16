@@ -52,6 +52,8 @@ never touches text outside the markers. Then:
   for it.
 - Run `ajiya hook install`. The hooks check every commit message for the
   `Ajiya:` trailer and pre-fill it from the tickets in progress.
+  When `ajiya.toml` is in a folder above several app repositories, run
+  `ajiya hook install --apps`; evidence is then searched in every app repository.
 - Set the command that runs the project's tests, so `ajiya ticket done --test`
   can run it. `init` sets it when it can tell (`go.mod`, a `package.json` test
   script, `pytest` in `pyproject.toml`) and says so; check that it is right. When
@@ -94,6 +96,9 @@ ajiya ticket add --phase bookings --app api "Booking model and migration" \
   "Tests for overlapping bookings pass" is a check; "Bookings work" is not.
 - **Depends**: the tickets that must be done first. Dependencies are the only
   source of order. If B needs A, say so, or `ajiya next` may offer B too early.
+- **Tags** are optional. Add `--tech <slug>` only when a ticket depends on a
+  specific technology or service, and run `ajiya tags` first to reuse a value.
+  `daily.md` has the rules.
 - Too big for one session? Split it. Too small to prove? Merge it into another.
 
 ### Work that is easy to forget
@@ -168,6 +173,7 @@ Then stop and wait. Do not start building until the user says so.
 |---|---|---|
 | Rename a phase | `ajiya phase rename <old> <new> [--title "<title>"]` | you |
 | Remove an empty phase | `ajiya phase remove <slug>` (refused while it holds tickets or a milestone or the launch target names it) | you |
+| Describe a phase | `ajiya phase describe <slug> "<text>"` (or `phase add ... --description`; `-` clears it) | you |
 | Show a phase earlier or later | `ajiya phase move <slug> --before <slug>` (or `--after`, `--first`, `--last`) | you |
 | Move an app's folder | `ajiya app move <name> --path <dir>` | you |
 | Remove an app | `ajiya app remove <name> --to <app>` (moves its open tickets) | a person |

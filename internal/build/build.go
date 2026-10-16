@@ -40,6 +40,9 @@ type Data struct {
 	Next       []string         `json:"next"`    // IDs that can start now, in 'ajiya next' order
 	Checks     []check.Finding  `json:"checks"`
 	Activity   []activity.Entry `json:"activity"`
+	Decisions  []view.Decision  `json:"decisions"` // by ID, each with the tickets that link it
+	Changes    []view.Change    `json:"changes"`   // by ID, each with its candidate table
+	History    []HistoryEvent   `json:"history"`   // decision and change events, oldest first
 }
 
 type Project struct {
@@ -47,20 +50,24 @@ type Project struct {
 	Prefix string `json:"prefix"`
 }
 
-// Counts are tickets by state. Total includes dropped tickets.
+// Counts are tickets by state. Total leaves out dropped and superseded
+// tickets, which are counted only in Dropped and Superseded.
 type Counts struct {
 	Total      int `json:"total"`
 	Done       int `json:"done"`
 	InProgress int `json:"in_progress"`
 	Pending    int `json:"pending"`
 	Dropped    int `json:"dropped"`
+	Superseded int `json:"superseded"`
 }
 
-// Closed is done plus dropped.
-func (c Counts) Closed() int { return c.Done + c.Dropped }
+// Closed is the done tickets: dropped and superseded ones are not in Total.
+func (c Counts) Closed() int { return c.Done }
 
 func (c *Counts) add(t *plan.Ticket) {
-	c.Total++
+	if !t.Status.Excluded() {
+		c.Total++
+	}
 	switch t.Status.State {
 	case plan.Done:
 		c.Done++
@@ -68,6 +75,8 @@ func (c *Counts) add(t *plan.Ticket) {
 		c.InProgress++
 	case plan.Dropped:
 		c.Dropped++
+	case plan.Superseded:
+		c.Superseded++
 	default:
 		c.Pending++
 	}
@@ -82,12 +91,13 @@ type Milestone struct {
 }
 
 type Phase struct {
-	Slug      string `json:"slug"`
-	Title     string `json:"title"`
-	Goal      string `json:"goal"`
-	Counts    Counts `json:"counts"`
-	Percent   int    `json:"percent"`
-	Milestone string `json:"milestone"` // earliest milestone of its tickets, or ""
+	Slug        string `json:"slug"`
+	Title       string `json:"title"`
+	Goal        string `json:"goal"`
+	Description string `json:"description"` // empty if none
+	Counts      Counts `json:"counts"`
+	Percent     int    `json:"percent"`
+	Milestone   string `json:"milestone"` // earliest milestone of its tickets, or ""
 }
 
 type App struct {
@@ -123,6 +133,7 @@ func Collect(cfg *config.Config, p *plan.Plan, order []*plan.Phase) (*Data, erro
 		Project:    Project{Name: cfg.Project.Name, Prefix: cfg.Project.Prefix},
 		Milestones: []Milestone{}, Phases: []Phase{}, Apps: []App{}, Tickets: []Ticket{},
 		Next: []string{}, Checks: []check.Finding{}, Activity: []activity.Entry{},
+		Decisions: []view.Decision{}, Changes: []view.Change{}, History: []HistoryEvent{},
 	}
 
 	var err error
@@ -179,7 +190,7 @@ func Collect(cfg *config.Config, p *plan.Plan, order []*plan.Phase) (*Data, erro
 			for _, t := range tickets {
 				if sched.Required[i][t.ID] {
 					bm.Required.add(t)
-					if byID[t.ID].Ready {
+					if byID[t.ID].canStart() {
 						bm.Ready++
 					}
 				}
@@ -193,7 +204,7 @@ func Collect(cfg *config.Config, p *plan.Plan, order []*plan.Phase) (*Data, erro
 		order = p.Phases
 	}
 	for _, ph := range order {
-		bp := Phase{Slug: ph.Slug, Title: ph.Title, Goal: ph.Goal}
+		bp := Phase{Slug: ph.Slug, Title: ph.Title, Goal: ph.Goal, Description: ph.Description}
 		best := -1
 		for _, t := range ph.Tickets {
 			bp.Counts.add(t)
@@ -209,6 +220,20 @@ func Collect(cfg *config.Config, p *plan.Plan, order []*plan.Phase) (*Data, erro
 		bp.Percent = percent(bp.Counts.Closed(), bp.Counts.Total)
 		d.Phases = append(d.Phases, bp)
 	}
+
+	for _, dec := range p.Decisions {
+		var linked []string
+		for _, t := range p.DecisionTickets(dec.ID) {
+			linked = append(linked, t.ID)
+		}
+		d.Decisions = append(d.Decisions, view.DecisionOf(dec, linked))
+	}
+
+	for _, c := range p.Changes {
+		d.Changes = append(d.Changes, view.ChangeOf(c))
+	}
+
+	d.History = History(p)
 
 	apps := append([]config.App{{Name: config.InfraApp}}, cfg.Apps...)
 	for _, a := range apps {
@@ -236,6 +261,10 @@ func Collect(cfg *config.Config, p *plan.Plan, order []*plan.Phase) (*Data, erro
 	return d, nil
 }
 
+// canStart reports whether a ticket is ready and not yet started. An
+// in-progress ticket is ready (nothing blocks it) but has already started.
+func (t Ticket) canStart() bool { return t.Ready && t.Status.State != "in_progress" }
+
 // nextOrder sorts ready tickets as 'ajiya next' does: earliest milestone first
 // (unscheduled last), then by how many open tickets each unblocks, then ID.
 func nextOrder(ts []Ticket, sched *plan.Schedule, schedErr error) []string {
@@ -247,7 +276,7 @@ func nextOrder(ts []Ticket, sched *plan.Schedule, schedErr error) []string {
 	}
 	var ready []Ticket
 	for _, t := range ts {
-		if t.Ready {
+		if t.canStart() {
 			ready = append(ready, t)
 		}
 	}

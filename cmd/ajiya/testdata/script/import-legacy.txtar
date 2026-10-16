@@ -59,7 +59,8 @@ stdout '(?s)ro-1-foundations.*ro-2-accounts.*ro-3-billing.*ro-4-go-live.*ro-5-la
 
 # Only work whose packages' dependencies are done is ready.
 exec ajiya next
-stdout 'LE-0004'
+stdout 'LE-0005'
+! stdout 'LE-0004'
 ! stdout 'LE-0009'
 ! stdout 'LE-0013'
 
@@ -106,8 +107,8 @@ exec ajiya import legacy loop.toml --app svc
 stdout '^  ro-1-one: 1 ticket\(s\): 0 done, 0 in progress, 1 pending$'
 stdout '^  ro-2-two: 1 ticket\(s\): 0 done, 0 in progress, 1 pending$'
 stdout '^  RO-2: depends on RO-1, which would make a dependency loop; not linked$'
-grep '^\| LO-0001 \| svc \| First \| - \| LO-0002 \| 🟥 Pending · Was: X-001 \|$' ajiya/ro-1-one.md
-grep '^\| LO-0002 \| svc \| Second \| - \| - \| 🟥 Pending · Was: X-002 \|$' ajiya/ro-2-two.md
+grep '^\| LO-0001 \| svc \| First \| - \| LO-0002 \| - \| 🟥 Pending · Was: X-001 \|$' ajiya/ro-1-one.md
+grep '^\| LO-0002 \| svc \| Second \| - \| - \| - \| 🟥 Pending · Was: X-002 \|$' ajiya/ro-2-two.md
 # The file order puts the first package before the one it now waits on: a warning, not an error.
 exec ajiya check
 stdout '0 error\(s\), 1 warning\(s\)'
@@ -362,85 +363,85 @@ path = "web"
 
 Goal: Foundations (was RO-1)
 
-| ID | App | Ticket | Done when | Depends | Status |
-|---|---|---|---|---|---|
-| LE-0001 | infra | Provision the database | - | - | 🟩 Done · Done before Ajiya · Was: OPS-001 |
-| LE-0002 | infra | Set up CI | - | - | 🟩 Done · Done before Ajiya · Was: OPS-002 |
+| ID | App | Ticket | Done when | Depends | Tags | Status |
+|---|---|---|---|---|---|---|
+| LE-0001 | infra | Provision the database | - | - | - | 🟩 Done · Done before Ajiya · Was: OPS-001 |
+| LE-0002 | infra | Set up CI | - | - | - | 🟩 Done · Done before Ajiya · Was: OPS-002 |
 -- golden/ro-2-accounts.md --
 <!-- Written by ajiya. Do not edit by hand: use ajiya commands. -->
 # Accounts
 
 Goal: Accounts (was RO-2)
 
-| ID | App | Ticket | Done when | Depends | Status |
-|---|---|---|---|---|---|
-| LE-0003 | api | Sign up with **email** | - | LE-0001, LE-0002 | 🟩 Done · Done before Ajiya · Was: API-001 |
-| LE-0004 | api | Log in \| log out | - | LE-0001, LE-0002 | 🟨 In progress · Was: API-002 |
-| LE-0005 | api | Reset password | - | LE-0001, LE-0002 | 🟥 Pending · Was: API-003 |
-| LE-0006 | web | Sign-up page | - | LE-0001, LE-0002 | 🟩 Done · Done before Ajiya · Was: WEB-001 |
-| LE-0007 | web | Login page, same as API-002 | - | - | 🟩 Dropped: tracked as LE-0004 (was WEB-002), decided by ajiya import · Was: WEB-002 |
-| LE-0008 | web | Password reset page, numbered in the wrong series | - | LE-0001, LE-0002 | 🟥 Pending · Was: API-003 |
+| ID | App | Ticket | Done when | Depends | Tags | Status |
+|---|---|---|---|---|---|---|
+| LE-0003 | api | Sign up with **email** | - | LE-0001, LE-0002 | - | 🟩 Done · Done before Ajiya · Was: API-001 |
+| LE-0004 | api | Log in \| log out | - | LE-0001, LE-0002 | - | 🟨 In progress · Was: API-002 |
+| LE-0005 | api | Reset password | - | LE-0001, LE-0002 | - | 🟥 Pending · Was: API-003 |
+| LE-0006 | web | Sign-up page | - | LE-0001, LE-0002 | - | 🟩 Done · Done before Ajiya · Was: WEB-001 |
+| LE-0007 | web | Login page, same as API-002 | - | - | - | 🟩 Dropped: tracked as LE-0004 (was WEB-002), decided by ajiya import · Was: WEB-002 |
+| LE-0008 | web | Password reset page, numbered in the wrong series | - | LE-0001, LE-0002 | - | 🟥 Pending · Was: API-003 |
 -- golden/ro-3-billing.md --
 <!-- Written by ajiya. Do not edit by hand: use ajiya commands. -->
 # Billing
 
 Goal: Billing (was RO-3)
 
-| ID | App | Ticket | Done when | Depends | Status |
-|---|---|---|---|---|---|
-| LE-0009 | api | Charge a card | - | LE-0003, LE-0004, LE-0005, LE-0006, LE-0008 | 🟥 Pending · Was: API-004 |
-| LE-0010 | api | Refunds | - | LE-0003, LE-0004, LE-0005, LE-0006, LE-0008 | 🟥 Pending · Was: API-005 |
-| LE-0011 | web | Billing page | - | LE-0003, LE-0004, LE-0005, LE-0006, LE-0008 | 🟥 Pending · Was: WEB-003 |
-| LE-0012 | web | Refund page | - | LE-0003, LE-0004, LE-0005, LE-0006, LE-0008 | 🟥 Pending · Was: WEB-004 |
+| ID | App | Ticket | Done when | Depends | Tags | Status |
+|---|---|---|---|---|---|---|
+| LE-0009 | api | Charge a card | - | LE-0003, LE-0004, LE-0005, LE-0006, LE-0008 | - | 🟥 Pending · Was: API-004 |
+| LE-0010 | api | Refunds | - | LE-0003, LE-0004, LE-0005, LE-0006, LE-0008 | - | 🟥 Pending · Was: API-005 |
+| LE-0011 | web | Billing page | - | LE-0003, LE-0004, LE-0005, LE-0006, LE-0008 | - | 🟥 Pending · Was: WEB-003 |
+| LE-0012 | web | Refund page | - | LE-0003, LE-0004, LE-0005, LE-0006, LE-0008 | - | 🟥 Pending · Was: WEB-004 |
 -- golden/ro-4-go-live.md --
 <!-- Written by ajiya. Do not edit by hand: use ajiya commands. -->
 # Go live
 
 Goal: Go live (was RO-4)
 
-| ID | App | Ticket | Done when | Depends | Status |
-|---|---|---|---|---|---|
-| LE-0013 | infra | Deploy to production | - | LE-0003, LE-0004, LE-0005, LE-0006, LE-0008, LE-0009, LE-0010, LE-0011, LE-0012 | 🟥 Pending · Was: OPS-003 |
+| ID | App | Ticket | Done when | Depends | Tags | Status |
+|---|---|---|---|---|---|---|
+| LE-0013 | infra | Deploy to production | - | LE-0003, LE-0004, LE-0005, LE-0006, LE-0008, LE-0009, LE-0010, LE-0011, LE-0012 | - | 🟥 Pending · Was: OPS-003 |
 -- golden/ro-5-launch-party.md --
 <!-- Written by ajiya. Do not edit by hand: use ajiya commands. -->
 # Launch party
 
 Goal: Launch party (was RO-5)
 
-| ID | App | Ticket | Done when | Depends | Status |
-|---|---|---|---|---|---|
-| LE-0014 | infra | Launch party | - | LE-0013 | 🟥 Pending · Needs a human: rollout task carried from RO-5; check who does it · Was: RO-5 |
+| ID | App | Ticket | Done when | Depends | Tags | Status |
+|---|---|---|---|---|---|---|
+| LE-0014 | infra | Launch party | - | LE-0013 | - | 🟥 Pending · Needs a human: rollout task carried from RO-5; check who does it · Was: RO-5 |
 -- golden/inbox.md --
 <!-- Written by ajiya. Do not edit by hand: use ajiya commands. -->
 # Inbox
 
 Goal: Imported items waiting to be organised
 
-| ID | App | Ticket | Done when | Depends | Status |
-|---|---|---|---|---|---|
-| LE-0015 | web | Footer links | - | - | 🟥 Pending · Was: WEB-005 |
+| ID | App | Ticket | Done when | Depends | Tags | Status |
+|---|---|---|---|---|---|---|
+| LE-0015 | web | Footer links | - | - | - | 🟥 Pending · Was: WEB-005 |
 -- golden/archive.md --
 <!-- Written by ajiya. Do not edit by hand: use ajiya commands. -->
 # Archive
 
 Goal: Done before Ajiya, not in any rollout work package
 
-| ID | App | Ticket | Done when | Depends | Status |
-|---|---|---|---|---|---|
-| LE-0016 | web | Retire the old logo | - | - | 🟩 Done · Done before Ajiya · Was: WEB-006 |
+| ID | App | Ticket | Done when | Depends | Tags | Status |
+|---|---|---|---|---|---|---|
+| LE-0016 | web | Retire the old logo | - | - | - | 🟩 Done · Done before Ajiya · Was: WEB-006 |
 -- golden/area-api.md --
 <!-- Written by ajiya. Do not edit by hand: use ajiya commands. -->
 # API
 
 Goal: Every ticket imported from ../legacy/docs/api/wbs.md is done
 
-| ID | App | Ticket | Done when | Depends | Status |
-|---|---|---|---|---|---|
-| LE-0001 | infra | Sign up with **email** | - | - | 🟩 Done · Done before Ajiya · Was: API-001 |
-| LE-0002 | infra | Log in \| log out | - | - | 🟨 In progress · Was: API-002 |
-| LE-0003 | infra | Reset password | - | - | 🟥 Pending · Was: API-003 |
-| LE-0004 | infra | Charge a card | - | - | 🟥 Pending · Was: API-004 |
-| LE-0005 | infra | Refunds | - | - | 🟥 Pending · Was: API-005 |
+| ID | App | Ticket | Done when | Depends | Tags | Status |
+|---|---|---|---|---|---|---|
+| LE-0001 | infra | Sign up with **email** | - | - | - | 🟩 Done · Done before Ajiya · Was: API-001 |
+| LE-0002 | infra | Log in \| log out | - | - | - | 🟨 In progress · Was: API-002 |
+| LE-0003 | infra | Reset password | - | - | - | 🟥 Pending · Was: API-003 |
+| LE-0004 | infra | Charge a card | - | - | - | 🟥 Pending · Was: API-004 |
+| LE-0005 | infra | Refunds | - | - | - | 🟥 Pending · Was: API-005 |
 -- json/keep --
 -- area/area.toml --
 prefixes = ["API", "WEB", "OPS"]
@@ -523,14 +524,14 @@ path = "docs/ops/wbs.md"
 ## Gate 0: Staging proven
 
 | ID | Work package | Scope | Depends | Launch | Status |
-|---|---|---|---|---|---|
+|---|---|---|---|---|---|---|
 | RO-1 | Foundations | OPS[Phase 0] | - | Required | |
 | RO-2 | Accounts | API-001..API-003, WEB-001, WEB-002, OPS-001 | RO-1 | Required | |
 
 ## Phase A: Safety
 
 | ID | Work package | Scope | Depends | Launch | Status |
-|---|---|---|---|---|---|
+|---|---|---|---|---|---|---|
 | RO-3 | Billing | API[epic b], WEB-003..WEB-004, API-099 | RO-2 | Required | |
 | RO-4 | Go live | OPS-003 | RO-2, RO-3 | Required | |
 | RO-5 | Launch party | - | RO-4, RO-9 | Optional | Not started |
@@ -551,6 +552,6 @@ phase = "core"
 | X-002 | Second | 🟥 |
 -- loop/rollout.md --
 | ID | Name | Scope | Depends | Launch | Status |
-|---|---|---|---|---|---|
+|---|---|---|---|---|---|---|
 | RO-1 | One | X-001 | RO-2 | Required | |
 | RO-2 | Two | X-002 | RO-1 | Required | |

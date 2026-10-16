@@ -22,9 +22,9 @@ module api
 
 Goal: Patients book through the web app, backed by the API
 
-| ID | App | Ticket | Done when | Depends | Status |
-|---|---|---|---|---|---|
-| FX-0001 | api | Slots endpoint | a | - | 🟥 Pending |
-| FX-0002 | api | Bookings endpoint | b | FX-0001 | 🟥 Pending |
+| ID | App | Ticket | Done when | Depends | Tags | Status |
+|---|---|---|---|---|---|---|
+| FX-0001 | api | Slots endpoint | a | - | - | 🟥 Pending |
+| FX-0002 | api | Bookings endpoint | b | FX-0001 | - | 🟥 Pending |
 -- want --
 W002 ajiya/bookings.md:1: the goal of bookings names api and web, but every ticket is for api. Fix: add tickets for the other apps, or reword the goal

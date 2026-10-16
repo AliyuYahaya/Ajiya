@@ -1,0 +1,48 @@
+An open ticket links a superseded decision; a done ticket doing so is history and is not reported.
+
+-- ajiya.toml --
+[project]
+name = "Fixture"
+prefix = "FX"
+-- ajiya/core.md --
+<!-- Written by ajiya. Do not edit by hand: use ajiya commands. -->
+# Core
+
+Goal: g
+
+| ID | App | Ticket | Done when | Depends | Tags | Status |
+|---|---|---|---|---|---|---|
+| FX-0001 | infra | A | a | - | dec:DEC-0001 | 🟥 Pending |
+| FX-0002 | infra | B | b | - | dec:DEC-0001 | 🟩 Done · Done before Ajiya |
+-- ajiya/decisions/DEC-0001.md --
+<!-- Written by ajiya. Do not edit by hand: use ajiya commands. -->
+# DEC-0001: Use RDS
+
+Status: Superseded by DEC-0002 (CHG-0001) · was: Accepted · 2026-09-12 · decided by Aliyu
+Tags: tech:aws-rds
+
+## Context
+-
+
+## Decision
+Use it.
+
+## Consequences
+-
+-- ajiya/decisions/DEC-0002.md --
+<!-- Written by ajiya. Do not edit by hand: use ajiya commands. -->
+# DEC-0002: Use Supabase
+
+Status: Accepted · 2026-10-01 · decided by Aliyu
+Tags: tech:supabase
+
+## Context
+-
+
+## Decision
+Use it.
+
+## Consequences
+-
+-- want --
+W014 ajiya/core.md:8: FX-0001 links DEC-0001, which is Superseded by DEC-0002 (CHG-0001) · was: Accepted · 2026-09-12 · decided by Aliyu. Fix: read DEC-0002 with 'ajiya decision show DEC-0002', then retag with 'ajiya ticket edit FX-0001 --decisions <IDs>'

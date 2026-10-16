@@ -34,6 +34,147 @@
     "annotations": {
       "destructiveHint": false,
       "idempotentHint": false,
+      "readOnlyHint": false
+    },
+    "description": "Use to record your judgement of one candidate of an open change: unaffected, modify, replace, invalidate or investigate, with a reason. replace needs title and done_when for the new ticket; modify of a done ticket needs them for a follow-up ticket; modify of an open ticket needs title, done_when or both. The other verdicts take neither. Assessing again overwrites the verdict. A person approves; investigate blocks approval.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "done_when": {
+          "description": "Done-when of the new ticket, or the edited done-when.",
+          "type": "string"
+        },
+        "id": {
+          "description": "Change ID, such as CHG-0014.",
+          "type": "string"
+        },
+        "reason": {
+          "description": "Why you chose this verdict.",
+          "type": "string"
+        },
+        "ticket": {
+          "description": "Ticket ID of the candidate, such as AJ-0043.",
+          "type": "string"
+        },
+        "title": {
+          "description": "Title of the new ticket, or the edited title for modify of an open ticket.",
+          "type": "string"
+        },
+        "verdict": {
+          "description": "One of unaffected, modify, replace, invalidate, investigate.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "ticket",
+        "verdict",
+        "reason"
+      ],
+      "type": "object"
+    },
+    "name": "ajiya_change_assess"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "idempotentHint": false,
+      "readOnlyHint": false
+    },
+    "description": "Use after opening a change, and again when tickets change: list the tickets it might affect, each with why (tag, decision, path, downstream), and write them into the change file. Verdicts already given are kept.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "description": "Change ID, such as CHG-0014.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "name": "ajiya_change_impact"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "idempotentHint": false,
+      "readOnlyHint": true
+    },
+    "description": "Use to see every change request with its status.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {},
+      "type": "object"
+    },
+    "name": "ajiya_change_list"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "idempotentHint": false,
+      "readOnlyHint": false
+    },
+    "description": "Use when the plan must change (a technology or decision is being replaced): open a change request. It snapshots the committed plan, so ajiya/ must have no uncommitted changes. Give at least one of replaces, decision or paths. A person approves or rejects the change; you never do.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "decision": {
+          "description": "Comma-separated decision IDs the change would supersede, such as DEC-0003.",
+          "type": "string"
+        },
+        "paths": {
+          "description": "Comma-separated file globs the change touches, such as infra/rds/**.",
+          "type": "string"
+        },
+        "replaces": {
+          "description": "Comma-separated key:value tags of the work being replaced, such as tech:aws-rds.",
+          "type": "string"
+        },
+        "title": {
+          "description": "What is changing, such as \"Move the database from AWS RDS to Supabase\".",
+          "type": "string"
+        },
+        "with": {
+          "description": "Comma-separated key:value tags of what replaces it, such as tech:supabase.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "title"
+      ],
+      "type": "object"
+    },
+    "name": "ajiya_change_open"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "idempotentHint": false,
+      "readOnlyHint": true
+    },
+    "description": "Use to read a change request in full: what it touches, its candidates, reasons and verdicts.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "description": "Change ID, such as CHG-0014.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "name": "ajiya_change_show"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "idempotentHint": false,
       "readOnlyHint": true
     },
     "description": "Use before you finish a task to find problems in the plan; fix every error. An empty list means no problems.",
@@ -52,6 +193,117 @@
       "type": "object"
     },
     "name": "ajiya_check"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "idempotentHint": false,
+      "readOnlyHint": false
+    },
+    "description": "Use only when a person has said they accept a proposed decision; record their name.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "by": {
+          "description": "Name of the person who decided.",
+          "type": "string"
+        },
+        "id": {
+          "description": "Decision ID, such as DEC-0003.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "by"
+      ],
+      "type": "object"
+    },
+    "name": "ajiya_decision_accept"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "idempotentHint": false,
+      "readOnlyHint": false
+    },
+    "description": "Use when you make or find a choice the plan rests on (a technology, a service, an approach): record it as a Proposed decision. A person accepts it; link tickets to it with ajiya_ticket_edit decisions.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "by": {
+          "description": "Who proposed it.",
+          "type": "string"
+        },
+        "consequences": {
+          "description": "What follows from it, including what it rules out.",
+          "type": "string"
+        },
+        "context": {
+          "description": "Why the choice was needed.",
+          "type": "string"
+        },
+        "decision": {
+          "description": "What was chosen.",
+          "type": "string"
+        },
+        "tech": {
+          "description": "Comma-separated technologies or services the ticket depends on, as lower-case slugs such as aws-rds. Leave out unless the ticket needs a specific one; reuse values from ajiya_tags.",
+          "type": "string"
+        },
+        "title": {
+          "description": "Short title, such as \"Use PostgreSQL on AWS RDS\".",
+          "type": "string"
+        }
+      },
+      "required": [
+        "title",
+        "decision"
+      ],
+      "type": "object"
+    },
+    "name": "ajiya_decision_add"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "idempotentHint": false,
+      "readOnlyHint": true
+    },
+    "description": "Use to see every decision with its status, or only those about one technology.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "tag": {
+          "description": "Only decisions with this tag, such as tech:postgres.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "name": "ajiya_decision_list"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "idempotentHint": false,
+      "readOnlyHint": true
+    },
+    "description": "Use to read a decision in full (context, decision, consequences, status) and the tickets that link it.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "description": "Decision ID, such as DEC-0003.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "name": "ajiya_decision_show"
   },
   {
     "annotations": {
@@ -206,6 +458,10 @@
     "inputSchema": {
       "additionalProperties": false,
       "properties": {
+        "description": {
+          "description": "Longer description under the goal, one or more paragraphs.",
+          "type": "string"
+        },
         "goal": {
           "description": "What the phase achieves.",
           "type": "string"
@@ -231,6 +487,33 @@
     "annotations": {
       "destructiveHint": false,
       "idempotentHint": false,
+      "readOnlyHint": false
+    },
+    "description": "Use to set or change a phase's description, the paragraphs under its goal. \"-\" clears it.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "slug": {
+          "description": "Phase slug.",
+          "type": "string"
+        },
+        "text": {
+          "description": "The description; \"-\" clears it.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "slug",
+        "text"
+      ],
+      "type": "object"
+    },
+    "name": "ajiya_phase_describe"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "idempotentHint": false,
       "readOnlyHint": true
     },
     "description": "Use to see each phase with its progress and earliest milestone.",
@@ -240,6 +523,42 @@
       "type": "object"
     },
     "name": "ajiya_phase_list"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "idempotentHint": false,
+      "readOnlyHint": false
+    },
+    "description": "Use before a risky change to the plan: tags the committed plan as ajiya/plan/\u003cname\u003e so it can be compared or restored. Refuses while ajiya/ has uncommitted changes, a bad name or an existing name; commit first.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "description": "Snapshot name, such as before-supabase: a valid tag name without spaces.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object"
+    },
+    "name": "ajiya_snapshot"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "idempotentHint": false,
+      "readOnlyHint": true
+    },
+    "description": "Use to see the plan snapshots (tags ajiya/plan/\u003cname\u003e) with their date and commit.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {},
+      "type": "object"
+    },
+    "name": "ajiya_snapshot_list"
   },
   {
     "annotations": {
@@ -259,6 +578,20 @@
     "annotations": {
       "destructiveHint": false,
       "idempotentHint": false,
+      "readOnlyHint": true
+    },
+    "description": "Use before tagging a ticket to see every tag in use with its ticket count, so you reuse an existing value instead of inventing a near-duplicate (postgres against postgresql).",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {},
+      "type": "object"
+    },
+    "name": "ajiya_tags"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "idempotentHint": false,
       "readOnlyHint": false
     },
     "description": "Use when you find work that is not in the plan: add a ticket instead of widening the current one.",
@@ -267,6 +600,10 @@
       "properties": {
         "app": {
           "description": "App name.",
+          "type": "string"
+        },
+        "decisions": {
+          "description": "Comma-separated decision IDs, such as DEC-0003.",
           "type": "string"
         },
         "depends": {
@@ -281,8 +618,16 @@
           "description": "Reason, when only a person can do this ticket.",
           "type": "string"
         },
+        "paths": {
+          "description": "Comma-separated file globs the ticket touches, for open tickets whose files commits cannot show yet.",
+          "type": "string"
+        },
         "phase": {
           "description": "Phase slug.",
+          "type": "string"
+        },
+        "tech": {
+          "description": "Comma-separated technologies or services the ticket depends on, as lower-case slugs such as aws-rds. Leave out unless the ticket needs a specific one; reuse values from ajiya_tags.",
           "type": "string"
         },
         "title": {
@@ -367,12 +712,16 @@
       "idempotentHint": false,
       "readOnlyHint": false
     },
-    "description": "Use to correct a ticket's title, done-when, dependencies, app or phase. Give at least one field; depends replaces the whole list.",
+    "description": "Use to correct a ticket's title, done-when, dependencies, app, phase or tags. Give at least one field; depends, tech, decisions and paths each replace the whole list, and \"-\" clears it.",
     "inputSchema": {
       "additionalProperties": false,
       "properties": {
         "app": {
           "description": "New app.",
+          "type": "string"
+        },
+        "decisions": {
+          "description": "Comma-separated decision IDs, such as DEC-0003. Replaces the ticket's decision tags; \"-\" clears them.",
           "type": "string"
         },
         "depends": {
@@ -387,8 +736,16 @@
           "description": "Ticket ID, such as AJ-0043.",
           "type": "string"
         },
+        "paths": {
+          "description": "Comma-separated file globs the ticket touches, for open tickets whose files commits cannot show yet. Replaces the ticket's path tags; \"-\" clears them.",
+          "type": "string"
+        },
         "phase": {
           "description": "New phase slug.",
+          "type": "string"
+        },
+        "tech": {
+          "description": "Comma-separated technologies or services the ticket depends on, as lower-case slugs such as aws-rds. Leave out unless the ticket needs a specific one; reuse values from ajiya_tags. Replaces the ticket's tech tags; \"-\" clears them.",
           "type": "string"
         },
         "title": {
@@ -402,6 +759,28 @@
       "type": "object"
     },
     "name": "ajiya_ticket_edit"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "idempotentHint": false,
+      "readOnlyHint": true
+    },
+    "description": "Use to see which files a ticket changed: the union of files in every commit whose Ajiya trailer names it, read from git (plan files in ajiya/ are left out). Empty when no commit names the ticket.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "description": "Ticket ID, such as AJ-0043.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "name": "ajiya_ticket_files"
   },
   {
     "annotations": {
@@ -426,7 +805,7 @@
           "type": "string"
         },
         "state": {
-          "description": "pending, in_progress, done, dropped, ready or human.",
+          "description": "pending, in_progress, done, dropped, superseded, ready or human.",
           "type": "string"
         }
       },

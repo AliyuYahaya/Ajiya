@@ -44,6 +44,6 @@ path = "api"
 
 Goal: Live
 
-| ID | App | Ticket | Done when | Depends | Status |
-|---|---|---|---|---|---|
-| DE-0002 | infra | Deploy to production | Reachable | DE-0001, DE-0003 | 🟥 Pending |
+| ID | App | Ticket | Done when | Depends | Tags | Status |
+|---|---|---|---|---|---|---|
+| DE-0002 | infra | Deploy to production | Reachable | DE-0001, DE-0003 | - | 🟥 Pending |

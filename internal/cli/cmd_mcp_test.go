@@ -96,7 +96,7 @@ func TestMCPToolsListGolden(t *testing.T) {
 // to mcpTools fails here; to offer it on purpose, change this test in the
 // same commit and say why.
 func TestMCPExcludedTools(t *testing.T) {
-	want := []string{"ticket drop", "app remove", "milestone remove", "milestone move", "hook install"}
+	want := []string{"ticket drop", "app remove", "milestone remove", "milestone move", "hook install", "change approve", "change reject"}
 	if strings.Join(mcpExcluded, "|") != strings.Join(want, "|") {
 		t.Fatalf("mcpExcluded = %v, want %v", mcpExcluded, want)
 	}
@@ -114,7 +114,9 @@ func TestMCPExcludedTools(t *testing.T) {
 	allowed := strings.Fields(`ajiya_status ajiya_next ajiya_ticket_show ajiya_ticket_list ajiya_phase_list
 		ajiya_milestone_list ajiya_milestone_show ajiya_check ajiya_ticket_add ajiya_ticket_edit
 		ajiya_ticket_start ajiya_ticket_done ajiya_ticket_block ajiya_phase_add ajiya_app_add
-		ajiya_milestone_add ajiya_launch_set ajiya_init`)
+		ajiya_milestone_add ajiya_launch_set ajiya_init ajiya_tags ajiya_ticket_files ajiya_snapshot ajiya_snapshot_list
+		ajiya_decision_add ajiya_decision_show ajiya_decision_list ajiya_decision_accept ajiya_phase_describe
+		ajiya_change_open ajiya_change_impact ajiya_change_assess ajiya_change_list ajiya_change_show`)
 	var got []string
 	for n := range have {
 		got = append(got, n)
@@ -196,21 +198,58 @@ func TestMCPInitThenPlan(t *testing.T) {
 		tool string
 		args map[string]any
 	}{
-		{"ajiya_phase_add", map[string]any{"slug": "core", "goal": "Core works"}},
+		{"ajiya_phase_add", map[string]any{"slug": "core", "goal": "Core works", "description": "Line one.\n\nLine two."}},
+		{"ajiya_phase_describe", map[string]any{"slug": "core", "text": "Not a flag\n\nSecond paragraph."}},
 		{"ajiya_ticket_add", map[string]any{"phase": "core", "app": "infra", "title": "-leading dash title", "done_when": "it works"}},
 		{"ajiya_ticket_edit", map[string]any{"id": "DE-0001", "done_when": "it really works"}},
+		{"ajiya_ticket_edit", map[string]any{"id": "DE-0001", "tech": "aws-rds,postgresql", "decisions": "DEC-0003", "paths": "infra/**"}},
+		{"ajiya_ticket_edit", map[string]any{"id": "DE-0001", "decisions": "-"}},
 		{"ajiya_milestone_add", map[string]any{"name": "alpha", "targets": "core"}},
 		{"ajiya_ticket_start", map[string]any{"id": "DE-0001"}},
 		{"ajiya_ticket_block", map[string]any{"id": "DE-0001", "reason": "waiting for a key"}},
+		{"ajiya_ticket_block", map[string]any{"id": "DE-0001", "reason": "-reason"}},
 		{"ajiya_launch_set", map[string]any{"target": "core"}},
 	} {
 		if r := mcpCall(t, cs, step.tool, step.args); r.IsError {
 			t.Fatalf("%s: %s", step.tool, resultText(r, 0))
 		}
 	}
+	r = mcpCall(t, cs, "ajiya_phase_list", nil)
+	if !strings.Contains(resultText(r, 1), `"description": "Not a flag\n\nSecond paragraph."`) {
+		t.Errorf("phase list lacks the description: %v", resultText(r, 1))
+	}
+	if r := mcpCall(t, cs, "ajiya_phase_describe", map[string]any{"slug": "core", "text": "- first point"}); r.IsError {
+		t.Fatalf("phase describe dash: %s", resultText(r, 0))
+	}
+	r = mcpCall(t, cs, "ajiya_phase_list", nil)
+	if !strings.Contains(resultText(r, 1), `"description": "- first point"`) {
+		t.Errorf("dash-leading description lost: %v", resultText(r, 1))
+	}
+	if r := mcpCall(t, cs, "ajiya_phase_describe", map[string]any{"slug": "core", "text": "-"}); r.IsError {
+		t.Fatalf("phase describe clear: %s", resultText(r, 0))
+	}
+	r = mcpCall(t, cs, "ajiya_phase_list", nil)
+	if !strings.Contains(resultText(r, 1), `"description": ""`) {
+		t.Errorf("description not cleared: %v", resultText(r, 1))
+	}
 	r = mcpCall(t, cs, "ajiya_ticket_show", map[string]any{"id": "DE-0001"})
 	if !strings.Contains(resultText(r, 1), "-leading dash title") {
 		t.Errorf("ticket show: %v", resultText(r, 1))
+	}
+	if !strings.Contains(resultText(r, 1), `"aws-rds"`) || !strings.Contains(resultText(r, 1), `"infra/**"`) || strings.Contains(resultText(r, 1), "DEC-0003") {
+		t.Errorf("ticket show lacks the tags or still has the cleared decision: %v", resultText(r, 1))
+	}
+	r = mcpCall(t, cs, "ajiya_ticket_add", map[string]any{"phase": "core", "app": "infra", "title": "Second", "done_when": "ok", "tech": "postgresql"})
+	if r.IsError {
+		t.Fatalf("ticket add with tech: %s", resultText(r, 0))
+	}
+	r = mcpCall(t, cs, "ajiya_tags", nil)
+	if r.IsError || !strings.Contains(resultText(r, 1), `"value": "postgresql"`) || !strings.Contains(resultText(r, 1), `"tickets": 2`) {
+		t.Errorf("tags: %v %q", r.IsError, resultText(r, 1))
+	}
+	r = mcpCall(t, cs, "ajiya_ticket_add", map[string]any{"phase": "core", "app": "infra", "title": "Bad", "done_when": "ok", "tech": "Postgres"})
+	if !r.IsError || !strings.Contains(resultText(r, 0), "lower-case slug") {
+		t.Errorf("bad tech: %v %q", r.IsError, resultText(r, 0))
 	}
 }
 
@@ -277,6 +316,7 @@ func TestMCPReadToolParity(t *testing.T) {
 		{"ajiya_next", nil, []string{"next"}},
 		{"ajiya_next", map[string]any{"milestone": "staging"}, []string{"next", "--milestone", "staging"}},
 		{"ajiya_ticket_show", map[string]any{"id": "DE-0003"}, []string{"ticket", "show", "DE-0003"}},
+		{"ajiya_ticket_files", map[string]any{"id": "DE-0003"}, []string{"ticket", "files", "DE-0003"}},
 		{"ajiya_ticket_list", nil, []string{"ticket", "list"}},
 		{"ajiya_ticket_list", map[string]any{"phase": "api", "state": "in_progress"}, []string{"ticket", "list", "--phase", "api", "--state", "in_progress"}},
 		{"ajiya_phase_list", nil, []string{"phase", "list"}},
@@ -363,5 +403,69 @@ func TestFileURIPath(t *testing.T) {
 	dir := t.TempDir()
 	if got, ok := fileURIPath(fileURI(dir)); !ok || got != dir {
 		t.Errorf("round trip of %q gave %q", dir, got)
+	}
+}
+
+// The server asks for roots only when the client declared the capability in
+// initialize.
+func TestMCPRootsOnlyFromClientsThatDeclareThem(t *testing.T) {
+	proj := statusFixture(t)
+	for _, tc := range []struct {
+		name      string
+		caps      *mcp.ClientCapabilities // nil: the client's default (roots when it has any)
+		wantAsked int
+		wantFound bool
+	}{
+		{"declared", nil, 1, true},
+		{"not declared", &mcp.ClientCapabilities{}, 0, false},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			ctx := context.Background()
+			srv := newMCPServer(t.TempDir(), "", func() time.Time { return statusNow })
+			st, ct := mcp.NewInMemoryTransports()
+			ss, err := srv.Connect(ctx, st, nil)
+			if err != nil {
+				t.Fatal(err)
+			}
+			t.Cleanup(func() { ss.Close() })
+			client := mcp.NewClient(&mcp.Implementation{Name: "test", Version: "1"}, &mcp.ClientOptions{Capabilities: tc.caps})
+			client.AddRoots(&mcp.Root{URI: fileURI(proj)})
+			asked := 0
+			client.AddReceivingMiddleware(func(next mcp.MethodHandler) mcp.MethodHandler {
+				return func(ctx context.Context, method string, req mcp.Request) (mcp.Result, error) {
+					if method == "roots/list" {
+						asked++
+					}
+					return next(ctx, method, req)
+				}
+			})
+			cs, err := client.Connect(ctx, ct, &mcp.ClientSessionOptions{ProtocolVersion: "2025-06-18"})
+			if err != nil {
+				t.Fatal(err)
+			}
+			t.Cleanup(func() { cs.Close() })
+			r := mcpCall(t, cs, "ajiya_phase_list", nil)
+			if asked != tc.wantAsked {
+				t.Errorf("roots/list requests = %d, want %d", asked, tc.wantAsked)
+			}
+			if r.IsError == tc.wantFound {
+				t.Errorf("error = %v, want project found = %v: %q", r.IsError, tc.wantFound, resultText(r, 0))
+			}
+		})
+	}
+}
+
+// ticket done ends with a reminder to commit the plan change, over MCP as in
+// the CLI.
+func TestMCPTicketDoneRemindsToCommit(t *testing.T) {
+	dir := statusFixture(t)
+	cs := mcpConnect(t, dir, "")
+	r := mcpCall(t, cs, "ajiya_ticket_done", map[string]any{"id": "DE-0003"})
+	if r.IsError {
+		t.Fatalf("error: %s", resultText(r, 0))
+	}
+	want := "Commit the plan change in ajiya/ with the trailer 'Ajiya: DE-0003'."
+	if got := resultText(r, len(r.Content)-1); got != want && !strings.HasSuffix(got, "\n"+want) {
+		t.Errorf("last content = %q, want it to end with %q", got, want)
 	}
 }

@@ -1,0 +1,33 @@
+A decision file that parses but is not in canonical form (a blank line added by hand).
+
+-- ajiya.toml --
+[project]
+name = "Fixture"
+prefix = "FX"
+-- ajiya/core.md --
+<!-- Written by ajiya. Do not edit by hand: use ajiya commands. -->
+# Core
+
+Goal: g
+
+| ID | App | Ticket | Done when | Depends | Tags | Status |
+|---|---|---|---|---|---|---|
+| FX-0001 | infra | A | a | - | dec:DEC-0001 | 🟥 Pending |
+-- ajiya/decisions/DEC-0001.md --
+<!-- Written by ajiya. Do not edit by hand: use ajiya commands. -->
+# DEC-0001: Use PostgreSQL
+
+Status: Accepted · 2026-09-12 · decided by Aliyu
+Tags: tech:postgres
+
+## Context
+
+Needed transactions.
+
+## Decision
+Use it.
+
+## Consequences
+-
+-- want --
+E016 ajiya/decisions/DEC-0001.md:8: file is not in the form ajiya writes (edited by hand?). Fix: restore it with 'git checkout -- ajiya/decisions/DEC-0001.md' and make the change with ajiya commands

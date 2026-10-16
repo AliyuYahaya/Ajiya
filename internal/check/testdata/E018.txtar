@@ -1,0 +1,35 @@
+A change file that does not parse (a verdict that is not one of the five).
+
+-- ajiya.toml --
+[project]
+name = "Fixture"
+prefix = "FX"
+-- ajiya/core.md --
+<!-- Written by ajiya. Do not edit by hand: use ajiya commands. -->
+# Core
+
+Goal: g
+
+| ID | App | Ticket | Done when | Depends | Tags | Status |
+|---|---|---|---|---|---|---|
+| FX-0001 | infra | A | a | - | tech:aws-rds | 🟥 Pending |
+-- ajiya/changes/CHG-0001.md --
+<!-- Written by ajiya. Do not edit by hand: use ajiya commands. -->
+# CHG-0001: Move off RDS
+
+Status: Open · 2026-10-16
+Replaces: tech:aws-rds
+With: -
+Decisions: -
+Paths: -
+Snapshot: before-CHG-0001
+
+## Candidates
+| ID | Ticket | Reasons | Verdict | Verdict reason | New title | New done when |
+|---|---|---|---|---|---|---|
+| FX-0001 | A | tag:tech:aws-rds | rework | x | - | - |
+
+## Results
+-
+-- want --
+E018 ajiya/changes/CHG-0001.md:14: verdict "rework" is not one of unaffected, modify, replace, invalidate, investigate. Fix: restore it with 'git checkout -- ajiya/changes/CHG-0001.md' and make the change with ajiya commands

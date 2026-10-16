@@ -103,10 +103,10 @@ stderr 'fix this file before changing the plan'
 
 Goal: A patient can book a slot
 
-| ID | App | Ticket | Done when | Depends | Status |
-|---|---|---|---|---|---|
-| CB-0001 | infra | Slots table | Returns free slots | - | 🟥 Pending |
-| CB-0002 | infra | Booking screen | Can pick a slot | CB-0001 | 🟥 Pending |
-| CB-0003 | infra | Hosting | Reachable | - | 🟥 Pending · Needs a human: hosting account |
+| ID | App | Ticket | Done when | Depends | Tags | Status |
+|---|---|---|---|---|---|---|
+| CB-0001 | infra | Slots table | Returns free slots | - | - | 🟥 Pending |
+| CB-0002 | infra | Booking screen | Can pick a slot | CB-0001 | - | 🟥 Pending |
+| CB-0003 | infra | Hosting | Reachable | - | - | 🟥 Pending · Needs a human: hosting account |
 -- broken.md --
 hand written notes

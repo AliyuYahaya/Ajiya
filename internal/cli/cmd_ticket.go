@@ -12,6 +12,7 @@ import (
 	"github.com/AliyuYahaya/Ajiya/internal/config"
 	"github.com/AliyuYahaya/Ajiya/internal/gitx"
 	"github.com/AliyuYahaya/Ajiya/internal/plan"
+	"github.com/AliyuYahaya/Ajiya/internal/view"
 )
 
 func runTicketAdd(e *env, args []string) error {
@@ -21,7 +22,12 @@ func runTicketAdd(e *env, args []string) error {
 	doneWhen := fs.String("done-when", "", "the check that proves the ticket is done")
 	depends := fs.String("depends", "", "IDs this ticket depends on, comma separated")
 	human := fs.String("human", "", "why this ticket needs a person")
+	tf := addTagFlags(fs)
 	pos, err := parse(fs, args, 1)
+	if err != nil {
+		return err
+	}
+	tags, err := tf.apply(fs, plan.Tags{})
 	if err != nil {
 		return err
 	}
@@ -57,6 +63,7 @@ func runTicketAdd(e *env, args []string) error {
 		return err
 	}
 	t := pr.newTicket(ph, *app, title, *doneWhen, deps, plan.Status{State: plan.Pending, Human: *human})
+	t.Tags = tags
 	if err := pr.plan.Save(ph); err != nil {
 		return err
 	}
@@ -152,6 +159,7 @@ func runTicketDone(e *env, args []string) error {
 		return refused("%s is already closed: %s", t.ID, t.Status)
 	}
 
+	evidenceRepo := "" // set when the evidence commit is not in the root repository
 	s := t.Status.Carry(plan.Done)
 	s.Note = *note
 	if *by != "" {
@@ -163,7 +171,7 @@ func runTicketDone(e *env, args []string) error {
 		}
 		s.By, s.Date = *by, today()
 	} else {
-		commits, err := gitx.Referencing(pr.cfg.Root, t.ID)
+		commits, err := gitx.ReferencingIn(pr.repos(), t.ID)
 		if err != nil {
 			return refused("%v", err)
 		}
@@ -175,7 +183,7 @@ func runTicketDone(e *env, args []string) error {
 			return refused("no commit references %s; commit the work with the trailer 'Ajiya: %s' first%s", t.ID, t.ID, hint)
 		}
 		if started, ok := gitx.StartedAt(pr.cfg.Root, t.ID); ok {
-			i := slices.IndexFunc(commits, func(c gitx.Commit) bool { return c.Time < started })
+			i := slices.IndexFunc(commits, func(c gitx.Evidence) bool { return c.Time < started })
 			if i == 0 {
 				return refused("no commit since %s was started names it (%s is from before the start); commit the work with the trailer 'Ajiya: %s' first", t.ID, commits[0].Short(), t.ID)
 			}
@@ -184,6 +192,7 @@ func runTicketDone(e *env, args []string) error {
 			}
 		}
 		s.Commit, s.Date = commits[0].Short(), commits[0].Date
+		evidenceRepo = pr.repoLabel(commits[0].Repo)
 	}
 	if *test {
 		if err := runTests(e, pr, t.ID); err != nil {
@@ -200,6 +209,10 @@ func runTicketDone(e *env, args []string) error {
 	}
 	_ = gitx.ClearStart(pr.cfg.Root, t.ID)
 	fmt.Fprintf(e.stdout, "%s %s\n", t.ID, t.Status)
+	if evidenceRepo != "" {
+		fmt.Fprintf(e.stdout, "evidence: %s in %s\n", t.Status.Commit, evidenceRepo)
+	}
+	fmt.Fprintf(e.stdout, "Commit the plan change in ajiya/ with the trailer 'Ajiya: %s'.\n", t.ID)
 	return nil
 }
 
@@ -220,7 +233,7 @@ func runTicketShow(e *env, args []string) error {
 	}
 	ph := pr.plan.Phase(t.Phase)
 	dependants := plan.NewGraph(pr.plan.Tickets()).Dependants(t.ID)
-	commits, err := gitx.Referencing(pr.cfg.Root, t.ID)
+	commits, err := gitx.ReferencingIn(pr.repos(), t.ID)
 	if err != nil && err != gitx.ErrNotRepo {
 		return err
 	}
@@ -234,6 +247,7 @@ func runTicketShow(e *env, args []string) error {
 			Hash    string `json:"hash"`
 			Date    string `json:"date"`
 			Subject string `json:"subject"`
+			Repo    string `json:"repo,omitempty"` // set when not the project root repository
 		}
 		links := func(ids []string) []link {
 			out := []link{}
@@ -246,17 +260,23 @@ func runTicketShow(e *env, args []string) error {
 			}
 			return out
 		}
+		decs := []decLink{}
+		for _, id := range t.Tags.Dec {
+			decs = append(decs, pr.decLink(id))
+		}
 		cs := []commit{}
 		for _, c := range commits {
-			cs = append(cs, commit{c.Hash, c.Date, c.Subject})
+			cs = append(cs, commit{c.Hash, c.Date, c.Subject, pr.repoLabel(c.Repo)})
 		}
 		return writeJSON(e, struct {
 			jsonTicket
-			PhaseTitle   string   `json:"phase_title"`
-			Dependencies []link   `json:"dependencies"`
-			Dependants   []link   `json:"dependants"`
-			Commits      []commit `json:"commits"`
-		}{toJSON(t), ph.Title, links(t.Depends), links(dependants), cs})
+			PhaseTitle   string       `json:"phase_title"`
+			Dependencies []link       `json:"dependencies"`
+			Dependants   []link       `json:"dependants"`
+			Decisions    []decLink    `json:"decisions"`
+			Changes      []changeLink `json:"changes"`
+			Commits      []commit     `json:"commits"`
+		}{toJSON(t), ph.Title, links(t.Depends), links(dependants), decs, pr.ticketChanges(t.ID), cs})
 	}
 	w := e.stdout
 	fmt.Fprintf(w, "%s  %s\n", t.ID, t.Title)
@@ -264,6 +284,7 @@ func runTicketShow(e *env, args []string) error {
 	fmt.Fprintf(w, "App:        %s\n", t.App)
 	fmt.Fprintf(w, "Done when:  %s\n", t.DoneWhen)
 	fmt.Fprintf(w, "Status:     %s\n", t.Status)
+	fmt.Fprintf(w, "Tags:       %s\n", t.Tags)
 	list := func(label string, ids []string) {
 		if len(ids) == 0 {
 			fmt.Fprintf(w, "%-11s -\n", label)
@@ -282,6 +303,29 @@ func runTicketShow(e *env, args []string) error {
 	}
 	list("Depends:", t.Depends)
 	list("Needed by:", dependants)
+	for i, id := range t.Tags.Dec {
+		label := "Decisions:"
+		if i > 0 {
+			label = ""
+		}
+		l := pr.decLink(id)
+		text := "(does not exist)"
+		if l.State != "missing" {
+			text = l.Status + " " + l.Title
+		}
+		fmt.Fprintf(w, "%-11s %s %s\n", label, id, text)
+	}
+	for i, l := range pr.ticketChanges(t.ID) {
+		label := "Changes:"
+		if i > 0 {
+			label = ""
+		}
+		verdict := l.Verdict
+		if verdict == "" {
+			verdict = "no verdict yet"
+		}
+		fmt.Fprintf(w, "%-11s %s %s, %s: %s\n", label, l.ID, l.Status, verdict, l.Title)
+	}
 	if len(commits) == 0 {
 		fmt.Fprintf(w, "%-11s -\n", "Commits:")
 	}
@@ -290,9 +334,29 @@ func runTicketShow(e *env, args []string) error {
 		if i > 0 {
 			label = ""
 		}
-		fmt.Fprintf(w, "%-11s %s %s %s\n", label, c.Short(), c.Date, c.Subject)
+		where := ""
+		if r := pr.repoLabel(c.Repo); r != "" {
+			where = " [" + r + "]"
+		}
+		fmt.Fprintf(w, "%-11s %s %s %s%s\n", label, c.Short(), c.Date, c.Subject, where)
 	}
 	return nil
+}
+
+// decLink is a decision a ticket links with a dec tag.
+type decLink struct {
+	ID     string `json:"id"`
+	Title  string `json:"title,omitempty"`
+	State  string `json:"state"`            // proposed, accepted, superseded; missing when the ID does not exist
+	Status string `json:"status,omitempty"` // the Status line as written
+}
+
+func (pr *project) decLink(id string) decLink {
+	d := pr.plan.Decision(id)
+	if d == nil {
+		return decLink{ID: id, State: "missing"}
+	}
+	return decLink{ID: id, Title: d.Title, State: view.DecisionStateName(d.Status.State), Status: d.Status.String()}
 }
 
 func runTicketEdit(e *env, args []string) error {
@@ -302,12 +366,13 @@ func runTicketEdit(e *env, args []string) error {
 	depends := fs.String("depends", "", `new dependency list; "-" for none`)
 	app := fs.String("app", "", "new app")
 	phase := fs.String("phase", "", "move to this phase")
+	tf := addTagFlags(fs)
 	pos, err := parse(fs, args, 1)
 	if err != nil {
 		return err
 	}
 	if fs.NFlag() == 0 {
-		return usageErr("nothing to change; give at least one of --title, --done-when, --depends, --app, --phase")
+		return usageErr("nothing to change; give at least one of --title, --done-when, --depends, --app, --phase, --tech, --decisions, --paths")
 	}
 	for _, f := range []struct {
 		name string
@@ -342,6 +407,11 @@ func runTicketEdit(e *env, args []string) error {
 		}
 		t.Depends = deps
 	}
+	tags, err := tf.apply(fs, t.Tags)
+	if err != nil {
+		return err
+	}
+	t.Tags = tags
 	if isSet(fs, "title") {
 		t.Title = *title
 	}
@@ -367,6 +437,9 @@ func runTicketEdit(e *env, args []string) error {
 		deps = strings.Join(t.Depends, ", ")
 	}
 	fmt.Fprintf(e.stdout, "%s  %s\n  phase %s · app %s · depends %s\n  done when: %s\n", t.ID, t.Title, t.Phase, t.App, deps, t.DoneWhen)
+	if !t.Tags.Empty() {
+		fmt.Fprintf(e.stdout, "  tags: %s\n", t.Tags)
+	}
 	return nil
 }
 
