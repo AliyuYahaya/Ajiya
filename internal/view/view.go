@@ -118,6 +118,67 @@ func DecisionOf(d *plan.Decision, tickets []string) Decision {
 		Decision: d.Decision, Consequences: d.Consequences, Tickets: tickets}
 }
 
+// ChangeStatus is a change's Status line, parsed.
+type ChangeStatus struct {
+	State  string `json:"state"` // open, approved, rejected
+	Text   string `json:"text"`  // the Status line as written
+	Date   string `json:"date"`
+	By     string `json:"by,omitempty"`
+	Reason string `json:"reason,omitempty"` // why it was rejected
+}
+
+// Candidate is one ticket a change might affect.
+type Candidate struct {
+	ID          string   `json:"id"`
+	Title       string   `json:"title"`
+	Reasons     []string `json:"reasons"` // kind:detail, such as tag:tech:aws-rds
+	Stale       bool     `json:"stale"`   // kept for its verdict, but impact no longer finds it
+	Verdict     string   `json:"verdict"` // "" until assessed
+	Why         string   `json:"why"`
+	NewTitle    string   `json:"new_title"`
+	NewDoneWhen string   `json:"new_done_when"`
+}
+
+// Change is one change request.
+type Change struct {
+	ID         string       `json:"id"`
+	Title      string       `json:"title"`
+	Status     ChangeStatus `json:"status"`
+	Replaces   Tags         `json:"replaces"`
+	With       Tags         `json:"with"`
+	Decisions  []string     `json:"decisions"`
+	Paths      []string     `json:"paths"`
+	Snapshot   string       `json:"snapshot"`
+	Candidates []Candidate  `json:"candidates"`
+	Results    string       `json:"results"`
+}
+
+// ChangeStateName is the JSON name of a change state.
+func ChangeStateName(s plan.ChangeState) string { return strings.ToLower(s.String()) }
+
+// ChangeOf returns the JSON form of a change.
+func ChangeOf(c *plan.Change) Change {
+	orEmpty := func(s []string) []string {
+		if s == nil {
+			return []string{}
+		}
+		return s
+	}
+	tags := func(t plan.Tags) Tags {
+		return Tags{Tech: orEmpty(t.Tech), Dec: orEmpty(t.Dec), Path: orEmpty(t.Path)}
+	}
+	s := c.Status
+	out := Change{ID: c.ID, Title: c.Title,
+		Status:   ChangeStatus{State: ChangeStateName(s.State), Text: s.String(), Date: s.Date, By: s.By, Reason: s.Reason},
+		Replaces: tags(c.Replaces), With: tags(c.With), Decisions: orEmpty(c.Decisions), Paths: orEmpty(c.Paths),
+		Snapshot: c.Snapshot, Candidates: []Candidate{}, Results: c.Results}
+	for _, k := range c.Candidates {
+		out.Candidates = append(out.Candidates, Candidate{ID: k.ID, Title: k.Title, Reasons: orEmpty(k.Reasons), Stale: k.Stale,
+			Verdict: string(k.Verdict), Why: k.Why, NewTitle: k.NewTitle, NewDoneWhen: k.NewDoneWhen})
+	}
+	return out
+}
+
 // StatusOf returns the JSON form of a status.
 func StatusOf(s plan.Status) Status {
 	out := Status{

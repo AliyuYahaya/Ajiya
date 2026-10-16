@@ -126,12 +126,13 @@ func TestJSON(t *testing.T) {
 		Dependencies []struct{ ID, Title, State string }
 		Dependants   []struct{ ID, Title, State string }
 		Decisions    []struct{ ID, Title, State, Status string }
+		Changes      []struct{ ID, Title, Status, Verdict string }
 		Commits      []struct{ Hash, Date, Subject string }
 	}
 	decode(t, ajiya(t, dir, 0, "ticket", "show", "DE-0001", "--json"), &show)
 	if show.Status.State != "done" || show.Status.Note != "first try" || len(show.Status.Commit) != 7 ||
 		show.PhaseTitle != "Core" || len(show.Dependencies) != 0 || show.Dependencies == nil ||
-		len(show.Dependants) != 1 || show.Dependants[0].State != "pending" || show.Decisions == nil || len(show.Decisions) != 0 ||
+		len(show.Dependants) != 1 || show.Dependants[0].State != "pending" || show.Decisions == nil || len(show.Decisions) != 0 || show.Changes == nil || len(show.Changes) != 0 ||
 		len(show.Commits) != 1 || show.Commits[0].Subject != "Deploy" || len(show.Commits[0].Hash) != 40 {
 		t.Errorf("ticket show --json = %+v", show)
 	}

@@ -120,6 +120,7 @@ func boolProp(name, desc string) mcpProp { return mcpProp{name, "boolean", desc,
 
 var idProp = strProp("id", "Ticket ID, such as AJ-0043.", true)
 var decIDProp = strProp("id", "Decision ID, such as DEC-0003.", true)
+var chgIDProp = strProp("id", "Change ID, such as CHG-0014.", true)
 
 // Tags are optional. Add tech only when the ticket depends on a specific
 // technology or service; check ajiya_tags first to reuse an existing value.
@@ -273,6 +274,23 @@ func mcpTools() []mcpTool {
 			argv: func(a mcpArgs) []string {
 				return cat([]string{"decision", "accept"}, a.flag("by", "by"), pos(a.str("id")))
 			}},
+		{name: "ajiya_change_open",
+			desc:  "Use when the plan must change (a technology or decision is being replaced): open a change request. It snapshots the committed plan, so ajiya/ must have no uncommitted changes. Give at least one of replaces, decision or paths. A person approves or rejects the change; you never do.",
+			props: []mcpProp{strProp("title", "What is changing, such as \"Move the database from AWS RDS to Supabase\".", true), strProp("replaces", "Comma-separated key:value tags of the work being replaced, such as tech:aws-rds.", false), strProp("with", "Comma-separated key:value tags of what replaces it, such as tech:supabase.", false), strProp("decision", "Comma-separated decision IDs the change would supersede, such as DEC-0003.", false), strProp("paths", "Comma-separated file globs the change touches, such as infra/rds/**.", false)},
+			argv: func(a mcpArgs) []string {
+				return cat([]string{"change", "open"}, a.flag("replaces", "replaces"), a.flag("with", "with"), a.flag("decision", "decision"), a.flag("paths", "paths"), pos(a.str("title")))
+			}},
+		{name: "ajiya_change_impact", json: true,
+			desc:  "Use after opening a change, and again when tickets change: list the tickets it might affect, each with why (tag, decision, path, downstream), and write them into the change file. Verdicts already given are kept.",
+			props: []mcpProp{chgIDProp},
+			argv:  func(a mcpArgs) []string { return cat([]string{"change", "impact"}, pos(a.str("id"))) }},
+		{name: "ajiya_change_list", readOnly: true, json: true,
+			desc: "Use to see every change request with its status.",
+			argv: func(a mcpArgs) []string { return []string{"change", "list"} }},
+		{name: "ajiya_change_show", readOnly: true, json: true,
+			desc:  "Use to read a change request in full: what it touches, its candidates, reasons and verdicts.",
+			props: []mcpProp{chgIDProp},
+			argv:  func(a mcpArgs) []string { return cat([]string{"change", "show"}, pos(a.str("id"))) }},
 		{name: "ajiya_init",
 			desc:  "Use in a folder that has no ajiya.toml to set up Ajiya there, registering the apps it detects. Equivalent to 'ajiya init --yes'.",
 			props: []mcpProp{strProp("name", "Project name (default: the folder name).", false), strProp("prefix", "Ticket ID prefix, such as AJ.", false)},

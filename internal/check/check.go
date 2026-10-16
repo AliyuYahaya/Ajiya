@@ -18,6 +18,8 @@
 //	E013 [phases] order lists a slug that is not a phase
 //	E014 to E016 decisions, listed in decisions.go
 //	E017 a superseded ticket's replacement does not exist
+//	E018 a change file does not parse
+//	E019 a change file is not in canonical form (edited by hand)
 //
 // A milestone name used twice has no code here: config.Parse refuses such an
 // ajiya.toml ("milestone ... is listed twice"), so every command, check
@@ -148,6 +150,7 @@ func Run(cfg *config.Config, p *plan.Plan) []Finding {
 
 	fs = append(fs, phaseOrder(cfg, p)...)
 	fs = append(fs, decisionFindings(p)...)
+	fs = append(fs, changeFindings(p)...)
 	fs = append(fs, planWarnings(cfg, p)...)
 	Sort(fs)
 	return fs

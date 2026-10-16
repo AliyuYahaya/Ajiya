@@ -44,6 +44,12 @@ type Plan struct {
 	RawDecisions map[string][]byte
 	// BrokenDecisions lists decision files that could not be parsed, keyed by ID.
 	BrokenDecisions map[string]*ParseError
+	// Changes are the readable change files in ajiya/changes.
+	Changes []*Change
+	// RawChanges holds each change file as read, LF only, keyed by ID.
+	RawChanges map[string][]byte
+	// BrokenChanges lists change files that could not be parsed, keyed by ID.
+	BrokenChanges map[string]*ParseError
 }
 
 // Load reads every <slug>.md in root/ajiya. Files that do not parse are
@@ -81,6 +87,9 @@ func Load(root string) (*Plan, error) {
 	}
 	sort.Slice(p.Phases, func(i, j int) bool { return p.Phases[i].Slug < p.Phases[j].Slug })
 	if err := p.loadDecisions(); err != nil {
+		return nil, err
+	}
+	if err := p.loadChanges(); err != nil {
 		return nil, err
 	}
 	return p, nil
