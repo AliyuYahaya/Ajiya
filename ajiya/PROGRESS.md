@@ -10,9 +10,9 @@ Generated 2026-10-16.
 | v0-1 | 37 | 37 | 100% | 0 |
 | v0-2 | 74 | 74 | 100% | 0 |
 | v0-2-1 | 83 | 83 | 100% | 0 |
-| v0-3 | 75 | 84 | 89% | 3 |
-| after-v0-3 | 75 | 83 | 90% | 3 |
-| v0-3-1 | 75 | 87 | 86% | 4 |
+| v0-3 | 75 | 84 | 89% | 0 |
+| after-v0-3 | 75 | 83 | 90% | 0 |
+| v0-3-1 | 75 | 87 | 86% | 1 |
 
 ## Phases
 
@@ -25,14 +25,11 @@ Generated 2026-10-16.
 | Release | 5 | 0 | 0 | 5 | 100% | v0-1 |
 | Agent-access | 9 | 0 | 0 | 9 | 100% | v0-2 |
 | Install | 24 | 0 | 0 | 24 | 100% | v0-2 |
-| Decisions-and-changes | 1 | 0 | 10 | 11 | 9% | v0-3 |
+| Decisions-and-changes | 1 | 4 | 6 | 11 | 9% | v0-3 |
 | Dashboard views | 0 | 0 | 4 | 4 | 0% | v0-3-1 |
 
 ## Can start now
 
-- **AJ-0051** Superseded status (ajiya) · v0-3
-- **AJ-0049** ajiya ticket files (ajiya) · v0-3
-- **AJ-0050** Decision records and commands (ajiya) · v0-3
 - **AJ-0107** Phase descriptions (ajiya) · v0-3-1
 
 ## Waiting
@@ -54,6 +51,8 @@ Generated 2026-10-16.
 
 ## Recent activity
 
+- 2026-10-16 `d3f7bb9` Upgrade the plan to the Tags column; mark AJ-0048 done (AJ-0048)
+  - AJ-0048: in_progress → done
 - 2026-10-16 `5540ca9` Merge AJ-0048: Tags column (AJ-0048)
 - 2026-10-16 `1778d83` Read and write the optional Tags column (AJ-0048)
 - 2026-10-16 `f2b0b99` Add ajiya tags and the tag flags for tickets (AJ-0048)
@@ -82,8 +81,7 @@ Generated 2026-10-16.
   - AJ-0104: in_progress → done
   - AJ-0105: in_progress → done
 - 2026-10-16 `52a348c` Refresh the agent kit (AJ-0100, AJ-0103)
-- 2026-10-16 `253d827` status counts only tickets that can start (AJ-0102)
-- and 246 more in data.js
+- and 247 more in data.js
 
 ## Checks
 
