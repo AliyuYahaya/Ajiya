@@ -284,6 +284,12 @@ func mcpTools() []mcpTool {
 			desc:  "Use after opening a change, and again when tickets change: list the tickets it might affect, each with why (tag, decision, path, downstream), and write them into the change file. Verdicts already given are kept.",
 			props: []mcpProp{chgIDProp},
 			argv:  func(a mcpArgs) []string { return cat([]string{"change", "impact"}, pos(a.str("id"))) }},
+		{name: "ajiya_change_assess", json: true,
+			desc:  "Use to record your judgement of one candidate of an open change: unaffected, modify, replace, invalidate or investigate, with a reason. replace needs title and done_when for the new ticket; modify of a done ticket needs them for a follow-up ticket; modify of an open ticket needs title, done_when or both. The other verdicts take neither. Assessing again overwrites the verdict. A person approves; investigate blocks approval.",
+			props: []mcpProp{chgIDProp, strProp("ticket", "Ticket ID of the candidate, such as AJ-0043.", true), strProp("verdict", "One of unaffected, modify, replace, invalidate, investigate.", true), strProp("reason", "Why you chose this verdict.", true), strProp("title", "Title of the new ticket, or the edited title for modify of an open ticket.", false), strProp("done_when", "Done-when of the new ticket, or the edited done-when.", false)},
+			argv: func(a mcpArgs) []string {
+				return cat([]string{"change", "assess"}, a.flag("verdict", "verdict"), a.flag("reason", "reason"), a.flag("title", "title"), a.flag("done-when", "done_when"), pos(a.str("id"), a.str("ticket")))
+			}},
 		{name: "ajiya_change_list", readOnly: true, json: true,
 			desc: "Use to see every change request with its status.",
 			argv: func(a mcpArgs) []string { return []string{"change", "list"} }},

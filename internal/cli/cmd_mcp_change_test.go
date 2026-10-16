@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-// The four change tools: open, impact, list and show. approve and reject are
+// The five change tools: open, impact, assess, list and show. approve and reject are
 // not tools (see TestMCPExcludedTools).
 func TestMCPChanges(t *testing.T) {
 	dir := t.TempDir()
@@ -58,6 +58,18 @@ func TestMCPChanges(t *testing.T) {
 		if r.IsError || !strings.Contains(text, want) {
 			t.Errorf("change impact lacks %s: %v %q", want, r.IsError, text)
 		}
+	}
+	r = mcpCall(t, cs, "ajiya_change_assess", map[string]any{"id": "CHG-0001", "ticket": "DE-0002", "verdict": "replace", "reason": "Needs new alerts", "title": "Supabase alerts", "done_when": "alerts fire"})
+	if text := resultText(r, 1); r.IsError || !strings.Contains(text, `"verdict": "replace"`) || !strings.Contains(text, `"new_title": "Supabase alerts"`) || !strings.Contains(text, `"new_done_when": "alerts fire"`) {
+		t.Fatalf("change assess: %v %q", r.IsError, text)
+	}
+	r = mcpCall(t, cs, "ajiya_change_assess", map[string]any{"id": "CHG-0001", "ticket": "DE-0002", "verdict": "unaffected", "reason": "Second look", "title": "x"})
+	if !r.IsError || !strings.Contains(resultText(r, 0), "--title and --done-when are for replace and modify") {
+		t.Errorf("assess with new text on unaffected: %v %q", r.IsError, resultText(r, 0))
+	}
+	r = mcpCall(t, cs, "ajiya_change_assess", map[string]any{"id": "CHG-0001", "ticket": "DE-0001", "verdict": "investigate"})
+	if !r.IsError {
+		t.Errorf("assess without a reason was allowed: %q", resultText(r, 0))
 	}
 	r = mcpCall(t, cs, "ajiya_change_list", map[string]any{})
 	if r.IsError || !strings.Contains(resultText(r, 1), `"CHG-0001"`) {
