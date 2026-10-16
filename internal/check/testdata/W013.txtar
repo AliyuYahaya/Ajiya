@@ -1,0 +1,25 @@
+Tech tags that differ only by punctuation or a trailing ql, js or s. Tickets
+without tags, and tags that stand alone, raise nothing.
+
+-- ajiya.toml --
+[project]
+name = "Fixture"
+prefix = "FX"
+-- ajiya/core.md --
+<!-- Written by ajiya. Do not edit by hand: use ajiya commands. -->
+# Core
+
+Goal: g
+
+| ID | App | Ticket | Done when | Depends | Tags | Status |
+|---|---|---|---|---|---|---|
+| FX-0001 | infra | A | a | - | tech:postgres | 🟥 Pending |
+| FX-0002 | infra | B | b | - | tech:postgresql dec:DEC-0001 | 🟥 Pending |
+| FX-0003 | infra | C | c | - | tech:node tech:postgresql | 🟥 Pending |
+| FX-0004 | infra | D | d | - | tech:aws-rds tech:awsrds tech:nodejs | 🟥 Pending |
+| FX-0005 | infra | E | e | - | tech:redis path:infra/** | 🟥 Pending |
+| FX-0006 | infra | F | f | - | - | 🟥 Pending |
+-- want --
+W013 ajiya/core.md:8: tech tags postgresql and postgres look like the same technology. Fix: use one spelling, such as tech:postgresql, with 'ajiya ticket edit <ID> --tech <value>'
+W013 ajiya/core.md:10: tech tags node and nodejs look like the same technology. Fix: use one spelling, such as tech:node, with 'ajiya ticket edit <ID> --tech <value>'
+W013 ajiya/core.md:11: tech tags aws-rds and awsrds look like the same technology. Fix: use one spelling, such as tech:aws-rds, with 'ajiya ticket edit <ID> --tech <value>'

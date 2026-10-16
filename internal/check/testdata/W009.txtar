@@ -24,26 +24,26 @@ targets = ["later"]
 
 Goal: g
 
-| ID | App | Ticket | Done when | Depends | Status |
-|---|---|---|---|---|---|
-| FX-0001 | infra | Deploy to staging | a | - | 🟥 Pending |
+| ID | App | Ticket | Done when | Depends | Tags | Status |
+|---|---|---|---|---|---|---|
+| FX-0001 | infra | Deploy to staging | a | - | - | 🟥 Pending |
 -- ajiya/go-live.md --
 <!-- Written by ajiya. Do not edit by hand: use ajiya commands. -->
 # Go-live
 
 Goal: g
 
-| ID | App | Ticket | Done when | Depends | Status |
-|---|---|---|---|---|---|
-| FX-0002 | infra | Deploy to production | b | FX-0001 | 🟥 Pending |
+| ID | App | Ticket | Done when | Depends | Tags | Status |
+|---|---|---|---|---|---|---|
+| FX-0002 | infra | Deploy to production | b | FX-0001 | - | 🟥 Pending |
 -- ajiya/later.md --
 <!-- Written by ajiya. Do not edit by hand: use ajiya commands. -->
 # Later
 
 Goal: g
 
-| ID | App | Ticket | Done when | Depends | Status |
-|---|---|---|---|---|---|
-| FX-0003 | infra | Dark mode | c | FX-0002 | 🟥 Pending |
+| ID | App | Ticket | Done when | Depends | Tags | Status |
+|---|---|---|---|---|---|---|
+| FX-0003 | infra | Dark mode | c | FX-0002 | - | 🟥 Pending |
 -- want --
 W009 ajiya.toml: milestone staging-proven comes after launch, but launch already requires every ticket staging-proven does, so staging-proven is reached no later than launch. Fix: put staging-proven first with 'ajiya milestone move staging-proven --before launch', or give staging-proven targets that launch does not require

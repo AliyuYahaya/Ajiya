@@ -20,9 +20,9 @@ targets = ["FX-0009"]
 
 Goal: g
 
-| ID | App | Ticket | Done when | Depends | Status |
-|---|---|---|---|---|---|
-| FX-0001 | infra | Write the API | a | - | 🟥 Pending |
+| ID | App | Ticket | Done when | Depends | Tags | Status |
+|---|---|---|---|---|---|---|
+| FX-0001 | infra | Write the API | a | - | - | 🟥 Pending |
 -- want --
 E012 ajiya.toml: milestone staging-proven: target "gate-0" is neither a phase nor a ticket. Fix: give milestone staging-proven only phase slugs or ticket IDs as targets in ajiya.toml
 E012 ajiya.toml: milestone launch: target "FX-0009" is neither a phase nor a ticket. Fix: give milestone launch only phase slugs or ticket IDs as targets in ajiya.toml

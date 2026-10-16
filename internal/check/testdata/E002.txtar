@@ -10,9 +10,9 @@ prefix = "FX"
 
 Goal: g
 
-| ID | App | Ticket | Done when | Depends | Status |
-|---|---|---|---|---|---|
-| FX-0002 | infra | B | b | - | 🟥 Pending |
-| FX-0001 | infra | A | a | - | 🟥 Pending |
+| ID | App | Ticket | Done when | Depends | Tags | Status |
+|---|---|---|---|---|---|---|
+| FX-0002 | infra | B | b | - | - | 🟥 Pending |
+| FX-0001 | infra | A | a | - | - | 🟥 Pending |
 -- want --
 E002 ajiya/core.md:8: file is not in the form ajiya writes (edited by hand?). Fix: restore it with 'git checkout -- ajiya/core.md' and make the change with ajiya commands

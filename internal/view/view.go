@@ -22,6 +22,13 @@ type Status struct {
 	Aliases []string `json:"aliases,omitempty"`
 }
 
+// Tags is a ticket's Tags cell. Each list is empty, never null.
+type Tags struct {
+	Tech []string `json:"tech"`
+	Dec  []string `json:"dec"`
+	Path []string `json:"path"`
+}
+
 // Ticket is one ticket row.
 type Ticket struct {
 	ID       string   `json:"id"`
@@ -30,6 +37,7 @@ type Ticket struct {
 	Title    string   `json:"title"`
 	DoneWhen string   `json:"done_when"`
 	Depends  []string `json:"depends"`
+	Tags     Tags     `json:"tags"`
 	Status   Status   `json:"status"`
 }
 
@@ -43,8 +51,15 @@ func TicketOf(t *plan.Ticket) Ticket {
 	if deps == nil {
 		deps = []string{}
 	}
+	orEmpty := func(s []string) []string {
+		if s == nil {
+			return []string{}
+		}
+		return s
+	}
 	return Ticket{
 		ID: t.ID, Phase: t.Phase, App: t.App, Title: t.Title, DoneWhen: t.DoneWhen, Depends: deps,
+		Tags: Tags{Tech: orEmpty(t.Tags.Tech), Dec: orEmpty(t.Tags.Dec), Path: orEmpty(t.Tags.Path)},
 		Status: Status{
 			State: StateNames[s.State], Text: s.String(), Note: s.Note, Human: s.Human, Blocked: s.Blocked,
 			Commit: s.Commit, By: s.By, Date: s.Date, Tests: s.Tests, Reason: s.Reason,

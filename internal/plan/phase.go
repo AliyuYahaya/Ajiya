@@ -10,7 +10,11 @@ import (
 // Header is the first line of every phase file.
 const Header = "<!-- Written by ajiya. Do not edit by hand: use ajiya commands. -->"
 
-var columns = []string{"ID", "App", "Ticket", "Done when", "Depends", "Status"}
+var columns = []string{"ID", "App", "Ticket", "Done when", "Depends", "Tags", "Status"}
+
+// oldColumns is the form before the Tags column. It is still read; the writer
+// always upgrades it.
+var oldColumns = []string{"ID", "App", "Ticket", "Done when", "Depends", "Status"}
 
 // SlugRE matches a phase slug, which is also its file name.
 var SlugRE = regexp.MustCompile(`^[a-z0-9]+(-[a-z0-9]+)*$`)
@@ -21,6 +25,9 @@ type Phase struct {
 	Title   string
 	Goal    string
 	Tickets []*Ticket
+
+	// SixColumn is set when the file was read in the old form, without Tags.
+	SixColumn bool
 }
 
 // Ticket is one row of a phase table.
@@ -30,6 +37,7 @@ type Ticket struct {
 	Title    string
 	DoneWhen string
 	Depends  []string
+	Tags     Tags
 	Status   Status
 
 	Phase string // slug of the phase holding the ticket
@@ -97,14 +105,17 @@ func ParsePhase(slug string, data []byte) (*Phase, error) {
 	if !ok {
 		return fail(i, "expected the ticket table after the goal")
 	}
-	if cells, ok := splitRow(l); !ok || strings.Join(cells, "|") != strings.Join(columns, "|") {
+	cols := columns
+	if cells, ok := splitRow(l); ok && strings.Join(cells, "|") == strings.Join(oldColumns, "|") {
+		cols, p.SixColumn = oldColumns, true
+	} else if !ok || strings.Join(cells, "|") != strings.Join(columns, "|") {
 		return fail(i, "expected the table header | %s |", strings.Join(columns, " | "))
 	}
 	i++
 	if i >= len(lines) {
 		return fail(i, "expected the table separator |---|---|...")
 	}
-	if cells, ok := splitRow(lines[i]); !ok || len(cells) != len(columns) || !isSeparator(cells) {
+	if cells, ok := splitRow(lines[i]); !ok || len(cells) != len(cols) || !isSeparator(cells) {
 		return fail(i, "expected the table separator |---|---|... right after the header")
 	}
 	i++
@@ -118,8 +129,8 @@ func ParsePhase(slug string, data []byte) (*Phase, error) {
 		if !ok {
 			return fail(i, "unexpected text after the ticket table")
 		}
-		if len(cells) != len(columns) {
-			return fail(i, "row has %d cells, needs %d (%s)", len(cells), len(columns), strings.Join(columns, ", "))
+		if len(cells) != len(cols) {
+			return fail(i, "row has %d cells, needs %d (%s)", len(cells), len(cols), strings.Join(cols, ", "))
 		}
 		t := &Ticket{
 			ID:       cells[0],
@@ -133,7 +144,13 @@ func ParsePhase(slug string, data []byte) (*Phase, error) {
 		if t.ID == "" {
 			return fail(i, "row has no ID")
 		}
-		st, err := ParseStatus(unescape(cells[5]))
+		if !p.SixColumn {
+			var err error
+			if t.Tags, err = ParseTags(cells[5]); err != nil {
+				return fail(i, "%s: %v", t.ID, err)
+			}
+		}
+		st, err := ParseStatus(unescape(cells[len(cells)-1]))
 		if err != nil {
 			return fail(i, "%s: %v", t.ID, err)
 		}
@@ -143,14 +160,25 @@ func ParsePhase(slug string, data []byte) (*Phase, error) {
 	return p, nil
 }
 
-// Format writes the phase in canonical form: rows sorted by ID.
-func (p *Phase) Format() []byte {
+// Format writes the phase in canonical form: rows sorted by ID, always with
+// the Tags column, so writing a phase read in the old form upgrades it.
+func (p *Phase) Format() []byte { return p.format(true) }
+
+// FormatSixColumn writes the phase in the old form, without Tags. Only check
+// uses it, to tell an old file from a hand-edited one.
+func (p *Phase) FormatSixColumn() []byte { return p.format(false) }
+
+func (p *Phase) format(withTags bool) []byte {
+	cols := oldColumns
+	if withTags {
+		cols = columns
+	}
 	var b strings.Builder
 	b.WriteString(Header + "\n")
 	b.WriteString("# " + p.Title + "\n\n")
 	b.WriteString("Goal: " + p.Goal + "\n\n")
-	b.WriteString("| " + strings.Join(columns, " | ") + " |\n")
-	b.WriteString(strings.Repeat("|---", len(columns)) + "|\n")
+	b.WriteString("| " + strings.Join(cols, " | ") + " |\n")
+	b.WriteString(strings.Repeat("|---", len(cols)) + "|\n")
 	tickets := append([]*Ticket(nil), p.Tickets...)
 	sort.SliceStable(tickets, func(i, j int) bool { return LessID(tickets[i].ID, tickets[j].ID) })
 	for _, t := range tickets {
@@ -160,7 +188,11 @@ func (p *Phase) Format() []byte {
 			SortIDs(ids)
 			deps = strings.Join(ids, ", ")
 		}
-		cells := []string{t.ID, t.App, escape(t.Title), escape(t.DoneWhen), deps, escape(t.Status.String())}
+		cells := []string{t.ID, t.App, escape(t.Title), escape(t.DoneWhen), deps}
+		if withTags {
+			cells = append(cells, t.Tags.String())
+		}
+		cells = append(cells, escape(t.Status.String()))
 		b.WriteString("| " + strings.Join(cells, " | ") + " |\n")
 	}
 	return []byte(b.String())

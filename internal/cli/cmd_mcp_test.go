@@ -114,7 +114,7 @@ func TestMCPExcludedTools(t *testing.T) {
 	allowed := strings.Fields(`ajiya_status ajiya_next ajiya_ticket_show ajiya_ticket_list ajiya_phase_list
 		ajiya_milestone_list ajiya_milestone_show ajiya_check ajiya_ticket_add ajiya_ticket_edit
 		ajiya_ticket_start ajiya_ticket_done ajiya_ticket_block ajiya_phase_add ajiya_app_add
-		ajiya_milestone_add ajiya_launch_set ajiya_init`)
+		ajiya_milestone_add ajiya_launch_set ajiya_init ajiya_tags`)
 	var got []string
 	for n := range have {
 		got = append(got, n)
@@ -199,6 +199,8 @@ func TestMCPInitThenPlan(t *testing.T) {
 		{"ajiya_phase_add", map[string]any{"slug": "core", "goal": "Core works"}},
 		{"ajiya_ticket_add", map[string]any{"phase": "core", "app": "infra", "title": "-leading dash title", "done_when": "it works"}},
 		{"ajiya_ticket_edit", map[string]any{"id": "DE-0001", "done_when": "it really works"}},
+		{"ajiya_ticket_edit", map[string]any{"id": "DE-0001", "tech": "aws-rds,postgresql", "decisions": "DEC-0003", "paths": "infra/**"}},
+		{"ajiya_ticket_edit", map[string]any{"id": "DE-0001", "decisions": "-"}},
 		{"ajiya_milestone_add", map[string]any{"name": "alpha", "targets": "core"}},
 		{"ajiya_ticket_start", map[string]any{"id": "DE-0001"}},
 		{"ajiya_ticket_block", map[string]any{"id": "DE-0001", "reason": "waiting for a key"}},
@@ -211,6 +213,21 @@ func TestMCPInitThenPlan(t *testing.T) {
 	r = mcpCall(t, cs, "ajiya_ticket_show", map[string]any{"id": "DE-0001"})
 	if !strings.Contains(resultText(r, 1), "-leading dash title") {
 		t.Errorf("ticket show: %v", resultText(r, 1))
+	}
+	if !strings.Contains(resultText(r, 1), `"aws-rds"`) || !strings.Contains(resultText(r, 1), `"infra/**"`) || strings.Contains(resultText(r, 1), "DEC-0003") {
+		t.Errorf("ticket show lacks the tags or still has the cleared decision: %v", resultText(r, 1))
+	}
+	r = mcpCall(t, cs, "ajiya_ticket_add", map[string]any{"phase": "core", "app": "infra", "title": "Second", "done_when": "ok", "tech": "postgresql"})
+	if r.IsError {
+		t.Fatalf("ticket add with tech: %s", resultText(r, 0))
+	}
+	r = mcpCall(t, cs, "ajiya_tags", nil)
+	if r.IsError || !strings.Contains(resultText(r, 1), `"value": "postgresql"`) || !strings.Contains(resultText(r, 1), `"tickets": 2`) {
+		t.Errorf("tags: %v %q", r.IsError, resultText(r, 1))
+	}
+	r = mcpCall(t, cs, "ajiya_ticket_add", map[string]any{"phase": "core", "app": "infra", "title": "Bad", "done_when": "ok", "tech": "Postgres"})
+	if !r.IsError || !strings.Contains(resultText(r, 0), "lower-case slug") {
+		t.Errorf("bad tech: %v %q", r.IsError, resultText(r, 0))
 	}
 }
 

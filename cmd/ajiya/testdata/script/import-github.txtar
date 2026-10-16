@@ -56,7 +56,7 @@ exec ajiya app add api --path api
 env GH_JSON=$WORK/more.json
 exec ajiya import github --app api
 stdout '^Imported 1 issue\(s\) into inbox \(0 closed\); skipped 3 already imported.$'
-grep '^\| DE-0005 \| api \| Issue ten \| - \| - \| 🟥 Pending · Link: https://github.com/o/r/issues/10 \|$' ajiya/inbox.md
+grep '^\| DE-0005 \| api \| Issue ten \| - \| - \| - \| 🟥 Pending · Link: https://github.com/o/r/issues/10 \|$' ajiya/inbox.md
 
 -- bin/gh --
 #!/bin/sh
@@ -95,8 +95,8 @@ cat "$WORK/issues.json"
 
 Goal: Imported items waiting to be organised
 
-| ID | App | Ticket | Done when | Depends | Status |
-|---|---|---|---|---|---|
-| DE-0002 | infra | first issue, lower case  as written | - | - | 🟥 Pending · Link: https://github.com/o/r/issues/1 |
-| DE-0003 | infra | Second issue | - | - | 🟥 Pending · Link: https://github.com/o/r/issues/2 |
-| DE-0004 | infra | Closed \| with a pipe | - | - | 🟩 Done · issue #3 · Link: https://github.com/o/r/issues/3 |
+| ID | App | Ticket | Done when | Depends | Tags | Status |
+|---|---|---|---|---|---|---|
+| DE-0002 | infra | first issue, lower case  as written | - | - | - | 🟥 Pending · Link: https://github.com/o/r/issues/1 |
+| DE-0003 | infra | Second issue | - | - | - | 🟥 Pending · Link: https://github.com/o/r/issues/2 |
+| DE-0004 | infra | Closed \| with a pipe | - | - | - | 🟩 Done · issue #3 · Link: https://github.com/o/r/issues/3 |

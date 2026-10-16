@@ -73,7 +73,11 @@ func Run(cfg *config.Config, p *plan.Plan) []Finding {
 		add("E001", fmt.Sprintf("%s:%d", plan.Path(slug), pe.Line), restore(slug), "%s", pe.Msg)
 	}
 	for _, ph := range p.Phases {
-		if line := firstDiff(p.Raw[ph.Slug], ph.Format()); line > 0 {
+		canonical := ph.Format()
+		if ph.SixColumn { // an old file is not hand-edited; W012 reports it
+			canonical = ph.FormatSixColumn()
+		}
+		if line := firstDiff(p.Raw[ph.Slug], canonical); line > 0 {
 			add("E002", fmt.Sprintf("%s:%d", plan.Path(ph.Slug), line), restore(ph.Slug),
 				"file is not in the form ajiya writes (edited by hand?)")
 		}

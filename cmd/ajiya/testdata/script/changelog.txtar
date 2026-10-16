@@ -45,25 +45,25 @@ stderr 'expected at most 1 argument'
 ## Core
 
 - **DE-0001** Setup — pending
-  - e25e94f Set up the core
-  - 7ff1d17 Side work
+  - 4aefbb4 Set up the core
+  - fb7e1b3 Side work
 - **DE-0002** Config — pending
-  - 7a533bf Config and endpoints
+  - b1434f9 Config and endpoints
 
 ## Public API
 
 - **DE-0003** Endpoints — in progress
-  - 7a533bf Config and endpoints
+  - b1434f9 Config and endpoints
 
 ## Other changes
 
-- 70fe641 Plan
-- ce8592f Tidy up
-- 1569997 Mystery
+- 5b4a666 Plan
+- 34cee93 Tidy up
+- 367ca14 Mystery
 -- range.md --
 # Changelog
 
 ## Core
 
 - **DE-0001** Setup — pending
-  - 7ff1d17 Side work
+  - fb7e1b3 Side work

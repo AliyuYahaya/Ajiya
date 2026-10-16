@@ -1,0 +1,17 @@
+A tag key that does not exist (comp was dropped) is a parse error.
+
+-- ajiya.toml --
+[project]
+name = "Fixture"
+prefix = "FX"
+-- ajiya/core.md --
+<!-- Written by ajiya. Do not edit by hand: use ajiya commands. -->
+# Core
+
+Goal: g
+
+| ID | App | Ticket | Done when | Depends | Tags | Status |
+|---|---|---|---|---|---|---|
+| FX-0001 | infra | A | a | - | comp:database | 🟥 Pending |
+-- want --
+E001 ajiya/core.md:8: FX-0001: tag key "comp" is not one of tech, dec, path. Fix: restore it with 'git checkout -- ajiya/core.md' and make the change with ajiya commands

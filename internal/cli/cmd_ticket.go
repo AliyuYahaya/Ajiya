@@ -21,7 +21,12 @@ func runTicketAdd(e *env, args []string) error {
 	doneWhen := fs.String("done-when", "", "the check that proves the ticket is done")
 	depends := fs.String("depends", "", "IDs this ticket depends on, comma separated")
 	human := fs.String("human", "", "why this ticket needs a person")
+	tf := addTagFlags(fs)
 	pos, err := parse(fs, args, 1)
+	if err != nil {
+		return err
+	}
+	tags, err := tf.apply(fs, plan.Tags{})
 	if err != nil {
 		return err
 	}
@@ -57,6 +62,7 @@ func runTicketAdd(e *env, args []string) error {
 		return err
 	}
 	t := pr.newTicket(ph, *app, title, *doneWhen, deps, plan.Status{State: plan.Pending, Human: *human})
+	t.Tags = tags
 	if err := pr.plan.Save(ph); err != nil {
 		return err
 	}
@@ -271,6 +277,7 @@ func runTicketShow(e *env, args []string) error {
 	fmt.Fprintf(w, "App:        %s\n", t.App)
 	fmt.Fprintf(w, "Done when:  %s\n", t.DoneWhen)
 	fmt.Fprintf(w, "Status:     %s\n", t.Status)
+	fmt.Fprintf(w, "Tags:       %s\n", t.Tags)
 	list := func(label string, ids []string) {
 		if len(ids) == 0 {
 			fmt.Fprintf(w, "%-11s -\n", label)
@@ -313,12 +320,13 @@ func runTicketEdit(e *env, args []string) error {
 	depends := fs.String("depends", "", `new dependency list; "-" for none`)
 	app := fs.String("app", "", "new app")
 	phase := fs.String("phase", "", "move to this phase")
+	tf := addTagFlags(fs)
 	pos, err := parse(fs, args, 1)
 	if err != nil {
 		return err
 	}
 	if fs.NFlag() == 0 {
-		return usageErr("nothing to change; give at least one of --title, --done-when, --depends, --app, --phase")
+		return usageErr("nothing to change; give at least one of --title, --done-when, --depends, --app, --phase, --tech, --decisions, --paths")
 	}
 	for _, f := range []struct {
 		name string
@@ -353,6 +361,11 @@ func runTicketEdit(e *env, args []string) error {
 		}
 		t.Depends = deps
 	}
+	tags, err := tf.apply(fs, t.Tags)
+	if err != nil {
+		return err
+	}
+	t.Tags = tags
 	if isSet(fs, "title") {
 		t.Title = *title
 	}
@@ -378,6 +391,9 @@ func runTicketEdit(e *env, args []string) error {
 		deps = strings.Join(t.Depends, ", ")
 	}
 	fmt.Fprintf(e.stdout, "%s  %s\n  phase %s · app %s · depends %s\n  done when: %s\n", t.ID, t.Title, t.Phase, t.App, deps, t.DoneWhen)
+	if !t.Tags.Empty() {
+		fmt.Fprintf(e.stdout, "  tags: %s\n", t.Tags)
+	}
 	return nil
 }
 

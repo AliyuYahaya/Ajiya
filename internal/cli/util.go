@@ -60,6 +60,35 @@ func isSet(fs *flag.FlagSet, name string) bool {
 	return set
 }
 
+// tagFlags are the flags that write a ticket's Tags cell. Each takes a
+// comma-separated list and replaces that key's values; an empty value or "-"
+// clears the key (only 'ticket edit' has anything to clear).
+type tagFlags struct{ tech, decisions, paths *string }
+
+func addTagFlags(fs *flag.FlagSet) tagFlags {
+	return tagFlags{
+		tech:      fs.String("tech", "", "technology or service tags, comma separated (lower-case slugs such as aws-rds)"),
+		decisions: fs.String("decisions", "", "decision IDs, comma separated (such as DEC-0003)"),
+		paths:     fs.String("paths", "", "file globs, comma separated"),
+	}
+}
+
+// apply returns tags with every key whose flag was given replaced.
+func (f tagFlags) apply(fs *flag.FlagSet, tags plan.Tags) (plan.Tags, error) {
+	for _, k := range []struct{ flag, key, v string }{
+		{"tech", plan.TagTech, *f.tech}, {"decisions", plan.TagDec, *f.decisions}, {"paths", plan.TagPath, *f.paths},
+	} {
+		if !isSet(fs, k.flag) {
+			continue
+		}
+		var err error
+		if tags, err = tags.With(k.key, plan.ParseTagList(k.v)); err != nil {
+			return tags, usageErr("--%s: %v", k.flag, err)
+		}
+	}
+	return tags, nil
+}
+
 // project is a loaded config and plan.
 type project struct {
 	cfg  *config.Config

@@ -19,9 +19,9 @@ targets = ["FX-0002"]
 
 Goal: g
 
-| ID | App | Ticket | Done when | Depends | Status |
-|---|---|---|---|---|---|
-| FX-0001 | infra | Write the API | a | - | 🟥 Pending |
-| FX-0002 | infra | Write the docs | b | FX-0001 | 🟥 Pending |
+| ID | App | Ticket | Done when | Depends | Tags | Status |
+|---|---|---|---|---|---|---|
+| FX-0001 | infra | Write the API | a | - | - | 🟥 Pending |
+| FX-0002 | infra | Write the docs | b | FX-0001 | - | 🟥 Pending |
 -- want --
 W007 ajiya.toml: nothing required for launch mentions deployment or hosting. Fix: add a ticket for deployment or hosting that the launch target depends on

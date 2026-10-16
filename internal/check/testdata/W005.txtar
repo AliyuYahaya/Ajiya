@@ -25,8 +25,8 @@ module tool
 
 Goal: g
 
-| ID | App | Ticket | Done when | Depends | Status |
-|---|---|---|---|---|---|
-| FX-0001 | api | A | a | - | 🟥 Pending |
+| ID | App | Ticket | Done when | Depends | Tags | Status |
+|---|---|---|---|---|---|---|
+| FX-0001 | api | A | a | - | - | 🟥 Pending |
 -- want --
 W005 apps/admin: apps/admin has its own manifest but is not a registered app. Fix: ajiya app add admin --path apps/admin (add --library for a shared package)

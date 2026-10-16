@@ -1,6 +1,7 @@
 package plan
 
 import (
+	"errors"
 	"os"
 	"path/filepath"
 	"reflect"
@@ -67,18 +68,98 @@ func TestParseEscapedPipes(t *testing.T) {
 
 // Hand edits that still parse come out in canonical form.
 func TestFormatCanonicalises(t *testing.T) {
-	in := "# Bookings\nGoal:   Book a slot\n\n|ID|App|Ticket|Done when|Depends|Status|\n| :-- | --- | --- | --- | --- | --- |\n" +
-		"| CB-0009 | web | B | x | CB-0008,CB-0007 CB-0007 | 🟥 Pending |\n" +
-		"|CB-0002|api|A|x|-|🟩 Done · 2026-09-28 · 4f2a91c|\n"
+	in := "# Bookings\nGoal:   Book a slot\n\n|ID|App|Ticket|Done when|Depends|Tags|Status|\n| :-- | --- | --- | --- | --- | --- | --- |\n" +
+		"| CB-0009 | web | B | x | CB-0008,CB-0007 CB-0007 | path:web/** tech:b dec:DEC-0001 tech:a tech:a | 🟥 Pending |\n" +
+		"|CB-0002|api|A|x|-|-|🟩 Done · 2026-09-28 · 4f2a91c|\n"
 	ph, err := ParsePhase("bookings", []byte(in))
 	if err != nil {
 		t.Fatal(err)
 	}
-	want := Header + "\n# Bookings\n\nGoal: Book a slot\n\n| ID | App | Ticket | Done when | Depends | Status |\n|---|---|---|---|---|---|\n" +
-		"| CB-0002 | api | A | x | - | 🟩 Done · 4f2a91c · 2026-09-28 |\n" +
-		"| CB-0009 | web | B | x | CB-0007, CB-0008 | 🟥 Pending |\n"
+	want := Header + "\n# Bookings\n\nGoal: Book a slot\n\n| ID | App | Ticket | Done when | Depends | Tags | Status |\n|---|---|---|---|---|---|---|\n" +
+		"| CB-0002 | api | A | x | - | - | 🟩 Done · 4f2a91c · 2026-09-28 |\n" +
+		"| CB-0009 | web | B | x | CB-0007, CB-0008 | tech:a tech:b dec:DEC-0001 path:web/** | 🟥 Pending |\n"
 	if got := string(ph.Format()); got != want {
 		t.Errorf("got\n%s\nwant\n%s", got, want)
+	}
+}
+
+// An old six-column file is read, kept as it is by FormatSixColumn (so check
+// can tell it from a hand edit), and upgraded by Format.
+func TestSixColumnFile(t *testing.T) {
+	old, err := os.ReadFile("testdata/golden-six/bookings.md")
+	if err != nil {
+		t.Fatal(err)
+	}
+	ph, err := ParsePhase("bookings", old)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !ph.SixColumn || len(ph.Tickets) != 4 || !ph.Tickets[0].Tags.Empty() || ph.Tickets[0].Status.State != Done || ph.Tickets[0].Line != 8 {
+		t.Fatalf("six-column read = %+v", ph)
+	}
+	if got := ph.FormatSixColumn(); string(got) != string(old) {
+		t.Errorf("six-column round trip changed the file:\n%s", got)
+	}
+	// A phase where no ticket has tags still gets the seven-column form.
+	upgraded := strings.Replace(string(old), "Depends | Status", "Depends | Tags | Status", 1)
+	upgraded = strings.Replace(upgraded, "|---|---|---|---|---|---|", "|---|---|---|---|---|---|---|", 1)
+	upgraded = strings.NewReplacer(" | 🟩", " | - | 🟩", " | 🟨", " | - | 🟨", " | 🟥", " | - | 🟥").Replace(upgraded)
+	if got := ph.Format(); string(got) != upgraded {
+		t.Errorf("upgrade differs:\n--- got\n%s\n--- want\n%s", got, upgraded)
+	}
+	again, err := ParsePhase("bookings", ph.Format())
+	if err != nil || again.SixColumn {
+		t.Errorf("upgraded file reads as %+v, %v", again, err)
+	}
+}
+
+func TestSevenColumnTags(t *testing.T) {
+	data, _ := os.ReadFile("testdata/golden/bookings.md")
+	ph, err := ParsePhase("bookings", data)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if ph.SixColumn {
+		t.Error("seven-column file read as six-column")
+	}
+	want := Tags{Tech: []string{"postgresql"}, Path: []string{"api/db/**"}}
+	if got := ph.Tickets[0].Tags; !reflect.DeepEqual(got, want) {
+		t.Errorf("CB-0007 tags = %+v", got)
+	}
+	if got := ph.Tickets[1].Tags; got.String() != "tech:postgresql dec:DEC-0003 dec:DEC-0004" {
+		t.Errorf("CB-0008 tags = %q", got)
+	}
+}
+
+func TestTagErrors(t *testing.T) {
+	for cell, want := range map[string]string{
+		"comp:database": `tag key "comp" is not one of tech, dec, path`,
+		"tech:Postgres": "lower-case slug",
+		"tech:aws_rds":  "lower-case slug",
+		"dec:3":         "decision ID",
+		"path:":         "file glob",
+		"postgres":      "not key:value",
+		"path:a|b":      "file glob",
+	} {
+		if _, err := ParseTags(cell); err == nil || !strings.Contains(err.Error(), want) {
+			t.Errorf("ParseTags(%q) = %v, want %q", cell, err, want)
+		}
+	}
+	const top = Header + "\n# P\n\nGoal: g\n\n| ID | App | Ticket | Done when | Depends | Tags | Status |\n|---|---|---|---|---|---|---|\n"
+	_, err := ParsePhase("p", []byte(top+"| X-0001 | a | t | d | - | comp:db | 🟥 Pending |\n"))
+	var pe *ParseError
+	if !errors.As(err, &pe) || pe.Line != 8 || !strings.Contains(pe.Msg, `X-0001: tag key "comp"`) {
+		t.Errorf("unknown key in a file: %v", err)
+	}
+}
+
+func TestTagCounts(t *testing.T) {
+	data, _ := os.ReadFile("testdata/golden/bookings.md")
+	ph, _ := ParsePhase("bookings", data)
+	got := (&Plan{Phases: []*Phase{ph}}).TagCounts()
+	want := []TagCount{{"tech", "postgresql", 2}, {"dec", "DEC-0003", 1}, {"dec", "DEC-0004", 1}, {"path", "api/db/**", 1}}
+	if !reflect.DeepEqual(got, want) {
+		t.Errorf("TagCounts = %+v", got)
 	}
 }
 
@@ -269,5 +350,28 @@ func TestAliasLookupAndCarry(t *testing.T) {
 	}
 	if again := s.Carry(Pending); again.Human != "keys" {
 		t.Errorf("Carry(Pending) lost Needs a human: %+v", again)
+	}
+}
+
+// Loading an old six-column file keeps it as it is; saving it upgrades it.
+func TestSaveUpgradesSixColumnFile(t *testing.T) {
+	root := t.TempDir()
+	os.MkdirAll(filepath.Join(root, Dir), 0o755)
+	old, _ := os.ReadFile("testdata/golden-six/bookings.md")
+	path := filepath.Join(root, Dir, "bookings.md")
+	os.WriteFile(path, old, 0o644)
+	p, err := Load(root)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if b, _ := os.ReadFile(path); string(b) != string(old) {
+		t.Error("loading rewrote the file")
+	}
+	if err := p.Save(p.Phases[0]); err != nil {
+		t.Fatal(err)
+	}
+	b, _ := os.ReadFile(path)
+	if !strings.Contains(string(b), "| Depends | Tags | Status |") || strings.Count(string(b), "\n") != strings.Count(string(old), "\n") {
+		t.Errorf("save did not upgrade the file:\n%s", b)
 	}
 }

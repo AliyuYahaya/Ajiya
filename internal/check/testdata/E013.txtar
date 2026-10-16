@@ -14,9 +14,9 @@ order = ["core", "gone", "broken"]
 
 Goal: g
 
-| ID | App | Ticket | Done when | Depends | Status |
-|---|---|---|---|---|---|
-| FX-0001 | infra | Schema | a | - | 🟥 Pending |
+| ID | App | Ticket | Done when | Depends | Tags | Status |
+|---|---|---|---|---|---|---|
+| FX-0001 | infra | Schema | a | - | - | 🟥 Pending |
 -- ajiya/broken.md --
 not a phase file
 -- want --
