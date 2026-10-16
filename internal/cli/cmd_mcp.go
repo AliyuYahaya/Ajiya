@@ -404,9 +404,13 @@ func (m *mcpServer) projectDir(ctx context.Context, sess *mcp.ServerSession, for
 }
 
 // clientRoots returns the local folders the client sent as MCP roots, if it
-// sends any.
+// declared the capability and sends any.
 func clientRoots(ctx context.Context, sess *mcp.ServerSession) []string {
 	if sess == nil {
+		return nil
+	}
+	// Ask only a client that declared the roots capability in initialize.
+	if p := sess.InitializeParams(); p == nil || p.Capabilities == nil || p.Capabilities.RootsV2 == nil {
 		return nil
 	}
 	res, err := sess.ListRoots(ctx, nil)

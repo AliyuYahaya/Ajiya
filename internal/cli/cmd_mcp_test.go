@@ -365,3 +365,52 @@ func TestFileURIPath(t *testing.T) {
 		t.Errorf("round trip of %q gave %q", dir, got)
 	}
 }
+
+// The server asks for roots only when the client declared the capability in
+// initialize.
+func TestMCPRootsOnlyFromClientsThatDeclareThem(t *testing.T) {
+	proj := statusFixture(t)
+	for _, tc := range []struct {
+		name      string
+		caps      *mcp.ClientCapabilities // nil: the client's default (roots when it has any)
+		wantAsked int
+		wantFound bool
+	}{
+		{"declared", nil, 1, true},
+		{"not declared", &mcp.ClientCapabilities{}, 0, false},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			ctx := context.Background()
+			srv := newMCPServer(t.TempDir(), "", func() time.Time { return statusNow })
+			st, ct := mcp.NewInMemoryTransports()
+			ss, err := srv.Connect(ctx, st, nil)
+			if err != nil {
+				t.Fatal(err)
+			}
+			t.Cleanup(func() { ss.Close() })
+			client := mcp.NewClient(&mcp.Implementation{Name: "test", Version: "1"}, &mcp.ClientOptions{Capabilities: tc.caps})
+			client.AddRoots(&mcp.Root{URI: fileURI(proj)})
+			asked := 0
+			client.AddReceivingMiddleware(func(next mcp.MethodHandler) mcp.MethodHandler {
+				return func(ctx context.Context, method string, req mcp.Request) (mcp.Result, error) {
+					if method == "roots/list" {
+						asked++
+					}
+					return next(ctx, method, req)
+				}
+			})
+			cs, err := client.Connect(ctx, ct, &mcp.ClientSessionOptions{ProtocolVersion: "2025-06-18"})
+			if err != nil {
+				t.Fatal(err)
+			}
+			t.Cleanup(func() { cs.Close() })
+			r := mcpCall(t, cs, "ajiya_phase_list", nil)
+			if asked != tc.wantAsked {
+				t.Errorf("roots/list requests = %d, want %d", asked, tc.wantAsked)
+			}
+			if r.IsError == tc.wantFound {
+				t.Errorf("error = %v, want project found = %v: %q", r.IsError, tc.wantFound, resultText(r, 0))
+			}
+		})
+	}
+}
