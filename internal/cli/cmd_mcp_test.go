@@ -96,7 +96,7 @@ func TestMCPToolsListGolden(t *testing.T) {
 // to mcpTools fails here; to offer it on purpose, change this test in the
 // same commit and say why.
 func TestMCPExcludedTools(t *testing.T) {
-	want := []string{"ticket drop", "app remove", "milestone remove", "milestone move", "hook install"}
+	want := []string{"ticket drop", "app remove", "milestone remove", "milestone move", "hook install", "change approve", "change reject"}
 	if strings.Join(mcpExcluded, "|") != strings.Join(want, "|") {
 		t.Fatalf("mcpExcluded = %v, want %v", mcpExcluded, want)
 	}

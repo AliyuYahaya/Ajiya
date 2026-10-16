@@ -18,7 +18,7 @@ func TestGuidesCoverCommands(t *testing.T) {
 		internal[c] = true // until AJ-0056 writes the decisions section of the guide; remove these lines then
 	}
 	internal["snapshot"], internal["snapshot list"] = true, true // until AJ-0056 writes the change section of the guide; remove this line then
-	for _, c := range []string{"change open", "change impact", "change list", "change show", "change assess"} {
+	for _, c := range []string{"change open", "change impact", "change list", "change show", "change assess", "change approve", "change reject"} {
 		internal[c] = true // until AJ-0056 writes the change section of the guide; remove these lines then
 	}
 	for _, c := range commands {

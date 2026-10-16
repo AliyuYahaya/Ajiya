@@ -140,6 +140,7 @@ var (
 // person decides them. A test keeps this list and the tools apart.
 var mcpExcluded = []string{
 	"ticket drop", "app remove", "milestone remove", "milestone move", "hook install",
+	"change approve", "change reject",
 }
 
 // mcpTools is the whole MCP surface, in the order tools/list returns it. Names
