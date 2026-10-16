@@ -37,7 +37,7 @@ func runAppAdd(e *env, args []string) error {
 		return err
 	}
 	warnMissingDir(e, pr, a.Path)
-	fmt.Fprintf(e.stdout, "Registered app %s at %s.\n", name, a.Path)
+	fmt.Fprintf(e.stdout, "Registered app %s at `%s`.\n", name, a.Path)
 	return nil
 }
 
