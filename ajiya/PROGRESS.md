@@ -12,7 +12,7 @@ Generated 2026-10-16.
 | v0-2-1 | 83 | 83 | 100% | 0 |
 | v0-3 | 79 | 84 | 94% | 0 |
 | after-v0-3 | 79 | 83 | 95% | 0 |
-| v0-3-1 | 80 | 88 | 90% | 0 |
+| v0-3-1 | 81 | 88 | 92% | 0 |
 
 ## Phases
 
@@ -23,7 +23,7 @@ Generated 2026-10-16.
 | Outputs | 12 | 0 | 0 | 12 | 100% | v0-1 |
 | Onboarding | 21 | 0 | 0 | 21 | 100% | v0-1 |
 | Release | 5 | 0 | 0 | 5 | 100% | v0-1 |
-| Agent-access | 9 | 1 | 0 | 10 | 90% | v0-2 |
+| Agent-access | 10 | 0 | 0 | 10 | 100% | v0-2 |
 | Install | 24 | 0 | 0 | 24 | 100% | v0-2 |
 | Decisions-and-changes | 5 | 1 | 5 | 11 | 45% | v0-3 |
 | Dashboard views | 1 | 0 | 3 | 4 | 25% | v0-3-1 |
@@ -49,6 +49,10 @@ Nothing.
 
 ## Recent activity
 
+- 2026-10-16 `a984d1d` Merge AJ-0111: dash-leading positional arguments (AJ-0111)
+- 2026-10-16 `1b95d84` Read positional arguments that start with a dash as text (AJ-0111)
+- 2026-10-16 `e62e9a7` Start AJ-0111 (chore)
+  - AJ-0111: pending → in_progress
 - 2026-10-16 `e8dde3b` Put AJ-0111 in v0.3.1 (chore)
 - 2026-10-16 `0a90a5a` Mark AJ-0107 done; add the dash-argument ticket (chore)
   - AJ-0107: in_progress → done
@@ -68,14 +72,8 @@ Nothing.
   - AJ-0050: in_progress → done
 - 2026-10-16 `a00f089` Merge AJ-0050: decision records and commands (AJ-0050)
 - 2026-10-16 `c9781ab` Add decision records and the decision commands (AJ-0050)
-- 2026-10-16 `9ddf7b0` Add the Superseded status, excluded from totals and required sets (AJ-0051)
-- 2026-10-16 `27ac944` Mark AJ-0049 done (AJ-0049)
-  - AJ-0049: in_progress → done
-- 2026-10-16 `542d6e2` Merge AJ-0049: ajiya ticket files (AJ-0049)
-- and 264 more in data.js
+- and 267 more in data.js
 
 ## Checks
 
-0 error(s), 1 warning(s).
-
-- W006 ajiya/agent-access.md:17: AJ-0111 was added after the plan was first built and is linked to no other ticket, so it may be missing from the launch set. Fix: link it: ajiya ticket edit AJ-0111 --depends <IDs>, or add it to the --depends of the work that needs it
+No problems found.

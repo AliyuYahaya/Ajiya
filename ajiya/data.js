@@ -104,13 +104,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 88,
-        "done": 80,
-        "in_progress": 2,
+        "done": 81,
+        "in_progress": 1,
         "pending": 6,
         "dropped": 0,
         "superseded": 0
       },
-      "percent": 90,
+      "percent": 92,
       "ready": 0
     }
   ],
@@ -202,13 +202,13 @@ window.AJIYA = {
       "description": "",
       "counts": {
         "total": 10,
-        "done": 9,
-        "in_progress": 1,
+        "done": 10,
+        "in_progress": 0,
         "pending": 0,
         "dropped": 0,
         "superseded": 0
       },
-      "percent": 90,
+      "percent": 100,
       "milestone": "v0-2"
     },
     {
@@ -266,8 +266,8 @@ window.AJIYA = {
       "path": ".",
       "counts": {
         "total": 111,
-        "done": 101,
-        "in_progress": 2,
+        "done": 102,
+        "in_progress": 1,
         "pending": 8,
         "dropped": 0,
         "superseded": 0
@@ -3597,27 +3597,76 @@ window.AJIYA = {
         "path": []
       },
       "status": {
-        "state": "in_progress",
-        "text": "🟨 In progress"
+        "state": "done",
+        "text": "🟩 Done · a984d1d · 2026-10-16 · tests passed",
+        "commit": "a984d1d",
+        "date": "2026-10-16",
+        "tests_passed": true
       },
       "milestone": "v0-3-1",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [],
       "unblocks": 0
     }
   ],
   "next": [],
-  "checks": [
-    {
-      "code": "W006",
-      "level": "warning",
-      "location": "ajiya/agent-access.md:17",
-      "message": "AJ-0111 was added after the plan was first built and is linked to no other ticket, so it may be missing from the launch set",
-      "fix": "link it: ajiya ticket edit AJ-0111 --depends \u003cIDs\u003e, or add it to the --depends of the work that needs it"
-    }
-  ],
+  "checks": [],
   "activity": [
+    {
+      "hash": "a984d1dd9026e50c49a5cfd2a2ee1762e270d882",
+      "short": "a984d1d",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Merge AJ-0111: dash-leading positional arguments",
+      "refs": [
+        "AJ-0111"
+      ],
+      "chore": false,
+      "merge": true,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792163063
+    },
+    {
+      "hash": "1b95d84d74929f33d370548d9d6367954cb7356c",
+      "short": "1b95d84",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Read positional arguments that start with a dash as text",
+      "refs": [
+        "AJ-0111"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792163046
+    },
+    {
+      "hash": "e62e9a7e23882d3c099ff2cbc8dca4e6907da664",
+      "short": "e62e9a7",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Start AJ-0111",
+      "refs": [],
+      "chore": true,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0111",
+          "phase": "agent-access",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        }
+      ],
+      "time": 1792162815
+    },
     {
       "hash": "e8dde3b5296e5286c08866e18e1db19a5577add3",
       "short": "e8dde3b",
