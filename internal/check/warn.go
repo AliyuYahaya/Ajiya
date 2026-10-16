@@ -16,6 +16,7 @@ package check
 //	W011 [phases] order lists a phase before a phase it waits on
 //	W012 a phase file is in the old six-column form, without Tags
 //	W013 two tech tags differ only by punctuation or a trailing ql, js or s
+//	W014 an open ticket links a superseded decision
 //
 // A ticket with no tags is valid: there is no warning for missing tags.
 

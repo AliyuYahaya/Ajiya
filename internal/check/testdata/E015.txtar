@@ -1,0 +1,32 @@
+A decision file that does not parse. A ticket linking it gets no second error.
+
+-- ajiya.toml --
+[project]
+name = "Fixture"
+prefix = "FX"
+-- ajiya/core.md --
+<!-- Written by ajiya. Do not edit by hand: use ajiya commands. -->
+# Core
+
+Goal: g
+
+| ID | App | Ticket | Done when | Depends | Tags | Status |
+|---|---|---|---|---|---|---|
+| FX-0001 | infra | A | a | - | dec:DEC-0001 | 🟥 Pending |
+-- ajiya/decisions/DEC-0001.md --
+<!-- Written by ajiya. Do not edit by hand: use ajiya commands. -->
+# DEC-0001: Use PostgreSQL
+
+Status: Maybe
+Tags: -
+
+## Context
+-
+
+## Decision
+Use it.
+
+## Consequences
+-
+-- want --
+E015 ajiya/decisions/DEC-0001.md:4: status "Maybe" is not Proposed, Accepted or Superseded. Fix: restore it with 'git checkout -- ajiya/decisions/DEC-0001.md' and make the change with ajiya commands

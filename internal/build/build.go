@@ -40,6 +40,7 @@ type Data struct {
 	Next       []string         `json:"next"`    // IDs that can start now, in 'ajiya next' order
 	Checks     []check.Finding  `json:"checks"`
 	Activity   []activity.Entry `json:"activity"`
+	Decisions  []view.Decision  `json:"decisions"` // by ID, each with the tickets that link it
 }
 
 type Project struct {
@@ -123,6 +124,7 @@ func Collect(cfg *config.Config, p *plan.Plan, order []*plan.Phase) (*Data, erro
 		Project:    Project{Name: cfg.Project.Name, Prefix: cfg.Project.Prefix},
 		Milestones: []Milestone{}, Phases: []Phase{}, Apps: []App{}, Tickets: []Ticket{},
 		Next: []string{}, Checks: []check.Finding{}, Activity: []activity.Entry{},
+		Decisions: []view.Decision{},
 	}
 
 	var err error
@@ -208,6 +210,14 @@ func Collect(cfg *config.Config, p *plan.Plan, order []*plan.Phase) (*Data, erro
 		}
 		bp.Percent = percent(bp.Counts.Closed(), bp.Counts.Total)
 		d.Phases = append(d.Phases, bp)
+	}
+
+	for _, dec := range p.Decisions {
+		var linked []string
+		for _, t := range p.DecisionTickets(dec.ID) {
+			linked = append(linked, t.ID)
+		}
+		d.Decisions = append(d.Decisions, view.DecisionOf(dec, linked))
 	}
 
 	apps := append([]config.App{{Name: config.InfraApp}}, cfg.Apps...)

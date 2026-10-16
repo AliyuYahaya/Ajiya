@@ -21,5 +21,6 @@ Goal: g
 | FX-0006 | infra | F | f | - | - | 🟥 Pending |
 -- want --
 W013 ajiya/core.md:8: tech tags postgresql and postgres look like the same technology. Fix: use one spelling, such as tech:postgresql, with 'ajiya ticket edit <ID> --tech <value>'
+E014 ajiya/core.md:9: FX-0002 links decision DEC-0001, which does not exist. Fix: add it with 'ajiya decision add', or correct the tag with 'ajiya ticket edit FX-0002 --decisions <existing IDs>|-'
 W013 ajiya/core.md:10: tech tags node and nodejs look like the same technology. Fix: use one spelling, such as tech:node, with 'ajiya ticket edit <ID> --tech <value>'
 W013 ajiya/core.md:11: tech tags aws-rds and awsrds look like the same technology. Fix: use one spelling, such as tech:aws-rds, with 'ajiya ticket edit <ID> --tech <value>'

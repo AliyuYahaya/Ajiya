@@ -2,7 +2,11 @@
 // They are part of ajiya's interface: add fields, never rename or remove them.
 package view
 
-import "github.com/AliyuYahaya/Ajiya/internal/plan"
+import (
+	"strings"
+
+	"github.com/AliyuYahaya/Ajiya/internal/plan"
+)
 
 // Status is a ticket's Status cell, parsed.
 type Status struct {
@@ -66,4 +70,49 @@ func TicketOf(t *plan.Ticket) Ticket {
 			Issue: s.Issue, Before: s.Before, Link: s.Link, Aliases: s.Aliases,
 		},
 	}
+}
+
+// DecisionStatus is a decision's Status line, parsed.
+type DecisionStatus struct {
+	State        string `json:"state"` // proposed, accepted, superseded
+	Text         string `json:"text"`  // the Status line as written
+	Date         string `json:"date,omitempty"`
+	By           string `json:"by,omitempty"`
+	SupersededBy string `json:"superseded_by,omitempty"`
+	Change       string `json:"change,omitempty"`
+	Was          string `json:"was,omitempty"` // for superseded: proposed or accepted
+}
+
+// Decision is one decision record. Tickets are the IDs of the tickets that link it.
+type Decision struct {
+	ID           string         `json:"id"`
+	Title        string         `json:"title"`
+	Status       DecisionStatus `json:"status"`
+	Tech         []string       `json:"tech"`
+	Context      string         `json:"context"`
+	Decision     string         `json:"decision"`
+	Consequences string         `json:"consequences"`
+	Tickets      []string       `json:"tickets"`
+}
+
+// DecisionStateName is the JSON name of a decision state.
+func DecisionStateName(s plan.DecState) string { return strings.ToLower(s.String()) }
+
+// DecisionOf returns the JSON form of a decision. tickets are the IDs linking it.
+func DecisionOf(d *plan.Decision, tickets []string) Decision {
+	s := d.Status
+	st := DecisionStatus{State: DecisionStateName(s.State), Text: s.String(), Date: s.Date, By: s.By,
+		SupersededBy: s.SupersededBy, Change: s.Change}
+	if s.State == plan.DecSuperseded {
+		st.Was = DecisionStateName(s.Was)
+	}
+	tech := d.Tags.Tech
+	if tech == nil {
+		tech = []string{}
+	}
+	if tickets == nil {
+		tickets = []string{}
+	}
+	return Decision{ID: d.ID, Title: d.Title, Status: st, Tech: tech, Context: d.Context,
+		Decision: d.Decision, Consequences: d.Consequences, Tickets: tickets}
 }

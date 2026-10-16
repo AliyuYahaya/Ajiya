@@ -1,0 +1,157 @@
+# decisions: written by the CLI, shown, listed, accepted, linked from tickets and checked.
+
+exec ajiya init --name Demo --prefix DE
+exec ajiya phase add core 'The core works'
+
+exec ajiya decision list
+stdout '^No decisions\.$'
+exec ajiya decision list --json
+stdout '^\[\]$'
+
+# A new decision is Proposed; --by says who proposed it.
+exec ajiya decision add 'Use PostgreSQL on AWS RDS' --decision 'Use PostgreSQL on AWS RDS.' --context 'Bookings need transactions.' --consequences 'Rules out a document database.' --tech postgres,aws-rds --by Sam
+stdout '^Added DEC-0001 \(Proposed\): Use PostgreSQL on AWS RDS$'
+grep '^<!-- Written by ajiya\. Do not edit by hand: use ajiya commands\. -->$' ajiya/decisions/DEC-0001.md
+grep '^# DEC-0001: Use PostgreSQL on AWS RDS$' ajiya/decisions/DEC-0001.md
+grep '^Status: Proposed · \d{4}-\d{2}-\d{2} · proposed by Sam$' ajiya/decisions/DEC-0001.md
+grep '^Tags: tech:aws-rds tech:postgres$' ajiya/decisions/DEC-0001.md
+grep '^## Context\nBookings need transactions\.\n\n## Decision\nUse PostgreSQL on AWS RDS\.\n\n## Consequences\nRules out a document database\.\n$' ajiya/decisions/DEC-0001.md
+
+# Without optional parts: no tags and empty sections are written as "-".
+exec ajiya decision add 'Host the web app on Vercel' --decision 'Use Vercel.' --json
+stdout '"id": "DEC-0002"'
+stdout '"state": "proposed"'
+stdout '"tech": \[\]'
+grep '^Status: Proposed · \d{4}-\d{2}-\d{2}$' ajiya/decisions/DEC-0002.md
+grep '^Tags: -$' ajiya/decisions/DEC-0002.md
+
+# Refused input.
+! exec ajiya decision add 'No decision text'
+stderr '--decision is required'
+! exec ajiya decision add 'Bad tag' --decision x --tech Postgres
+stderr '--tech: tech tag "Postgres" must be a lower-case slug'
+! exec ajiya decision add 'Bad comp' --decision x --comp database
+stderr 'flag provided but not defined: -comp'
+! exec ajiya decision add 'Bad text' --decision ' leading space'
+stderr 'must not start or end with spaces'
+! exec ajiya decision show DEC-0009
+stderr 'no decision DEC-0009'
+
+# Accepting records who decided; a decision is accepted once.
+! exec ajiya decision accept DEC-0001
+stderr '--by is required'
+exec ajiya decision accept DEC-0001 --by Aliyu
+stdout '^DEC-0001 Accepted · \d{4}-\d{2}-\d{2} · decided by Aliyu$'
+grep '^Status: Accepted · \d{4}-\d{2}-\d{2} · decided by Aliyu$' ajiya/decisions/DEC-0001.md
+! exec ajiya decision accept DEC-0001 --by Aliyu
+stderr 'DEC-0001 is already accepted'
+
+# Tickets link decisions with --decisions; show lists them on both sides.
+exec ajiya ticket add --phase core --app infra 'Configure RDS backups' --done-when 'Daily snapshot' --decisions DEC-0001
+exec ajiya ticket show DE-0001
+stdout 'Decisions:  DEC-0001 Accepted · \d{4}-\d{2}-\d{2} · decided by Aliyu Use PostgreSQL on AWS RDS'
+exec ajiya ticket show DE-0001 --json
+stdout '"decisions": \['
+stdout '"state": "accepted"'
+exec ajiya decision show DEC-0001
+stdout 'Tickets:    DE-0001 \S+ Configure RDS backups'
+stdout 'Rules out a document database\.'
+exec ajiya decision show DEC-0001 --json
+stdout '"tickets": \[\s+"DE-0001"\s+\]'
+stdout '"consequences": "Rules out a document database\."'
+
+# List, with a tag filter.
+exec ajiya decision list
+stdout '^2 decision\(s\)$'
+stdout 'DEC-0001  Accepted  Use PostgreSQL on AWS RDS'
+stdout 'DEC-0002  Proposed  Host the web app on Vercel'
+exec ajiya decision list --tag tech:postgres
+stdout 'DEC-0001'
+! stdout 'DEC-0002'
+exec ajiya decision list --tag tech:postgres --json
+stdout '"id": "DEC-0001"'
+! stdout 'DEC-0002'
+! exec ajiya decision list --tag dec:DEC-0001
+stderr 'decisions carry only tech tags'
+
+# The dashboard data carries the decisions.
+exec ajiya build
+grep '"decisions": \[' ajiya/data.js
+grep '"id": "DEC-0002"' ajiya/data.js
+exec ajiya check --strict
+stdout '^No problems found\.$'
+
+# A ticket linking a decision that does not exist is an error.
+exec ajiya ticket edit DE-0001 --decisions DEC-0001,DEC-0007
+! exec ajiya check
+stdout 'E014 ajiya/core.md:\d+: DE-0001 links decision DEC-0007, which does not exist'
+exec ajiya ticket edit DE-0001 --decisions DEC-0001
+
+# An open ticket linking a superseded decision is a warning (AJ-0055 will set the status).
+cp superseded.md ajiya/decisions/DEC-0001.md
+exec ajiya check
+stdout 'W014 ajiya/core.md:\d+: DE-0001 links DEC-0001, which is Superseded by DEC-0002 \(CHG-0001\)'
+! exec ajiya check --strict
+exec ajiya ticket edit DE-0001 --decisions DEC-0002
+exec ajiya check --strict
+
+# A hand edit is an error: E016 when it still parses, E015 when it does not.
+cp edited.md ajiya/decisions/DEC-0001.md
+! exec ajiya check
+stdout 'E016 ajiya/decisions/DEC-0001.md:\d+: file is not in the form ajiya writes'
+cp broken.md ajiya/decisions/DEC-0001.md
+! exec ajiya check
+stdout 'E015 ajiya/decisions/DEC-0001.md:4: status "Maybe"'
+! exec ajiya decision show DEC-0001
+stderr 'ajiya/decisions/DEC-0001.md:4'
+
+# IDs are permanent: an unreadable file still holds its number.
+exec ajiya decision add 'Third' --decision 'Do it.'
+stdout '^Added DEC-0003 '
+
+-- superseded.md --
+<!-- Written by ajiya. Do not edit by hand: use ajiya commands. -->
+# DEC-0001: Use PostgreSQL on AWS RDS
+
+Status: Superseded by DEC-0002 (CHG-0001) · was: Accepted · 2026-09-12 · decided by Aliyu
+Tags: tech:aws-rds tech:postgres
+
+## Context
+-
+
+## Decision
+Use PostgreSQL on AWS RDS.
+
+## Consequences
+-
+-- edited.md --
+<!-- Written by ajiya. Do not edit by hand: use ajiya commands. -->
+# DEC-0001: Use PostgreSQL on AWS RDS
+
+Status: Accepted · 2026-09-12 · decided by Aliyu
+Tags: tech:aws-rds tech:postgres
+
+## Context
+-
+
+## Decision
+
+Use PostgreSQL on AWS RDS.
+
+## Consequences
+-
+-- broken.md --
+<!-- Written by ajiya. Do not edit by hand: use ajiya commands. -->
+# DEC-0001: Use PostgreSQL on AWS RDS
+
+Status: Maybe
+Tags: -
+
+## Context
+-
+
+## Decision
+Use it.
+
+## Consequences
+-
