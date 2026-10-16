@@ -103,13 +103,13 @@ window.AJIYA = {
       ],
       "required": {
         "total": 87,
-        "done": 79,
-        "in_progress": 2,
+        "done": 80,
+        "in_progress": 1,
         "pending": 6,
         "dropped": 0,
         "superseded": 0
       },
-      "percent": 90,
+      "percent": 91,
       "ready": 0
     }
   ],
@@ -118,6 +118,7 @@ window.AJIYA = {
       "slug": "commit-rule",
       "title": "Commit-rule",
       "goal": "Every commit names 1 to 3 tickets, enforced by hooks with a CI check as backup",
+      "description": "",
       "counts": {
         "total": 9,
         "done": 9,
@@ -133,6 +134,7 @@ window.AJIYA = {
       "slug": "apps-launch",
       "title": "Apps-launch",
       "goal": "Apps are detected and managed, launch readiness is defined, and every check in the spec runs",
+      "description": "",
       "counts": {
         "total": 15,
         "done": 15,
@@ -148,6 +150,7 @@ window.AJIYA = {
       "slug": "outputs",
       "title": "Outputs",
       "goal": "PROGRESS.md, data.js, the dashboard and serve show the plan and its activity",
+      "description": "",
       "counts": {
         "total": 12,
         "done": 12,
@@ -163,6 +166,7 @@ window.AJIYA = {
       "slug": "onboarding",
       "title": "Onboarding",
       "goal": "A new or existing project can be set up by an agent using only the installed kit and importers",
+      "description": "",
       "counts": {
         "total": 21,
         "done": 21,
@@ -178,6 +182,7 @@ window.AJIYA = {
       "slug": "release",
       "title": "Release",
       "goal": "v0.1 is ready to publish: binaries, Homebrew cask, README walkthroughs and changelog",
+      "description": "",
       "counts": {
         "total": 5,
         "done": 5,
@@ -193,21 +198,23 @@ window.AJIYA = {
       "slug": "agent-access",
       "title": "Agent-access",
       "goal": "Agents read and change the plan through ajiya status and an MCP server they register with in one step",
+      "description": "",
       "counts": {
-        "total": 9,
+        "total": 10,
         "done": 9,
         "in_progress": 0,
-        "pending": 0,
+        "pending": 1,
         "dropped": 0,
         "superseded": 0
       },
-      "percent": 100,
+      "percent": 90,
       "milestone": "v0-2"
     },
     {
       "slug": "install",
       "title": "Install",
       "goal": "Ajiya installs in one step, with a Claude Code plugin",
+      "description": "",
       "counts": {
         "total": 24,
         "done": 24,
@@ -223,6 +230,7 @@ window.AJIYA = {
       "slug": "decisions-and-changes",
       "title": "Decisions-and-changes",
       "goal": "Plans change without losing history: tags, decisions, superseded work and approved change requests",
+      "description": "",
       "counts": {
         "total": 11,
         "done": 5,
@@ -238,15 +246,16 @@ window.AJIYA = {
       "slug": "dashboard-views",
       "title": "Dashboard views",
       "goal": "The dashboard shows each thing once, explains every phase, and shows how the plan changed over time",
+      "description": "",
       "counts": {
         "total": 4,
-        "done": 0,
-        "in_progress": 1,
+        "done": 1,
+        "in_progress": 0,
         "pending": 3,
         "dropped": 0,
         "superseded": 0
       },
-      "percent": 0,
+      "percent": 25,
       "milestone": "v0-3-1"
     }
   ],
@@ -255,10 +264,10 @@ window.AJIYA = {
       "name": "ajiya",
       "path": ".",
       "counts": {
-        "total": 110,
-        "done": 100,
-        "in_progress": 2,
-        "pending": 8,
+        "total": 111,
+        "done": 101,
+        "in_progress": 1,
+        "pending": 9,
         "dropped": 0,
         "superseded": 0
       }
@@ -3476,16 +3485,19 @@ window.AJIYA = {
         "path": []
       },
       "status": {
-        "state": "in_progress",
-        "text": "🟨 In progress"
+        "state": "done",
+        "text": "🟩 Done · 3e35786 · 2026-10-16 · tests passed",
+        "commit": "3e35786",
+        "date": "2026-10-16",
+        "tests_passed": true
       },
       "milestone": "v0-3-1",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0109"
       ],
-      "unblocks": 1
+      "unblocks": 0
     },
     {
       "id": "AJ-0108",
@@ -3538,7 +3550,6 @@ window.AJIYA = {
       "milestone": "v0-3-1",
       "ready": false,
       "waiting_on": [
-        "AJ-0107",
         "AJ-0108"
       ],
       "dependants": [],
@@ -3571,11 +3582,127 @@ window.AJIYA = {
       ],
       "dependants": [],
       "unblocks": 0
+    },
+    {
+      "id": "AJ-0111",
+      "phase": "agent-access",
+      "app": "ajiya",
+      "title": "Positional arguments that start with a dash",
+      "done_when": "A positional argument after the flags that starts with - (e.g. phase describe web \"- first point\" or ticket block \u003cID\u003e \"-reason\") is read as text, not a flag, from the CLI after -- and from MCP tools; tests cover both",
+      "depends": [],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
+      "status": {
+        "state": "pending",
+        "text": "🟥 Pending"
+      },
+      "milestone": "",
+      "ready": true,
+      "waiting_on": [],
+      "dependants": [],
+      "unblocks": 0
     }
   ],
-  "next": [],
-  "checks": [],
+  "next": [
+    "AJ-0111"
+  ],
+  "checks": [
+    {
+      "code": "W010",
+      "level": "warning",
+      "location": "ajiya.toml",
+      "message": "1 open ticket is in no milestone: AJ-0111",
+      "fix": "make a milestone's targets depend on them, or add a milestone for the later work"
+    },
+    {
+      "code": "W006",
+      "level": "warning",
+      "location": "ajiya/agent-access.md:17",
+      "message": "AJ-0111 was added after the plan was first built and is linked to no other ticket, so it may be missing from the launch set",
+      "fix": "link it: ajiya ticket edit AJ-0111 --depends \u003cIDs\u003e, or add it to the --depends of the work that needs it"
+    }
+  ],
   "activity": [
+    {
+      "hash": "3e35786ca451c6b8750b217b93957c3b0fcbb798",
+      "short": "3e35786",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Refresh the agent kit",
+      "refs": [
+        "AJ-0107"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792162775
+    },
+    {
+      "hash": "55fc3bfefb518aae83ced98737f387ca1d205aed",
+      "short": "55fc3bf",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Merge AJ-0107: phase descriptions",
+      "refs": [
+        "AJ-0107"
+      ],
+      "chore": false,
+      "merge": true,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792162748
+    },
+    {
+      "hash": "b09ec5d6010f00f3a59f96f5c51b45c089b040a0",
+      "short": "b09ec5d",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Phase descriptions: phase describe, --description, JSON, data.js and MCP",
+      "refs": [
+        "AJ-0107"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792162723
+    },
+    {
+      "hash": "1a7f462f2dcecabf23b597b881c4534c237d0294",
+      "short": "1a7f462",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Start AJ-0053, AJ-0107",
+      "refs": [],
+      "chore": true,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0053",
+          "phase": "decisions-and-changes",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        },
+        {
+          "id": "AJ-0107",
+          "phase": "dashboard-views",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        }
+      ],
+      "time": 1792162327
+    },
     {
       "hash": "d83269c862549fb19d1a5d2a2cdb41002e52c418",
       "short": "d83269c",
