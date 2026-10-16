@@ -11,8 +11,8 @@ Generated 2026-10-16.
 | v0-2 | 74 | 74 | 100% | 0 |
 | v0-2-1 | 83 | 83 | 100% | 0 |
 | v0-3 | 83 | 84 | 98% | 1 |
-| after-v0-3 | 82 | 83 | 98% | 0 |
-| v0-3-1 | 85 | 89 | 95% | 0 |
+| after-v0-3 | 83 | 83 | 100% | 0 |
+| v0-3-1 | 86 | 89 | 96% | 0 |
 
 ## Phases
 
@@ -25,8 +25,8 @@ Generated 2026-10-16.
 | Release | 5 | 0 | 0 | 5 | 100% | v0-1 |
 | Agent-access | 10 | 0 | 0 | 10 | 100% | v0-2 |
 | Install | 24 | 0 | 0 | 24 | 100% | v0-2 |
-| Decisions-and-changes | 10 | 1 | 1 | 12 | 83% | v0-3 |
-| Dashboard views | 1 | 0 | 3 | 4 | 25% | v0-3-1 |
+| Decisions-and-changes | 11 | 0 | 1 | 12 | 91% | v0-3 |
+| Dashboard views | 1 | 1 | 2 | 4 | 25% | v0-3-1 |
 
 ## Can start now
 
@@ -34,9 +34,8 @@ Generated 2026-10-16.
 
 ## Waiting
 
-- **AJ-0108** Dashboard: one view per way of seeing tickets (ajiya) waits on AJ-0057
 - **AJ-0109** Dashboard: a page per phase (ajiya) waits on AJ-0108
-- **AJ-0110** Dashboard: plan history from decisions and changes (ajiya) waits on AJ-0057, AJ-0108
+- **AJ-0110** Dashboard: plan history from decisions and changes (ajiya) waits on AJ-0108
 
 ## Needs a human
 
@@ -44,6 +43,10 @@ Generated 2026-10-16.
 
 ## Recent activity
 
+- 2026-10-16 `7182cfb` Merge AJ-0057: dashboard changes and decisions (AJ-0057)
+- 2026-10-16 `51cd669` Dashboard: open changes and decisions (AJ-0057)
+- 2026-10-16 `8b66500` Mark AJ-0056 done (AJ-0056)
+  - AJ-0056: in_progress → done
 - 2026-10-16 `d2098d0` Refresh the agent kit (AJ-0056)
 - 2026-10-16 `e41fdef` Merge AJ-0056: guides and skill for decisions and changes (AJ-0056)
 - 2026-10-16 `ff903d4` Teach tags, decisions and the change procedure in the guides and skill (AJ-0056)
@@ -65,11 +68,7 @@ Generated 2026-10-16.
   - AJ-0053: in_progress → done
   - AJ-0054: pending → in_progress
   - AJ-0055: pending → in_progress
-- 2026-10-16 `e0409bc` Merge AJ-0053: change open and change impact (AJ-0053)
-- 2026-10-16 `a055a2b` Mark AJ-0111 done (AJ-0111)
-  - AJ-0111: in_progress → done
-- 2026-10-16 `e0ff3e6` Add change open and change impact (AJ-0053)
-- and 282 more in data.js
+- and 285 more in data.js
 
 ## Checks
 

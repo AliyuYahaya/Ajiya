@@ -298,6 +298,37 @@ td .sub { color: var(--c-faint); font-size: 12px; }
 .gnode.miss > *, .gnode.miss::before { opacity: .25; }
 .gnode .nm.two { white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
 
+/* Changes and Decisions */
+.nav-item[hidden] { display: none; }
+.badge.proposed, .badge.open { background: var(--c-amber-pale); color: var(--c-amber-text); }
+.badge.accepted, .badge.approved { background: var(--c-green-pale); color: var(--c-green); }
+.badge.rejected { background: var(--c-red-pale); color: var(--c-red); }
+.badge.v-unaffected { background: var(--c-page); color: var(--c-muted); }
+.badge.v-modify { background: var(--c-blue-pale); color: var(--c-blue); }
+.badge.v-replace, .badge.v-invalidate { background: var(--c-violet-pale); color: var(--c-violet); }
+.badge.v-investigate { background: var(--c-red-pale); color: var(--c-red); }
+.badge.v-none { background: var(--c-amber-pale); color: var(--c-amber-text); }
+.rec { padding: 18px 20px; margin-bottom: 14px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.rec .head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.rec .rid { font-weight: 700; }
+.rec h3 { margin: 0; font-size: 16px; font-weight: 800; overflow-wrap: anywhere; }
+.rec .tags { display: flex; flex-wrap: wrap; gap: 4px 6px; align-items: center; font-size: 12px; color: var(--c-muted); }
+.rec .tags .arrow { color: var(--c-faint); }
+.rec .lbl { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--c-faint); margin-right: 2px; }
+.rec .prose { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+.rec .prose-k { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--c-faint); margin: 4px 0 2px; }
+.rec .alert { border-radius: 12px; padding: 8px 12px; font-size: 13px; font-weight: 600; background: var(--c-amber-pale); color: var(--c-amber-text); }
+.rec .alert.bad { background: var(--c-red-pale); color: var(--c-red); }
+.rec .alert.ok { background: var(--c-green-pale); color: var(--c-green); }
+.rec details > summary { cursor: pointer; font-weight: 600; color: var(--c-muted); }
+.rec .table-wrap { border-radius: 12px; }
+.impact td, .impact th { padding: 8px 12px; }
+.impact .why { color: var(--c-muted); font-size: 12.5px; overflow-wrap: anywhere; }
+.impact .reasons { display: flex; flex-wrap: wrap; gap: 4px; }
+.impact .newv { margin-top: 4px; font-size: 12.5px; overflow-wrap: anywhere; }
+.impact tr.stale td { opacity: .6; }
+@media (max-width: 860px) { .impact .why-col, .impact th.why-col { display: none; } }
+
 /* Live refresh: a small note after data.js reloads under ajiya serve. */
 .live-note {
   position: fixed; right: 16px; bottom: 16px; z-index: 30; pointer-events: none; opacity: 0; transition: opacity .3s;
@@ -358,6 +389,8 @@ dialog::backdrop { background: var(--c-backdrop); }
   <symbol id="i-box" viewBox="0 0 24 24"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></symbol>
   <symbol id="i-check" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></symbol>
   <symbol id="i-git" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M3 12h6"/><path d="M15 12h6"/></symbol>
+  <symbol id="i-scale" viewBox="0 0 24 24"><path d="M12 3v18"/><path d="M5 7h14"/><path d="m5 7-3 7a3 3 0 0 0 6 0Z"/><path d="m19 7-3 7a3 3 0 0 0 6 0Z"/><path d="M8 21h8"/></symbol>
+  <symbol id="i-swap" viewBox="0 0 24 24"><path d="M17 4l4 4-4 4"/><path d="M3 8h18"/><path d="M7 20l-4-4 4-4"/><path d="M21 16H3"/></symbol>
   <symbol id="i-left" viewBox="0 0 24 24"><path d="m11 17-5-5 5-5"/><path d="m18 17-5-5 5-5"/></symbol>
   <symbol id="i-right" viewBox="0 0 24 24"><path d="m6 17 5-5-5-5"/><path d="m13 17 5-5-5-5"/></symbol>
   <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/></symbol>
@@ -385,6 +418,9 @@ dialog::backdrop { background: var(--c-backdrop); }
       <button class="nav-item" type="button" data-tab="apps" title="Apps"><svg class="i"><use href="#i-box"/></svg><span class="hide-c">Apps</span><span class="n hide-c"></span></button>
       <button class="nav-item" type="button" data-tab="checks" title="Checks"><svg class="i"><use href="#i-check"/></svg><span class="hide-c">Checks</span><span class="n hide-c"></span></button>
       <button class="nav-item" type="button" data-tab="activity" title="Activity"><svg class="i"><use href="#i-git"/></svg><span class="hide-c">Activity</span><span class="n hide-c"></span></button>
+      <!-- Optional views: hidden when the plan has none of that thing. -->
+      <button class="nav-item" type="button" data-tab="changes" title="Changes" hidden><svg class="i"><use href="#i-swap"/></svg><span class="hide-c">Changes</span><span class="n hide-c"></span></button>
+      <button class="nav-item" type="button" data-tab="decisions" title="Decisions" hidden><svg class="i"><use href="#i-scale"/></svg><span class="hide-c">Decisions</span><span class="n hide-c"></span></button>
       <div id="phaseNav"></div>
     </nav>
     <div class="side-foot">
@@ -514,13 +550,14 @@ dialog::backdrop { background: var(--c-backdrop); }
   const arr = v => Array.isArray(v) ? v : [];
   // The data and its indexes. setData runs again when live refresh loads a
   // new data.js.
-  let milestones, phases, apps, tickets, checks, activity, nextIDs, project;
+  let milestones, phases, apps, tickets, checks, activity, nextIDs, project, decisions, changes;
   let byID, phaseBySlug, phaseIndex, msIndex, idIndex, nextIndex;
   function setData(d) {
     D = d;
     milestones = arr(d.milestones); phases = arr(d.phases); apps = arr(d.apps);
     tickets = d.tickets; checks = arr(d.checks); activity = arr(d.activity); nextIDs = arr(d.next);
     project = d.project || {};
+    decisions = arr(d.decisions); changes = arr(d.changes);
     byID = new Map(tickets.map(t => [t.id, t]));
     phaseBySlug = new Map(phases.map(p => [p.slug, p]));
     phaseIndex = new Map(phases.map((p, i) => [p.slug, i]));
@@ -584,17 +621,22 @@ dialog::backdrop { background: var(--c-backdrop); }
     apps: { label: 'Apps', sub: 'Tickets per app.', filters: false },
     checks: { label: 'Checks', sub: 'What ajiya check reports. Fix errors first.', filters: 'search' },
     activity: { label: 'Activity', sub: 'Commits from the last 30 days, newest first, with the status changes they made.', filters: 'search' },
+    changes: { label: 'Changes', sub: 'Plan changes: open ones first, with the tickets each might affect and the verdicts so far.', optional: () => changes.length, filters: 'search' },
+    decisions: { label: 'Decisions', sub: 'Choices the plan rests on, and the tickets that link them.', optional: () => decisions.length, filters: 'search' },
   };
   const renderers = {
     overview: renderOverview, next: renderNext, board: renderBoard, deps: renderDeps, phases: renderPhases,
     tickets: renderTickets, apps: renderApps, checks: renderChecks, activity: renderActivity,
+    changes: renderChanges, decisions: renderDecisions,
   };
 
   let tab = location.hash.slice(1) || store.get(key('tab'));
-  if (!VIEWS[tab]) tab = 'overview';
+  // An optional view (Changes, Decisions) exists only while the plan has some.
+  const shown = k => !!VIEWS[k] && (!VIEWS[k].optional || VIEWS[k].optional());
+  if (!shown(tab)) tab = 'overview';
   window.addEventListener('hashchange', () => {
     const h = location.hash.slice(1);
-    if (VIEWS[h] && h !== tab) go(h);
+    if (shown(h) && h !== tab) go(h);
   });
   function go(t) {
     tab = t; store.set(key('tab'), t); ticketLimit = 150; activityLimit = 100;
@@ -669,9 +711,11 @@ dialog::backdrop { background: var(--c-backdrop); }
     const n = {
       next: nextIDs.length, board: tickets.length, deps: tickets.filter(t => arr(t.depends).length).length, phases: phases.length, tickets: tickets.length,
       apps: apps.length, checks: checks.length, activity: activity.length,
+      changes: changes.filter(c => c.status.state === 'open').length || changes.length, decisions: decisions.length,
     };
     document.querySelectorAll('#nav [data-tab]').forEach(b => {
       const k = b.dataset.tab;
+      b.hidden = !shown(k);
       b.setAttribute('aria-current', String(k === tab));
       const s = b.querySelector('.n');
       if (s) { s.textContent = n[k] ? n[k] : ''; s.classList.toggle('bad', k === 'checks' && errors > 0); }
@@ -1218,9 +1262,90 @@ dialog::backdrop { background: var(--c-backdrop); }
   }
 
   /* -------------------------------------------------------------------------
+     Changes and Decisions. Self-contained: own render functions, own helpers.
+     ----------------------------------------------------------------------- */
+  const plainChips = list => arr(list).map(x => `<span class="chip" style="cursor:default">${esc(x)}</span>`).join('');
+  const tagChips = (label, list) => arr(list).length ? `<span class="lbl">${label}</span>${plainChips(list)}` : '';
+  // A change's tags (tech/dec/path) as one flat list of key:value strings.
+  const flatTags = t => t ? [...arr(t.tech).map(x => 'tech:' + x), ...arr(t.dec).map(x => 'dec:' + x), ...arr(t.path).map(x => 'path:' + x)] : [];
+  const decByID = id => decisions.find(d => d.id === id);
+  const chgByID = id => changes.find(c => c.id === id);
+  // Clickable decision / change IDs; they jump to the card in its tab.
+  const decChip = id => decByID(id) ? `<span class="chip" role="button" tabindex="0" data-dec="${esc(id)}" title="${esc(decByID(id).title)}">${esc(id)}</span>` : `<span class="chip unknown" title="Not in the plan">${esc(id)}</span>`;
+  const chgChip = id => chgByID(id) ? `<span class="chip" role="button" tabindex="0" data-chg="${esc(id)}" title="${esc(chgByID(id).title)}">${esc(id)}</span>` : `<span class="chip unknown">${esc(id)}</span>`;
+  const verdictBadge = v => v ? `<span class="badge v-${esc(v)}">${esc(v)}</span>` : '<span class="badge v-none">needs verdict</span>';
+  const recMatch = parts => !F.q || parts.join(' ').toLowerCase().includes(F.q);
+  // Candidates that still need a verdict (stale ones are kept for history only).
+  const needVerdict = c => arr(c.candidates).filter(k => !k.verdict && !k.stale);
+
+  function impactTable(c) {
+    const cands = arr(c.candidates);
+    if (!cands.length) return '<div class="section-note" style="margin:0">No candidates. Run <span class="mono">ajiya change impact</span> to find them.</div>';
+    return `<div class="table-wrap"><table class="impact"><thead><tr><th>Ticket</th><th>Reasons</th><th>Verdict</th><th class="why-col">Why</th></tr></thead><tbody>${cands.map(k => `<tr${k.stale ? ' class="stale"' : ''}>
+      <td>${chip(k.id)}${k.stale ? ' <span class="badge plain" title="Impact no longer finds this ticket; kept for its verdict">stale</span>' : ''}<div>${md(k.title)}</div></td>
+      <td><div class="reasons">${arr(k.reasons).map(r => `<span class="badge plain">${esc(r)}</span>`).join('')}</div></td>
+      <td>${verdictBadge(k.verdict)}${k.new_title || k.new_done_when ? `<div class="newv">${k.new_title ? `<b>${md(k.new_title)}</b>` : ''}${k.new_done_when ? `<div class="why">Done when: ${md(k.new_done_when)}</div>` : ''}</div>` : ''}</td>
+      <td class="why why-col">${md(k.why)}</td></tr>`).join('')}</tbody></table></div>`;
+  }
+  function changeHTML(c) {
+    const st = c.status, open = st.state === 'open';
+    const pending = needVerdict(c).length, inv = arr(c.candidates).filter(k => k.verdict === 'investigate').length;
+    const rep = flatTags(c.replaces), wth = flatTags(c.with);
+    const tags = [
+      rep.length || wth.length ? `<span class="lbl">Replaces</span>${plainChips(rep) || '<span>-</span>'}<span class="arrow">with</span>${plainChips(wth) || '<span>-</span>'}` : '',
+      arr(c.decisions).length ? `<span class="lbl">Decisions</span>${c.decisions.map(decChip).join('')}` : '',
+      tagChips('Paths', c.paths),
+      c.snapshot ? `<span class="lbl">Snapshot</span>${plainChips([c.snapshot])}` : '',
+    ].filter(Boolean).map(x => `<div class="tags">${x}</div>`).join('');
+    let status = '';
+    if (open) {
+      if (inv) status += `<div class="alert bad">Approval blocked: ${plural(inv, 'candidate')} marked investigate. Resolve ${inv === 1 ? 'it' : 'them'} first.</div>`;
+      if (pending) status += `<div class="alert">${plural(pending, 'candidate')} still ${pending === 1 ? 'needs' : 'need'} a verdict.</div>`;
+      else if (arr(c.candidates).length && !inv) status += '<div class="alert ok">Every candidate has a verdict. Ready for a person to approve.</div>';
+    } else if (st.reason) status = `<div class="alert bad">Rejected: ${md(st.reason)}</div>`;
+    const results = c.results ? `<div><div class="prose-k">Results</div><p class="prose">${md(c.results)}</p></div>` : '';
+    const inner = `${tags}${status}${impactTable(c)}${results}`;
+    return `<div class="card-box rec" id="chg-${esc(c.id)}">
+      <div class="head"><span class="rid mono">${esc(c.id)}</span><span class="badge ${esc(st.state)}">${esc(st.state)}</span>${st.date ? `<span style="color:var(--c-muted);font-size:12px">${esc(st.date)}${st.by ? ' · ' + esc(st.by) : ''}</span>` : ''}</div>
+      <h3>${md(c.title)}</h3>${open ? inner : `${results}<details><summary>Details and ${plural(arr(c.candidates).length, 'candidate')}</summary><div style="display:flex;flex-direction:column;gap:10px;margin-top:10px">${tags}${status}${impactTable(c)}</div></details>`}</div>`;
+  }
+  function renderChanges() {
+    const list = changes.filter(c => recMatch([c.id, c.title, c.status.text, ...flatTags(c.replaces), ...flatTags(c.with), ...arr(c.decisions), ...arr(c.paths)]));
+    if (!list.length) { view.innerHTML = noMatch; return; }
+    const open = list.filter(c => c.status.state === 'open'), shut = list.filter(c => c.status.state !== 'open');
+    view.innerHTML = (open.length ? `<h2 class="section">Open <span class="count">${open.length}</span></h2>${open.map(changeHTML).join('')}` : '')
+      + (shut.length ? `<h2 class="section">Closed <span class="count">${shut.length}</span></h2><p class="section-note">Approved and rejected changes stay in the plan as history.</p>${shut.map(changeHTML).join('')}` : '');
+  }
+  function decisionHTML(d) {
+    const st = d.status;
+    const sup = st.state === 'superseded' ? `<div class="alert">Superseded${st.superseded_by ? ` by ${decChip(st.superseded_by)}` : ''}${st.change ? ` in change ${chgChip(st.change)}` : ''}${st.was ? ` (was ${esc(st.was)})` : ''}.</div>` : '';
+    const prose = (k, v) => v ? `<div><div class="prose-k">${k}</div><p class="prose">${md(v)}</p></div>` : '';
+    return `<div class="card-box rec" id="dec-${esc(d.id)}">
+      <div class="head"><span class="rid mono">${esc(d.id)}</span><span class="badge ${esc(st.state)}">${esc(st.state)}</span>${st.date || st.by ? `<span style="color:var(--c-muted);font-size:12px">${[st.date, st.by && 'decided by ' + st.by].filter(Boolean).map(esc).join(' · ')}</span>` : ''}</div>
+      <h3>${md(d.title)}</h3>${sup}
+      ${arr(d.tech).length ? `<div class="tags">${tagChips('Tech', d.tech.map(x => 'tech:' + x))}</div>` : ''}
+      ${prose('Context', d.context)}${prose('Decision', d.decision)}${prose('Consequences', d.consequences)}
+      <div class="tags"><span class="lbl">Tickets</span>${arr(d.tickets).length ? d.tickets.map(id => chip(id, true)).join('') : '<span>none link this decision</span>'}</div></div>`;
+  }
+  function renderDecisions() {
+    const list = decisions.filter(d => recMatch([d.id, d.title, d.status.text, ...arr(d.tech), d.context, d.decision, d.consequences, ...arr(d.tickets)]));
+    view.innerHTML = list.length ? list.map(decisionHTML).join('') : noMatch;
+  }
+  // Jump from a decision or change ID to its card in the other tab.
+  function jumpTo(tabName, prefix, id) {
+    if (tab !== tabName) go(tabName);
+    const el = document.getElementById(prefix + id);
+    if (el) { el.scrollIntoView({ block: 'start' }); el.style.borderColor = 'var(--c-blue)'; }
+  }
+  // Decisions and changes a ticket touches, for its detail dialog.
+  const decsOfTicket = t => decisions.filter(d => arr(d.tickets).includes(t.id) || arr(t.tags && t.tags.dec).includes(d.id));
+  const chgsOfTicket = t => changes.filter(c => arr(c.candidates).some(k => k.id === t.id));
+
+  /* -------------------------------------------------------------------------
      Render the current view.
      ----------------------------------------------------------------------- */
   function render() {
+    if (!shown(tab)) tab = 'overview'; // the last Change or Decision went away on a live refresh
     renderNav();
     const v = VIEWS[tab];
     $('title').textContent = v.label;
@@ -1274,6 +1399,10 @@ dialog::backdrop { background: var(--c-backdrop); }
     if (!closed(t) && arr(t.waiting_on).length) add('Waiting on', t.waiting_on.map(d => chip(d, true)).join(''));
     add('Needed by', arr(t.dependants).map(d => chip(d, true)).join(''));
     if (!closed(t) && t.unblocks) add('Unblocks', `${plural(t.unblocks, 'open ticket')}, directly or not`);
+    const tg = t.tags || {};
+    add('Tags', plainChips([...arr(tg.tech).map(x => 'tech:' + x), ...arr(tg.path).map(x => 'path:' + x)]));
+    add('Decisions', decsOfTicket(t).map(d => `${decChip(d.id)} <span class="badge ${esc(d.status.state)}">${esc(d.status.state)}</span> ${md(d.title)}`).join('<br>'), true);
+    add('Changes', chgsOfTicket(t).map(c => `${chgChip(c.id)} <span class="badge ${esc(c.status.state)}">${esc(c.status.state)}</span> ${verdictBadge(c.candidates.find(x => x.id === t.id).verdict)} ${md(c.title)}`).join('<br>'), true);
     const commits = activity.filter(e => arr(e.refs).includes(t.id) || arr(e.changes).some(c => c.id === t.id));
     if (commits.length) add('Commits', commits.map(e => `<span class="mono" title="${esc(e.date)}">${esc(e.short)}</span> ${esc(e.subject)}`).join('<br>'), true);
     $('dlgBody').innerHTML = `<div class="kv">${rows.join('')}</div>`;
@@ -1285,13 +1414,19 @@ dialog::backdrop { background: var(--c-backdrop); }
   dlg.addEventListener('click', e => {
     if (e.target === dlg) return closeDlg();
     const c = e.target.closest('[data-open]');
-    if (c) openTicket(c.dataset.open);
+    if (c) return openTicket(c.dataset.open);
+    const dc = e.target.closest('[data-dec]'), cc = e.target.closest('[data-chg]');
+    if (dc || cc) { closeDlg(); if (dc) jumpTo('decisions', 'dec-', dc.dataset.dec); else jumpTo('changes', 'chg-', cc.dataset.chg); }
   });
 
   /* Clicks in the main view: ticket chips and cards, KPI shortcuts, phase and app rows. */
   view.addEventListener('click', e => {
     const op = e.target.closest('[data-open]');
     if (op) { e.stopPropagation(); return openTicket(op.dataset.open); }
+    const dc = e.target.closest('[data-dec]');
+    if (dc) return jumpTo('decisions', 'dec-', dc.dataset.dec);
+    const cc = e.target.closest('[data-chg]');
+    if (cc) return jumpTo('changes', 'chg-', cc.dataset.chg);
     const g = e.target.closest('[data-go]');
     if (g) return go(g.dataset.go);
     const ph = e.target.closest('[data-phase-go]');
@@ -1302,7 +1437,7 @@ dialog::backdrop { background: var(--c-backdrop); }
 
   // Keyboard: Enter or Space on a chip opens its ticket, like a button.
   document.addEventListener('keydown', e => {
-    if ((e.key === 'Enter' || e.key === ' ') && e.target.matches && e.target.matches('span[data-open]')) { e.preventDefault(); e.target.click(); }
+    if ((e.key === 'Enter' || e.key === ' ') && e.target.matches && e.target.matches('span[data-open], span[data-dec], span[data-chg]')) { e.preventDefault(); e.target.click(); }
   });
 
   /* -------------------------------------------------------------------------
