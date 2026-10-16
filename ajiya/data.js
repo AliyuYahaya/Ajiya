@@ -17,7 +17,8 @@ window.AJIYA = {
         "done": 37,
         "in_progress": 0,
         "pending": 0,
-        "dropped": 0
+        "dropped": 0,
+        "superseded": 0
       },
       "percent": 100,
       "ready": 0
@@ -32,7 +33,8 @@ window.AJIYA = {
         "done": 74,
         "in_progress": 0,
         "pending": 0,
-        "dropped": 0
+        "dropped": 0,
+        "superseded": 0
       },
       "percent": 100,
       "ready": 0
@@ -55,7 +57,8 @@ window.AJIYA = {
         "done": 83,
         "in_progress": 0,
         "pending": 0,
-        "dropped": 0
+        "dropped": 0,
+        "superseded": 0
       },
       "percent": 100,
       "ready": 0
@@ -67,13 +70,14 @@ window.AJIYA = {
       ],
       "required": {
         "total": 84,
-        "done": 77,
-        "in_progress": 2,
+        "done": 79,
+        "in_progress": 0,
         "pending": 5,
-        "dropped": 0
+        "dropped": 0,
+        "superseded": 0
       },
-      "percent": 91,
-      "ready": 0
+      "percent": 94,
+      "ready": 1
     },
     {
       "name": "after-v0-3",
@@ -82,13 +86,14 @@ window.AJIYA = {
       ],
       "required": {
         "total": 83,
-        "done": 77,
-        "in_progress": 2,
+        "done": 79,
+        "in_progress": 0,
         "pending": 4,
-        "dropped": 0
+        "dropped": 0,
+        "superseded": 0
       },
-      "percent": 92,
-      "ready": 0
+      "percent": 95,
+      "ready": 1
     },
     {
       "name": "v0-3-1",
@@ -98,13 +103,14 @@ window.AJIYA = {
       ],
       "required": {
         "total": 87,
-        "done": 77,
-        "in_progress": 2,
+        "done": 79,
+        "in_progress": 0,
         "pending": 8,
-        "dropped": 0
+        "dropped": 0,
+        "superseded": 0
       },
-      "percent": 88,
-      "ready": 1
+      "percent": 90,
+      "ready": 2
     }
   ],
   "phases": [
@@ -117,7 +123,8 @@ window.AJIYA = {
         "done": 9,
         "in_progress": 0,
         "pending": 0,
-        "dropped": 0
+        "dropped": 0,
+        "superseded": 0
       },
       "percent": 100,
       "milestone": "v0-1"
@@ -131,7 +138,8 @@ window.AJIYA = {
         "done": 15,
         "in_progress": 0,
         "pending": 0,
-        "dropped": 0
+        "dropped": 0,
+        "superseded": 0
       },
       "percent": 100,
       "milestone": "v0-1"
@@ -145,7 +153,8 @@ window.AJIYA = {
         "done": 12,
         "in_progress": 0,
         "pending": 0,
-        "dropped": 0
+        "dropped": 0,
+        "superseded": 0
       },
       "percent": 100,
       "milestone": "v0-1"
@@ -159,7 +168,8 @@ window.AJIYA = {
         "done": 21,
         "in_progress": 0,
         "pending": 0,
-        "dropped": 0
+        "dropped": 0,
+        "superseded": 0
       },
       "percent": 100,
       "milestone": "v0-1"
@@ -173,7 +183,8 @@ window.AJIYA = {
         "done": 5,
         "in_progress": 0,
         "pending": 0,
-        "dropped": 0
+        "dropped": 0,
+        "superseded": 0
       },
       "percent": 100,
       "milestone": "v0-1"
@@ -187,7 +198,8 @@ window.AJIYA = {
         "done": 9,
         "in_progress": 0,
         "pending": 0,
-        "dropped": 0
+        "dropped": 0,
+        "superseded": 0
       },
       "percent": 100,
       "milestone": "v0-2"
@@ -201,7 +213,8 @@ window.AJIYA = {
         "done": 24,
         "in_progress": 0,
         "pending": 0,
-        "dropped": 0
+        "dropped": 0,
+        "superseded": 0
       },
       "percent": 100,
       "milestone": "v0-2"
@@ -212,12 +225,13 @@ window.AJIYA = {
       "goal": "Plans change without losing history: tags, decisions, superseded work and approved change requests",
       "counts": {
         "total": 11,
-        "done": 3,
-        "in_progress": 2,
+        "done": 5,
+        "in_progress": 0,
         "pending": 6,
-        "dropped": 0
+        "dropped": 0,
+        "superseded": 0
       },
-      "percent": 27,
+      "percent": 45,
       "milestone": "v0-3"
     },
     {
@@ -229,7 +243,8 @@ window.AJIYA = {
         "done": 0,
         "in_progress": 0,
         "pending": 4,
-        "dropped": 0
+        "dropped": 0,
+        "superseded": 0
       },
       "percent": 0,
       "milestone": "v0-3-1"
@@ -241,10 +256,11 @@ window.AJIYA = {
       "path": ".",
       "counts": {
         "total": 110,
-        "done": 98,
-        "in_progress": 2,
+        "done": 100,
+        "in_progress": 0,
         "pending": 10,
-        "dropped": 0
+        "dropped": 0,
+        "superseded": 0
       }
     }
   ],
@@ -1804,18 +1820,21 @@ window.AJIYA = {
         "path": []
       },
       "status": {
-        "state": "in_progress",
-        "text": "🟨 In progress"
+        "state": "done",
+        "text": "🟩 Done · 71f6e2e · 2026-10-16 · tests passed",
+        "commit": "71f6e2e",
+        "date": "2026-10-16",
+        "tests_passed": true
       },
       "milestone": "v0-3",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0052",
         "AJ-0053",
         "AJ-0058"
       ],
-      "unblocks": 10
+      "unblocks": 0
     },
     {
       "id": "AJ-0052",
@@ -1832,19 +1851,20 @@ window.AJIYA = {
         "path": []
       },
       "status": {
-        "state": "in_progress",
-        "text": "🟨 In progress"
+        "state": "done",
+        "text": "🟩 Done · 71f6e2e · 2026-10-16 · tests passed",
+        "commit": "71f6e2e",
+        "date": "2026-10-16",
+        "tests_passed": true
       },
       "milestone": "v0-3",
       "ready": false,
-      "waiting_on": [
-        "AJ-0051"
-      ],
+      "waiting_on": [],
       "dependants": [
         "AJ-0053",
         "AJ-0058"
       ],
-      "unblocks": 9
+      "unblocks": 0
     },
     {
       "id": "AJ-0053",
@@ -1868,11 +1888,8 @@ window.AJIYA = {
         "text": "🟥 Pending"
       },
       "milestone": "v0-3",
-      "ready": false,
-      "waiting_on": [
-        "AJ-0051",
-        "AJ-0052"
-      ],
+      "ready": true,
+      "waiting_on": [],
       "dependants": [
         "AJ-0054",
         "AJ-0058"
@@ -2026,8 +2043,6 @@ window.AJIYA = {
       "milestone": "v0-3",
       "ready": false,
       "waiting_on": [
-        "AJ-0051",
-        "AJ-0052",
         "AJ-0053",
         "AJ-0054",
         "AJ-0055",
@@ -3559,10 +3574,68 @@ window.AJIYA = {
     }
   ],
   "next": [
+    "AJ-0053",
     "AJ-0107"
   ],
   "checks": [],
   "activity": [
+    {
+      "hash": "71f6e2ea98b6713328e47a767668d1f1fcbfcab0",
+      "short": "71f6e2e",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Merge AJ-0051, AJ-0052: superseded status and snapshots",
+      "refs": [
+        "AJ-0051",
+        "AJ-0052"
+      ],
+      "chore": false,
+      "merge": true,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792162294
+    },
+    {
+      "hash": "2a56f797907c7cbe33cdbf405f0d7f175fa7fb19",
+      "short": "2a56f79",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Add ajiya snapshot and snapshot list: plan snapshots as annotated tags",
+      "refs": [
+        "AJ-0052"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792162161
+    },
+    {
+      "hash": "78e0cf9519c5c72707cc520eaa3932c6cd528197",
+      "short": "78e0cf9",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Mark AJ-0050 done",
+      "refs": [
+        "AJ-0050"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0050",
+          "phase": "decisions-and-changes",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · a00f089 · 2026-10-16 · tests passed"
+        }
+      ],
+      "time": 1792162057
+    },
     {
       "hash": "a00f089b95baee67ef24638ab17d148fe5cb9f1e",
       "short": "a00f089",
@@ -3594,6 +3667,22 @@ window.AJIYA = {
       "agent": "",
       "changes": [],
       "time": 1792161938
+    },
+    {
+      "hash": "9ddf7b0fd59a693ad5616111b7bad69e9c87e7b4",
+      "short": "9ddf7b0",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Add the Superseded status, excluded from totals and required sets",
+      "refs": [
+        "AJ-0051"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792161814
     },
     {
       "hash": "27ac944457e61ff1d3f13f457e579d6b468be5dc",
