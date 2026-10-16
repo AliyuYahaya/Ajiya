@@ -70,14 +70,14 @@ window.AJIYA = {
       ],
       "required": {
         "total": 84,
-        "done": 80,
-        "in_progress": 2,
+        "done": 82,
+        "in_progress": 0,
         "pending": 2,
         "dropped": 0,
         "superseded": 0
       },
-      "percent": 95,
-      "ready": 0
+      "percent": 97,
+      "ready": 1
     },
     {
       "name": "after-v0-3",
@@ -86,14 +86,14 @@ window.AJIYA = {
       ],
       "required": {
         "total": 83,
-        "done": 80,
-        "in_progress": 2,
+        "done": 82,
+        "in_progress": 0,
         "pending": 1,
         "dropped": 0,
         "superseded": 0
       },
-      "percent": 96,
-      "ready": 0
+      "percent": 98,
+      "ready": 1
     },
     {
       "name": "v0-3-1",
@@ -104,14 +104,14 @@ window.AJIYA = {
       ],
       "required": {
         "total": 88,
-        "done": 82,
-        "in_progress": 2,
+        "done": 84,
+        "in_progress": 0,
         "pending": 4,
         "dropped": 0,
         "superseded": 0
       },
-      "percent": 93,
-      "ready": 0
+      "percent": 95,
+      "ready": 1
     }
   ],
   "phases": [
@@ -233,14 +233,14 @@ window.AJIYA = {
       "goal": "Plans change without losing history: tags, decisions, superseded work and approved change requests",
       "description": "",
       "counts": {
-        "total": 11,
-        "done": 6,
-        "in_progress": 2,
-        "pending": 3,
+        "total": 12,
+        "done": 8,
+        "in_progress": 0,
+        "pending": 4,
         "dropped": 0,
         "superseded": 0
       },
-      "percent": 54,
+      "percent": 66,
       "milestone": "v0-3"
     },
     {
@@ -265,10 +265,10 @@ window.AJIYA = {
       "name": "ajiya",
       "path": ".",
       "counts": {
-        "total": 111,
-        "done": 103,
-        "in_progress": 2,
-        "pending": 6,
+        "total": 112,
+        "done": 105,
+        "in_progress": 0,
+        "pending": 7,
         "dropped": 0,
         "superseded": 0
       }
@@ -1924,17 +1924,20 @@ window.AJIYA = {
         "path": []
       },
       "status": {
-        "state": "in_progress",
-        "text": "🟨 In progress"
+        "state": "done",
+        "text": "🟩 Done · 78a3e86 · 2026-10-16 · tests passed",
+        "commit": "78a3e86",
+        "date": "2026-10-16",
+        "tests_passed": true
       },
       "milestone": "v0-3",
-      "ready": true,
+      "ready": false,
       "waiting_on": [],
       "dependants": [
         "AJ-0055",
         "AJ-0058"
       ],
-      "unblocks": 7
+      "unblocks": 0
     },
     {
       "id": "AJ-0055",
@@ -1951,20 +1954,22 @@ window.AJIYA = {
         "path": []
       },
       "status": {
-        "state": "in_progress",
-        "text": "🟨 In progress"
+        "state": "done",
+        "text": "🟩 Done · 78a3e86 · 2026-10-16 · tests passed",
+        "commit": "78a3e86",
+        "date": "2026-10-16",
+        "tests_passed": true
       },
       "milestone": "v0-3",
       "ready": false,
-      "waiting_on": [
-        "AJ-0054"
-      ],
+      "waiting_on": [],
       "dependants": [
         "AJ-0056",
         "AJ-0057",
-        "AJ-0058"
+        "AJ-0058",
+        "AJ-0112"
       ],
-      "unblocks": 6
+      "unblocks": 0
     },
     {
       "id": "AJ-0056",
@@ -1985,10 +1990,8 @@ window.AJIYA = {
         "text": "🟥 Pending"
       },
       "milestone": "v0-3",
-      "ready": false,
-      "waiting_on": [
-        "AJ-0055"
-      ],
+      "ready": true,
+      "waiting_on": [],
       "dependants": [
         "AJ-0058"
       ],
@@ -2014,10 +2017,8 @@ window.AJIYA = {
         "text": "🟥 Pending"
       },
       "milestone": "after-v0-3",
-      "ready": false,
-      "waiting_on": [
-        "AJ-0055"
-      ],
+      "ready": true,
+      "waiting_on": [],
       "dependants": [
         "AJ-0108",
         "AJ-0110"
@@ -2054,8 +2055,6 @@ window.AJIYA = {
       "milestone": "v0-3",
       "ready": false,
       "waiting_on": [
-        "AJ-0054",
-        "AJ-0055",
         "AJ-0056"
       ],
       "dependants": [],
@@ -3608,11 +3607,134 @@ window.AJIYA = {
       "waiting_on": [],
       "dependants": [],
       "unblocks": 0
+    },
+    {
+      "id": "AJ-0112",
+      "phase": "decisions-and-changes",
+      "app": "ajiya",
+      "title": "change approve retargets milestones",
+      "done_when": "When approve supersedes a ticket that a milestone (or [launch]) targets, ajiya.toml is updated in the same write to target the replacement (or the invalidated ticket's dependencies), and the Results list it; the Supabase scenario covers a targeted ticket",
+      "depends": [
+        "AJ-0055"
+      ],
+      "tags": {
+        "tech": [],
+        "dec": [],
+        "path": []
+      },
+      "status": {
+        "state": "pending",
+        "text": "🟥 Pending"
+      },
+      "milestone": "",
+      "ready": true,
+      "waiting_on": [],
+      "dependants": [],
+      "unblocks": 0
     }
   ],
-  "next": [],
-  "checks": [],
+  "next": [
+    "AJ-0056",
+    "AJ-0057",
+    "AJ-0112"
+  ],
+  "checks": [
+    {
+      "code": "W010",
+      "level": "warning",
+      "location": "ajiya.toml",
+      "message": "1 open ticket is in no milestone: AJ-0112",
+      "fix": "make a milestone's targets depend on them, or add a milestone for the later work"
+    }
+  ],
   "activity": [
+    {
+      "hash": "78a3e863be99a7d01bf63b6303eb3c903499b0eb",
+      "short": "78a3e86",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Merge AJ-0054, AJ-0055: change assess, approve and reject",
+      "refs": [
+        "AJ-0054",
+        "AJ-0055"
+      ],
+      "chore": false,
+      "merge": true,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792164060
+    },
+    {
+      "hash": "637df59eaf7b30e344f9ca633a6403d55d035510",
+      "short": "637df59",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Add change approve and change reject",
+      "refs": [
+        "AJ-0055"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792164019
+    },
+    {
+      "hash": "e4c98daf3cf8fd56bc036ce8ce62e51a42ba4b1e",
+      "short": "e4c98da",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Add change assess: record a verdict on a candidate",
+      "refs": [
+        "AJ-0054"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [],
+      "time": 1792163809
+    },
+    {
+      "hash": "6d73335c1d1bece2aef65221e9d7032c0e4122a9",
+      "short": "6d73335",
+      "date": "2026-10-16",
+      "author": "Aliyu Yahaya - ST10440112",
+      "subject": "Mark AJ-0053 done; start AJ-0054, AJ-0055",
+      "refs": [
+        "AJ-0053"
+      ],
+      "chore": false,
+      "merge": false,
+      "revert": false,
+      "agent": "",
+      "changes": [
+        {
+          "id": "AJ-0053",
+          "phase": "decisions-and-changes",
+          "from": "in_progress",
+          "to": "done",
+          "text": "🟩 Done · e0409bc · 2026-10-16 · tests passed"
+        },
+        {
+          "id": "AJ-0054",
+          "phase": "decisions-and-changes",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        },
+        {
+          "id": "AJ-0055",
+          "phase": "decisions-and-changes",
+          "from": "pending",
+          "to": "in_progress",
+          "text": "🟨 In progress"
+        }
+      ],
+      "time": 1792163133
+    },
     {
       "hash": "e0409bc4f1b770c99fbe191d144408452658f6ee",
       "short": "e0409bc",

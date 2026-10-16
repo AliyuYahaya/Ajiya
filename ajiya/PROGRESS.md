@@ -10,9 +10,9 @@ Generated 2026-10-16.
 | v0-1 | 37 | 37 | 100% | 0 |
 | v0-2 | 74 | 74 | 100% | 0 |
 | v0-2-1 | 83 | 83 | 100% | 0 |
-| v0-3 | 80 | 84 | 95% | 0 |
-| after-v0-3 | 80 | 83 | 96% | 0 |
-| v0-3-1 | 82 | 88 | 93% | 0 |
+| v0-3 | 82 | 84 | 97% | 1 |
+| after-v0-3 | 82 | 83 | 98% | 1 |
+| v0-3-1 | 84 | 88 | 95% | 1 |
 
 ## Phases
 
@@ -25,19 +25,18 @@ Generated 2026-10-16.
 | Release | 5 | 0 | 0 | 5 | 100% | v0-1 |
 | Agent-access | 10 | 0 | 0 | 10 | 100% | v0-2 |
 | Install | 24 | 0 | 0 | 24 | 100% | v0-2 |
-| Decisions-and-changes | 6 | 2 | 3 | 11 | 54% | v0-3 |
+| Decisions-and-changes | 8 | 0 | 4 | 12 | 66% | v0-3 |
 | Dashboard views | 1 | 0 | 3 | 4 | 25% | v0-3-1 |
 
 ## Can start now
 
-Nothing.
+- **AJ-0056** Guides and skill for decisions and changes (ajiya) · v0-3
+- **AJ-0057** Dashboard: open changes and decisions (ajiya) · after-v0-3
+- **AJ-0112** change approve retargets milestones (ajiya)
 
 ## Waiting
 
-- **AJ-0055** change approve and change reject (ajiya) waits on AJ-0054
-- **AJ-0056** Guides and skill for decisions and changes (ajiya) waits on AJ-0055
-- **AJ-0057** Dashboard: open changes and decisions (ajiya) waits on AJ-0055
-- **AJ-0058** v0.3 definition of done (ajiya) waits on AJ-0054, AJ-0055, AJ-0056
+- **AJ-0058** v0.3 definition of done (ajiya) waits on AJ-0056
 - **AJ-0108** Dashboard: one view per way of seeing tickets (ajiya) waits on AJ-0057
 - **AJ-0109** Dashboard: a page per phase (ajiya) waits on AJ-0108
 - **AJ-0110** Dashboard: plan history from decisions and changes (ajiya) waits on AJ-0057, AJ-0108
@@ -48,6 +47,13 @@ Nothing.
 
 ## Recent activity
 
+- 2026-10-16 `78a3e86` Merge AJ-0054, AJ-0055: change assess, approve and reject (AJ-0054, AJ-0055)
+- 2026-10-16 `637df59` Add change approve and change reject (AJ-0055)
+- 2026-10-16 `e4c98da` Add change assess: record a verdict on a candidate (AJ-0054)
+- 2026-10-16 `6d73335` Mark AJ-0053 done; start AJ-0054, AJ-0055 (AJ-0053)
+  - AJ-0053: in_progress → done
+  - AJ-0054: pending → in_progress
+  - AJ-0055: pending → in_progress
 - 2026-10-16 `e0409bc` Merge AJ-0053: change open and change impact (AJ-0053)
 - 2026-10-16 `a055a2b` Mark AJ-0111 done (AJ-0111)
   - AJ-0111: in_progress → done
@@ -63,16 +69,10 @@ Nothing.
 - 2026-10-16 `3e35786` Refresh the agent kit (AJ-0107)
 - 2026-10-16 `55fc3bf` Merge AJ-0107: phase descriptions (AJ-0107)
 - 2026-10-16 `b09ec5d` Phase descriptions: phase describe, --description, JSON, data.js and MCP (AJ-0107)
-- 2026-10-16 `1a7f462` Start AJ-0053, AJ-0107 (chore)
-  - AJ-0053: pending → in_progress
-  - AJ-0107: pending → in_progress
-- 2026-10-16 `d83269c` Mark AJ-0051, AJ-0052 done (AJ-0051, AJ-0052)
-  - AJ-0051: in_progress → done
-  - AJ-0052: in_progress → done
-- 2026-10-16 `71f6e2e` Merge AJ-0051, AJ-0052: superseded status and snapshots (AJ-0051, AJ-0052)
-- 2026-10-16 `2a56f79` Add ajiya snapshot and snapshot list: plan snapshots as annotated tags (AJ-0052)
-- and 270 more in data.js
+- and 274 more in data.js
 
 ## Checks
 
-No problems found.
+0 error(s), 1 warning(s).
+
+- W010 ajiya.toml: 1 open ticket is in no milestone: AJ-0112. Fix: make a milestone's targets depend on them, or add a milestone for the later work
